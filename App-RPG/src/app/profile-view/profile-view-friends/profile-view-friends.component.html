@@ -1,0 +1,28 @@
+<div class="container jumbotron">
+  
+  <h2>{{ profileData.firstname }} {{ profileData.lastname }} ({{ profileData.login }})</h2>
+
+  <p>Friends list:</p>                                                                                      
+  <div class="table-responsive">          
+  <table class="table">
+    <tbody>
+      <tr *ngFor="let friend of friendsAcceptedPhoto">
+        <td>
+          <img [src]="friend.photo" alt="Profile image" style="width:100px; height: 100px">
+        </td>
+        <td>
+          <h2 role="button" [routerLink]="['/profile', friend.personalData.login]">{{friend.personalData.firstname}} {{friend.personalData.lastname}} ({{friend.personalData.login}})</h2>
+        </td>
+      </tr>
+      <tr *ngFor="let friend of friendsAcceptedNoPhoto">
+        <td>
+          <img src="assets/unknown.png" alt="Profile image" style="width:100px; height: 100px">
+        </td>
+        <td>
+          <h2 role="button" [routerLink]="['/profile', friend.login]">{{friend.firstname}} {{friend.lastname}} ({{friend.login}})</h2>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>

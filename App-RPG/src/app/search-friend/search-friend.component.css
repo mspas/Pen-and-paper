@@ -1,0 +1,8 @@
+
+h2 {
+    color: white;
+    font-size: medium;
+}
+h2:hover {
+    color: #42ffc6;
+}

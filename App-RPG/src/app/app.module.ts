@@ -1,0 +1,75 @@
+import { SearchGameResolve } from './search-game/search-game.resolve.service';
+import { FriendResolve } from './profile-page/profile-page.resolve';
+import { ApiService } from './api.service';
+import { AuthGuardService } from './auth/auth-guard.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+import { HomeComponent } from './home/home.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+
+import { AuthService } from './auth/auth.service';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { HeaderComponent } from './header/header.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
+import { PersonalDataResolve } from './profile-view/page-view.resolve.service';
+import { ProfileViewFriendsComponent } from './profile-view/profile-view-friends/profile-view-friends.component';
+import { FriendViewResolve } from './profile-view/profile-view-friends/profile-view-friends.resolve.service';
+import { SearchFriendComponent } from './search-friend/search-friend.component';
+import { SearchFriendResolve } from './search-friend/search-friend.resolve.service';
+import { CreateGameComponent } from './create-game/create-game.component';
+import { CreateGameDataService } from './create-game/create-game.service';
+import { ProfileViewGamesComponent } from './profile-view-games/profile-view-games.component';
+import { GamesViewResolve } from './profile-view-games/profile-view-games.resolve.service';
+import { GameViewComponent } from './game-view/game-view.component';
+import { GameResolve } from './game-view/game.resolve.service';
+import { SearchGameComponent } from './search-game/search-game.component';
+import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game.component';
+import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SignInComponent,
+    SignUpComponent,
+    ProfilePageComponent,
+    HeaderComponent,
+    ProfileViewComponent,
+    ProfileViewFriendsComponent,
+    SearchFriendComponent,
+    CreateGameComponent,
+    ProfileViewGamesComponent,
+    GameViewComponent,
+    SearchGameComponent,
+    InviteToGameComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule
+  ],
+  providers: [
+    AuthService,
+    AuthGuardService,
+    ApiService,
+    PersonalDataResolve,
+    FriendResolve,
+    FriendViewResolve,
+    SearchFriendResolve,
+    CreateGameDataService,
+    GamesViewResolve,
+    GameResolve,
+    SearchGameResolve,
+    GameInviteResolve
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

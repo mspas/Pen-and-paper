@@ -1,0 +1,40 @@
+.modal-header {
+    background-color: #13976f;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
+}
+
+.modal-title {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.modal-btn-close {
+    border-color: transparent;
+    color: azure;
+}
+
+.modal-content {
+    background-color: #3a3a3a;
+}
+
+.modal-body {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.btn-confirm {
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+}

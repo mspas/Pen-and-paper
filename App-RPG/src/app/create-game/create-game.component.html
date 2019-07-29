@@ -1,0 +1,45 @@
+<div class="container jumbotron">
+  <form class="form-signin" (ngSubmit)="onCreate(f)" #f="ngForm">
+    <h1 style="font-size: 26px">What are you planning?</h1>
+
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" placeholder="Title" style="font-size: 19px" ngModel class="form-control"> 
+
+    <label for="genre">Game setting / Genre:</label>
+    <select class="form-control" id="genre" [(ngModel)]="genre" name="genre">
+      <option *ngFor="let option of gameCategories">
+        {{option}}
+      </option>
+    </select>
+
+    <label for="location">Location:</label><br>
+    <input type="text" id="location" name="location" placeholder="Location" style="font-size: 19px" ngModel class="form-control">
+
+    <label for="date">Start date:</label>
+    <input type="date" id="date" name="date" placeholder="Start date" style="font-size: 19px" ngModel class="form-control">
+
+    <label for="nofplayers">Max. players:</label>
+    <select class="form-control" id="nofplayers" [(ngModel)]="nofplayers" name="nofplayers">
+      <option *ngFor="let i of numberOfPlayers">
+        {{i}}
+      </option>
+    </select>
+    <!--<input type="number" min="1" max="20" id="age" name="age" style="font-size: 19px" ngModel class="form-control" required>-->
+
+    <label for="book">Book / Vademecum:</label>
+    <input type="text" id="book" name="book" placeholder="Book / Vademecum" style="font-size: 19px" ngModel class="form-control">
+    
+    <label for="description">Story description:</label>
+    <textarea id="description" name="description" placeholder="Shortly describe your in-game world, introduce the background of the story, some character's models. But remember to keep some plots in secret..." rows="5" style="font-size: 19px" ngModel class="form-control"></textarea>
+
+    <label for="comment">Comment for creating character's card:</label>
+    <textarea id="comment" name="comment" placeholder="Tips for players to properly create theris characters cards. ( can leave it blank)" rows="5" style="font-size: 19px" ngModel class="form-control"></textarea>
+
+    <label for="box">Allow joining without invitation?</label>
+    <input id="box" type="checkbox" (click)='onBox(box.checked);' #box>
+    
+
+    <br>
+    <button class="btn btn-lg btn-success btn-block" style="font-size: 20px" type="submit">Save and create</button>
+  </form>
+</div>

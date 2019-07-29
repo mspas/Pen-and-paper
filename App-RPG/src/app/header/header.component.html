@@ -1,0 +1,28 @@
+<nav class="navbar navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="home"><img src="assets/logo.png" alt="Logo" ></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar" *ngIf="isLoggedIn==true;">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="search-game/search"><span class="glyphicon glyphicon-search"></span> FIND GAME</a></li>
+          <li><a href="create-game"><span class="glyphicon glyphicon-tower"></span> CREATE GAME</a></li>
+          <li><a href="search-friends/search"><span class="glyphicon glyphicon-search"></span> SERACH FRIENDS</a></li>
+          <li><a href="my-profile"><span class="glyphicon glyphicon-user"></span> MY PROFILE</a></li>
+          <li><a href="home" (click)="onLogout()"><span class="glyphicon glyphicon-off"></span> LOGOUT</a></li>              
+        </ul>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar" *ngIf="isLoggedIn==false;">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="search-game/search"><span class="glyphicon glyphicon-search"></span> FIND GAME</a></li>
+          <li><a href="sign-in"><span class="glyphicon glyphicon-star"></span> SIGN IN</a></li>
+          <li><a href="sign-up"><span class="glyphicon glyphicon-star-empty"></span> SIGN UP</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>

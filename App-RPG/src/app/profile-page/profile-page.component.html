@@ -1,0 +1,231 @@
+<div class="container jumbotron">
+    <h2>You are logged as {{ myProfile.personaldata.firstname }} {{ myProfile.personaldata.lastname }} ({{ myProfile.login }})</h2>
+    <p>Your personal informations:
+        <span style="padding-left: 32%">
+          <button type="button" id="button4box" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangeData()">
+            <span class="glyphicon glyphicon-wrench"></span> 
+            Change personal data
+          </button>  
+          <button type="button" id="button4box" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePassword()">
+            <span class="glyphicon glyphicon-erase"></span> 
+            Change password
+          </button>
+          <button type="button" id="button4box" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePicture()">
+            <span class="glyphicon glyphicon-picture"></span> 
+            Change picture
+          </button>     
+        </span>
+      </p> 
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
+          <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
+        </div>
+        <div class="col-md-8">
+          {{ myProfile.personaldata.firstname }} {{ myProfile.personaldata.lastname }} ({{ myProfile.login }})
+          <div class="table-responsive" style="width:75%;">          
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nickname:</td>
+                    <td>{{myProfile.personaldata.login}}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{{myProfile.personaldata.email}}</td>
+                  </tr>
+                  <tr>
+                    <td>First name:</td>
+                    <td>{{myProfile.personaldata.firstname}}</td>
+                  </tr>
+                  <tr>
+                    <td>Last name:</td>
+                    <td>{{myProfile.personaldata.lastname}}</td>
+                  </tr>
+                  <tr>
+                    <td>City:</td>
+                    <td>{{myProfile.personaldata.city}}</td>
+                  </tr>
+                  <tr>
+                    <td>Age:</td>
+                    <td>{{myProfile.personaldata.age}}</td>
+                  </tr>
+                  <tr>
+                    <td>Games:</td>
+                    <td><h2 role="button" [routerLink]="['/profile/games-list', pd.login]"><span class="glyphicon glyphicon-tower"></span> Show games</h2></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+        </div>
+      </div>
+    </div>
+
+
+      <!-- Modal -->
+      <div id="modalChangeData" class="modal fade" role="dialog" style=" margin-top: 50px;">
+          <div class="modal-dialog modal-lg">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+              <form (ngSubmit)="onSaveChanges(f)" #f="ngForm">
+                <div class="modal-header">
+                  <button type="button" class="close modal-btn-close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">{{modalTitle}}</h4>
+                </div>
+                <div class="modal-body row">
+
+                  <div *ngIf="modalData == true">
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> After proceeding changes you will need to relog!
+                    </div>
+                    <label for="login">Email</label>
+                    <input type="email" id="email" name="email" placeholder="{{pd.email}}" ngModel class="form-control font19">
+                    
+                    <label for="firstname">First name</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="{{pd.firstname}}" ngModel class="form-control font19">
+              
+                    <label for="lastname">Last name</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="{{pd.lastname}}" ngModel class="form-control font19">
+              
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="{{pd.city}}" ngModel class="form-control font19">
+              
+                    <label for="age">Age</label>
+                    <input type="number" min="5" max="100" id="age" name="age" placeholder="{{pd.age}}" ngModel class="form-control font19">
+                  </div>
+
+                  <div *ngIf="modalPassword == true">
+                    <label for="oldpassword">Old password</label>
+                    <input type="password" id="oldpassword" name="oldpassword" ngModel class="form-control" required>
+    
+                    <label for="password">New password</label>
+                    <input type="password" id="password" name="password" ngModel class="form-control" required>
+    
+                    <label for="repeatpassword">Repeat new password</label>
+                    <input type="password" id="repeatpassword" name="repeatpassword" ngModel class="form-control" required>
+                  </div>
+
+                  <div *ngIf="modalPicture == true">
+                    <div class="alert alert-warning">
+                      <strong>Warning!</strong> After proceeding changes you may need to relog!
+                    </div>
+                    <label for="file">Select image from your drive</label>
+                    <br>Preferred size: 200x200 px
+                    <input type="file" id="file" name="file"  required #fileInput>
+                  </div>
+
+                </div>
+      
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" type="submit">Save</button>
+                </div>
+              </form>
+            </div>
+        
+          </div>
+        </div>
+
+
+      
+
+
+
+  
+    <div class="panel green-back">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#invites">
+              <div *ngIf="isNewInvite == true">
+                  <span class="glyphicon glyphicon-envelope"> NEW!</span>
+              </div> 
+              Friends invitations
+          </a>
+        </h4>
+      </div>
+      <div id="invites" class="panel-collapse collapse">
+        <div class="panel-body">
+          <table class="table center">
+            <thead>
+              <tr>
+                <th>Invitations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <div *ngIf="isNewInvite == false">
+                <h3>I'm sorry, there is nothing in here :(</h3>
+              </div>
+              <tr *ngFor="let invite of receivedInvites">
+                <td>
+                  <h2 role="button" [routerLink]="['/profile', invite.personalData.login]">{{invite.personalData.firstname}} {{invite.personalData.lastname}} ({{invite.personalData.login}})</h2>
+                </td>
+                <td>
+                  <h2 class="decision">
+                    <button type="button" class="btn btn-success" (click)="onAcceptInvitation(invite.id)">
+                      <span class="glyphicon glyphicon-ok"></span> Accept
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="onDeclineInvitation(invite.id)">
+                      <span class="glyphicon glyphicon-remove"></span> Decline
+                    </button>
+                  </h2>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel green-back">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#collapse">
+            Show my friends list
+          </a>
+        </h4>
+      </div>
+      <div id="collapse" class="panel-collapse collapse">
+        <div class="panel-body">
+          <table class="table center">
+            <thead>
+              <tr>
+                <th>Friends</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let friend of friendsAccepted">
+                <td>
+                  <h2 role="button" [routerLink]="['/profile', friend.login]">{{friend.firstname}} {{friend.lastname}} ({{friend.login}})</h2>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table center">
+            <thead>
+              <tr>
+                <th>Waiting invitations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let friendInvited of friendsWaiting">
+                <td>
+                  <h2 role="button" [routerLink]="['/profile', friendInvited.login]">{{friendInvited.firstname}} {{friendInvited.lastname}} ({{friendInvited.login}})</h2>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

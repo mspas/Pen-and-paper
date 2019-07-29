@@ -1,0 +1,9 @@
+.book-icon {
+    color: #16a87c;
+    font-size: 50px;
+    display: inline;
+}
+
+.book-icon:hover {
+    color: #00ffb3;
+}

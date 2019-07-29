@@ -1,0 +1,75 @@
+  <div class="container jumbotron">
+    <p><span class="info"> {{ profileData.firstname }} {{ profileData.lastname }} ({{ profileData.login }})</span>
+        <span style="padding-left: 32%">
+          <button *ngIf="isFriend == false && isInvited == false" type="button" id="button4box" class="btn btn-success btn-sm" (click)="onSendInvite()">
+            <span class="glyphicon glyphicon-envelope"></span> 
+            SEND FRIEND INVITE
+          </button>  
+          <button *ngIf="isFriend == false && isInvited == true" type="button" id="button4box" class="btn btn-success btn-sm">
+            YOUR INVITE IS WAITING...
+          </button>
+          <button *ngIf="isFriend == true" type="button" id="button4box" class="btn btn-success btn-sm" (click)="deleteFriend()">
+            <span class="glyphicon glyphicon-remove"></span> 
+            DELETE FRIEND
+          </button>  
+          <button type="button" id="button4box" class="btn btn-success btn-sm" [routerLink]="['/profile/friends-list', profileData.login]">
+            <span class="glyphicon glyphicon-user"></span> 
+            SHOW LIST OF FRIENDS
+          </button>     
+        </span>
+    </p>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
+          <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
+        </div>
+        <div class="col-md-8">
+          {{ profileData.firstname }} {{ profileData.lastname }} ({{ profileData.login }})
+          <div class="table-responsive" style="width:75%;">          
+              <table class="table info" style="color: white">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nickname:</td>
+                    <td>{{profileData.login}}</td>
+                  </tr>
+                  <tr *ngIf="isFriend == true">
+                    <td>Email:</td>
+                    <td>{{profileData.email}}</td>
+                  </tr>
+                  <tr>
+                    <td>First name:</td>
+                    <td>{{profileData.firstname}}</td>
+                  </tr>
+                  <tr>
+                    <td>Last name:</td>
+                    <td>{{profileData.lastname}}</td>
+                  </tr>
+                  <tr>
+                    <td>City:</td>
+                    <td>{{profileData.city}}</td>
+                  </tr>
+                  <tr *ngIf="isFriend == true">
+                    <td>Age:</td>
+                    <td>{{profileData.age}}</td>
+                  </tr>
+                  <tr>
+                    <td>Games:</td>
+                    <td><h2 role="button" [routerLink]="['/profile/games-list', profileData.login]"><span class="glyphicon glyphicon-tower"></span> Show games</h2></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>

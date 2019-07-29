@@ -1,0 +1,46 @@
+<div class="container jumbotron">
+    <h1 style="font-size: 26px">Who are you looking for? (use at least one input below)</h1>
+  <div class="form-group row">
+    <form class="form-signin" (ngSubmit)="onSearch(f)" #f="ngForm">
+      <div class="col-xs-3">
+        <label for="firstname">First name</label>
+        <input type="text" id="firstname" name="firstname" placeholder="First name" style="font-size: 19px" ngModel class="form-control input-lg">
+      </div>
+      
+      <div class="col-xs-3">
+        <label for="lastname">Last name</label>
+        <input type="lastname" id="lastname" name="lastname" placeholder="Last name" style="font-size: 19px" ngModel class="form-control input-lg">
+      </div>
+
+      <div class="col-xs-3">
+        <label for="login">Nickname</label>
+        <input type="login" id="login" name="login" placeholder="Nickname" style="font-size: 19px" ngModel class="form-control input-lg">
+      </div>
+      <div class="col-xs-3" style="padding-top:6px">
+        <label for="login"></label>
+        <button class="btn btn-lg btn-success btn-block" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+      </div>
+    </form>
+  </div>
+  <br>
+  <p>Search results:</p>                                                                                      
+  <div class="table-responsive">          
+      <table class="table center">
+          <thead>
+            <tr>
+              <th>Find</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let friend of foundData; let i = index">
+              <td>
+                <h2>#{{i}}</h2>
+              </td>
+              <td>
+                <h2 role="button" [routerLink]="['/profile', friend.login]">{{friend.firstname}} {{friend.lastname}} ({{friend.login}})</h2>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="text-center jumbotron">
+  <form class="form-signin" (ngSubmit)="onSignIn(f)" #f="ngForm">
+    <div class="alert alert-danger" *ngIf="loginError == true">
+      <strong>Error!</strong> Login or password incorrect!
+    </div>
+      <h1 style="font-size: 26px">Please sign in</h1>
+      <div class="input-group" style="padding-top: 10px; padding-bottom: 10px">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input type="login" id="login" name="login" placeholder="Login" style="font-size: 19px" ngModel class="form-control">
+      </div>
+      <div class="input-group" style="padding-bottom: 20px">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <input type="password" id="password" name="password" placeholder="Password" style="font-size: 19px" ngModel class="form-control">
+      </div>
+      <button class="btn btn-lg btn-success btn-block" style="font-size: 20px" type="submit">Sign in</button>
+  </form>
+
+  <button class="btn btn-lg btn-primary btn-block" style="font-size: 20px; width: 20%" type="button" (click)="onTest()">Test</button>
+</div>

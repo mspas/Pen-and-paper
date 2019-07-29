@@ -1,0 +1,65 @@
+h2 {
+    color: white;
+    font-size: medium;
+}
+h2:hover {
+    color: #42ffc6;
+}
+.panel-body {
+    min-width: 420px;
+    max-width: 600px;
+    padding: 15px;
+    margin: auto;
+}
+.modal-header {
+    background-color: #13976f;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
+}
+
+.modal-title {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.modal-btn-close {
+    border-color: transparent;
+    color: azure;
+}
+
+.modal-content {
+    background-color: #3a3a3a;
+}
+
+.modal-body {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 19px;
+}
+
+.remove-icon {
+    color: #cf0d27;
+}
+
+.remove-icon:hover {
+    color: #ff4961;
+}
+
+.book-icon {
+    color: #16a87c;
+}
+
+.book-icon:hover {
+    color: #00ffb3;
+}
+
+
+.remove-element {
+    color: white;
+}
+
+.remove-clicked {
+    color: #ff4961;
+}

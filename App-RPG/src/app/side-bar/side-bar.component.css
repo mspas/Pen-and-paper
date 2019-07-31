@@ -1,0 +1,26 @@
+.side-body {
+    min-height: 100vh;
+    position: relative;
+}
+
+.side-img {
+    background-image: url("assets/side-bar.png");
+    display: inline-block;
+    position:relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 90px;
+    float:left;
+    clear:none;  
+}
+
+.side-content {
+    background-color: #e1d7c0;
+    display: inline-block;
+    vertical-align: top;
+    height: 100vh;
+    width: 300px;
+    float: left;
+    clear:none;  
+}

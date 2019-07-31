@@ -11,6 +11,7 @@ import 'rxjs/add/operator/catch';
 import { SkillCreateModel } from './models/skill.model';
 import { GameSessionCreateModel } from './models/gamesession.model';
 import { ChangePasswordModel } from './models/changepassword.model';
+import { MessageModel, ConversationModel, MessageCreateModel } from './models/message.model';
 
 @Injectable()
 export class ApiService {
@@ -20,10 +21,66 @@ export class ApiService {
     constructor(private _http: HttpClient) {
     }
 
+    getAllDataProfile(nick: string, login: string): Observable<any> {
+        let myProfile =  this._http
+            .get<PersonalDataModel[]>(this.url + 'pdata/' + login)
+            .do(data => console.log("oby id " + JSON.stringify(data)));
+        let myFriendsList = this._http
+            .get<FriendModel[]>(this.url + 'Friend/' + login)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+        let myGamesList = this._http
+            .get<GameToPersonAppModel[]>(this.url + 'GameToPerson/' + login)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+
+        let profile =  this._http
+            .get<PersonalDataModel[]>(this.url + 'pdata/' + nick)
+            .do(data => console.log("oby id " + JSON.stringify(data)));
+        let friendsList = this._http
+            .get<FriendModel[]>(this.url + 'Friend/' + nick)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+        let gamesList = this._http
+            .get<GameToPersonAppModel[]>(this.url + 'GameToPerson/' + nick)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+
+        return Observable.forkJoin([myProfile, myFriendsList, myGamesList, profile, friendsList, gamesList]);
+    }
+
+    getConversation(relationId: number) {
+        //this._http.post(this.url + 'Message/', new MessageModel(0, new Date(Date.UTC(2019, 6, 19, 1,1,1,1)), false, "hello dude", 2)).subscribe (
+          //  error => console.log(error));;
+        return this._http
+            .get<MessageModel[]>(this.url + 'Message/' + relationId);
+    }
+
+    getRelationData(relationId: number) {
+        return this._http
+            .get<FriendModel[]>(this.url + 'Friend/' + relationId.toString())
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+    }
+
+    sendMessage(msg: MessageCreateModel) {
+        console.log(JSON.stringify(msg));
+        this._http.post(this.url + 'Message/', msg).subscribe (
+            error => console.log(error));
+    }
+
+    getDataProfile(id: number, nick: string): Observable<any> {
+        let profile =  this._http
+            .get<PersonalDataModel[]>(this.url + 'pdata/' + nick)
+            .do(data => console.log("oby id " + JSON.stringify(data)));
+        let friendsList = this._http
+            .get<FriendModel[]>(this.url + 'Friend/' + id)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+        let gamesList = this._http
+            .get<GameToPersonAppModel[]>(this.url + 'GameToPerson/' + id)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+        return Observable.forkJoin([profile, friendsList, gamesList]);
+    }
+
     getFriendsList(id: number): Observable<FriendModel[]> {
         return this._http
             .get<FriendModel[]>(this.url + 'Friend/' + id.toString())
-            .do(data => console.log('All: ' + JSON.stringify(data)));
+            .do(data => console.log('from API: ' + JSON.stringify(data)));
     }
 
     getProfile(nick: string): Observable<PersonalDataModel[]> {
@@ -55,6 +112,11 @@ export class ApiService {
     sendFriendInvite(idS: number, idR: number) {
         let friendInvite = new FriendCreateModel(false, idS, idR);
         this._http.post(this.url + 'Friend/', friendInvite).subscribe (
+            error => console.log(error));
+    }
+
+    editRelation(invite: FriendModel) {
+        this._http.put<FriendModel>(this.url + 'Friend/' + invite.id.toString(), invite).subscribe (
             error => console.log(error));
     }
 

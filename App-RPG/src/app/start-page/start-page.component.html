@@ -1,0 +1,47 @@
+<div class="row">
+  <div>
+    <div class="panel green-back">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#games">
+                <div *ngIf="isNewInvite == true">
+                    <span class="glyphicon glyphicon-envelope"> NEW!</span>
+                </div> 
+                Friends invitations
+            </a>
+          </h4>
+        </div>
+        <div id="games" class="panel-collapse collapse">
+          <div class="panel-body">
+            <table class="table center">
+              <thead>
+                <tr>
+                  <th>Invitations</th>
+                </tr>
+              </thead>
+              <tbody>
+                <div *ngIf="isNewInvite == false">
+                  <h3>I'm sorry, there is nothing in here :(</h3>
+                </div>
+                <tr *ngFor="let invite of receivedInvites">
+                  <td>
+                    <h2 role="button" [routerLink]="['/profile', invite.personalData.login]">{{invite.personalData.firstname}} {{invite.personalData.lastname}} ({{invite.personalData.login}})</h2>
+                  </td>
+                  <td>
+                    <h2 class="decision">
+                      <button type="button" class="btn btn-success" (click)="onAcceptInvitation(invite.id)">
+                        <span class="glyphicon glyphicon-ok"></span> Accept
+                      </button>
+                      <button type="button" class="btn btn-danger" (click)="onDeclineInvitation(invite.id)">
+                        <span class="glyphicon glyphicon-remove"></span> Decline
+                      </button>
+                    </h2>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

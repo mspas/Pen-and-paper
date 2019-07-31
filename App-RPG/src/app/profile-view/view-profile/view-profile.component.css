@@ -1,0 +1,154 @@
+.btn-wrap {
+    margin-left: 680px;
+    margin-top: -46px;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+
+#my-page {
+    margin-left: 539px;
+}
+.my-page-btn {
+    padding-top: 74.685px;
+    line-height: 1.15;
+}
+
+.btn-text {
+    padding-top: 62.685px;
+    line-height: 1.15;
+}
+.btn-profile {
+    background-color: #f1efef;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 100px;
+    width: 145px;
+    padding-left: 10px;
+    margin-right: -4px;
+    cursor: pointer;
+    border-style: solid;
+    border-color: #fff;
+    border-width: 1px;
+}
+
+.btn-my-profile {
+    background-color: #f1efef;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 111px;
+    width: 145px;
+    padding-left: 10px;
+    margin-right: -4px;
+    cursor: pointer;
+    border-style: solid;
+    border-color: #fff;
+    border-width: 1px;
+}
+
+#send_message {
+    background-image: url("assets/btn-msg.png");
+    border-radius: 14px 0px 0px 14px;
+}
+#send_message:hover {
+    background-image: url("assets/btn-msg-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
+.friend-opt {
+    border-radius: 0px 14px 14px 0px;
+}
+
+#send_invite {
+    background-image: url("assets/btn-send-invite.png");
+}
+#send_invite:hover {
+    background-image: url("assets/btn-send-invite-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+#invite_waiting {
+    background-image: url("assets/btn-invited.png");
+}
+#invite_waiting:hover {
+    background-image: url("assets/btn-invited-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+#delete_friend {
+    background-image: url("assets/btn-delete-friend.png");
+}
+#delete_friend:hover {
+    background-image: url("assets/btn-delete-friend-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
+#change_personal_data {
+    background-image: url("assets/btn-pdata.png");
+    border-radius: 14px 0px 0px 14px;
+}
+#change_personal_data:hover {
+    background-image: url("assets/btn-pdata-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
+#change_passwrod {
+    background-image: url("assets/lock.png");
+}
+#change_passwrod:hover {
+    background-image: url("assets/btn-pass-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
+#change_image {
+    background-image: url("assets/btn-image.png");
+    border-radius: 0px 14px 14px 0px;
+}
+#change_image:hover {
+    background-image: url("assets/btn-image-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
+.table-info {
+    color: #252525;
+    font-family: Montserrat, sans-serif;
+}
+
+.modal-header {
+    background-color: #13976f;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
+}
+
+.modal-title {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.modal-btn-close {
+    border-color: transparent;
+    color: azure;
+}
+
+.modal-content {
+    background-color: #3a3a3a;
+}
+
+.modal-body {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 19px;
+}
+
+.btn-confirm {
+    margin-left: 40%;
+    margin-right: 40%;
+}

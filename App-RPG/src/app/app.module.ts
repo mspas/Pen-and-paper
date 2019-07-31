@@ -19,19 +19,27 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { PersonalDataResolve } from './profile-view/page-view.resolve.service';
-import { ProfileViewFriendsComponent } from './profile-view/profile-view-friends/profile-view-friends.component';
-import { FriendViewResolve } from './profile-view/profile-view-friends/profile-view-friends.resolve.service';
+import { ProfileViewFriendsComponent } from './profile-view/view-friends/profile-view-friends.component';
+import { FriendViewResolve } from './profile-view/view-friends/profile-view-friends.resolve.service';
 import { SearchFriendComponent } from './search-friend/search-friend.component';
 import { SearchFriendResolve } from './search-friend/search-friend.resolve.service';
 import { CreateGameComponent } from './create-game/create-game.component';
 import { CreateGameDataService } from './create-game/create-game.service';
-import { ProfileViewGamesComponent } from './profile-view-games/profile-view-games.component';
-import { GamesViewResolve } from './profile-view-games/profile-view-games.resolve.service';
+import { ProfileViewGamesComponent } from './profile-view/view-games/profile-view-games.component';
+import { GamesViewResolve } from './profile-view/view-games/profile-view-games.resolve.service';
 import { GameViewComponent } from './game-view/game-view.component';
 import { GameResolve } from './game-view/game.resolve.service';
 import { SearchGameComponent } from './search-game/search-game.component';
 import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game.component';
 import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { ProfileDataResolve } from './side-bar/side-bar.resolve.service';
+import { DataService } from './data.service';
+import { FriendsService } from './friends.service';
+import { StartPageComponent } from './start-page/start-page.component';
+import { BphotoComponent } from './bphoto/bphoto.component';
+import { ViewProfileComponent } from './profile-view/view-profile/view-profile.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +56,12 @@ import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.se
     ProfileViewGamesComponent,
     GameViewComponent,
     SearchGameComponent,
-    InviteToGameComponent
+    InviteToGameComponent,
+    SideBarComponent,
+    StartPageComponent,
+    BphotoComponent,
+    ViewProfileComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +81,10 @@ import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.se
     GamesViewResolve,
     GameResolve,
     SearchGameResolve,
-    GameInviteResolve
+    GameInviteResolve,
+    ProfileDataResolve,
+    DataService,
+    FriendsService
   ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,9 @@ export class FriendModel {
         public id: number,
         public personalData: PersonalDataModel,
         public isAccepted: boolean,
-        public isReceiver: boolean
+        public isReceiver: boolean,
+        public isFriendRequest: boolean,
+        public lastMessageDate: Date
     ) {}
   }
 

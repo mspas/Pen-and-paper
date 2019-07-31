@@ -9,19 +9,21 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { PersonalDataResolve } from './profile-view/page-view.resolve.service';
-import { ProfileViewFriendsComponent } from './profile-view/profile-view-friends/profile-view-friends.component';
+import { ProfileViewFriendsComponent } from './profile-view/view-friends/profile-view-friends.component';
 import { FriendResolve } from './profile-page/profile-page.resolve';
-import { FriendViewResolve } from './profile-view/profile-view-friends/profile-view-friends.resolve.service';
+import { FriendViewResolve } from './profile-view/view-friends/profile-view-friends.resolve.service';
 import { SearchFriendResolve } from './search-friend/search-friend.resolve.service';
 import { CreateGameComponent } from './create-game/create-game.component';
-import { GamesViewResolve } from './profile-view-games/profile-view-games.resolve.service';
-import { ProfileViewGamesComponent } from './profile-view-games/profile-view-games.component';
+import { GamesViewResolve } from './profile-view/view-games/profile-view-games.resolve.service';
+import { ProfileViewGamesComponent } from './profile-view/view-games/profile-view-games.component';
 import { GameResolve } from './game-view/game.resolve.service';
 import { GameViewComponent } from './game-view/game-view.component';
 import { SearchGameComponent } from './search-game/search-game.component';
 import { SearchGameResolve } from './search-game/search-game.resolve.service';
 import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game.component';
 import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { StartPageComponent } from './start-page/start-page.component';
 
 const routes: Routes = [];
 
@@ -31,7 +33,15 @@ const routes: Routes = [];
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'sign-in', component: SignInComponent },
-      { path: 'sign-up', component: SignUpComponent },
+      { path: 'sign-up', component: SideBarComponent },
+      { 
+        path: 'start', 
+        component: StartPageComponent, 
+        canActivate: [AuthGuardService],
+        resolve: {
+          profiledata: FriendResolve
+        },
+      },
       { 
         path: 'search-game/:value', 
         component: SearchGameComponent,

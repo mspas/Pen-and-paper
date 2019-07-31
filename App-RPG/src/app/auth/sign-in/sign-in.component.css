@@ -2,8 +2,124 @@
     min-width: 300px;
     max-width: 330px;
     padding: 15px;
+    padding-top: 70px;
     margin: auto;
 }
 .font-weight-normal {
     font-weight: 400;
 }
+
+.welcome_text {
+    font-size: 33.333px;
+    text-anchor: middle;
+    font-family: Fofer;
+    font-weight: 500;
+    color: black;
+    line-height: 35px;
+}
+
+.btn-wrap {
+  margin-left: 189px;
+}
+
+button {
+  background: none;
+  border: 2px solid;
+  color: #000000;
+  font-family: Fofer;
+  font-size: 33.333px;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 3px 6px;
+}
+
+button:hover {
+  background: rgb(16, 151, 16, 0.4);
+}
+
+.btn-green-scrap {
+  background-color: transparent;
+  transform: rotate(10deg);
+  font-size: 36px;
+  font-family: Fofer;
+  color: #119911;
+  border: 0px;
+  margin-left: 200px;
+  width: 108px;
+  height: 46px;
+}
+
+.btn-green-scrap:hover {
+  opacity: 0.2;
+  background-color: rgb(250, 250, 167);
+}
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+
+.inp {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    min-width: 300px;
+  }
+  .inp .label {
+    position: absolute;
+    font-family: Fofer;
+    top: 16px;
+    left: 0;
+    font-size: 29px;
+    color: #1f2022;
+    font-weight: 500;
+    transform-origin: 0 0;
+    transition: all 0.2s ease;
+  }
+  .inp .border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #000000;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all 0.15s ease;
+  }
+  .inp input {
+    -webkit-appearance: none;
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    padding: 12px 0;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid #000000;
+    background: none;
+    border-radius: 0;
+    color: #223254;
+    transition: all 0.15s ease;
+    outline:none;
+  }
+  .inp input:hover {
+    background: rgba(34,50,84,0.03);
+  }
+  .inp input:not(:placeholder-shown) + span {
+    color: #5a667f;
+    transform: translateY(-26px) scale(0.75);
+  }
+  .inp input:focus {
+    background: none;
+  }
+  .inp input:focus + span {
+    color: #3e4244;
+    transform: translateY(-26px) scale(0.75);
+  }
+  .inp input:focus + span + .border {
+    transform: scaleX(1);
+  }
+
+
+  
+  

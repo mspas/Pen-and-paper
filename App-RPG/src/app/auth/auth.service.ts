@@ -48,10 +48,10 @@ export class AuthService {
     const user: AuthModel = new AuthModel(email, password);
     this._http.post(this.url+'login', user).subscribe(
       (token: string) => {
-        this.router.navigate(['/my-profile']);
         localStorage.setItem('token', token['token']);
         let tokenn = localStorage.getItem("token");
         let tokenInfo = this.getDecodedAccessToken(tokenn);
+        this.router.navigate(['/profile', tokenInfo.login]);
         localStorage.setItem("id", tokenInfo.id);
       },
       //error => console.log(error)

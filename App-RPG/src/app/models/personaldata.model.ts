@@ -1,3 +1,5 @@
+import { NotificationModel } from "./notification.model";
+
 export class PersonalDataModel {
     constructor(
       public id: number,
@@ -18,6 +20,7 @@ export class PersonalDataModel {
       public firstname: string,
       public lastname: string,
       public city: string,
-      public age: number
+      public age: number,
+      public notificationData: NotificationModel
     ) {}
   }

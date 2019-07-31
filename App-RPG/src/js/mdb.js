@@ -1,12 +1,12 @@
 /*!
  * Material Design for Bootstrap 4
- * Version: MDB FREE: 4.5.14
+ * Version: MDB FREE: 4.7.7
  *
  *
  * Copyright: Material Design for Bootstrap
  * https://mdbootstrap.com/
  *
- * Read the license: https://mdbootstrap.com/license/
+ * Read the license: https://mdbootstrap.com/general/license/
  *
  *
  * Documentation: https://mdbootstrap.com/
@@ -21,7 +21,7 @@
  *
  * Contact: office@mdbootstrap.com
  *
- * Atribution: Animate CSS, Twitter Bootstrap, Materialize CSS, Normalize CSS, Waves JS, WOW JS, Toastr, Chart.js , Hammer.js
+ * Attribution: Animate CSS, Twitter Bootstrap, Materialize CSS, Normalize CSS, Waves JS, WOW JS, Toastr, Chart.jss
  *
  */
 
@@ -36,6 +36,7 @@
   waves.js
   forms-free.js
   enhanced-modals.js
+  treeview.js
 
 */
 
@@ -14711,194 +14712,227 @@ module.exports = function() {
 
 var WOW;
 
-(function($) {
+(function ($) {
 
-    WOW = function WOW() {
+  WOW = function WOW() {
 
-        return {
+    return {
 
-            init: function init() {
+      init: function init() {
 
-                var animationName = [];
+        var animationName = [];
 
-                var once = 1;
+        var once = 1;
 
-                function mdbWow() {
+        function mdbWow() {
 
-                    var windowHeight = window.innerHeight;
-                    var scroll = window.scrollY;
+          var windowHeight = window.innerHeight;
+          var scroll = window.scrollY;
 
-                    $('.wow').each(function() {
+          $('.wow').each(function () {
 
-                        if ($(this).css('visibility') == 'visible') {
-                            return;
-                        }
-
-                        if (windowHeight + scroll - 100 > getOffset(this) && scroll < getOffset(this) || windowHeight + scroll - 100 > getOffset(this) + $(this).height() && scroll < getOffset(this) + $(this).height() || windowHeight + scroll == $(document).height() && getOffset(this) + 100 > $(document).height()) {
-
-                            var index = $(this).index('.wow');
-
-                            var delay = $(this).attr('data-wow-delay');
-
-                            if (delay) {
-
-                                delay = $(this).attr('data-wow-delay').slice(0, -1
-
-                                );
-                                var self = this;
-
-                                var timeout = parseFloat(delay) * 1000;
-
-                                $(self).addClass('animated');
-                                $(self).css({ 'visibility': 'visible' });
-                                $(self).css({ 'animation-delay': delay });
-                                $(self).css({ 'animation-name': animationName[index] });
-
-                                var removeTime = $(this).css('animation-duration').slice(0, -1) * 1000;
-
-                                if ($(this).attr('data-wow-delay')) {
-
-                                    removeTime += $(this).attr('data-wow-delay').slice(0, -1) * 1000;
-                                }
-
-                                var self = this;
-
-                                setTimeout(function() {
-
-                                    $(self).removeClass('animated');
-                                }, removeTime);
-                            } else {
-
-                                $(this).addClass('animated');
-                                $(this).css({ 'visibility': 'visible' });
-                                $(this).css({ 'animation-name': animationName[index] });
-
-                                var removeTime = $(this).css('animation-duration').slice(0, -1) * 1000;
-
-                                var self = this;
-
-                                setTimeout(function() {
-
-                                    $(self).removeClass('animated');
-                                }, removeTime);
-                            }
-                        }
-                    });
-                }
-
-                function appear() {
-
-                    $('.wow').each(function() {
-
-                        var index = $(this).index('.wow');
-
-                        var delay = $(this).attr('data-wow-delay');
-
-                        if (delay) {
-
-                            delay = $(this).attr('data-wow-delay').slice(0, -1);
-
-                            var timeout = parseFloat(delay) * 1000;
-
-                            $(this).addClass('animated');
-                            $(this).css({ 'visibility': 'visible' });
-                            $(this).css({ 'animation-delay': delay + 's' });
-                            $(this).css({ 'animation-name': animationName[index] });
-                        } else {
-
-                            $(this).addClass('animated');
-                            $(this).css({ 'visibility': 'visible' });
-                            $(this).css({ 'animation-name': animationName[index] });
-                        }
-                    });
-                }
-
-                function hide() {
-
-                    var windowHeight = window.innerHeight;
-                    var scroll = window.scrollY;
-
-                    $('.wow.animated').each(function() {
-
-                        if (windowHeight + scroll - 100 > getOffset(this) && scroll > getOffset(this) + 100 || windowHeight + scroll - 100 < getOffset(this) && scroll < getOffset(this) + 100 || getOffset(this) + $(this).height > $(document).height() - 100) {
-
-                            $(this).removeClass('animated');
-                            $(this).css({ 'animation-name': 'none' });
-                            $(this).css({ 'visibility': 'hidden' });
-                        } else {
-
-                            var removeTime = $(this).css('animation-duration').slice(0, -1) * 1000;
-
-                            if ($(this).attr('data-wow-delay')) {
-
-                                removeTime += $(this).attr('data-wow-delay').slice(0, -1) * 1000;
-                            }
-
-                            var self = this;
-
-                            setTimeout(function() {
-
-                                $(self).removeClass('animated');
-                            }, removeTime);
-                        }
-                    });
-
-                    mdbWow();
-
-                    once--;
-                }
-
-                function getOffset(elem) {
-
-                    var box = elem.getBoundingClientRect();
-
-                    var body = document.body;
-                    var docEl = document.documentElement;
-
-                    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-
-                    var clientTop = docEl.clientTop || body.clientTop || 0;
-
-                    var top = box.top + scrollTop - clientTop;
-
-                    return Math.round(top);
-                }
-
-                $('.wow').each(function() {
-
-                    $(this).css({ 'visibility': 'hidden' });
-                    animationName[$(this).index('.wow')] = $(this).css('animation-name');
-                    $(this).css({ 'animation-name': 'none' });
-                });
-
-                $(window).scroll(function() {
-
-                    if (once) {
-
-                        hide();
-                    } else {
-
-                        mdbWow();
-                    }
-                });
-
-                appear();
+            if ($(this).css('visibility') == 'visible') {
+              return;
             }
-        };
+
+            if (windowHeight + scroll - 100 > getOffset(this) && scroll < getOffset(this) || windowHeight + scroll - 100 > getOffset(this) + $(this).height() && scroll < getOffset(this) + $(this).height() || windowHeight + scroll == $(document).height() && getOffset(this) + 100 > $(document).height()) {
+
+              var index = $(this).index('.wow');
+
+              var delay = $(this).attr('data-wow-delay');
+
+              if (delay) {
+
+                delay = $(this).attr('data-wow-delay').slice(0, -1
+
+                );
+                var self = this;
+
+                var timeout = parseFloat(delay) * 1000;
+
+                $(self).addClass('animated');
+                $(self).css({
+                  'visibility': 'visible'
+                });
+                $(self).css({
+                  'animation-delay': delay
+                });
+                $(self).css({
+                  'animation-name': animationName[index]
+                });
+
+                var removeTime = $(this).css('animation-duration').slice(0, -1) * 1000;
+
+                if ($(this).attr('data-wow-delay')) {
+
+                  removeTime += $(this).attr('data-wow-delay').slice(0, -1) * 1000;
+                }
+
+                var self = this;
+
+                setTimeout(function () {
+
+                  $(self).removeClass('animated');
+                }, removeTime);
+              } else {
+
+                $(this).addClass('animated');
+                $(this).css({
+                  'visibility': 'visible'
+                });
+                $(this).css({
+                  'animation-name': animationName[index]
+                });
+
+                var removeTime = $(this).css('animation-duration').slice(0, -1) * 1000;
+
+                var self = this;
+
+                setTimeout(function () {
+
+                  $(self).removeClass('animated');
+                }, removeTime);
+              }
+            }
+          });
+        }
+
+        function appear() {
+
+          $('.wow').each(function () {
+
+            var index = $(this).index('.wow');
+
+            var delay = $(this).attr('data-wow-delay');
+
+            if (delay) {
+
+              delay = $(this).attr('data-wow-delay').slice(0, -1);
+
+              var timeout = parseFloat(delay) * 1000;
+
+              $(this).addClass('animated');
+              $(this).css({
+                'visibility': 'visible'
+              });
+              $(this).css({
+                'animation-delay': delay + 's'
+              });
+              $(this).css({
+                'animation-name': animationName[index]
+              });
+            } else {
+
+              $(this).addClass('animated');
+              $(this).css({
+                'visibility': 'visible'
+              });
+              $(this).css({
+                'animation-name': animationName[index]
+              });
+            }
+          });
+        }
+
+        function hide() {
+
+          var windowHeight = window.innerHeight;
+          var scroll = window.scrollY;
+
+          $('.wow.animated').each(function () {
+
+            if (windowHeight + scroll - 100 > getOffset(this) && scroll > getOffset(this) + 100 || windowHeight + scroll - 100 < getOffset(this) && scroll < getOffset(this) + 100 || getOffset(this) + $(this).height > $(document).height() - 100) {
+
+              $(this).removeClass('animated');
+              $(this).css({
+                'animation-name': 'none'
+              });
+              $(this).css({
+                'visibility': 'hidden'
+              });
+            } else {
+
+              var removeTime = $(this).css('animation-duration').slice(0, -1) * 1000;
+
+              if ($(this).attr('data-wow-delay')) {
+
+                removeTime += $(this).attr('data-wow-delay').slice(0, -1) * 1000;
+              }
+
+              var self = this;
+
+              setTimeout(function () {
+
+                $(self).removeClass('animated');
+              }, removeTime);
+            }
+          });
+
+          mdbWow();
+
+          once--;
+        }
+
+        function getOffset(elem) {
+
+          var box = elem.getBoundingClientRect();
+
+          var body = document.body;
+          var docEl = document.documentElement;
+
+          var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+
+          var clientTop = docEl.clientTop || body.clientTop || 0;
+
+          var top = box.top + scrollTop - clientTop;
+
+          return Math.round(top);
+        }
+
+        $('.wow').each(function () {
+
+          $(this).css({
+            'visibility': 'hidden'
+          });
+          animationName[$(this).index('.wow')] = $(this).css('animation-name');
+          $(this).css({
+            'animation-name': 'none'
+          });
+        });
+
+        $(window).scroll(function () {
+
+          if (once) {
+
+            hide();
+          } else {
+
+            mdbWow();
+          }
+        });
+
+        appear();
+      }
     };
+  };
 })(jQuery);
 
-"use strict";
+'use strict';
 
 (function ($) {
-  var SCROLLING_NAVBAR_OFFSET_TOP = 50;
-  $(window).on('scroll', function () {
-    var $navbar = $('.navbar');
 
+  var SCROLLING_NAVBAR_OFFSET_TOP = 50;
+
+  $(window).on('scroll', function () {
+
+    var $navbar = $('.navbar');
     if ($navbar.length) {
+
       if ($navbar.offset().top > SCROLLING_NAVBAR_OFFSET_TOP) {
+
         $('.scrolling-navbar').addClass('top-nav-collapse');
       } else {
+
         $('.scrolling-navbar').removeClass('top-nav-collapse');
       }
     }
@@ -15117,26 +15151,18 @@ var WOW;
             var parent = element.parentNode;
 
             // If input already have parent just pass through
-            if (parent.tagName.toLowerCase() === 'i' && parent.classList.contains('waves-effect')) {
+            if (parent.tagName.toLowerCase() === 'span' && parent.classList.contains('waves-effect')) {
                 return;
             }
 
             // Put element class and style to the specified parent
-            var wrapper       = document.createElement('i');
-            wrapper.className = element.className + ' waves-input-wrapper';
-            element.className = 'waves-button-input';
+            var wrapper       = document.createElement('span');
+            wrapper.className = 'waves-input-wrapper';
+            // element.className = 'waves-button-input';
 
             // Put element as child
             parent.replaceChild(wrapper, element);
             wrapper.appendChild(element);
-
-            // Apply element color and background color to wrapper
-            var elementStyle    = window.getComputedStyle(element, null);
-            var color           = elementStyle.color;
-            var backgroundColor = elementStyle.backgroundColor;
-
-            wrapper.setAttribute('style', 'color:' + color + ';background:' + backgroundColor);
-            element.setAttribute('style', 'background-color:rgba(0,0,0,0);');
 
         },
 
@@ -15515,39 +15541,47 @@ Waves.attach('.navbar-nav a:not(.navbar-brand), .nav-icons li a, .nav-tabs .nav-
 Waves.attach('.pager li a', ['waves-light']);
 Waves.attach('.pagination .page-item .page-link', ['waves-effect']);
 Waves.init();
-"use strict";
-
-var _this = void 0;
+'use strict';
 
 (function ($) {
-  var inputSelector = "".concat(['text', 'password', 'email', 'url', 'tel', 'number', 'search', 'search-md'].map(function (selector) {
-    return "input[type=".concat(selector, "]");
-  }).join(', '), ", textarea");
+
+  var inputSelector = ['text', 'password', 'email', 'url', 'tel', 'number', 'search', 'search-md'].map(function (selector) {
+    return 'input[type=' + selector + ']';
+  }).join(', ') + ', textarea';
+
   var textAreaSelector = '.materialize-textarea';
 
   var updateTextFields = function updateTextFields($input) {
+
     var $labelAndIcon = $input.siblings('label, i');
     var hasValue = $input.val().length;
     var hasPlaceholder = $input.attr('placeholder');
-    var addOrRemove = "".concat(hasValue || hasPlaceholder ? 'add' : 'remove', "Class");
+    var addOrRemove = (hasValue || hasPlaceholder ? 'add' : 'remove') + 'Class';
+
     $labelAndIcon[addOrRemove]('active');
   };
 
   var validateField = function validateField($input) {
+
     if ($input.hasClass('validate')) {
+
       var value = $input.val();
       var noValue = !value.length;
       var isValid = !$input[0].validity.badInput;
 
       if (noValue && isValid) {
+
         $input.removeClass('valid').removeClass('invalid');
       } else {
+
         var valid = $input.is(':valid');
         var length = Number($input.attr('length')) || 0;
 
         if (valid && (!length || length > value.length)) {
+
           $input.removeClass('invalid').addClass('valid');
         } else {
+
           $input.removeClass('valid').addClass('invalid');
         }
       }
@@ -15555,84 +15589,103 @@ var _this = void 0;
   };
 
   var textAreaAutoResize = function textAreaAutoResize() {
-    var $textarea = $(_this);
 
+    var $textarea = $(undefined);
     if ($textarea.val().length) {
+
       var $hiddenDiv = $('.hiddendiv');
       var fontFamily = $textarea.css('font-family');
       var fontSize = $textarea.css('font-size');
 
       if (fontSize) {
+
         $hiddenDiv.css('font-size', fontSize);
       }
 
       if (fontFamily) {
+
         $hiddenDiv.css('font-family', fontFamily);
       }
 
       if ($textarea.attr('wrap') === 'off') {
+
         $hiddenDiv.css('overflow-wrap', 'normal').css('white-space', 'pre');
       }
 
-      $hiddenDiv.text("".concat($textarea.val(), "\n"));
+      $hiddenDiv.text($textarea.val() + '\n');
       var content = $hiddenDiv.html().replace(/\n/g, '<br>');
-      $hiddenDiv.html(content); // When textarea is hidden, width goes crazy.
-      // Approximate with half of window size
+      $hiddenDiv.html(content);
 
+      // When textarea is hidden, width goes crazy.
+      // Approximate with half of window size
       $hiddenDiv.css('width', $textarea.is(':visible') ? $textarea.width() : $(window).width() / 2);
       $textarea.css('height', $hiddenDiv.height());
     }
   };
 
   $(inputSelector).each(function (index, input) {
+
     var $this = $(input);
     var $labelAndIcon = $this.siblings('label, i');
     updateTextFields($this);
     var isValid = input.validity.badInput;
-
     if (isValid) {
+
       $labelAndIcon.addClass('active');
     }
   });
+
   $(document).on('focus', inputSelector, function (e) {
+
     $(e.target).siblings('label, i').addClass('active');
   });
+
   $(document).on('blur', inputSelector, function (e) {
+
     var $this = $(e.target);
     var noValue = !$this.val();
     var invalid = !e.target.validity.badInput;
     var noPlaceholder = $this.attr('placeholder') === undefined;
 
     if (noValue && invalid && noPlaceholder) {
+
       $this.siblings('label, i').removeClass('active');
     }
 
     validateField($this);
   });
+
   $(document).on('change', inputSelector, function (e) {
+
     var $this = $(e.target);
     updateTextFields($this);
     validateField($this);
   });
-  $('input[autofocus]').siblings('label, i').addClass('active');
-  $(document).on('reset', function (e) {
-    var $formReset = $(e.target);
 
+  $('input[autofocus]').siblings('label, i').addClass('active');
+
+  $(document).on('reset', function (e) {
+
+    var $formReset = $(e.target);
     if ($formReset.is('form')) {
+
       var $formInputs = $formReset.find(inputSelector);
       $formInputs.removeClass('valid').removeClass('invalid').each(function (index, input) {
+
         var $this = $(input);
         var noDefaultValue = !$this.val();
         var noPlaceholder = !$this.attr('placeholder');
-
         if (noDefaultValue && noPlaceholder) {
           $this.siblings('label, i').removeClass('active');
         }
       });
+
       $formReset.find('select.initialized').each(function (index, select) {
+
         var $select = $(select);
         var $visibleInput = $select.siblings('input.select-dropdown');
         var defaultValue = $select.children('[selected]').val();
+
         $select.val(defaultValue);
         $visibleInput.val(defaultValue);
       });
@@ -15640,30 +15693,37 @@ var _this = void 0;
   });
 
   function init() {
+
     var $text = $('.md-textarea-auto');
-
     if ($text.length) {
-      var observe;
 
+      var observe = void 0;
       if (window.attachEvent) {
+
         observe = function observe(element, event, handler) {
-          element.attachEvent("on".concat(event), handler);
+
+          element.attachEvent('on' + event, handler);
         };
       } else {
+
         observe = function observe(element, event, handler) {
+
           element.addEventListener(event, handler, false);
         };
       }
 
       $text.each(function () {
+
         var self = this;
 
         function resize() {
+
           self.style.height = 'auto';
-          self.style.height = "".concat(self.scrollHeight, "px");
+          self.style.height = self.scrollHeight + 'px';
         }
 
         function delayedResize() {
+
           window.setTimeout(resize, 0);
         }
 
@@ -15672,15 +15732,16 @@ var _this = void 0;
         observe(self, 'paste', delayedResize);
         observe(self, 'drop', delayedResize);
         observe(self, 'keydown', delayedResize);
+
         resize();
       });
     }
   }
-
   init();
-  var $body = $('body');
 
+  var $body = $('body');
   if (!$('.hiddendiv').first().length) {
+
     var $hiddenDiv = $('<div class="hiddendiv common"></div>');
     $body.append($hiddenDiv);
   }
@@ -15694,23 +15755,54 @@ var _this = void 0;
     office@mdbootstrap.com
 */
 
-$('body').on('shown.bs.modal', '.modal', function() {
-    if($('.modal-backdrop').length) {
-    } else {
+(function($){
+  $('body').on('shown.bs.modal', '.modal', function() {
+    if(!$('.modal-backdrop').length) {
 
-        $modal_dialog = $(this).children('.modal-dialog')
+      $modal_dialog = $(this).children('.modal-dialog')
 
-        if($modal_dialog.hasClass('modal-side')) {
-            $(this).addClass('modal-scrolling');
-            $('body').addClass('scrollable');
-        }
+      if($modal_dialog.hasClass('modal-side')) {
+        $(this).addClass('modal-scrolling');
+        $('body').addClass('scrollable');
+      }
 
-        if($modal_dialog.hasClass('modal-frame')) {
-            $(this).addClass('modal-content-clickable');
-            $('body').addClass('scrollable');
-        }
+      if($modal_dialog.hasClass('modal-frame')) {
+        $(this).addClass('modal-content-clickable');
+        $('body').addClass('scrollable');
+      }
     }
-});
-$('body').on('hidden.bs.modal', '.modal', function() {
+  });
+  $('body').on('hidden.bs.modal', '.modal', function() {
     $('body').removeClass('scrollable');
-});
+  });
+})(jQuery);
+
+"use strict";
+
+var toggler = document.getElementsByClassName("rotate");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function () {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("down");
+  });
+}
+'use strict';
+
+(function ($) {
+  $('.input-default-wrapper').on('change', '.input-default-js', function (e) {
+
+    var $this = $(e.target),
+        $label = $this.next('label'),
+        $files = $this[0].files;
+    var fileName = '';
+
+    if ($files && $files.length > 1) {
+      fileName = ($this.attr('data-multiple-target') || '').replace('{target}', $files.length);
+    } else if (e.target.value) {
+      fileName = e.target.value.split('\\').pop();
+    }
+    fileName ? $label.find('.span-choose-file').html(fileName) : $label.html($label.html());
+  });
+})(jQuery);

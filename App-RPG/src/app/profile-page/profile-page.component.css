@@ -22,6 +22,114 @@
     background-color: #13976f;
 }
 
+.top-img {
+    background-image: url("assets/book.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+.book-img {
+    max-width: 100%;
+    height: auto;
+}
+.profile-nav {
+    max-width: 1100px;
+    position: absolute;
+}
+.profile-photo-wrap {
+    display: inline-block;
+    margin-top: 0px;
+    margin-left: 40px;
+}
+.nav-tabs-wrap {
+    padding-top: 125px;
+    padding-left: 50px;
+    display: inline-block;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+li a {
+    color: #000000;
+    padding: 28px 15px;
+}
+li a:hover {
+    color: #f4511e;
+    background-color: #fff;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    background-color: #e4e3e3;
+}
+
+#big-name {
+    padding-top: 140px;
+    padding-left: 50px;
+    color: #000000;
+    font-size: 22px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+
+.btn-wrap {
+    margin-left: 539px;
+    margin-top: -46px;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+.btn-text {
+    padding-top: 74.685px;
+    line-height: 1.15;
+}
+.btn-profile {
+    background-color: #f1efef;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 111px;
+    width: 145px;
+    padding-left: 10px;
+    margin-right: -4px;
+    cursor: pointer;
+    border-style: solid;
+    border-color: #fff;
+    border-width: 1px;
+}
+
+#change_personal_data {
+    background-image: url("assets/btn-pdata.png");
+    border-radius: 14px 0px 0px 14px;
+}
+#change_personal_data:hover {
+    background-image: url("assets/btn-pdata-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
+#change_passwrod {
+    background-image: url("assets/lock.png");
+}
+#change_passwrod:hover {
+    background-image: url("assets/btn-pass-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
+#change_image {
+    background-image: url("assets/btn-image.png");
+    border-radius: 0px 14px 14px 0px;
+}
+#change_image:hover {
+    background-image: url("assets/btn-image-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
 .green-back {
     background-color: #13976f;
 }

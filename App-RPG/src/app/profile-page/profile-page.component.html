@@ -1,7 +1,55 @@
-<div class="container jumbotron">
-    <h2>You are logged as {{ myProfile.personaldata.firstname }} {{ myProfile.personaldata.lastname }} ({{ myProfile.login }})</h2>
+<!--<div class="side-bar">
+  <app-side-bar></app-side-bar>
+</div>-->
+
+<!--<div class="top-img">
+  <img src="assets/book.jpg">
+</div>-->
+
+<!--<div class="container">
+  <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
+  <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
+</div>-->
+
+<div class="container">
+  <div class="profile-nav">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="profile-photo-wrap">
+          <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
+          <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
+        </div>
+      </div>
+      <div class="col-md-4" id="big-name">
+        {{ myProfile.personaldata.firstname }} {{ myProfile.personaldata.lastname }} ({{ myProfile.login }})
+      </div>
+      <div class="col-md-5">
+        <div class="nav-tabs-wrap">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Friends</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-tower"></span> Games</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content" style="height: 1000px">
+    <div class="content-top"></div>
+
+    <div class="btn-wrap">
+      <div class="btn-profile" id="change_personal_data" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangeData()">
+        <p class="btn-text">Change<br> profile info</p>
+      </div>
+      <div class="btn-profile" id="change_passwrod" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePassword()">
+        <p class="btn-text">Change<br> password</p>
+      </div>
+      <div class="btn-profile" id="change_image" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePicture()">
+        <p class="btn-text">Change<br> your image</p>
+      </div>
+    </div>
     <p>Your personal informations:
-        <span style="padding-left: 32%">
+        <!--<span style="padding-left: 32%">
           <button type="button" id="button4box" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangeData()">
             <span class="glyphicon glyphicon-wrench"></span> 
             Change personal data
@@ -14,18 +62,9 @@
             <span class="glyphicon glyphicon-picture"></span> 
             Change picture
           </button>     
-        </span>
+        </span>-->
       </p> 
 
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
-          <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
-        </div>
-        <div class="col-md-8">
-          {{ myProfile.personaldata.firstname }} {{ myProfile.personaldata.lastname }} ({{ myProfile.login }})
           <div class="table-responsive" style="width:75%;">          
               <table class="table">
                 <thead>
@@ -67,16 +106,12 @@
                 </tbody>
               </table>
               </div>
-        </div>
-      </div>
-    </div>
 
 
-      <!-- Modal -->
       <div id="modalChangeData" class="modal fade" role="dialog" style=" margin-top: 50px;">
           <div class="modal-dialog modal-lg">
         
-            <!-- Modal content-->
+
             <div class="modal-content">
               <form (ngSubmit)="onSaveChanges(f)" #f="ngForm">
                 <div class="modal-header">
@@ -229,3 +264,4 @@
       </div>
     </div>
   </div>
+</div>

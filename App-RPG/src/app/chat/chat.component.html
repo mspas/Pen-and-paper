@@ -1,0 +1,28 @@
+<div class="window" id="chat-window">
+    <div class="content-top" id="top">
+        <div class="chat-nav" id="name">{{conversationData.userProfile.firstname}} {{conversationData.userProfile.lastname}} ({{conversationData.userProfile.login}})</div>
+        <div class="chat-nav" style="right: 2px">
+            <span class="glyphicon glyphicon-minus icon" id="mini" (click)="minimalizeClick()"></span>
+            <span class="glyphicon glyphicon-remove icon" (click)="closeChat()" id="close"></span>
+        </div>
+    </div>
+    <div class="chat">
+        <div class="text-box">
+            <div *ngIf="conversation.length < 1">
+                Seems that you've never chat together. <br>Say hello and be polite! :)
+            </div>
+            <p *ngFor="let message of conversation" class="message" id="msg{{message.id}}">
+                {{message.bodyMessage}}<br>
+            </p>
+        </div>
+    </div>
+    <div class="chat-input">
+        <!--<form (ngSubmit)="onSendMessage(f)" #f="ngForm">-->
+            <textarea class="textarea" [(ngModel)]="defaultValue" id="message" rows="2" cols="30"></textarea>
+            <br>
+            <!--<input style="display: inline-block" type="submit">
+            <span type="submit" class="glyphicon glyphicon-menu-right arrow"></span>-->
+            <span (click)="onSendMessage()" class="glyphicon glyphicon-menu-right arrow"></span>
+        <!--</form>-->
+    </div>
+</div>

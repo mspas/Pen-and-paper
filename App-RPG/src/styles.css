@@ -1,9 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 90vh;
+    width: 100vw;
+}
 body {
     font: 400 15px Lato, sans-serif;
     line-height: 1.8;
     color: #818181;
-    background-color: #252525;
+    /*background-color: #252525;*/
+    background-color: #ececec;
+}
+.main-content-wrap {
+    /*background-color: #1bf5b411;*/
+    background-color: transparent;
+    padding-top: 120px;
 }
 h2 {
     font-size: 24px;
@@ -23,10 +33,32 @@ h4 {
     padding: 60px 50px;
 }
 .jumbotron {
-    background-color: #252525;
-    color: #fff;
-    padding: 100px 25px;
+    margin-top: 120px;
+    padding-top: 10px;
+    background-color: #e4e3e3;
+    border-radius: 30px 30px 0px 0px;
+    border-style: solid;
+    border-color: #ffffff;
+    color: #252525;
+    padding-left: 25px;
     font-family: Montserrat, sans-serif;
+}
+.content {
+    margin-top: 120px;
+    padding-top: 150px;
+    background-color: #e4e3e3;
+    border-radius: 30px 30px 0px 0px;
+    border-style: solid;
+    border-color: #ffffff;
+    color: #252525;
+    padding-left: 25px;
+    font-family: Montserrat, sans-serif;
+}
+.content-top {
+    margin: -150px 0px 75px -25px;
+    height: 80px;
+    background-color: #f1efef;
+    border-radius: 30px 30px 0px 0px;
 }
 .font19 {
     font-size: 19px;    

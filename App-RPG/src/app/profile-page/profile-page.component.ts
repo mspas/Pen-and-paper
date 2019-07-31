@@ -8,6 +8,8 @@ import { AuthService } from '../auth/auth.service';
 import * as jwt_decode from 'jwt-decode';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { DataService } from '../data.service';
+import { FriendsService } from '../friends.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -35,7 +37,9 @@ export class ProfilePageComponent implements OnInit {
   modalTitle: string = "Change personal data";
   pd: PersonalDataModel;
 
-  constructor(private auth : AuthService, private route: ActivatedRoute, private _api: ApiService) { }
+  constructor(private auth : AuthService, private route: ActivatedRoute, private _api: ApiService, private _data: DataService, friendsService: FriendsService) { 
+    //this.friendsAll = friendsService.getFriends();
+  }
 
   ngOnInit() {
     this.token = localStorage.getItem("token");
@@ -64,6 +68,8 @@ export class ProfilePageComponent implements OnInit {
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.friendsAll = profiledata.profiledata;
     });
+    console.log("subscribed in comp inside router: " + this.friendsAll); 
+    //console.log("magik 2 lata " + JSON.stringify(this.friendsAll));
 
     this.friendsAll.forEach(element => {
       if (element.isAccepted) {
@@ -75,7 +81,12 @@ export class ProfilePageComponent implements OnInit {
         else 
           this.friendsWaiting.push(element.personalData);
       }
-    });
+    });   
+
+    this._data.changeBPhoto("url('assets/siema.jpg')"); 
+    //console.log("magik 2 lata " + this.friendsAll);
+    this._data.changeSidebarControls(true);   
+    this._data.changeFriends(this.friendsAll);
 
     if (this.receivedInvites.length > 0) 
       this.isNewInvite = true;
@@ -128,7 +139,7 @@ export class ProfilePageComponent implements OnInit {
     this.modalPassword = false;
     this.modalPicture = false;
     this.modalTitle = "Change personal data";
-  }
+    }
 
   onModalChangePassword() {
     this.modalData = false;

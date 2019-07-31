@@ -6,14 +6,23 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
         </button>
-        <a class="navbar-brand" href="home"><img src="assets/logo.png" alt="Logo" ></a>
+        <a class="navbar-brand" href="home"><img src="assets/logo2.png" alt="Logo" ></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar" *ngIf="isLoggedIn==true;">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="search-game/search"><span class="glyphicon glyphicon-search"></span> FIND GAME</a></li>
           <li><a href="create-game"><span class="glyphicon glyphicon-tower"></span> CREATE GAME</a></li>
           <li><a href="search-friends/search"><span class="glyphicon glyphicon-search"></span> SERACH FRIENDS</a></li>
-          <li><a href="my-profile"><span class="glyphicon glyphicon-user"></span> MY PROFILE</a></li>
+          <li data-toggle="dropdown" style="cursor: pointer" (click)="fixDropdown()">
+            <div class="dropdown drop" id="workffs"><div><span class="glyphicon glyphicon-user"></span> MY ACCOUNT <span class="caret"></span></div>
+              <ul class="dropdown-menu drop-opt">
+                <li class="opt"><a href="#" (click)="goToMyProfile()">My Profile</a></li>
+                <li class="opt"><a href="#">Messages</a></li>
+                <li class="opt"><a href="#">My Games</a></li>
+                <li class="opt"><a href="#">Friends</a></li>
+              </ul>
+            </div>
+          </li>
           <li><a href="home" (click)="onLogout()"><span class="glyphicon glyphicon-off"></span> LOGOUT</a></li>              
         </ul>
       </div>

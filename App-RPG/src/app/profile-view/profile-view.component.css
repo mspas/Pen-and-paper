@@ -22,10 +22,77 @@
     background-color: #13976f;
 }
 
+.top-img {
+    background-image: url("assets/book.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+.book-img {
+    max-width: 100%;
+    height: auto;
+}
+.profile-nav {
+    max-width: 1100px;
+    position: absolute;
+}
+.profile-photo-wrap {
+    display: inline-block;
+    margin-top: 0px;
+    margin-left: 40px;
+}
+.nav-tabs-wrap {
+    padding-top: 125px;
+    padding-left: 40px;
+    display: inline-block;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+li a {
+    color: #000000;
+    padding: 28px 15px;
+    cursor: pointer;
+}
+li a:hover {
+    color: #f4511e;
+    background-color: #fff;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    background-color: #e4e3e3;
+}
+
+#big-name {
+    padding-top: 140px;
+    padding-left: 50px;
+    padding-right: 0px;
+    color: #000000;
+    font-size: 22px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+
+.btn-wrap {
+    margin-left: 539px;
+    margin-top: -46px;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+.btn-text {
+    padding-top: 74.685px;
+    line-height: 1.15;
+}
+
 .green-back {
     background-color: #13976f;
 }
-
 h2 {
     color: white;
     font-size: medium;
@@ -33,12 +100,43 @@ h2 {
 h2:hover {
     color: #42ffc6;
 }
+h3 {
+    color: white;
+    font-size: medium;
+}
+.decision {
+    float: right;
+}
 
-.info {
-    color: #42ffc6;
-    padding: 2%;
-    font-size: 22px !important;
-    letter-spacing: 2px;
-    border-radius: 0;
+.modal-header {
+    background-color: #13976f;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
     font-family: Montserrat, sans-serif;
+}
+
+.modal-title {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.modal-btn-close {
+    border-color: transparent;
+    color: azure;
+}
+
+.modal-content {
+    background-color: #3a3a3a;
+}
+
+.modal-body {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 19px;
+}
+
+.btn-confirm {
+    margin-left: 40%;
+    margin-right: 40%;
 }

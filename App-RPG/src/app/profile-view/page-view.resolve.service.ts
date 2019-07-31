@@ -32,7 +32,8 @@ export class PersonalDataResolve implements Resolve<PersonalDataModel[]> {
 
     resolve(route: ActivatedRouteSnapshot) {
         let nick = route.params['login'];
-        console.log("ej login " + nick);
-        return this.api.getData_LoggedWithView(nick);
+        let login = localStorage.getItem('nick');
+        //return this.api.getData_LoggedWithView(nick);
+        return this.api.getAllDataProfile(nick, login);
     }
 }

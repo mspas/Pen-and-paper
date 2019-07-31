@@ -1,31 +1,56 @@
-<div class="text-center jumbotron">
+
   <form class="form-signin" (ngSubmit)="onSignUp(f)" #f="ngForm" ngNativeValidate>
     <div class="alert alert-success" *ngIf="accMsg == true">
       <strong>Success!</strong> Account created succesfully!
     </div>
-      <h1 style="font-size: 26px">Create a new account</h1>
-
-      <label for="login">Email</label>
-      <input type="email" id="email" name="email" placeholder="Email" style="font-size: 19px" ngModel class="form-control" required>
-
-      <label for="login">Login</label>
-      <input type="login" id="login" name="login" placeholder="Login" style="font-size: 19px" ngModel class="form-control" required>
-
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Password" style="font-size: 19px" ngModel class="form-control" required>
-      
-      <label for="firstname">First name</label>
-      <input type="text" id="firstname" name="firstname" placeholder="First name" style="font-size: 19px" ngModel class="form-control" required>
-
-      <label for="lastname">Last name</label>
-      <input type="text" id="lastname" name="lastname" placeholder="Last name" style="font-size: 19px" ngModel class="form-control" required>
-
-      <label for="city">City</label>
-      <input type="text" id="city" name="city" placeholder="City" style="font-size: 19px" ngModel class="form-control" required>
-
-      <label for="age">Age</label>
-      <input type="number" min="5" max="100" id="age" name="age" style="font-size: 19px" ngModel class="form-control" required>
-
-      <button class="btn btn-lg btn-success btn-block" style="font-size: 20px" type="submit">Sign up</button>
+    <div class="btn-wrap"><button type="submit">SIGN UP</button></div>    
+        <div class="input-group">
+          <label for="inp" class="inp">
+              <input type="email" id="inp" name="email" placeholder="&nbsp;" ngModel class="form-control">
+              <span class="label">Email</span>
+              <span class="border"></span>
+            </label>
+        </div>
+        <div class="input-group">
+            <label for="inp" class="inp">
+                <input type="login" id="inp" name="login" placeholder="&nbsp;" ngModel class="form-control">
+                <span class="label">Login</span>
+                <span class="border"></span>
+              </label>
+          </div>
+        <div class="input-group">
+            <label for="inp" class="inp">
+                <input type="password" id="inp" name="password" placeholder="&nbsp;" ngModel class="form-control">
+                <span class="label">Password</span>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div class="input-group">
+            <label for="inp" class="inp">
+                <input type="text" id="inp" name="firstname" placeholder="&nbsp;" ngModel class="form-control">
+                <span class="label">First name</span>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div class="input-group">
+            <label for="inp" class="inp">
+                <input type="text" id="inp" name="lastname" placeholder="&nbsp;" ngModel class="form-control">
+                <span class="label">Last name</span>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div class="input-group">
+            <label for="inp" class="inp">
+                <input type="text" id="inp" name="city" placeholder="&nbsp;" ngModel class="form-control">
+                <span class="label">City</span>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div class="input-group">
+            <label for="inp" class="inp">
+                <input type="number" id="inp" name="age" placeholder="&nbsp;" ngModel class="form-control">
+                <span class="label">Age</span>
+                <span class="border"></span>
+            </label>
+        </div>
   </form>
-</div>

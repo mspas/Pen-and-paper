@@ -1,6 +1,7 @@
 .navbar {
     margin-bottom: 0;
-    background-color: #13976f;
+    background-color: #e4e3e3;
+    /*ececec*/
     z-index: 9999;
     border: 0;
     font-size: 12px !important;
@@ -9,9 +10,40 @@
     border-radius: 0;
     font-family: Montserrat, sans-serif;
 }
-.navbar li a, .navbar .navbar-brand {
-    color: #fff !important;
+.navbar li a, .navbar {
+    color: #000000 !important;
 }
+.navbar-brand {
+    padding-top: 5px;
+}
+
+.navbar-nav>li>a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.drop {
+    padding: 20px 10px 20px 10px;
+    cursor: hand;
+}
+.drop:hover {
+    color: #f4511e !important;
+    background-color: #fff !important;
+}
+.drop-focus {
+    color: #f4511e !important;
+    background-color: #fff !important;
+}
+
+.drop-opt {
+    width: 184px;
+    background-color: rgba(255, 255, 255, 0.795);
+    padding-top: 0px;
+    margin-top: 0px;
+    border: 0px;
+    border-radius: 0px; 
+}
+
 .navbar-nav li a:hover, .navbar-nav li.active a {
     color: #f4511e !important;
     background-color: #fff !important;

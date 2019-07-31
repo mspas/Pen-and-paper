@@ -3,6 +3,8 @@ import { PersonalDataModel } from './../models/personaldata.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
+import { GameToPersonAppModel } from '../models/game-to-person.model';
+import { FriendModel } from '../models/friend.model';
 
 @Component({
   selector: 'app-profile-view',
@@ -17,8 +19,22 @@ export class ProfileViewComponent implements OnInit {
   isInvited: boolean = false;
   defaultImage: boolean = true;
   userID: number;
-  profileData: PersonalDataModel;
+
+  profileChild: boolean = true;
+  friendsChild: boolean = false;
+  gamesChild: boolean = false;
+
+  myProfileData: PersonalDataModel;
+  myGamesAPPList: GameToPersonAppModel[] = [];
+  myFriends: FriendModel[] = [];
+
+  userProfileData: PersonalDataModel;
+  userGamesAPPList: GameToPersonAppModel[] = [];
+  userFriends: FriendModel[] = [];
+
   data: any;
+  ourRelation: FriendModel = null;
+  myProfilePage: boolean = false;
   //loggedUserFriends: PersonalDataModel[] = [];
 
   constructor(private route: ActivatedRoute, private _api : ApiService) { 
@@ -32,19 +48,24 @@ export class ProfileViewComponent implements OnInit {
     });
 
     let profile = this.data[0];
-    this.profileData = profile.pop();
-    localStorage.setItem("profileid", this.profileData.id.toString());
-    var loggedUserFriends = this.data[1];
+    this.myProfileData = profile.pop();
+    this.myFriends = this.data[1];
+    this.myGamesAPPList = this.data[2];
 
-    console.log("foto " + this.profileData.photoName);
+    profile = this.data[3];
+    this.userProfileData = profile.pop();
+    //localStorage.setItem("profileid", this.userProfileData.id.toString());
+    this.userFriends = this.data[4];
+    this.userGamesAPPList = this.data[5];
 
-    if (this.profileData.photoName != null && this.profileData.photoName != "") {
+    console.log("foto " + this.userProfileData.photoName);
 
-      console.log("foto " + this.profileData.photoName + " weszlem");
+    if (this.userProfileData.photoName != null && this.userProfileData.photoName != "") {
+
       this.defaultImage = false;
 
       this.isImageLoading = true;
-      this._api.getImage(this.profileData.photoName).subscribe(data => {
+      this._api.getImage(this.userProfileData.photoName).subscribe(data => {
         this.createImageFromBlob(data);
         this.isImageLoading = false;
       }, error => {
@@ -53,20 +74,26 @@ export class ProfileViewComponent implements OnInit {
       });
     }
 
-    if (loggedUserFriends != null) {
-      loggedUserFriends.forEach(fr => {
-        console.log("fr = " + fr.personalData.id + "; pd = " + this.profileData.id);
-        if (fr.personalData.id == this.profileData.id){
-          if (fr.isAccepted) {
-            this.isFriend = true;
-            this.isInvited = false;
+    if (this.myProfileData.id == this.userProfileData.id) {
+      this.myProfilePage = true;
+    }
+    else {
+      if (this.myFriends != null) {
+        this.myFriends.forEach(fr => {
+          console.log("fr = " + fr.personalData.id + "; pd = " + this.userProfileData.id);
+          if (fr.personalData.id == this.userProfileData.id){
+            if (fr.isAccepted) {
+              this.isFriend = true;
+              this.isInvited = false;
+            }
+            else {
+              this.isFriend = false;
+              this.isInvited = true;
+            }
+            this.ourRelation = fr;
           }
-          else {
-            this.isFriend = false;
-            this.isInvited = true;
-          }
-        }
-      });
+        });
+      }
     }
   }
 
@@ -83,11 +110,37 @@ export class ProfileViewComponent implements OnInit {
 
   onSendInvite() {
     let loggedID = parseInt(localStorage.getItem("id"));
-    this._api.sendFriendInvite(loggedID, this.profileData.id);
+    this._api.sendFriendInvite(loggedID, this.myProfileData.id);
   }
 
   deleteFriend() {
 
+  }
+
+  onNavClick(event: Event) {    
+    let elementId: string = (event.target as Element).id;
+    document.getElementById("nav-profile").setAttribute("class", "");
+    document.getElementById("nav-friends").setAttribute("class", "");
+    document.getElementById("nav-games").setAttribute("class", "");
+
+    if (elementId == "anav-profile") {
+      this.profileChild = true;
+      this.friendsChild = false;
+      this.gamesChild = false;
+      document.getElementById("nav-profile").setAttribute("class", "active");
+    }
+    if (elementId == "anav-friends") {
+      this.profileChild = false;
+      this.friendsChild = true;
+      this.gamesChild = false;
+      document.getElementById("nav-friends").setAttribute("class", "active");
+    }    
+    if (elementId == "anav-games") {
+      this.profileChild = false;
+      this.friendsChild = false;
+      this.gamesChild = true;
+      document.getElementById("nav-games").setAttribute("class", "active");
+    }
   }
 
 }

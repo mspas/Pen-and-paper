@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Projects\\Api-RPG\\RPG-Api\\RPG-Api.csproj": {}
+    "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG-Api.csproj": {}
   },
   "projects": {
-    "G:\\Projects\\Api-RPG\\RPG-Api\\RPG-Api.csproj": {
+    "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG-Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Projects\\Api-RPG\\RPG-Api\\RPG-Api.csproj",
+        "projectUniqueName": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG-Api.csproj",
         "projectName": "RPG-Api",
-        "projectPath": "G:\\Projects\\Api-RPG\\RPG-Api\\RPG-Api.csproj",
+        "projectPath": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG-Api.csproj",
         "packagesPath": "C:\\Users\\Marcin\\.nuget\\packages\\",
-        "outputPath": "G:\\Projects\\Api-RPG\\RPG-Api\\obj\\",
+        "outputPath": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

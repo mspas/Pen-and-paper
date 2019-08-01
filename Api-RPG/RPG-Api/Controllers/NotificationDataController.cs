@@ -30,11 +30,13 @@ namespace RPG_Api.Controllers
         [HttpGet("{id}")]
         public NotificationData Get(int id)
         {
+            Console.WriteLine("id " + id);
             var result = new NotificationData();
             foreach (NotificationData notf in allNotfData)
             {
                 if (notf.Id == id)
                 {
+                    Console.WriteLine("notf id " + id);
                     result = notf;
                 }
             }
@@ -52,7 +54,11 @@ namespace RPG_Api.Controllers
             }
 
             toUpdate.lastMessageDate = data.lastMessageDate;
-            toUpdate.lastNotificationDate = data.lastNotificationDate;
+            toUpdate.lastGameNotificationDate = data.lastGameNotificationDate;
+            toUpdate.lastFriendNotificationDate = data.lastFriendNotificationDate;
+            toUpdate.lastMessageSeen = data.lastMessageSeen;
+            toUpdate.lastGameNotificationSeen = data.lastGameNotificationSeen;
+            toUpdate.lastFriendNotificationSeen = data.lastFriendNotificationSeen;
 
 
             context.NotificationsData.Update(toUpdate);

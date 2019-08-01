@@ -14,7 +14,7 @@
           <li><a href="create-game"><span class="glyphicon glyphicon-tower"></span> CREATE GAME</a></li>
           <li><a href="search-friends/search"><span class="glyphicon glyphicon-search"></span> SERACH FRIENDS</a></li>
           <li data-toggle="dropdown" style="cursor: pointer" (click)="fixDropdown()">
-            <div class="dropdown drop" id="workffs"><div><span class="glyphicon glyphicon-user"></span> MY ACCOUNT <span class="caret"></span></div>
+            <div class="dropdown drop" id="workffs"><div><span class="glyphicon glyphicon-user"></span> <span  *ngIf="notificationSet.message">!!!</span> MY ACCOUNT <span class="caret"></span></div>
               <ul class="dropdown-menu drop-opt">
                 <li class="opt"><a href="#" (click)="goToMyProfile()">My Profile</a></li>
                 <li class="opt"><a href="#">Messages</a></li>

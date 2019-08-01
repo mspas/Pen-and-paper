@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FriendModel } from './models/friend.model';
 import { MessageModel, ConversationModel } from './models/message.model';
+import { CheckNotificationModel } from './models/notification.model';
 
 
 @Injectable()
@@ -13,6 +14,7 @@ export class DataService {
   private conversationData = new BehaviorSubject<ConversationModel>(null);
   private chatControl = new BehaviorSubject<boolean>(false);
   private relationId = new BehaviorSubject<number>(-1);
+  private notificationSet = new BehaviorSubject<CheckNotificationModel>({message: false, game: false, friend: false});
 
   currentFriends = this.friendsSource.asObservable();
   currentBPhoto = this.bPhotoSource.asObservable();
@@ -20,6 +22,7 @@ export class DataService {
   currentConversationData = this.conversationData.asObservable();
   currentChatControl = this.chatControl.asObservable();
   currentRelationId = this.relationId.asObservable();
+  currentNotificationSet = this.notificationSet.asObservable();
 
   constructor() { }
 
@@ -46,6 +49,10 @@ export class DataService {
   
   changeRelationId(id: number) {
     this.relationId.next(id);
+  }
+
+  changeNotificationSet(check: CheckNotificationModel) {
+    this.notificationSet.next(check);
   }
   
 }

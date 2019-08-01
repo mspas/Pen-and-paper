@@ -12,6 +12,7 @@ import { SkillCreateModel } from './models/skill.model';
 import { GameSessionCreateModel } from './models/gamesession.model';
 import { ChangePasswordModel } from './models/changepassword.model';
 import { MessageModel, ConversationModel, MessageCreateModel } from './models/message.model';
+import { NotificationAppModel } from './models/notification.model';
 
 @Injectable()
 export class ApiService {
@@ -62,6 +63,11 @@ export class ApiService {
         console.log(JSON.stringify(msg));
         this._http.post(this.url + 'Message/', msg).subscribe (
             error => console.log(error));
+    }
+
+    getNotificationData(id: number) {
+        return this._http
+            .get<NotificationAppModel>(this.url + 'NotificationData/' + id);
     }
 
     getDataProfile(id: number, nick: string): Observable<any> {

@@ -11,9 +11,10 @@ using System;
 namespace RPGApi.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    partial class RpgDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190801150514_notificationFix")]
+    partial class notificationFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,15 +210,9 @@ namespace RPGApi.Migrations
 
                     b.Property<DateTime?>("lastFriendNotificationDate");
 
-                    b.Property<DateTime?>("lastFriendNotificationSeen");
-
                     b.Property<DateTime?>("lastGameNotificationDate");
 
-                    b.Property<DateTime?>("lastGameNotificationSeen");
-
                     b.Property<DateTime?>("lastMessageDate");
-
-                    b.Property<DateTime?>("lastMessageSeen");
 
                     b.HasKey("Id");
 

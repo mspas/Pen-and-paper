@@ -11,7 +11,11 @@ namespace mdRPG.Models
         [ForeignKey("PersonalData")]
         public int Id { get; set; }
         public DateTime? lastMessageDate { get; set; }
-        public DateTime? lastNotificationDate { get; set; }
+        public DateTime? lastGameNotificationDate { get; set; }
+        public DateTime? lastFriendNotificationDate { get; set; }
+        public DateTime? lastMessageSeen { get; set; }
+        public DateTime? lastGameNotificationSeen { get; set; }
+        public DateTime? lastFriendNotificationSeen { get; set; }
     }
 
 }

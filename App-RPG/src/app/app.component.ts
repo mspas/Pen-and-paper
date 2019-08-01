@@ -4,6 +4,8 @@ import { ApiService } from './api.service';
 import { FriendModel } from './models/friend.model';
 import { DataService } from './data.service';
 import { ConversationModel } from './models/message.model';
+import { NotificationAppModel, CheckNotificationModel } from './models/notification.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +19,16 @@ export class AppComponent {
   setChat = false;
   conversation: ConversationModel;
   friendsAll: FriendModel[] = [];
+  notificationData: NotificationAppModel;
+  notificationDataPrevious: NotificationAppModel = null;
+  timerSubscription: any;
 
   constructor(private auth: AuthService, private _api: ApiService, private _data: DataService) {
   }
 
+  ngOnInit() {
+    this.subscribeToData();
+  }
 
   ngAfterContentChecked() {
     this.userIsLogged = this.auth.isAuthenticated();
@@ -42,5 +50,45 @@ export class AppComponent {
   async getConversation() {
     //var res = await this._data.currentConversation.subscribe(data => this.conversation = data);
     this.setChat = true;
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  async refreshData() {
+    //this._api.getConversation(this.conversationData.relationId).subscribe(data => this.conversation = data);
+    //await this.delay(4000);
+    await this._api.getNotificationData(Number.parseInt(localStorage.getItem("id"))).subscribe(data => {
+      this.notificationData = data;
+      this.subscribeToData();
+    });
+
+    await this.delay(6000);
+    
+    console.log(JSON.stringify(this.notificationData));
+
+    var notificationSet = new CheckNotificationModel(false, false, false);
+
+    if (this.notificationData.lastMessageDate > this.notificationData.lastMessageSeen) 
+      notificationSet.message = true;
+    else 
+      notificationSet.message = false;
+
+    if (this.notificationData.lastGameNotificationDate > this.notificationData.lastGameNotificationSeen)
+      notificationSet.game = true;
+    else 
+      notificationSet.game = false;
+
+    if (this.notificationData.lastFriendNotificationDate > this.notificationData.lastFriendNotificationSeen)
+      notificationSet.friend = true;
+    else 
+      notificationSet.friend = false;
+
+    this._data.changeNotificationSet(notificationSet);
+  }
+
+  private subscribeToData(): void {
+    this.timerSubscription = Observable.timer(4000).first().subscribe(() => this.refreshData());
   }
 }

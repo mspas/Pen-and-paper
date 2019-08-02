@@ -24,6 +24,8 @@ import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game
 import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { StartPageComponent } from './start-page/start-page.component';
+import { ActivityComponent } from './activity/activity.component';
+import { ActivityResolve } from './activity/activity.resolve.service';
 
 const routes: Routes = [];
 
@@ -108,6 +110,14 @@ const routes: Routes = [];
           canActivate: [AuthGuardService],
           resolve: {
             profiledata: GameInviteResolve
+          },
+      },
+      {
+          path: 'my-account', 
+          component: ActivityComponent,
+          canActivate: [AuthGuardService],
+          resolve: {
+            profiledata: ActivityResolve
           },
       }
   ])

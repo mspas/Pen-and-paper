@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="profile-nav">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="profile-photo-wrap">
+          <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
+          <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="nav-tabs-wrap">
+          <ul class="nav nav-tabs">
+            <li class="active" id="acc-messages">
+              <a (click)="onNavClick($event)" id="aacc-messages">
+                <span (click)="onNavClick($event)" id="aacc-messages" class="glyphicon glyphicon-user"></span> 
+                MESSAGES
+              </a>
+              </li>
+            <li id="acc-games" >
+              <a (click)="onNavClick($event)" id="aacc-games">
+                <span (click)="onNavClick($event)" id="aacc-games" class="glyphicon glyphicon-list-alt"></span> 
+                MY GAMES
+              </a>
+            </li>
+            <li id="acc-friends">
+              <a (click)="onNavClick($event)" id="aacc-friends">
+                <span (click)="onNavClick($event)" id="aacc-friends" class="glyphicon glyphicon-tower"></span> 
+                MY FRIENDS
+              </a>
+            </li>
+            <li id="acc-settings">
+              <a (click)="onNavClick($event)" id="aacc-settings">
+                <span (click)="onNavClick($event)" id="aacc-settings" class="glyphicon glyphicon-tower"></span> 
+                SETTINGS
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content" style="height: 1000px">
+    <div class="content-top"></div>
+    <app-account-messages *ngIf="messagesChild == true"></app-account-messages>
+    <app-account-games *ngIf="gamesChild == true"></app-account-games>
+    <app-account-friends *ngIf="friendsChild == true"></app-account-friends>
+    <app-account-settings *ngIf="settingsChild == true"></app-account-settings>
+  </div>
+</div>

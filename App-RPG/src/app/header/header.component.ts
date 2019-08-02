@@ -84,4 +84,8 @@ export class HeaderComponent implements OnInit {
     this.timerSubscription = Observable.timer(4000).first().subscribe(() => this.refreshData());
   }
 
+  goToMyAccount() {
+    this.router.navigate(['/my-account']);
+  }
+
 }

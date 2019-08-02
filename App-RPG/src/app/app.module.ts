@@ -40,6 +40,12 @@ import { StartPageComponent } from './start-page/start-page.component';
 import { BphotoComponent } from './bphoto/bphoto.component';
 import { ViewProfileComponent } from './profile-view/view-profile/view-profile.component';
 import { ChatComponent } from './chat/chat.component';
+import { ActivityComponent } from './activity/activity.component';
+import { ActivityResolve } from './activity/activity.resolve.service';
+import { AccountSettingsComponent } from './activity/account-settings/account-settings.component';
+import { AccountMessagesComponent } from './activity/account-messages/account-messages.component';
+import { AccountFriendsComponent } from './activity/account-friends/account-friends.component';
+import { AccountGamesComponent } from './activity/account-games/account-games.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +67,12 @@ import { ChatComponent } from './chat/chat.component';
     StartPageComponent,
     BphotoComponent,
     ViewProfileComponent,
-    ChatComponent
+    ChatComponent,
+    ActivityComponent,
+    AccountSettingsComponent,
+    AccountMessagesComponent,
+    AccountFriendsComponent,
+    AccountGamesComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +95,8 @@ import { ChatComponent } from './chat/chat.component';
     GameInviteResolve,
     ProfileDataResolve,
     DataService,
-    FriendsService
+    FriendsService,
+    ActivityResolve
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
-import { ConversationModel, MessageModel, MessageCreateModel } from '../models/message.model';
+import { ConversationDataModel, MessageModel, MessageCreateModel } from '../models/message.model';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { FriendModel } from '../models/friend.model';
@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
 
   minimalize: boolean = false;
   newConversation: boolean = false;
-  conversationData: ConversationModel;
+  conversationData: ConversationDataModel;
   conversation: MessageModel[] = [];
   relationData: FriendModel[] =[];
   timerSubscription: any;

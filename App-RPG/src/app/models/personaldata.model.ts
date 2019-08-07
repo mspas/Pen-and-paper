@@ -9,7 +9,9 @@ export class PersonalDataModel {
       public lastname: string,
       public city: string,
       public age: number,
-      public photoName: string
+      public photoName: string,
+      public isPhotoUploaded: boolean
+
     ) {}
   }
 

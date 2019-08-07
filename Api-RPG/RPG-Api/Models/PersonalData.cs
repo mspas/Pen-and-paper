@@ -17,6 +17,7 @@ namespace mdRPG.Models
         public string city { get; set; }
         public int age { get; set; }
         public string photoName { get; set; }
+        public bool isPhotoUploaded{ get; set; }
 
         public virtual ICollection<Friend> MyFriends { get; set; }
         public virtual ICollection<Friend> IamFriends { get; set; }
@@ -28,6 +29,7 @@ namespace mdRPG.Models
         public PersonalData()
         {
             NotificationData = new NotificationData();
+            isPhotoUploaded = false;
         }
     }
 }

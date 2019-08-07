@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 import { SkillCreateModel } from './models/skill.model';
 import { GameSessionCreateModel } from './models/gamesession.model';
 import { ChangePasswordModel } from './models/changepassword.model';
-import { MessageModel, ConversationModel, MessageCreateModel } from './models/message.model';
+import { MessageModel, MessageCreateModel } from './models/message.model';
 import { NotificationAppModel } from './models/notification.model';
 
 @Injectable()
@@ -50,7 +50,8 @@ export class ApiService {
         //this._http.post(this.url + 'Message/', new MessageModel(0, new Date(Date.UTC(2019, 6, 19, 1,1,1,1)), false, "hello dude", 2)).subscribe (
           //  error => console.log(error));;
         return this._http
-            .get<MessageModel[]>(this.url + 'Message/' + relationId);
+            .get<MessageModel[]>(this.url + 'Message/' + relationId)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
     }
 
     getRelationData(relationId: number) {

@@ -16,5 +16,6 @@ namespace mdRPG.Controllers.Resources
         public string city { get; set; }
         public int age { get; set; }
         public string photoName { get; set; }
+        public bool isPhotoUploaded { get; set; }
     }
 }

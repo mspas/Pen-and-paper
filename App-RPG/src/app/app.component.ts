@@ -66,7 +66,7 @@ export class AppComponent {
 
     await this.delay(6000);
     
-    console.log(JSON.stringify(this.notificationData));
+    //console.log(JSON.stringify(this.notificationData));
 
     var notificationSet = new CheckNotificationModel(false, false, false);
 

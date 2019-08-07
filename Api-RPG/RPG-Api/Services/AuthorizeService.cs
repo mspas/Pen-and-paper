@@ -67,7 +67,8 @@ namespace mdRPG.Services
                 new Claim("id", foundAccount.Id.ToString()),
                 new Claim("city", foundAccount.PersonalData.city),
                 new Claim("age", foundAccount.PersonalData.age.ToString()),
-                new Claim("photoName", foundAccount.PersonalData.photoName.ToString())
+                new Claim("photoName", foundAccount.PersonalData.photoName.ToString()),
+                new Claim("isPhotoUploaded", foundAccount.PersonalData.isPhotoUploaded.ToString())
             };
 
             // SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

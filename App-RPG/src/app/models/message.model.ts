@@ -22,10 +22,18 @@ export class MessageModel {
     ) {}
   }
 
-export class ConversationModel {
+export class ConversationDataModel {
     constructor(
         public relation: FriendModel,
         public myProfile: PersonalDataModel,
         public userProfile: PersonalDataModel
     ) {}
   }
+  
+export class ConversationModel {
+  constructor(
+      public conversationData: ConversationDataModel,
+      public photo: any,
+      public messages: MessageModel[]
+  ) {}
+}

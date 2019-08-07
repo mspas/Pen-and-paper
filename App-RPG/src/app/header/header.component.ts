@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit {
 
     await this.delay(8000);
 
-    console.log(JSON.stringify(this.newNotificationSet));
+    //console.log(JSON.stringify(this.newNotificationSet));
 
     if (this.newNotificationSet.friend == true) 
       this.notificationSet.friend = true;
@@ -84,8 +84,9 @@ export class HeaderComponent implements OnInit {
     this.timerSubscription = Observable.timer(4000).first().subscribe(() => this.refreshData());
   }
 
-  goToMyAccount() {
-    this.router.navigate(['/my-account']);
+  goToMyAccount(event: Event) {    
+    let elementId: string = (event.target as Element).id;
+    this.router.navigate(['/my-account', elementId]);
   }
 
 }

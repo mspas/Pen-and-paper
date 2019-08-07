@@ -17,10 +17,10 @@
             <div class="dropdown drop" id="workffs"><div><span class="glyphicon glyphicon-user"></span> <span  *ngIf="notificationSet.message">!!!</span> MY ACCOUNT <span class="caret"></span></div>
               <ul class="dropdown-menu drop-opt">
                 <li class="opt"><a href="#" (click)="goToMyProfile()">My Profile</a></li>
-                <li class="opt"><a href="#" (click)="goToMyAccount()">Messages</a></li>
-                <li class="opt"><a href="#" (click)="goToMyAccount()">My Games</a></li>
-                <li class="opt"><a href="#" (click)="goToMyAccount()">Friends</a></li>
-                <li class="opt"><a href="#" (click)="goToMyAccount()">Settings</a></li>
+                <li class="opt"><a href="#" id="messages" (click)="goToMyAccount($event)">Messages</a></li>
+                <li class="opt"><a href="#" id="games" (click)="goToMyAccount($event)">My Games</a></li>
+                <li class="opt"><a href="#" id="friends" (click)="goToMyAccount($event)">Friends</a></li>
+                <li class="opt"><a href="#" id="settings" (click)="goToMyAccount($event)">Settings</a></li>
               </ul>
             </div>
           </li>

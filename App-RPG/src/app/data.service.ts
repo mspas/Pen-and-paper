@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FriendModel } from './models/friend.model';
-import { MessageModel, ConversationModel } from './models/message.model';
+import { MessageModel, ConversationDataModel } from './models/message.model';
 import { CheckNotificationModel } from './models/notification.model';
 
 
@@ -11,7 +11,7 @@ export class DataService {
   private friendsSource = new BehaviorSubject<FriendModel[]>([{id: -1, personalData:null, isAccepted:true, isReceiver:true, isFriendRequest: false, lastMessageDate: new Date()}]);
   private bPhotoSource = new BehaviorSubject<string>("assets/book.jpg");
   private sidebarControl = new BehaviorSubject<boolean>(false);
-  private conversationData = new BehaviorSubject<ConversationModel>(null);
+  private conversationData = new BehaviorSubject<ConversationDataModel>(null);
   private chatControl = new BehaviorSubject<boolean>(false);
   private relationId = new BehaviorSubject<number>(-1);
   private notificationSet = new BehaviorSubject<CheckNotificationModel>({message: false, game: false, friend: false});
@@ -39,7 +39,7 @@ export class DataService {
     this.sidebarControl.next(check);
   }
 
-  changeConversationData(conv: ConversationModel) {
+  changeConversationData(conv: ConversationDataModel) {
     this.conversationData.next(conv);
   }
 

@@ -10,27 +10,27 @@
       <div class="col-md-9">
         <div class="nav-tabs-wrap">
           <ul class="nav nav-tabs">
-            <li class="active" id="acc-messages">
-              <a (click)="onNavClick($event)" id="aacc-messages">
-                <span (click)="onNavClick($event)" id="aacc-messages" class="glyphicon glyphicon-user"></span> 
+            <li id="acc-messages">
+              <a (click)="onNavClick($event)" id="messages">
+                <span (click)="onNavClick($event)" id="messages" class="glyphicon glyphicon-user"></span> 
                 MESSAGES
               </a>
               </li>
             <li id="acc-games" >
-              <a (click)="onNavClick($event)" id="aacc-games">
-                <span (click)="onNavClick($event)" id="aacc-games" class="glyphicon glyphicon-list-alt"></span> 
+              <a (click)="onNavClick($event)" id="games">
+                <span (click)="onNavClick($event)" id="games" class="glyphicon glyphicon-list-alt"></span> 
                 MY GAMES
               </a>
             </li>
             <li id="acc-friends">
-              <a (click)="onNavClick($event)" id="aacc-friends">
-                <span (click)="onNavClick($event)" id="aacc-friends" class="glyphicon glyphicon-tower"></span> 
+              <a (click)="onNavClick($event)" id="friends">
+                <span (click)="onNavClick($event)" id="friends" class="glyphicon glyphicon-tower"></span> 
                 MY FRIENDS
               </a>
             </li>
             <li id="acc-settings">
-              <a (click)="onNavClick($event)" id="aacc-settings">
-                <span (click)="onNavClick($event)" id="aacc-settings" class="glyphicon glyphicon-tower"></span> 
+              <a (click)="onNavClick($event)" id="settings">
+                <span (click)="onNavClick($event)" id="settings" class="glyphicon glyphicon-tower"></span> 
                 SETTINGS
               </a>
             </li>
@@ -41,9 +41,9 @@
   </div>
   <div class="content" style="height: 1000px">
     <div class="content-top"></div>
-    <app-account-messages *ngIf="messagesChild == true"></app-account-messages>
+    <app-account-messages *ngIf="messagesChild == true" [allConversations]="allConversations"></app-account-messages>
     <app-account-games *ngIf="gamesChild == true"></app-account-games>
-    <app-account-friends *ngIf="friendsChild == true"></app-account-friends>
+    <app-account-friends *ngIf="friendsChild == true" [myFriends]="myFriends"></app-account-friends>
     <app-account-settings *ngIf="settingsChild == true"></app-account-settings>
   </div>
 </div>

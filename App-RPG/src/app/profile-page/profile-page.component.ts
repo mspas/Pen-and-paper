@@ -48,7 +48,7 @@ export class ProfilePageComponent implements OnInit {
     localStorage.setItem("profileid", this.accountId);
     localStorage.setItem("nick", tokenInfo.login);
     let fileName = tokenInfo.photoName;
-    var personalData = new PersonalDataModel(parseInt(tokenInfo.id), tokenInfo.login, tokenInfo.email, tokenInfo.firstname, tokenInfo.lastname, tokenInfo.city, parseInt(tokenInfo.age), tokenInfo.photoName);
+    var personalData = new PersonalDataModel(parseInt(tokenInfo.id), tokenInfo.login, tokenInfo.email, tokenInfo.firstname, tokenInfo.lastname, tokenInfo.city, parseInt(tokenInfo.age), tokenInfo.photoName, tokenInfo.isPhotoUploaded);
     this.myProfile = new AccountModel(tokenInfo.login, 'nope', tokenInfo.email, personalData);
     this.pd = personalData;
 

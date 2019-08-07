@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PersonalDataModel } from '../../models/personaldata.model';
 import { ApiService } from '../../api.service';
-import { MessageModel, ConversationModel } from '../../models/message.model';
+import { MessageModel, ConversationModel, ConversationDataModel } from '../../models/message.model';
 import { FriendModel } from '../../models/friend.model';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../data.service';
@@ -47,11 +47,11 @@ export class ViewProfileComponent implements OnInit {
   onSendMessage(){
     if (this.ourRelation != null) {
       //await this._api.getConversation(this.ourRelation.id).subscribe(data => this.conversation = data); //wyjebac to do app comp i viewchildem do chatu elo ide spac
-      this._data.changeConversationData(new ConversationModel(this.ourRelation, this.myProfileData, this.userProfileData));
+      this._data.changeConversationData(new ConversationDataModel(this.ourRelation, this.myProfileData, this.userProfileData));
       this._data.changeChatControl(true);
     }
     else {
-      this._data.changeConversationData(new ConversationModel(null, null, this.userProfileData));
+      this._data.changeConversationData(new ConversationDataModel(null, null, this.userProfileData));
       this._data.changeChatControl(true);
     }
   }

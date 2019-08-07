@@ -62,6 +62,7 @@ namespace mdRPG.Controllers
 
             foundAccount.PersonalData.ProfilePhoto = photo;
             foundAccount.PersonalData.photoName = fileName;
+            foundAccount.PersonalData.isPhotoUploaded = true;
 
             await context.SaveChangesAsync();
 

@@ -113,7 +113,7 @@ const routes: Routes = [];
           },
       },
       {
-          path: 'my-account', 
+          path: 'my-account/:value', 
           component: ActivityComponent,
           canActivate: [AuthGuardService],
           resolve: {

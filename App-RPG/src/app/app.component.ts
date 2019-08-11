@@ -64,7 +64,10 @@ export class AppComponent {
       this.subscribeToData();
     });
 
-    await this.delay(6000);
+    if (this.notificationData == null) 
+      await this.delay(1000);
+    else 
+      await this.delay(3000);
     
     //console.log(JSON.stringify(this.notificationData));
 
@@ -89,6 +92,6 @@ export class AppComponent {
   }
 
   private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(4000).first().subscribe(() => this.refreshData());
+    this.timerSubscription = Observable.timer(2000).first().subscribe(() => this.refreshData());
   }
 }

@@ -67,6 +67,10 @@ li a:hover {
     background-color: #e4e3e3;
 }
 
+.notification-active {
+    color: #f4511e !important;
+}
+
 #big-name {
     padding-top: 140px;
     padding-left: 50px;

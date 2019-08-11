@@ -41,8 +41,13 @@
 }
 .profile-photo-wrap {
     display: inline-block;
-    margin-top: 0px;
+    margin-top: 20px;
     margin-left: 40px;
+}
+.profile-photo {
+    width:200px; 
+    height: 200px;
+    border-radius: 10px 10px 10px 10px;
 }
 .nav-tabs-wrap {
     padding-top: 125px;

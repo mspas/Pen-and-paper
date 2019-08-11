@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { GameToPersonAppModel } from '../../models/game-to-person.model';
 
 @Component({
   selector: 'app-account-games',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountGamesComponent implements OnInit {
 
+  @Input("myGamesAPPList") myGamesAPPList: GameToPersonAppModel[] = [];
+  
   constructor() { }
 
   ngOnInit() {

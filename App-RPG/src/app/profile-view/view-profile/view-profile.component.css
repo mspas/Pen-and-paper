@@ -121,7 +121,7 @@
 }
 
 .modal-header {
-    background-color: #13976f;
+    background-color: #f1efef;
     font-size: 12px !important;
     line-height: 1.42857143 !important;
     letter-spacing: 4px;
@@ -130,16 +130,26 @@
 
 .modal-title {
     border-color: transparent;
-    color: #fff !important;
+    color: #000000 !important;
+    font-size: 15px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
 }
 
 .modal-btn-close {
     border-color: transparent;
-    color: azure;
+    color: #000000;
 }
 
 .modal-content {
-    background-color: #3a3a3a;
+    font-size: 15px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+    background-color: #e4e3e3;
 }
 
 .modal-body {

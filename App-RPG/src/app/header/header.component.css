@@ -36,12 +36,20 @@
 }
 
 .drop-opt {
-    width: 184px;
+    width: 177px;
     background-color: rgba(255, 255, 255, 0.795);
     padding-top: 0px;
     margin-top: 0px;
     border: 0px;
     border-radius: 0px; 
+}
+
+.drop-opt-ext {
+    width: 207px;
+}
+
+.notification-active {
+    color: #f4511e !important;
 }
 
 .navbar-nav li a:hover, .navbar-nav li.active a {

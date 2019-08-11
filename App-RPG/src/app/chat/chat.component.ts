@@ -120,7 +120,7 @@ export class ChatComponent implements OnInit {
     );
     this._api.sendMessage(msg);
     this.conversationData.relation.lastMessageDate = myDate;
-    this._api.editRelation(this.conversationData.relation);
+    //this._api.editRelation(this.conversationData.relation);
     this.addMsgTemporary(msg);
   }
 

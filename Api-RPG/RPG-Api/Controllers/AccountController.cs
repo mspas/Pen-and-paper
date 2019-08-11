@@ -44,7 +44,6 @@ namespace mdRPG.Controllers
         [HttpPut("/api/account/{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] ChangePassword passwordData)
         {
-            Console.WriteLine(id + " id");
             var toUpdate = context.Accounts.Find(id);
             if (toUpdate == null)
             {

@@ -27,7 +27,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn = this.auth.isAuthenticated();
-    this.refreshData();
+    //this.refreshData();
+    this._data.currentNotificationSet.subscribe(data => {
+      this.newNotificationSet = data;
+      //this.subscribeToData();
+    });
   }
 
   onLogout() {
@@ -51,6 +55,13 @@ export class HeaderComponent implements OnInit {
     //Called after every check of the component's or directive's content.
     //Add 'implements AfterContentChecked' to the class.
     
+    if (this.newNotificationSet.friend == true) 
+      this.notificationSet.friend = true;
+    if (this.newNotificationSet.game == true) 
+      this.notificationSet.game = true;
+    if (this.newNotificationSet.message == true) 
+      this.notificationSet.message = true;
+
     this.isLoggedIn = this.auth.isAuthenticated();
   }
 
@@ -66,7 +77,7 @@ export class HeaderComponent implements OnInit {
       //this.subscribeToData();
     });
 
-    await this.delay(8000);
+    await this.delay(3000);
 
     //console.log(JSON.stringify(this.newNotificationSet));
 
@@ -87,6 +98,17 @@ export class HeaderComponent implements OnInit {
   goToMyAccount(event: Event) {    
     let elementId: string = (event.target as Element).id;
     this.router.navigate(['/my-account', elementId]);
+  }
+
+  checkActiveNotifications(): boolean {
+    if (this.notificationSet.message || this.notificationSet.friend || this.notificationSet.game) {
+      document.getElementById("accountDropdown").setAttribute("class", "notification-active");
+      document.getElementById("dropdown-menu").setAttribute("class", "dropdown-menu drop-opt drop-opt-ext");
+      return true;
+    }
+    document.getElementById("accountDropdown").setAttribute("class", "");
+    document.getElementById("dropdown-menu").setAttribute("class", "dropdown-menu drop-opt");
+    return false;
   }
 
 }

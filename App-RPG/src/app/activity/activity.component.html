@@ -13,19 +13,19 @@
             <li id="acc-messages">
               <a (click)="onNavClick($event)" id="messages">
                 <span (click)="onNavClick($event)" id="messages" class="glyphicon glyphicon-user"></span> 
-                MESSAGES
+                MESSAGES <span *ngIf="notificationSet.message">(!)</span>
               </a>
               </li>
             <li id="acc-games" >
               <a (click)="onNavClick($event)" id="games">
                 <span (click)="onNavClick($event)" id="games" class="glyphicon glyphicon-list-alt"></span> 
-                MY GAMES
+                MY GAMES <span *ngIf="notificationSet.game">(!)</span>
               </a>
             </li>
             <li id="acc-friends">
               <a (click)="onNavClick($event)" id="friends">
                 <span (click)="onNavClick($event)" id="friends" class="glyphicon glyphicon-tower"></span> 
-                MY FRIENDS
+                MY FRIENDS <span *ngIf="notificationSet.friend">(!)</span>
               </a>
             </li>
             <li id="acc-settings">
@@ -42,8 +42,8 @@
   <div class="content" style="height: 1000px">
     <div class="content-top"></div>
     <app-account-messages *ngIf="messagesChild == true" [allConversations]="allConversations"></app-account-messages>
-    <app-account-games *ngIf="gamesChild == true"></app-account-games>
+    <app-account-games *ngIf="gamesChild == true" [myGamesAPPList]="myGamesAPPList"></app-account-games>
     <app-account-friends *ngIf="friendsChild == true" [myFriends]="myFriends"></app-account-friends>
-    <app-account-settings *ngIf="settingsChild == true"></app-account-settings>
+    <app-account-settings *ngIf="settingsChild == true" [myProfileData]="myProfileData"></app-account-settings>
   </div>
 </div>

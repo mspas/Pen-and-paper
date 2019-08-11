@@ -33,7 +33,6 @@ namespace mdRPG.Controllers
         allAccounts = mapper.Map<List<Account>, List<AccountResource>>(acc);
         foreach (AccountResource a in allAccounts)
         {
-                Console.WriteLine("moj id: " + a.Id.ToString());
                 per.Add(a.PersonalData);
         }
      }

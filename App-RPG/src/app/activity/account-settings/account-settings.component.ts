@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { PersonalDataModel } from '../../models/personaldata.model';
 
 @Component({
   selector: 'app-account-settings',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-settings.component.css']
 })
 export class AccountSettingsComponent implements OnInit {
+
+  @Input("myProfileData") myProfileData: PersonalDataModel[] = [];
 
   constructor() { }
 

@@ -5,6 +5,8 @@ import { ApiService } from '../api.service';
 import { GameToPersonAppModel } from '../models/game-to-person.model';
 import { FriendModel } from '../models/friend.model';
 import { MessageModel, ConversationModel, ConversationDataModel } from '../models/message.model';
+import { CheckNotificationModel } from '../models/notification.model';
+import { DataService } from '../data.service';
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
@@ -37,13 +39,19 @@ export class ActivityComponent implements OnInit {
   myProfilePage: boolean = false;
   conversation: MessageModel[];
   allConversations: ConversationModel[] = [];
-  //loggedUserFriends: PersonalDataModel[] = [];
+  
+  private newNotificationSet: CheckNotificationModel;
+  private notificationSet: CheckNotificationModel = new CheckNotificationModel(false, false, false);
 
-  constructor(private route: ActivatedRoute, private router: Router, private _api : ApiService) { 
+  constructor(private route: ActivatedRoute, private router: Router, private _api : ApiService, private _data: DataService) { 
   }
 
   ngOnInit() {
     this.subPage = this.route.snapshot.params['value'];
+
+    this._data.currentNotificationSet.subscribe(data => {
+      this.newNotificationSet = data;
+    });
 
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.data = profiledata.profiledata;
@@ -95,21 +103,49 @@ export class ActivityComponent implements OnInit {
       }
     }
 
-
-    console.log("myFriends KURWA " + JSON.stringify(this.myFriends));
-
     this.myFriends.forEach(relation => {
       if (relation.lastMessageDate != null) {
         this.getConversation(relation);
       }
     });
-
-    
-    console.log("allConv KURWA " + JSON.stringify(this.allConversations));
-
-    
+    //this.lightProperTabNotif();
     this.setProperNavTab();
 
+  }
+
+  ngAfterContentChecked(): void {
+    if (this.newNotificationSet.friend == true) 
+      this.notificationSet.friend = true;
+    if (this.newNotificationSet.game == true) 
+      this.notificationSet.game = true;
+    if (this.newNotificationSet.message == true) 
+      this.notificationSet.message = true;
+
+    if (this.subPage != "messages" && this.notificationSet.message == true) {
+      document.getElementById("acc-messages").setAttribute("class", "notification-active");
+    }
+    if (this.subPage != "games" && this.notificationSet.game == true) {
+      document.getElementById("acc-games").setAttribute("class", "notification-active"); 
+    }
+    if (this.subPage != "friends" && this.notificationSet.friend == true) {
+      document.getElementById("acc-friends").setAttribute("class", "notification-active");
+    }
+  }
+
+  async refreshData() {
+    await this._data.currentNotificationSet.subscribe(data => {
+      this.newNotificationSet = data;
+    });
+    await this.delay(4000);
+
+    if (this.newNotificationSet.friend == true) 
+      this.notificationSet.friend = true;
+    if (this.newNotificationSet.game == true) 
+      this.notificationSet.game = true;
+    if (this.newNotificationSet.message == true) 
+      this.notificationSet.message = true;
+
+    this.refreshData();
   }
 
   delay(ms: number) {
@@ -119,7 +155,6 @@ export class ActivityComponent implements OnInit {
   async getConversation(relation: FriendModel) {
     let conversationData = new ConversationDataModel(relation, this.myProfileData, relation.personalData);
     await this._api.getConversation(relation.id).subscribe(data => this.conversation = data);
-    console.log("conversasioin KURWA " + JSON.stringify(this.conversation));
     await this.delay(4000);
     this.allConversations.push(new ConversationModel(conversationData, null, this.conversation));
   }
@@ -127,22 +162,18 @@ export class ActivityComponent implements OnInit {
   setProperNavTab() {
     this.setFalse();
     if (this.subPage == "messages") {
-      console.log("messages = " + this.subPage);
       document.getElementById("acc-messages").setAttribute("class", "active");
       this.messagesChild = true; 
     }
     if (this.subPage == "games") {
-      console.log("games = " + this.subPage);
       document.getElementById("acc-games").setAttribute("class", "active"); 
       this.gamesChild = true;   
     }
     if (this.subPage == "friends") {
-      console.log("friends = " + this.subPage);
       document.getElementById("acc-friends").setAttribute("class", "active");  
       this.friendsChild = true;  
     }
     if (this.subPage == "settings") {
-      console.log("settings = " + this.subPage);
       document.getElementById("acc-settings").setAttribute("class", "active");   
       this.settingsChild = true;   
     }

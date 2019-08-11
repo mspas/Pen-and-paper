@@ -14,12 +14,12 @@
           <li><a href="create-game"><span class="glyphicon glyphicon-tower"></span> CREATE GAME</a></li>
           <li><a href="search-friends/search"><span class="glyphicon glyphicon-search"></span> SERACH FRIENDS</a></li>
           <li data-toggle="dropdown" style="cursor: pointer" (click)="fixDropdown()">
-            <div class="dropdown drop" id="workffs"><div><span class="glyphicon glyphicon-user"></span> <span  *ngIf="notificationSet.message">!!!</span> MY ACCOUNT <span class="caret"></span></div>
-              <ul class="dropdown-menu drop-opt">
+            <div class="dropdown drop" id="workffs"><div id="accountDropdown"><span class="glyphicon glyphicon-user"></span>MY ACCOUNT <span *ngIf="checkActiveNotifications()">(!)</span> <span class="caret"></span></div>
+              <ul class="dropdown-menu drop-opt" id="dropdown-menu">
                 <li class="opt"><a href="#" (click)="goToMyProfile()">My Profile</a></li>
-                <li class="opt"><a href="#" id="messages" (click)="goToMyAccount($event)">Messages</a></li>
-                <li class="opt"><a href="#" id="games" (click)="goToMyAccount($event)">My Games</a></li>
-                <li class="opt"><a href="#" id="friends" (click)="goToMyAccount($event)">Friends</a></li>
+                <li class="opt"><a href="#" id="messages" (click)="goToMyAccount($event)">Messages <span *ngIf="notificationSet.message">(!)</span></a></li>
+                <li class="opt"><a href="#" id="games" (click)="goToMyAccount($event)">My Games <span *ngIf="notificationSet.games">(!)</span></a></li>
+                <li class="opt"><a href="#" id="friends" (click)="goToMyAccount($event)">Friends <span *ngIf="notificationSet.friends">(!)</span></a></li>
                 <li class="opt"><a href="#" id="settings" (click)="goToMyAccount($event)">Settings</a></li>
               </ul>
             </div>

@@ -20,7 +20,6 @@ export class AccountFriendsComponent implements OnInit {
   constructor(private _api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    console.log("friends KURWA " + JSON.stringify(this.myFriends));
 
     if (this.myFriends != null) {
       this.myFriends.forEach(fr => {

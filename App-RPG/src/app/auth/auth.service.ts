@@ -51,8 +51,10 @@ export class AuthService {
         localStorage.setItem('token', token['token']);
         let tokenn = localStorage.getItem("token");
         let tokenInfo = this.getDecodedAccessToken(tokenn);
-        this.router.navigate(['/profile', tokenInfo.login]);
         localStorage.setItem("id", tokenInfo.id);
+        localStorage.setItem("nick", tokenInfo.login);
+        console.log("cros kurwa aafdaopshnjfjkSZ BFjkhsd " +  tokenInfo.login);
+        this.router.navigate(['/profile', tokenInfo.login]);
       },
       //error => console.log(error)
       error => this.loginError.next(true)

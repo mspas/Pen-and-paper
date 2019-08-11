@@ -3,6 +3,7 @@ import { ConversationModel, MessageCreateModel, MessageModel, ConversationDataMo
 import { ApiService } from '../../api.service';
 import { FriendModel } from '../../models/friend.model';
 import { PersonalDataModel } from '../../models/personaldata.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account-messages',
@@ -12,17 +13,15 @@ import { PersonalDataModel } from '../../models/personaldata.model';
 export class AccountMessagesComponent implements OnInit {
 
   @Input("allConversations") allConversations: ConversationModel[] = [];
-  //@Input("myProfileData") myProfileData: PersonalDataModel;
-  //@Input("userProfileData") userProfileData: PersonalDataModel;
-  //@Input("myFriends") myFriends: FriendModel[] = [];
   isImageLoading: boolean;
   defaultValue: string = "";
+  timerSubscription: any;
   //allConversations: ConversationModel[] = [];
-  conversation: MessageModel[];
+  //conversation: MessageModel[];
 
   constructor(private _api: ApiService) { }
 
-  async ngOnInit() { 
+  ngOnInit() { 
    /* await this.myFriends.forEach(relation => {
       if (relation.lastMessageDate != null) {
         this.getConversation(relation);
@@ -43,10 +42,9 @@ export class AccountMessagesComponent implements OnInit {
           console.log(error);
         });
     });
-    
-    console.log("allConv KURWA " + JSON.stringify(this.allConversations));
-  }
 
+    this.refreshData();    
+  }
 
   createImageFromBlob(image: Blob, i: number) {
     let reader = new FileReader();
@@ -69,6 +67,34 @@ export class AccountMessagesComponent implements OnInit {
     });
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  async refreshData() {
+    //this._api.getConversation(this.conversationData.relationId).subscribe(data => this.conversation = data);
+    //await this.delay(4000);
+    this.allConversations.forEach(async conversation => {
+      conversation.conversationData.relation
+      await this._api.getRelationData(conversation.conversationData.relation.id).subscribe(data => {
+        conversation.conversationData.relation = data[0];
+        //this.subscribeToData();
+      });
+      await this.delay(4000);
+      let lastDate = conversation.conversationData.relation.lastMessageDate;
+      let length = conversation.messages.length;
+      if (lastDate > conversation.messages[length-1].sendDdate || conversation.messages[length-1].sendDdate == null) { //nowsza rzecz jest wieksza
+        this._api.getConversation(conversation.conversationData.relation.id).subscribe(data => conversation.messages = data);
+      }
+    });
+    await this.delay(4000);
+    this.refreshData();
+  }
+
+  private subscribeToData(): void {
+    this.timerSubscription = Observable.timer(4000).first().subscribe(() => this.refreshData());
+  }
+
   onSendMessage(index: number) {
     var body = (<HTMLInputElement>document.getElementById("message")).value;
     this.defaultValue = "";
@@ -78,12 +104,12 @@ export class AccountMessagesComponent implements OnInit {
     );
     this._api.sendMessage(msg);
     this.allConversations[index].conversationData.relation.lastMessageDate = myDate;
-    this._api.editRelation(this.allConversations[index].conversationData.relation);
-    //this.addMsgTemporary(msg,);
+    //this._api.editRelation(this.allConversations[index].conversationData.relation);
+    this.addMsgTemporary(msg, index);
   }
 
-  addMsgTemporary(msg: MessageCreateModel) {
-   // this.conversation.push(new MessageModel(-1, null, false, msg.bodyMessage, msg.relationId, msg.senderId));
+  addMsgTemporary(msg: MessageCreateModel, index: number) {
+    this.allConversations[index].messages.push(new MessageModel(-1, null, false, msg.bodyMessage, msg.relationId, msg.senderId));
   }
 
 }

@@ -38,7 +38,20 @@ namespace RPG_Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Message message)
         {
-            Console.WriteLine(message.sendDdate + " " + message.bodyMessage);
+            var toUpdateRelation = context.Friends.Find(message.relationId);
+
+            int notificationId;
+            if (toUpdateRelation.player1Id == message.senderId)
+                notificationId = toUpdateRelation.player2Id;
+            else
+                notificationId = toUpdateRelation.player1Id;
+
+            var toUpdateNotif = context.NotificationsData.Find(notificationId);
+            toUpdateNotif.lastMessageDate = message.sendDdate;
+            toUpdateRelation.lastMessageDate = message.sendDdate;
+
+            context.NotificationsData.Update(toUpdateNotif);
+            context.Friends.Update(toUpdateRelation);
             context.Messages.Add(message);
             await context.SaveChangesAsync();
             return Ok(message);

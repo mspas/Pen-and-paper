@@ -60,7 +60,6 @@ public class GameController : Controller
             DateTime dateTo = DateTime.Parse("9999-01-01");
             bool onlyFree = true;
 
-            Console.WriteLine(data);
             if (Int32.TryParse(data, out int id))
             {
                 foundData.Add(dbRepository.GetGame(id));

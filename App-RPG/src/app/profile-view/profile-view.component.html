@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-3">
         <div class="profile-photo-wrap">
-          <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
-          <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
+          <img src="assets/unknown.png" alt="Profile image" class="profile-photo" *ngIf="defaultImage == true">
+          <img [src]="imageToShow" alt="Profile image" class="profile-photo" *ngIf="defaultImage == false">
         </div>
       </div>
       <div class="col-md-4" id="big-name">

@@ -114,12 +114,9 @@ export class ActivityComponent implements OnInit {
   }
 
   ngAfterContentChecked(): void {
-    if (this.newNotificationSet.friend == true) 
-      this.notificationSet.friend = true;
-    if (this.newNotificationSet.game == true) 
-      this.notificationSet.game = true;
-    if (this.newNotificationSet.message == true) 
-      this.notificationSet.message = true;
+    this.notificationSet.message = this.newNotificationSet.message;
+    this.notificationSet.friend = this.newNotificationSet.friend;
+    this.notificationSet.game = this.newNotificationSet.game;
 
     if (this.subPage != "messages" && this.notificationSet.message == true) {
       document.getElementById("acc-messages").setAttribute("class", "notification-active");

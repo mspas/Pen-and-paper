@@ -19,7 +19,7 @@ export class AppComponent {
   setChat = false;
   conversation: ConversationModel;
   friendsAll: FriendModel[] = [];
-  notificationData: NotificationAppModel;
+  notificationData: NotificationAppModel = null;
   notificationDataPrevious: NotificationAppModel = null;
   timerSubscription: any;
 
@@ -69,26 +69,28 @@ export class AppComponent {
     else 
       await this.delay(3000);
     
-    //console.log(JSON.stringify(this.notificationData));
 
     var notificationSet = new CheckNotificationModel(false, false, false);
 
-    if (this.notificationData.lastMessageDate > this.notificationData.lastMessageSeen) 
-      notificationSet.message = true;
-    else 
-      notificationSet.message = false;
+    if (this.notificationData != null) {
+      if (this.notificationData.lastMessageDate > this.notificationData.lastMessageSeen) 
+        notificationSet.message = true;
+      else 
+        notificationSet.message = false;
 
-    if (this.notificationData.lastGameNotificationDate > this.notificationData.lastGameNotificationSeen)
-      notificationSet.game = true;
-    else 
-      notificationSet.game = false;
+      if (this.notificationData.lastGameNotificationDate > this.notificationData.lastGameNotificationSeen)
+        notificationSet.game = true;
+      else 
+        notificationSet.game = false;
 
-    if (this.notificationData.lastFriendNotificationDate > this.notificationData.lastFriendNotificationSeen)
-      notificationSet.friend = true;
-    else 
-      notificationSet.friend = false;
+      if (this.notificationData.lastFriendNotificationDate > this.notificationData.lastFriendNotificationSeen)
+        notificationSet.friend = true;
+      else 
+        notificationSet.friend = false;
+    }
 
     this._data.changeNotificationSet(notificationSet);
+    this._data.changeNotificationData(this.notificationData);
   }
 
   private subscribeToData(): void {

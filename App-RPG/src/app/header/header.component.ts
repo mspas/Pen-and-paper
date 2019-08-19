@@ -55,12 +55,16 @@ export class HeaderComponent implements OnInit {
     //Called after every check of the component's or directive's content.
     //Add 'implements AfterContentChecked' to the class.
     
-    if (this.newNotificationSet.friend == true) 
+    /*if (this.newNotificationSet.friend == true) 
       this.notificationSet.friend = true;
     if (this.newNotificationSet.game == true) 
       this.notificationSet.game = true;
     if (this.newNotificationSet.message == true) 
-      this.notificationSet.message = true;
+      this.notificationSet.message = true;*/
+
+    this.notificationSet.message = this.newNotificationSet.message;
+    this.notificationSet.friend = this.newNotificationSet.friend;
+    this.notificationSet.game = this.newNotificationSet.game;
 
     this.isLoggedIn = this.auth.isAuthenticated();
   }

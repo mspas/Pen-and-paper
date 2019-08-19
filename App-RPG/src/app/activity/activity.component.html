@@ -41,7 +41,7 @@
   </div>
   <div class="content" style="height: 1000px">
     <div class="content-top"></div>
-    <app-account-messages *ngIf="messagesChild == true" [allConversations]="allConversations"></app-account-messages>
+    <app-account-messages *ngIf="messagesChild == true" [allConversations]="allConversations" [notificationSet]="notificationSet" [myFriends]="myFriends"></app-account-messages>
     <app-account-games *ngIf="gamesChild == true" [myGamesAPPList]="myGamesAPPList"></app-account-games>
     <app-account-friends *ngIf="friendsChild == true" [myFriends]="myFriends"></app-account-friends>
     <app-account-settings *ngIf="settingsChild == true" [myProfileData]="myProfileData"></app-account-settings>

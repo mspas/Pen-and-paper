@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ConversationModel, MessageCreateModel, MessageModel, ConversationDataModel } from '../../models/message.model';
+import { ConversationModel, MessageCreateModel, MessageModel } from '../../models/message.model';
 import { ApiService } from '../../api.service';
-import { FriendModel } from '../../models/friend.model';
-import { PersonalDataModel } from '../../models/personaldata.model';
 import { Observable } from 'rxjs';
+import { CheckNotificationModel, NotificationAppModel } from '../../models/notification.model';
+import { DataService } from '../../data.service';
+import { FriendModel, FriendListModel } from '../../models/friend.model';
 
 @Component({
   selector: 'app-account-messages',
@@ -12,14 +13,18 @@ import { Observable } from 'rxjs';
 })
 export class AccountMessagesComponent implements OnInit {
 
-  @Input("allConversations") allConversations: ConversationModel[] = [];
+  @Input("allConversations") allConversations: ConversationModel[] = null;
+  @Input("notificationSet") notificationSet: CheckNotificationModel;
+  @Input("myFriends") myFriends: FriendModel[] = [];
+  friendsAcceptedPhoto: FriendListModel[] = [];
   isImageLoading: boolean;
   defaultValue: string = "";
   timerSubscription: any;
+  //notificationData: NotificationAppModel = null;
   //allConversations: ConversationModel[] = [];
   //conversation: MessageModel[];
 
-  constructor(private _api: ApiService) { }
+  constructor(private _api: ApiService, private _data: DataService) { }
 
   ngOnInit() { 
    /* await this.myFriends.forEach(relation => {
@@ -30,26 +35,32 @@ export class AccountMessagesComponent implements OnInit {
 
     console.log("allConv KURWA " + JSON.stringify(this.allConversations));*/
 
-    var i = 0;
-    this.allConversations.forEach(element => {
-      i++;
+    // TUTEJ JEST COS ZE LISTA MA 1 DLUGOSC A ROBI NA 2
+
+
+    this.myFriends.forEach(element => {
+      let friend = new FriendListModel(element.personalData, null);
+      this.friendsAcceptedPhoto.push(friend);
+      let id = this.friendsAcceptedPhoto.length - 1;
       this.isImageLoading = true;
-      this._api.getImage(element.conversationData.userProfile.photoName).subscribe(data => {
-          this.createImageFromBlob(data, i);
+      if (element.personalData.photoName != null && element.personalData.photoName != "") {
+        this._api.getImage(element.personalData.photoName).subscribe(data => {
+          this.createImageFromBlob(data, id);
           this.isImageLoading = false;
         }, error => {
           this.isImageLoading = false;
           console.log(error);
         });
+      }
     });
 
     this.refreshData();    
   }
 
-  createImageFromBlob(image: Blob, i: number) {
+  createImageFromBlob(image: Blob, id: number) {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
-       this.allConversations[i].photo = reader.result;
+       this.friendsAcceptedPhoto[id].photo = reader.result;
     }, false);
  
     if (image) {
@@ -58,17 +69,39 @@ export class AccountMessagesComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
+    var i = 0;
     this.allConversations.forEach(chat => {
       chat.messages.forEach(msg => {
         if (msg.senderId == chat.conversationData.myProfile.id) {
           document.getElementById("msg" + msg.id.toString()).setAttribute("class", "my-message");
         }
+        //chat.photo = this.friendsAcceptedPhoto[i].photo;
+        //this.scrollChatDown(i);
       });
+      //console.log("photo = " + chat.photo);
+      chat.photo = this.friendsAcceptedPhoto[i].photo;
+      i++;
     });
   }
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+ async scrollChatDown(index: number) {
+    await this.delay(300);
+
+    var msgList = document.getElementById("msg-list" + index.toString());
+    msgList.scrollTop = msgList.scrollHeight;
+
+    if (this.notificationSet.message) {
+      var notificationData: NotificationAppModel;
+      await this._data.currentNotificationData.subscribe(data => {
+        notificationData = data;
+      });
+      notificationData.lastMessageSeen = notificationData.lastMessageDate;
+      this._api.editNotificationData(notificationData);
+    }
   }
 
   async refreshData() {

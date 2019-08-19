@@ -68,6 +68,11 @@ export class ApiService {
             .get<NotificationAppModel>(this.url + 'NotificationData/' + id);
     }
 
+    editNotificationData(data: NotificationAppModel) {
+        this._http.put<NotificationAppModel>(this.url + 'NotificationData/' + data.id.toString(), data).subscribe (
+            error => console.log(error));
+    }
+
     getDataProfile(id: number, nick: string): Observable<any> {
         if (id != null && nick != null) {
             let profile =  this._http

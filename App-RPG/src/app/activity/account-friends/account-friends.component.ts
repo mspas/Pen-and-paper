@@ -28,6 +28,7 @@ export class AccountFriendsComponent implements OnInit {
         }
       });
     }
+    console.log("length = " + this.myFriends.length);
 
     this.friendsAccepted.forEach(element => {
       if (element.photoName != null && element.photoName != "") {

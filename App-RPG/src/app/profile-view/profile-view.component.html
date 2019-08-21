@@ -7,8 +7,9 @@
           <img [src]="imageToShow" alt="Profile image" class="profile-photo" *ngIf="defaultImage == false">
         </div>
       </div>
-      <div class="col-md-4" id="big-name">
-        {{ userProfileData.firstname }} {{ userProfileData.lastname }} ({{ userProfileData.login }})
+      <div class="col-md-4 col-name">
+        <span class="text-outline" id="big-name">{{ userProfileData.firstname }} {{ userProfileData.lastname }}</span>
+        <span class="title-panel-sm" id="nickname">{{ userProfileData.login }}</span>
       </div>
       <div class="col-md-5">
         <div class="nav-tabs-wrap">
@@ -35,7 +36,7 @@
       </div>
     </div>
   </div>
-  <div class="content" style="height: 1000px">
+  <div class="content">
     <div class="content-top"></div>
     <app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
     <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends"></app-view-friends>

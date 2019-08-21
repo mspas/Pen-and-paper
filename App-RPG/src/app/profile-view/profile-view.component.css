@@ -47,12 +47,13 @@
 .profile-photo {
     width:200px; 
     height: 200px;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .nav-tabs-wrap {
-    padding-top: 125px;
+    padding-top: 126px;
     padding-left: 40px;
+    min-width: 400px;
     display: inline-block;
     color: #000000;
     font-size: 14px;
@@ -73,19 +74,43 @@ li a:hover {
     background-color: #e4e3e3;
 }
 
+.col-name {
+    margin-top: 125px;
+    padding: 0 15px 0 0;
+}
+
 #big-name {
-    padding-top: 140px;
-    padding-left: 50px;
-    padding-right: 0px;
-    color: #000000;
-    font-size: 22px;
+    padding-left: 25px;
+    color: #ffffff;
+    font-size: 32px;
     letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
+#nickname {
+    position: absolute;
+    float: right;
+    margin-top: 45px;
+    margin-left: -15px;
+    font-size: 15px;
+    letter-spacing: 2px;
+}
+/*#nickname {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: 20px;
+    font-size: 45px;
+    color: #ffffff;
+}*/
+.title-panel-sm {
+    color: #000000;
+    font-size: 20px;
+    letter-spacing: 4px;
     font-family: Montserrat, sans-serif;
 }
 
 .btn-wrap {
     margin-left: 539px;
-    margin-top: -46px;
+    margin-top: 25px;
     color: #000000;
     font-size: 14px;
     letter-spacing: 2px;

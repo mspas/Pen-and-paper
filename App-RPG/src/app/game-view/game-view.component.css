@@ -1,3 +1,73 @@
+.content {
+    padding-top: 0px;
+    margin-top: 120px;
+}
+.content-top {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 5px -5px #333;
+}
+
+.title-panel {
+    position: absolute;
+    padding: 140px 0 0 140px;
+    color: #000000;
+    font-size: 26px;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
+}
+.btn-join {
+    display: inline-block;
+    height: 100px;
+    width: 300px;
+    padding-left: 10px;
+    margin-right: -4px;
+    cursor: pointer;
+    background-color: #f1efef;
+    background-repeat: no-repeat;
+    background-image: url("assets/btn-join-game.png");
+    border-style: solid;
+    border-color: #fff;
+    border-width: 1px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0 0 2px #58a33c;
+}
+.btn-join:hover {
+    box-shadow: inset 0 5px 5px 0 rgba(16, 61, 14, 0.24), 0 17px 50px 0 rgba(16, 61, 14, 0.24);
+    background-image: url("assets/btn-join-game-hover.png");
+    background-color: rgba(80, 244, 30, 0.1);
+    color: #58a33c;
+}
+.btn-text {
+    padding-top: 35px;
+    padding-left: 120px;
+    line-height: 1.15;
+    font-size: 25px;
+}
+.description {
+    text-align: justify;
+    padding: 50px 50px 0 25px;
+
+}
+.information {
+    background-image: url("assets/notepad.png");
+    background-repeat: no-repeat;
+    margin-top: 50px;
+    margin-left: -10px;
+    padding-top: 30px;
+    padding-left: 125px;
+    max-width: 1074px;
+    color: #252525;
+    font-family: Montserrat, sans-serif;
+    border-radius: 30px 0 0 0;
+    box-shadow:  15px -10px 15px -15px rgba(0, 0, 0, 0.2),  5px 0 5px -5px rgba(0, 0, 0, 0.19);
+}
+
+
+
+
+
+
 h2 {
     color: white;
     font-size: medium;

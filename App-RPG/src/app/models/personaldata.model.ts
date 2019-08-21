@@ -26,3 +26,11 @@ export class PersonalDataModel {
       public notificationData: NotificationModel
     ) {}
   }
+
+  export class PersonalDataListModel {
+    constructor(
+      public data: PersonalDataModel,
+      public photo: any
+    ) {}
+
+}

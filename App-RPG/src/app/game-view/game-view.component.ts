@@ -1,7 +1,7 @@
 import { ButtonManager } from './button-manager';
 import { ApiService } from './../api.service';
 import { Component, OnInit } from '@angular/core';
-import { PersonalDataModel } from '../models/personaldata.model';
+import { PersonalDataModel, PersonalDataListModel } from '../models/personaldata.model';
 import { GameToPersonAppModel, GameToPersonCreateModel } from '../models/game-to-person.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameAppModel } from '../models/game.model';
@@ -21,6 +21,7 @@ export class GameViewComponent implements OnInit {
   urlFantasy: string = "assets/fantasy1.png";
   urlSciFi: string = "assets/scifi.png";
   imageUrl: string = "";
+  imageToShow: any;
 
   data: any;
   profileData: PersonalDataModel;
@@ -35,16 +36,17 @@ export class GameViewComponent implements OnInit {
   isNewRequest: boolean = false;
   numberOfRequests: number = 0;
   myCardId: number;
-  acceptedPlayers: PersonalDataModel[] = [];
+  acceptedPlayers: PersonalDataListModel[] = [];
   waitingSelfRequested: PersonalDataModel[] = [];
   waitingInvited: PersonalDataModel[] = [];
   newSkillsNames: string[] = [];
   newGameSessions: GameSessionCreateModel[] = [];
   isNewInvited: boolean = false;
+  isImageLoading: boolean;
 
 
   
-  constructor(private route: ActivatedRoute, private _api: ApiService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private _api: ApiService, private _router: Router) { }
 
   ngOnInit() {
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
@@ -87,9 +89,12 @@ export class GameViewComponent implements OnInit {
         });
       }
       this.gameData.cards.forEach(card => {
-        if (card.playerId == player.id) {
-          if (card.isAccepted)
-            this.acceptedPlayers.push(player);
+        //if (card.playerId == player.id && card.id != this.gameMaster.id) {
+          if (card.playerId == player.id) {
+          if (card.isAccepted) {
+            let playerListModel = new PersonalDataListModel(player, null);
+            this.acceptedPlayers.push(playerListModel);
+          }
           else {
             if (card.isMadeByPlayer)
               this.waitingSelfRequested.push(player);
@@ -112,7 +117,44 @@ export class GameViewComponent implements OnInit {
     if (this.gameData.isActive)
       this.status = "Active";
 
+    if (this.gameMaster.photoName != null && this.gameMaster.photoName != "") {
+        this._api.getImage(this.gameMaster.photoName).subscribe(data => {
+          this.createImageFromBlob(data, -1);
+          this.isImageLoading = false;
+        }, error => {
+          this.isImageLoading = false;
+          console.log(error);
+        });
+    }
+    let i = 0;
+    this.acceptedPlayers.forEach(element => {
+      if (element.data.photoName != null && element.data.photoName != "") {
+        this._api.getImage(element.data.photoName).subscribe(data => {
+          this.createImageFromBlob(data, i-1);
+          this.isImageLoading = false;
+        }, error => {
+          this.isImageLoading = false;
+          console.log(error);
+        });
+      }
+      i++;
+    });
+
   }
+
+  createImageFromBlob(image: Blob, i: number) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      if (i != -1)
+        this.acceptedPlayers[i].photo = reader.result;
+      else  
+        this.imageToShow = reader.result;
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+ }
 
   onJoin() {
     let invite = false;
@@ -121,12 +163,12 @@ export class GameViewComponent implements OnInit {
 
     let newConnection = new GameToPersonCreateModel(this.gameData.id, this.profileData.id, false, invite, true, 10);
     this._api.joinGame(newConnection);
-    this.router.navigate(['/profile/games-list/', this.profileData.login]);
+    this._router.navigate(['/profile/games-list/', this.profileData.login]);
   }
 
   onLeave() {
     this._api.declineJoinGame(this.myCardId);
-    this.router.navigate(['/profile/games-list/', this.profileData.login]);
+    this._router.navigate(['/profile/games-list/', this.profileData.login]);
   }
 
   onAcceptRequest(playerId: number) {

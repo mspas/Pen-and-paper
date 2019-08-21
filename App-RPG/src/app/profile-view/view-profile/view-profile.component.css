@@ -19,6 +19,14 @@
     padding-top: 62.685px;
     line-height: 1.15;
 }
+.btn-wrap {
+    margin-left: 539px;
+    margin-top: -46px;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-family: Montserrat, sans-serif;
+}
 .btn-profile {
     background-color: #f1efef;
     background-repeat: no-repeat;

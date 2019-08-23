@@ -25,12 +25,12 @@ namespace mdRPG.Controllers
         }
 
 
-        [HttpGet("/api/account")]
+       /* [HttpGet("/api/account")]
         public List<AccountResource> GetAccounts()
         {
             var acc = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
             return mapper.Map<List<Account>, List<AccountResource>>(acc);
-        }
+        }*/
         
         [HttpPost("/api/account")]
         public async Task<IActionResult> CreateAccount([FromBody] Account account)

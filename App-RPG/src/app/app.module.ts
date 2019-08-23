@@ -46,6 +46,7 @@ import { AccountSettingsComponent } from './activity/account-settings/account-se
 import { AccountMessagesComponent } from './activity/account-messages/account-messages.component';
 import { AccountFriendsComponent } from './activity/account-friends/account-friends.component';
 import { AccountGamesComponent } from './activity/account-games/account-games.component';
+import { GameOverviewComponent } from './game-overview/game-overview.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { AccountGamesComponent } from './activity/account-games/account-games.co
     AccountSettingsComponent,
     AccountMessagesComponent,
     AccountFriendsComponent,
-    AccountGamesComponent
+    AccountGamesComponent,
+    GameOverviewComponent
   ],
   imports: [
     BrowserModule,

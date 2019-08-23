@@ -20,6 +20,7 @@ namespace mdRPG.Models
         public virtual PersonalData player { get; set; }
         public virtual ICollection<MySkill> characterSkills { get; set; }
         public virtual ICollection<MyItem> characterItems { get; set; }
+        public virtual ICollection<UserPermitted> topicsAccess { get; set; }
 
         /*public GameToPerson(int gameID, int playerID, bool master, bool accept, bool made)
         {

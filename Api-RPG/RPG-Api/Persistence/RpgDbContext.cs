@@ -24,6 +24,10 @@ namespace mdRPG.Persistence
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<NotificationData> NotificationsData { get; set; }
+        public DbSet<Forum> Forums { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+        public DbSet<MessageForum> MessagesForum { get; set; }
+        public DbSet<UserPermitted> UserPermissions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -86,6 +90,36 @@ namespace mdRPG.Persistence
                         .HasOne(m => m.relation)
                         .WithMany(t => t.Messages)
                         .HasForeignKey(m => m.relationId)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Topic>()
+                        .HasOne(m => m.forum)
+                        .WithMany(t => t.Topics)
+                        .HasForeignKey(m => m.forumId)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MessageForum>()
+                        .HasOne(m => m.topic)
+                        .WithMany(t => t.Messages)
+                        .HasForeignKey(m => m.topicId)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MessageForum>()
+                        .HasOne(m => m.topic)
+                        .WithMany(t => t.Messages)
+                        .HasForeignKey(m => m.topicId)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserPermitted>()
+                        .HasOne(m => m.UserCard)
+                        .WithMany(t => t.topicsAccess)
+                        .HasForeignKey(m => m.userId)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserPermitted>()
+                        .HasOne(m => m.Topic)
+                        .WithMany(t => t.UsersPermissions)
+                        .HasForeignKey(m => m.topicId)
                         .OnDelete(DeleteBehavior.Restrict);
         }
     }

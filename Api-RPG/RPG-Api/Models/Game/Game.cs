@@ -21,10 +21,18 @@ namespace mdRPG.Models
         public DateTime date { get; set; }
         public bool needInvite { get; set; }
         public bool isActive { get; set; }
+        public DateTime? lastActivityDate { get; set; }
         public PersonalData gameMaster { get; set; }
+        public virtual Forum forum { get; set; }
         public virtual ICollection<GameToPerson> participants { get; set; }
         public virtual ICollection<Skill> skillSetting { get; set; }
         public virtual ICollection<GameSession> sessions { get; set; }
+
+
+        public Game()
+        {
+            forum = new Forum();
+        }
     }
 
 }

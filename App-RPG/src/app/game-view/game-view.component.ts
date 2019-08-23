@@ -105,6 +105,11 @@ export class GameViewComponent implements OnInit {
       });
     });
 
+    if (this.iAmParticipant || this.iAmMaster) {
+      this.goToGameOverview();
+    }
+    console.log("oh je " + this.iAmMaster);
+
     
     if (this.waitingSelfRequested.length >= 1)
       this.numberOfRequests = this.waitingSelfRequested.length;
@@ -154,6 +159,12 @@ export class GameViewComponent implements OnInit {
     if (image) {
        reader.readAsDataURL(image);
     }
+ }
+
+ async goToGameOverview() {
+  var res = await this._router.navigate(['/game', this.gameData.id, 'overview']);
+  var snapshot = this.route.snapshot;
+  window.location.reload();
  }
 
   onJoin() {

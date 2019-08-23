@@ -26,6 +26,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { StartPageComponent } from './start-page/start-page.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivityResolve } from './activity/activity.resolve.service';
+import { GameOverviewComponent } from './game-overview/game-overview.component';
 
 const routes: Routes = [];
 
@@ -118,6 +119,14 @@ const routes: Routes = [];
           canActivate: [AuthGuardService],
           resolve: {
             profiledata: ActivityResolve
+          },
+      },
+      {
+          path: 'game/:id/overview', 
+          component: GameOverviewComponent,
+          canActivate: [AuthGuardService],
+          resolve: {
+            profiledata: GameResolve
           },
       }
   ])

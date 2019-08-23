@@ -107,19 +107,3 @@ h4 {
 .font19 {
     font-size: 19px;    
 }
-
-.st0{fill:none;stroke:#000;stroke-miterlimit:10}
-
-path {
-  stroke-dasharray: 507;
-  animation: draw 4s reverse infinite;
-}
-
-@keyframes draw {
-  from {
-    stroke-dashoffset: 0;
-  }
-  to {
-    stroke-dashoffset: 507;
-  }
-}

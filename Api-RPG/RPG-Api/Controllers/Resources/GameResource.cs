@@ -31,23 +31,24 @@ namespace mdRPG.Controllers.Resources
         }
 
         public int Id { get; set; }
-    public int masterId { get; set; }
-    public string title { get; set; }
-    public string category { get; set; }
-    public int nofparticipants { get; set; }
-    public int nofplayers { get; set; }
-    public string description { get; set; }
-    public string location { get; set; }
-    public string book { get; set; }
-    public string comment { get; set; }
-    public DateTime date { get; set; }
-    public bool needInvite { get; set; }
-    public bool isActive { get; set; }
-    public PersonalDataResource gameMaster { get; set; }
-    public List<PersonalDataResource> participants { get; set; }
-    public List<SkillResource> skillSetting { get; set; }
-    public List<GameSession> sessions { get; set; }
-    public List<GameToPersonResource> cards { get; set; }
+        public int masterId { get; set; }
+        public string title { get; set; }
+        public string category { get; set; }
+        public int nofparticipants { get; set; }
+        public int nofplayers { get; set; }
+        public string description { get; set; }
+        public string location { get; set; }
+        public string book { get; set; }
+        public string comment { get; set; }
+        public DateTime date { get; set; }
+        public bool needInvite { get; set; }
+        public bool isActive { get; set; }
+        public DateTime? lastActivityDate { get; set; }
+        public PersonalDataResource gameMaster { get; set; }
+        public List<PersonalDataResource> participants { get; set; }
+        public List<SkillResource> skillSetting { get; set; }
+        public List<GameSession> sessions { get; set; }
+        public List<GameToPersonResource> cards { get; set; }
 
       
     }

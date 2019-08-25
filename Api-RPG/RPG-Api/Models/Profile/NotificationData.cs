@@ -16,6 +16,7 @@ namespace mdRPG.Models
         public DateTime? lastMessageSeen { get; set; }
         public DateTime? lastGameNotificationSeen { get; set; }
         public DateTime? lastFriendNotificationSeen { get; set; }
+        public virtual ICollection<TopicToPerson> topicsAccess { get; set; }
     }
 
 }

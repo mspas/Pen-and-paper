@@ -27,7 +27,7 @@ namespace mdRPG.Persistence
         public DbSet<Forum> Forums { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<MessageForum> MessagesForum { get; set; }
-        public DbSet<UserPermitted> UserPermissions { get; set; }
+        public DbSet<TopicToPerson> TopicsToPersons { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -110,15 +110,15 @@ namespace mdRPG.Persistence
                         .HasForeignKey(m => m.topicId)
                         .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<UserPermitted>()
-                        .HasOne(m => m.UserCard)
+            modelBuilder.Entity<TopicToPerson>()
+                        .HasOne(m => m.UserNotificationData)
                         .WithMany(t => t.topicsAccess)
                         .HasForeignKey(m => m.userId)
                         .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<UserPermitted>()
+            modelBuilder.Entity<TopicToPerson>()
                         .HasOne(m => m.Topic)
-                        .WithMany(t => t.UsersPermissions)
+                        .WithMany(t => t.UsersConnected)
                         .HasForeignKey(m => m.topicId)
                         .OnDelete(DeleteBehavior.Restrict);
         }

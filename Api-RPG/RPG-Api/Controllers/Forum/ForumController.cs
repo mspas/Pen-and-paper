@@ -41,7 +41,6 @@ namespace mdRPG.Controllers
         {
             var toUpdate = context.Forums.Find(id);
             toUpdate.lastActivityDate = forum.lastActivityDate;
-            toUpdate.forumName = forum.forumName;
             toUpdate.isPublic = forum.isPublic;
 
             context.Forums.Update(toUpdate);

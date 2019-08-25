@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using mdRPG.Models;
 using mdRPG.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,39 +39,48 @@ namespace mdRPG.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MessageForum message)
         {
-           /* var toUpdateTopic = context.Topics.Find(message.topicId);
+            var toUpdateTopic = context.Topics.Include(mbox => mbox.UsersConnected).First(mbox => mbox.Id == message.topicId);
             var toUpdateForum = context.Forums.Find(toUpdateTopic.forumId);
-            var toUpdateGame = context.Games.Find(toUpdateForum.Id);
+            var toUpdateGame = context.Games.Include(mbox => mbox.participants).First(mbox => mbox.Id == toUpdateForum.Id);
 
-            int notificationId;
-            if (toUpdateRelation.player1Id == message.senderId)
-                notificationId = toUpdateRelation.player2Id;
-            else
-                notificationId = toUpdateRelation.player1Id;
+            toUpdateTopic.lastActivityDate = message.sendDdate;
+            toUpdateForum.lastActivityDate = message.sendDdate;
+            toUpdateGame.lastActivityDate = message.sendDdate;
 
-            var toUpdateNotif = context.NotificationsData.Find(notificationId);
-            toUpdateNotif.lastMessageDate = message.sendDdate;
-            toUpdateRelation.lastMessageDate = message.sendDdate;
+            foreach (GameToPerson player in toUpdateGame.participants)
+            {
+                foreach (TopicToPerson per in toUpdateTopic.UsersConnected)
+                {
+                    if (player.playerId == per.userId)
+                    {
+                        var toUpdateNotification = context.NotificationsData.Find(player.playerId);
+                        toUpdateNotification.lastGameNotificationDate = message.sendDdate;
+                        context.NotificationsData.Update(toUpdateNotification);
+                    }
+                }
+            }
 
-            context.NotificationsData.Update(toUpdateNotif);
-            context.Friends.Update(toUpdateRelation);
-            context.Messages.Add(message);
-            await context.SaveChangesAsync();*/
+            context.Topics.Update(toUpdateTopic);
+            context.Forums.Update(toUpdateForum);
+            context.Games.Update(toUpdateGame);
+            context.MessagesForum.Add(message);
+            await context.SaveChangesAsync();
             return Ok(message);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id)
+        public async Task<IActionResult> Put(int id, [FromBody] MessageForum message)
         {
-            var toUpdate = context.Messages.Find(id);
+            var toUpdate = context.MessagesForum.Find(id);
             if (toUpdate == null)
             {
                 return NotFound();
             }
 
-            toUpdate.wasSeen = true;
+            toUpdate.bodyMessage = message.bodyMessage;
+            toUpdate.editDate = message.editDate;
 
-            context.Messages.Update(toUpdate);
+            context.MessagesForum.Update(toUpdate);
             await context.SaveChangesAsync();
             return NoContent();
         }
@@ -78,13 +88,13 @@ namespace mdRPG.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var toDelete = context.Messages.Find(id);
+            var toDelete = context.MessagesForum.Find(id);
             if (toDelete == null)
             {
                 return NotFound();
             }
 
-            context.Messages.Remove(toDelete);
+            context.MessagesForum.Remove(toDelete);
             await context.SaveChangesAsync();
             return NoContent();
         }

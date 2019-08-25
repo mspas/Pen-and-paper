@@ -10,7 +10,6 @@ namespace mdRPG.Models
     {
         [ForeignKey("Game")]
         public int Id { get; set; }
-        public string forumName { get; set; }
         public bool isPublic { get; set; }
         public DateTime? lastActivityDate { get; set; }
         public virtual ICollection<Topic> Topics { get; set; }

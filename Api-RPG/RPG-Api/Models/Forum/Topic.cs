@@ -14,6 +14,6 @@ namespace mdRPG.Models
         public int forumId { get; set; }
         public virtual Forum forum { get; set; }
         public virtual ICollection<MessageForum> Messages { get; set; }
-        public virtual ICollection<UserPermitted> UsersPermissions { get; set; }
+        public virtual ICollection<TopicToPerson> UsersConnected { get; set; }
     }
 }

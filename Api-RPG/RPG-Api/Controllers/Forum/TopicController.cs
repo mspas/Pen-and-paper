@@ -26,12 +26,12 @@ namespace mdRPG.Controllers
         [HttpGet("{userId}/{topicId}")]
         public Topic Get(int userId, int topicId)
         {
-            var topic = context.Topics.Include(mbox => mbox.Messages).Include(mbox => mbox.UsersPermissions).First(mbox => mbox.Id == topicId);
+            var topic = context.Topics.Include(mbox => mbox.Messages).Include(mbox => mbox.UsersConnected).First(mbox => mbox.Id == topicId);
             if (topic.isPublic == false)
             {
-                if (topic.UsersPermissions.Count > 0)
+                if (topic.UsersConnected.Count > 0)
                 {
-                    foreach (UserPermitted per in topic.UsersPermissions)
+                    foreach (TopicToPerson per in topic.UsersConnected)
                     {
                         if (per.userId == userId)
                             return topic;
@@ -47,6 +47,15 @@ namespace mdRPG.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Topic topic)
         {
+            var game = context.Games.Include(mbox => mbox.participants).First(mbox => mbox.Id == topic.forumId);
+            if (topic.isPublic)
+            {
+                foreach (GameToPerson player in game.participants)
+                {
+                    var t2p = new TopicToPerson(topic.forumId, topic.Id, player.playerId);
+                    context.TopicsToPersons.Add(t2p);
+                }
+            }
             context.Topics.Add(topic);
             await context.SaveChangesAsync();
             return Ok(topic);

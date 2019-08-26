@@ -13,6 +13,7 @@ import { GameSessionCreateModel } from './models/gamesession.model';
 import { ChangePasswordModel } from './models/changepassword.model';
 import { MessageModel, MessageCreateModel } from './models/message.model';
 import { NotificationAppModel } from './models/notification.model';
+import { ForumModel } from './models/forum.model';
 
 @Injectable()
 export class ApiService {
@@ -86,6 +87,16 @@ export class ApiService {
                 .do(data => console.log('All: ' + JSON.stringify(data)));
             return Observable.forkJoin([profile, friendsList, gamesList]);
         }
+    }
+
+    getGameAndForum(gameId: number): Observable<any> {
+        let forum =  this._http
+            .get<ForumModel>(this.url + 'Forum/' + gameId.toString())
+            .do(data => console.log("forum " + JSON.stringify(data)));
+        let game = this._http
+            .get<GameAppModel[]>(this.url + 'Game/' + gameId.toString())
+            .do(data => console.log('game: ' + JSON.stringify(data)));
+        return Observable.forkJoin([forum, game]);
     }
 
     getFriendsList(id: number): Observable<FriendModel[]> {

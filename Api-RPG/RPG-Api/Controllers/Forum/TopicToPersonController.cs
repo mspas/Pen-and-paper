@@ -10,26 +10,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace mdRPG.Controllers
 {
+    [Route("api/[controller]")]
     public class TopicToPersonController : Controller
 {
         // GET: /<controller>/
         private readonly RpgDbContext context;
-        private readonly List<TopicToPerson> allTopicsToPersons = new List<TopicToPerson>();
+        private readonly List<TopicToPerson> allTopicsToPersons = null;
 
         public TopicToPersonController(RpgDbContext context)
         {
             this.context = context;
-            //allTopics = context.Topics.Include(m => m.Messages).ToList();
+            allTopicsToPersons = context.TopicsToPersons.ToList();
         }
 
         [HttpGet("{userId}")]
         public List<TopicToPerson> Get(int userId)
         {
+            Console.WriteLine("userid = " + userId);
             var foundT2P = new List<TopicToPerson>(); ;
             foreach (TopicToPerson t2p in allTopicsToPersons)
             {
                 if (t2p.userId == userId)
                 {
+                    Console.WriteLine("t2p id = " + t2p.Id);
                     foundT2P.Add(t2p);
                 }
             }

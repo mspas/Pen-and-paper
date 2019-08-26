@@ -28,7 +28,7 @@ import { CreateGameDataService } from './create-game/create-game.service';
 import { ProfileViewGamesComponent } from './profile-view/view-games/profile-view-games.component';
 import { GamesViewResolve } from './profile-view/view-games/profile-view-games.resolve.service';
 import { GameViewComponent } from './game-view/game-view.component';
-import { GameResolve } from './game-view/game.resolve.service';
+import { GameViewResolve } from './game-view/game.resolve.service';
 import { SearchGameComponent } from './search-game/search-game.component';
 import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game.component';
 import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
@@ -47,6 +47,7 @@ import { AccountMessagesComponent } from './activity/account-messages/account-me
 import { AccountFriendsComponent } from './activity/account-friends/account-friends.component';
 import { AccountGamesComponent } from './activity/account-games/account-games.component';
 import { GameOverviewComponent } from './game-overview/game-overview.component';
+import { GameResolve } from './game-overview/game-overview.resolve.service';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { GameOverviewComponent } from './game-overview/game-overview.component';
     CreateGameDataService,
     GamesViewResolve,
     GameResolve,
+    GameViewResolve,
     SearchGameResolve,
     GameInviteResolve,
     ProfileDataResolve,

@@ -16,7 +16,7 @@ import { SearchFriendResolve } from './search-friend/search-friend.resolve.servi
 import { CreateGameComponent } from './create-game/create-game.component';
 import { GamesViewResolve } from './profile-view/view-games/profile-view-games.resolve.service';
 import { ProfileViewGamesComponent } from './profile-view/view-games/profile-view-games.component';
-import { GameResolve } from './game-view/game.resolve.service';
+import { GameViewResolve } from './game-view/game.resolve.service';
 import { GameViewComponent } from './game-view/game-view.component';
 import { SearchGameComponent } from './search-game/search-game.component';
 import { SearchGameResolve } from './search-game/search-game.resolve.service';
@@ -27,6 +27,7 @@ import { StartPageComponent } from './start-page/start-page.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivityResolve } from './activity/activity.resolve.service';
 import { GameOverviewComponent } from './game-overview/game-overview.component';
+import { GameResolve } from './game-overview/game-overview.resolve.service';
 
 const routes: Routes = [];
 
@@ -102,7 +103,7 @@ const routes: Routes = [];
           component: GameViewComponent,
           canActivate: [AuthGuardService],
           resolve: {
-            profiledata: GameResolve
+            profiledata: GameViewResolve
           },
       },
       {

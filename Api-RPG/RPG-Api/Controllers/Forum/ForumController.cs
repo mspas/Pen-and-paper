@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace mdRPG.Controllers
 {
+    [Route("api/[controller]")]
     public class ForumController : Controller
     {
         // GET: /<controller>/
@@ -26,7 +27,7 @@ namespace mdRPG.Controllers
         [HttpGet("{id}")]
         public Forum Get(int id)
         {
-            var forum = context.Forums.Find(id);
+            var forum = context.Forums.Include(mbox => mbox.Topics).First(mbox => mbox.Id == id);
             forum.Topics = new List<Topic>();
             foreach (Topic topic in allTopics)
             {
@@ -39,7 +40,7 @@ namespace mdRPG.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Forum forum)
         {
-            var toUpdate = context.Forums.Find(id);
+            var toUpdate = context.Forums.Include(mbox => mbox.Topics).First(mbox => mbox.Id == id);
             toUpdate.lastActivityDate = forum.lastActivityDate;
             toUpdate.isPublic = forum.isPublic;
 

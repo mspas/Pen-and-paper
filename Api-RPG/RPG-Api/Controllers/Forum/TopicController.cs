@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace mdRPG.Controllers
 {
+    [Route("api/[controller]")]
     public class TopicController : Controller
 {
         // GET: /<controller>/

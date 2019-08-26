@@ -22,5 +22,8 @@ namespace mdRPG.Models
             this.userId = userId;
             lastActivitySeen = null;
         }
+        public TopicToPerson()
+        {
+        }
     }
 }

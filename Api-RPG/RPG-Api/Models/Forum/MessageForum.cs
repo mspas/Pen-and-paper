@@ -9,7 +9,7 @@ namespace mdRPG.Models
 {
         public int Id { get; set; }
         public DateTime sendDdate { get; set; }
-        public DateTime editDate { get; set; }
+        public DateTime? editDate { get; set; }
         public string bodyMessage { get; set; }
         public int senderId { get; set; }
         public int topicId { get; set; }

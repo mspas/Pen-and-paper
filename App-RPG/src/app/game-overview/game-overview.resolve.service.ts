@@ -4,11 +4,11 @@ import {
     ActivatedRouteSnapshot
 } from '@angular/router';
 import { ApiService } from '../api.service';
-import { GameAppModel } from '../models/game.model';
+import { ForumModel } from '../models/forum.model';
 
 
 @Injectable()
-export class GameViewResolve implements Resolve<GameAppModel> {
+export class GameResolve implements Resolve<ForumModel> {
 
     
     constructor(private _api: ApiService, private router: Router) {
@@ -16,6 +16,6 @@ export class GameViewResolve implements Resolve<GameAppModel> {
 
     resolve(route: ActivatedRouteSnapshot) {
         let id = +route.params['id'];
-        return this._api.getGameView(id);
+        return this._api.getGameAndForum(id);
     }
 }

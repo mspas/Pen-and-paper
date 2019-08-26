@@ -1,7 +1,6 @@
 export class ForumModel {
     constructor(
         public id: number,
-        public forumName: string,
         public isPublic: boolean,
         public lastActivityDate: Date,
         public topics: TopicModel[]
@@ -23,9 +22,9 @@ export class MessageForumModel {
     constructor(
         public id: number,
         public sendDdate: Date,
+        public editDdate: Date,
         public bodyMessage: string,
         public senderId: number,
-        public forumId: number,
         public topicId: number
     ) { }
 }

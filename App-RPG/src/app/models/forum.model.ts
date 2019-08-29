@@ -1,3 +1,5 @@
+import { PersonalDataModel } from "./personaldata.model";
+
 export class ForumModel {
     constructor(
         public id: number,
@@ -10,11 +12,28 @@ export class ForumModel {
 export class TopicModel {
     constructor(
         public id: number,
-        public topicName: string,
-        public isPublic: boolean,
-        public lastActivityDate: Date,
         public forumId: number,
+        public topicName: string,
+        public category: string,
+        public authorId: number,
+        public isPublic: boolean,
+        public messagesAmount: number,
+        public createDate: Date,
+        public lastActivityDate: Date,
+        public lastActivityUserId: number,
+        public totalPages: number,
         public messages: MessageForumModel[]
+    ) { }
+}
+
+export class TopicListModel {
+    constructor(
+        public topicData: TopicModel,
+        public author: PersonalDataModel,
+        public wasSeen: boolean,
+        public lastAuthor: PersonalDataModel,
+        public lastPostDate: Date
+
     ) { }
 }
 
@@ -25,6 +44,7 @@ export class MessageForumModel {
         public editDdate: Date,
         public bodyMessage: string,
         public senderId: number,
-        public topicId: number
+        public topicId: number,
+        public pageNumber: number
     ) { }
 }

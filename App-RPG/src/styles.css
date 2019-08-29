@@ -32,25 +32,22 @@ body {
 }
 .content {
     margin-top: 120px;
-    padding-top: 150px;
+    padding: 150px 25px 25px 25px;
     background-color: #e4e3e3;
     border-radius: 30px 30px 0px 0px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-style: solid;
     border-color: #ffffff;
     color: #252525;
-    padding-left: 25px;
     font-family: Montserrat, sans-serif;
 }
 .content-top {
-    margin: -150px 0px 75px -25px;
+    margin: -150px -25px 75px -25px;
     height: 80px;
     background-color: #f1efef;
     border-radius: 30px 30px 0px 0px;
 }
 
-.title-panel-bg {
-}
 .title-panel-sm {
     margin-left: 40px; 
     color: #000000;

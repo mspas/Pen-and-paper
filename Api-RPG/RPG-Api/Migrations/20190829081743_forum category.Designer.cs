@@ -11,9 +11,10 @@ using System;
 namespace RPGApi.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    partial class RpgDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190829081743_forum category")]
+    partial class forumcategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,8 +196,6 @@ namespace RPGApi.Migrations
 
                     b.Property<DateTime?>("editDate");
 
-                    b.Property<int>("pageNumber");
-
                     b.Property<DateTime>("sendDdate");
 
                     b.Property<int>("senderId");
@@ -337,11 +336,7 @@ namespace RPGApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("authorId");
-
                     b.Property<string>("category");
-
-                    b.Property<DateTime>("createDate");
 
                     b.Property<int>("forumId");
 
@@ -349,13 +344,7 @@ namespace RPGApi.Migrations
 
                     b.Property<DateTime?>("lastActivityDate");
 
-                    b.Property<int>("lastActivityUserId");
-
-                    b.Property<int>("messagesAmount");
-
                     b.Property<string>("topicName");
-
-                    b.Property<int>("totalPages");
 
                     b.HasKey("Id");
 

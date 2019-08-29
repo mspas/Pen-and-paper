@@ -1,5 +1,75 @@
-<div class="container" style="width: 80%; min-width: 1170px">
-  <div class="content">
-  
+<div class="container">
+  <div class="title-panel">
+    <div class="row" style="max-width: 1100px">
+      <div class="col-sm-3 col-md-6">
+          <span class="text-outline">{{ gameData.title }}</span>
+      </div>
+      <div class="col-sm-3 col-md-6">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+      </div>
+    </div>
+  </div>
+  <div class="content" >
+    <div class="content-top"></div>
+
+    <div class="table-responsive">          
+        <table class="table table-info">
+          <thead>
+            <tr>
+              <th>
+                TOPICS
+              </th>
+              <th>
+                AUTHOR
+              </th>
+              <th>
+                POSTS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="media" *ngFor="let topic of topicList; let i=index">
+              <td>
+                  <div class="media-left">
+                    <img *ngIf="topic.wasSeen" class="topic-img" src="assets/topic-new.png" alt="New message!">
+                    <img *ngIf="!topic.wasSeen" class="topic-img" src="assets/topic.png" alt="Seen">
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                      <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          ...
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                      </ul>
+                    </h4>
+                    <h4 class="media-bottom">
+                      <div class="user-post"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                    </h4>
+                  </div>
+              </td>
+              <td>
+                <div class="user-post"><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+              </td>
+              <td>
+                {{topic.topicData.messagesAmount}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
   </div>
 </div>

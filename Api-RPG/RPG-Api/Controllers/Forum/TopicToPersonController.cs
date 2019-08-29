@@ -23,18 +23,21 @@ namespace mdRPG.Controllers
             allTopicsToPersons = context.TopicsToPersons.ToList();
         }
 
-        [HttpGet("{userId}")]
-        public List<TopicToPerson> Get(int userId)
+        [HttpGet("{userId}/{forumId}")]
+        public List<TopicToPerson> Get(int userId, int forumId)
         {
-            Console.WriteLine("userid = " + userId);
             var foundT2P = new List<TopicToPerson>(); ;
             foreach (TopicToPerson t2p in allTopicsToPersons)
             {
-                if (t2p.userId == userId)
+                if (t2p.userId == userId && forumId == -1)      //-1 to gdy wczytuje wszystkie notyfikacje dla gracza
                 {
-                    Console.WriteLine("t2p id = " + t2p.Id);
                     foundT2P.Add(t2p);
                 }
+                if (t2p.userId == userId && t2p.forumId == forumId)
+                {
+                    foundT2P.Add(t2p);
+                }
+
             }
             return foundT2P;
         }

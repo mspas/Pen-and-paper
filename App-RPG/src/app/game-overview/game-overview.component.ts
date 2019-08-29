@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ForumModel, TopicListModel } from '../models/forum.model';
+import { GameAppModel } from '../models/game.model';
+import { PersonalDataModel } from '../models/personaldata.model';
+import { TopicToPersonModel } from '../models/topic-to-person.model';
 
 @Component({
   selector: 'app-game-overview',
@@ -8,9 +12,47 @@ import { Router } from '@angular/router';
 })
 export class GameOverviewComponent implements OnInit {
 
-  constructor() { }
+  data: any[];
+  forumData: ForumModel;
+  gameData: GameAppModel;
+  topicToPersonData: TopicToPersonModel[];
+
+  topicList: TopicListModel[] = [];
+  totalPagesLessOne: number = 1;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.data.subscribe((profiledata: { profiledata: any }) => {
+      this.data = profiledata.profiledata;
+    });
+
+    this.forumData = this.data[0];
+    let gameList = this.data[1];
+    this.gameData = gameList.pop();
+    this.topicToPersonData = this.data[2];
+
+    console.log("wft " + this.forumData.topics[0].messages[this.forumData.topics[0].messagesAmount-1].sendDdate)
+
+    this.forumData.topics.forEach(topic => {
+      let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
+      this.gameData.participants.forEach(user => {
+        if (user.id == topic.authorId) 
+          topicListModel.author = user;
+      });
+      this.topicToPersonData.forEach(t2p => {
+        if (t2p.lastActivitySeen < topic.lastActivityDate || t2p.lastActivitySeen == null)
+          topicListModel.wasSeen = false;
+      });
+
+      this.gameData.participants.forEach(user => {
+        if (user.id == topic.messages[topic.messagesAmount-1].senderId)
+          topicListModel.lastAuthor = user;
+      });
+
+      console.log(JSON.stringify(topicListModel));
+      this.topicList.push(topicListModel);
+    });
   }
 
 }

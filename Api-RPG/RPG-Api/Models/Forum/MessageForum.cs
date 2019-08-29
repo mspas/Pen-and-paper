@@ -13,6 +13,7 @@ namespace mdRPG.Models
         public string bodyMessage { get; set; }
         public int senderId { get; set; }
         public int topicId { get; set; }
+        public int pageNumber { get; set; }
         public virtual Topic topic { get; set; }
     }
 }

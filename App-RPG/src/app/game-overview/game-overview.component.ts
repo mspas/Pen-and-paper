@@ -17,8 +17,10 @@ export class GameOverviewComponent implements OnInit {
   gameData: GameAppModel;
   topicToPersonData: TopicToPersonModel[];
 
-  topicList: TopicListModel[] = [];
-  totalPagesLessOne: number = 1;
+  topicGeneralList: TopicListModel[] = [];
+  topicGameList: TopicListModel[] = [];
+  topicSupportList: TopicListModel[] = [];
+  topicOfftopList: TopicListModel[] = [];
 
   constructor(private route: ActivatedRoute) { }
 
@@ -31,8 +33,6 @@ export class GameOverviewComponent implements OnInit {
     let gameList = this.data[1];
     this.gameData = gameList.pop();
     this.topicToPersonData = this.data[2];
-
-    console.log("wft " + this.forumData.topics[0].messages[this.forumData.topics[0].messagesAmount-1].sendDdate)
 
     this.forumData.topics.forEach(topic => {
       let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
@@ -50,8 +50,14 @@ export class GameOverviewComponent implements OnInit {
           topicListModel.lastAuthor = user;
       });
 
-      console.log(JSON.stringify(topicListModel));
-      this.topicList.push(topicListModel);
+      if (topic.category == "general")
+        this.topicGeneralList.push(topicListModel);
+      if (topic.category == "game")
+        this.topicGameList.push(topicListModel);
+      if (topic.category == "support")
+        this.topicSupportList.push(topicListModel);
+      if (topic.category == "offtop")
+        this.topicOfftopList.push(topicListModel);
     });
   }
 

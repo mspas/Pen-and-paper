@@ -1,16 +1,22 @@
 <div class="container">
   <div class="title-panel">
-    <div class="row" style="max-width: 1100px">
-      <div class="col-sm-3 col-md-6">
-          <span class="text-outline">{{ gameData.title }}</span>
-      </div>
-      <div class="col-sm-3 col-md-6">
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
-      </div>
+    <div style="max-width: 1100px">
+      <span class="text-outline">{{ gameData.title }}</span>
     </div>
   </div>
-  <div class="content" >
-    <div class="content-top"></div>
+  <div class="btn-wrap title-panel-btns default-font">
+      <span class="btn-forum" id="btn-user-access"><img class="btn-ico" src="assets/baner.png">USER'S ACCESS</span>
+      <span class="btn-forum" id="btn-settings"><img class="btn-ico" src="assets/fix.png">MANAGE GAME SETTINGS</span>
+      <span class="btn-forum" id="btn-edit"><img class="btn-ico" src="assets/pencil.png">EDIT TOPICS</span>
+  </div>
+  <div class="content default-font" >
+    <div class="content-top"></div> 
+
+    <div class="btn-wrap">
+      <span class="btn-forum" id="btn-add-topic"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</span>
+      <span class="btn-forum" id="btn-your-character"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</span>
+      <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>
+    </div>
 
     <div class="table-responsive">          
         <table class="table table-info">
@@ -28,7 +34,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="media" *ngFor="let topic of topicList; let i=index">
+            <tr>
+              - GENERAL -
+            </tr>
+            <tr class="media" *ngFor="let topic of topicGeneralList; let i=index">
               <td>
                   <div class="media-left">
                     <img *ngIf="topic.wasSeen" class="topic-img" src="assets/topic-new.png" alt="New message!">
@@ -57,12 +66,141 @@
                       </ul>
                     </h4>
                     <h4 class="media-bottom">
-                      <div class="user-post"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                      <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
                     </h4>
                   </div>
               </td>
               <td>
-                <div class="user-post"><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+                <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+              </td>
+              <td>
+                {{topic.topicData.messagesAmount}}
+              </td>
+            </tr>
+            <tr>
+              - GAME -
+            </tr>
+            <tr class="media" *ngFor="let topic of topicGameList; let i=index">
+              <td>
+                  <div class="media-left">
+                    <img *ngIf="topic.wasSeen" class="topic-img" src="assets/topic-new.png" alt="New message!">
+                    <img *ngIf="!topic.wasSeen" class="topic-img" src="assets/topic.png" alt="Seen">
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                      <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          ...
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                      </ul>
+                    </h4>
+                    <h4 class="media-bottom">
+                      <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                    </h4>
+                  </div>
+              </td>
+              <td>
+                <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+              </td>
+              <td>
+                {{topic.topicData.messagesAmount}}
+              </td>
+            </tr>
+            <tr>
+              - SUPPORT -
+            </tr>
+            <tr class="media" *ngFor="let topic of topicSupportList; let i=index">
+              <td>
+                  <div class="media-left">
+                    <img *ngIf="topic.wasSeen" class="topic-img" src="assets/topic-new.png" alt="New message!">
+                    <img *ngIf="!topic.wasSeen" class="topic-img" src="assets/topic.png" alt="Seen">
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                      <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          ...
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                      </ul>
+                    </h4>
+                    <h4 class="media-bottom">
+                      <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                    </h4>
+                  </div>
+              </td>
+              <td>
+                <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+              </td>
+              <td>
+                {{topic.topicData.messagesAmount}}
+              </td>
+            </tr>
+            <tr>
+              - OFF-TOPIC -
+            </tr>
+            <tr class="media" *ngFor="let topic of topicOfftopList; let i=index">
+              <td>
+                  <div class="media-left">
+                    <img *ngIf="topic.wasSeen" class="topic-img" src="assets/topic-new.png" alt="New message!">
+                    <img *ngIf="!topic.wasSeen" class="topic-img" src="assets/topic.png" alt="Seen">
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                      <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      </ul>
+                      <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          ...
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
+                          <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                      </ul>
+                    </h4>
+                    <h4 class="media-bottom">
+                      <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                    </h4>
+                  </div>
+              </td>
+              <td>
+                <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
               </td>
               <td>
                 {{topic.topicData.messagesAmount}}

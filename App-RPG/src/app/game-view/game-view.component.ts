@@ -162,7 +162,7 @@ export class GameViewComponent implements OnInit {
 
  async goToGameOverview() {
   console.log("oh je " + this.iAmMaster);
-  var res = await this._router.navigate(['/game', this.gameData.id, 'overview']);
+  var res = await this._router.navigate(['/game', this.gameData.id, 'overview', 'forum']);
   var snapshot = this.route.snapshot;
   window.location.reload();
  }

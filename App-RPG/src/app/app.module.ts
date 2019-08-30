@@ -48,6 +48,8 @@ import { AccountFriendsComponent } from './activity/account-friends/account-frie
 import { AccountGamesComponent } from './activity/account-games/account-games.component';
 import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { GameResolve } from './game-overview/game-overview.resolve.service';
+import { GameForumComponent } from './game-overview/game-forum/game-forum.component';
+import { CreateTopicComponent } from './game-overview/create-topic/create-topic.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { GameResolve } from './game-overview/game-overview.resolve.service';
     AccountMessagesComponent,
     AccountFriendsComponent,
     AccountGamesComponent,
-    GameOverviewComponent
+    GameOverviewComponent,
+    GameForumComponent,
+    CreateTopicComponent
   ],
   imports: [
     BrowserModule,

@@ -1,44 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ForumModel, TopicListModel } from '../models/forum.model';
-import { GameAppModel } from '../models/game.model';
-import { PersonalDataModel } from '../models/personaldata.model';
-import { TopicToPersonModel } from '../models/topic-to-person.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { ForumModel, TopicListModel } from '../../models/forum.model';
+import { GameAppModel } from '../../models/game.model';
+import { TopicToPersonModel } from '../../models/topic-to-person.model';
+import { PersonalDataModel } from '../../models/personaldata.model';
 
 @Component({
-  selector: 'app-game-overview',
-  templateUrl: './game-overview.component.html',
-  styleUrls: ['./game-overview.component.css']
+  selector: 'app-game-forum',
+  templateUrl: './game-forum.component.html',
+  styleUrls: ['./game-forum.component.css', '../game-overview.component.css']
 })
-export class GameOverviewComponent implements OnInit {
+export class GameForumComponent implements OnInit {
 
-  data: any[];
-  forumData: ForumModel;
-  gameData: GameAppModel;
-  topicToPersonData: TopicToPersonModel[];
-  profileData: PersonalDataModel;
-
+  @Input() forumData: ForumModel;
+  @Input() gameData: GameAppModel;
+  @Input() topicToPersonData: TopicToPersonModel[];
+  @Input() profileData: PersonalDataModel;
+  
   topicGeneralList: TopicListModel[] = [];
   topicGameList: TopicListModel[] = [];
   topicSupportList: TopicListModel[] = [];
   topicOfftopList: TopicListModel[] = [];
-  subpage: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit() {
-    this.subpage = this.route.snapshot.params.subpage;
-    this.route.data.subscribe((profiledata: { profiledata: any }) => {
-      this.data = profiledata.profiledata;
-    });
-
-    let profile = this.data[0];
-    this.profileData = profile.pop();
-    this.forumData = this.data[1];
-    let gameList = this.data[2];
-    this.gameData = gameList.pop();
-    this.topicToPersonData = this.data[3];
-
     this.forumData.topics.forEach(topic => {
       let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
       this.gameData.participants.forEach(user => {
@@ -64,6 +49,7 @@ export class GameOverviewComponent implements OnInit {
       if (topic.category == "offtop")
         this.topicOfftopList.push(topicListModel);
     });
+  }
   }
 
 }

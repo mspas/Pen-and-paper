@@ -123,7 +123,7 @@ const routes: Routes = [];
           },
       },
       {
-          path: 'game/:id/overview', 
+          path: 'game/:id/overview/:subpage', 
           component: GameOverviewComponent,
           canActivate: [AuthGuardService],
           resolve: {

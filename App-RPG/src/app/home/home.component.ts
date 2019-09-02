@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'home',
@@ -8,11 +9,19 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-    constructor(private router: Router) {}
+    private isLoggedIn : boolean;
+
+    constructor(private router: Router, private _auth : AuthService) {}
 
     isSignIn = true;
     isSignUp = false;
     isAbout = false;
+
+    ngOnInit() {
+      this.isLoggedIn = this._auth.isAuthenticated();
+      if (this.isLoggedIn)
+        this.router.navigate(['/profile/' + localStorage.getItem("nick")]);
+    }
 
     rootToSignIn() {
       this.router.navigate(['/sign-in']);

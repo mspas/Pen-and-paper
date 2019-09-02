@@ -53,7 +53,6 @@ export class AuthService {
         let tokenInfo = this.getDecodedAccessToken(tokenn);
         localStorage.setItem("id", tokenInfo.id);
         localStorage.setItem("nick", tokenInfo.login);
-        console.log("cros kurwa aafdaopshnjfjkSZ BFjkhsd " +  tokenInfo.login);
         this.router.navigate(['/profile', tokenInfo.login]);
       },
       //error => console.log(error)

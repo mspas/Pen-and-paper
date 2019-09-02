@@ -14,7 +14,13 @@
             <tr>
               <td>Category:</td>
               <td>
-                <select class="form-control" id="category" [(ngModel)]="category" name="category" style="width: 150px">
+                <select *ngIf="iAmGameMaster" class="form-control" id="category" [(ngModel)]="category" name="category" style="width: 150px">
+                  <option>General</option>
+                  <option>Game</option>
+                  <option>Support</option>
+                  <option>Off-topic</option>
+                </select>
+                <select *ngIf="!iAmGameMaster" class="form-control" id="category" [(ngModel)]="category" name="category" style="width: 150px">
                   <option>Support</option>
                   <option>Off-topic</option>
                 </select>
@@ -24,6 +30,17 @@
               <td>Text:</td>
               <td>
                 <textarea id="message" name="message" rows="5" ngModel class="form-control"></textarea>
+              </td>
+            </tr>
+            <tr *ngIf="iAmGameMaster">
+              <td>Access to this topic:</td>
+              <td style="float: left">
+                <div class="radio">
+                  <label><input type="radio" name="optradio" value="public" checked ngModel>Public</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="optradio" value="limited" ngModel>Limited</label>
+                </div>
               </td>
             </tr>
             <tr>

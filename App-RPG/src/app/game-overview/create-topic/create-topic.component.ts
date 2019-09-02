@@ -13,24 +13,26 @@ export class CreateTopicComponent implements OnInit {
 
   @Input() forumData: ForumModel;
   @Input() profileData: PersonalDataModel;
+  @Input() iAmGameMaster: boolean;
 
   constructor(private _api: ApiService) { }
 
   ngOnInit() {
+
   }
 
-  onCreate(form: NgForm) {
-    let id;
+  async onCreate(form: NgForm) {
     let date = new Date();
-    let array: MessageForumModel[] = [];
-    console.log(form.value.title + " " + form.value.category + " " + form.value.message);
-    const message: MessageForumModel = new MessageForumModel(null, date, null, form.value.message, this.profileData.id, null, 1);
-    array.push(message);
-    const topic: TopicCreateModel = new TopicCreateModel(this.forumData.id, form.value.title, form.value.category, this.profileData.id, true, 1, date, date, this.profileData.id, 1);
+    let access = true;
+
+    if (form.controls['optradio'].value == "limited")
+      access = false;
+
+    const topic: TopicCreateModel = new TopicCreateModel(this.forumData.id, form.value.title, form.value.category, this.profileData.id, access, 1, date, date, this.profileData.id, 1);
     const newtopic: NewTopicModel = new NewTopicModel(topic, form.value.message);
-    this._api.createTopic(newtopic);
-    //nie dziala
-  }
-  
+    await this._api.createTopic(newtopic);
+
+
+  }  
 
 }

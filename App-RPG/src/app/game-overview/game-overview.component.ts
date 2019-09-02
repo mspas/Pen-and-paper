@@ -23,6 +23,7 @@ export class GameOverviewComponent implements OnInit {
   topicSupportList: TopicListModel[] = [];
   topicOfftopList: TopicListModel[] = [];
   subpage: string;
+  iAmGameMaster: boolean = false;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -64,6 +65,8 @@ export class GameOverviewComponent implements OnInit {
       if (topic.category == "offtop")
         this.topicOfftopList.push(topicListModel);
     });
-  }
+
+    if (this.gameData.masterId == this.profileData.id)
+      this.iAmGameMaster = true;
 
 }

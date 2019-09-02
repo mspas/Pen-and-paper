@@ -46,18 +46,27 @@ namespace mdRPG.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Topic topic)
+        public async Task<IActionResult> Post([FromBody]CreateTopic data)
         {
+            Topic topic = data.topic;
+            string bodyMessage = data.bodyMessage;
+            Console.WriteLine("msg wtf: " + bodyMessage);
+            MessageForum message = new MessageForum(topic.createDate, bodyMessage, topic.authorId, 1);
             var game = context.Games.Include(mbox => mbox.participants).First(mbox => mbox.Id == topic.forumId);
+            context.Topics.Add(topic);
+            await context.SaveChangesAsync();
+            message.topicId = topic.Id;
             if (topic.isPublic)
             {
                 foreach (GameToPerson player in game.participants)
                 {
                     var t2p = new TopicToPerson(topic.forumId, topic.Id, player.playerId);
+                    if (player.Id == topic.authorId)
+                        t2p.lastActivitySeen = topic.createDate;
                     context.TopicsToPersons.Add(t2p);
                 }
             }
-            context.Topics.Add(topic);
+            context.MessagesForum.Add(message);
             await context.SaveChangesAsync();
             return Ok(topic);
         }

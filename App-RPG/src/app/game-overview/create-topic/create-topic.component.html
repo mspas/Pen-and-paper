@@ -1,4 +1,4 @@
-<form class="form-create" (ngSubmit)="onCreate(f)" #f="ngForm">            
+<form name="myform" class="form-create" (ngSubmit)="onCreate(f)" #f="ngForm">            
     <div class="table-responsive default-font" style="width:75%;">          
         <table class="table table-info">
           <thead>
@@ -8,7 +8,7 @@
             <tr>
               <td>Title:</td>
               <td>
-                <input type="text" id="title" name="title" placeholder="Title" style="font-size: 19px" ngModel class="form-control">
+                <input type="text" id="title" name="title" ngModel class="form-control">
               </td>
             </tr>
             <tr>
@@ -23,13 +23,13 @@
             <tr>
               <td>Text:</td>
               <td>
-                <textarea id="message" name="message" rows="5" style="font-size: 19px" ngModel class="form-control"></textarea>
+                <textarea id="message" name="message" rows="5" ngModel class="form-control"></textarea>
               </td>
             </tr>
             <tr>
               <td></td>
               <td style="float: right">
-                <span class="btn-forum" id="btn-send" type="submit"><img class="btn-ico" src="assets/plus.png">SEND</span>
+                <button class="btn-forum" id="btn-send" type="submit"><img class="btn-ico" src="assets/plus.png">SEND</button>
               </td>
             </tr>
           </tbody>

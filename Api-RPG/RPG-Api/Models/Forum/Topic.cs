@@ -22,4 +22,11 @@ namespace mdRPG.Models
         public virtual ICollection<MessageForum> Messages { get; set; }
         public virtual ICollection<TopicToPerson> UsersConnected { get; set; }
     }
+
+    public class CreateTopic
+    {
+        public Topic topic { get; set; }
+        public string bodyMessage { get; set; }
+    }
+
 }

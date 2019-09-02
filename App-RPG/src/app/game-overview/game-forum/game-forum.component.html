@@ -14,8 +14,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        - GENERAL -
+      <tr> 
+        <div class="forum-category">
+          <div class="forum-cat">- GENERAL -</div>
+        </div>
       </tr>
       <tr class="media" *ngFor="let topic of topicGeneralList; let i=index">
         <td>
@@ -57,8 +59,10 @@
           {{topic.topicData.messagesAmount}}
         </td>
       </tr>
-      <tr>
-        - GAME -
+      <tr>        
+        <div class="forum-category">
+          <div class="forum-cat">- GAME -</div>
+        </div>
       </tr>
       <tr class="media" *ngFor="let topic of topicGameList; let i=index">
         <td>
@@ -100,8 +104,10 @@
           {{topic.topicData.messagesAmount}}
         </td>
       </tr>
-      <tr>
-        - SUPPORT -
+      <tr>        
+          <div class="forum-category">
+            <div class="forum-cat">- SUPPORT -</div>
+          </div>
       </tr>
       <tr class="media" *ngFor="let topic of topicSupportList; let i=index">
         <td>
@@ -143,8 +149,10 @@
           {{topic.topicData.messagesAmount}}
         </td>
       </tr>
-      <tr>
-        - OFF-TOPIC -
+      <tr>        
+          <div class="forum-category">
+            <div class="forum-cat">- OFF-TOPIC -</div>
+          </div>
       </tr>
       <tr class="media" *ngFor="let topic of topicOfftopList; let i=index">
         <td>

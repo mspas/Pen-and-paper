@@ -13,7 +13,7 @@ import { GameSessionCreateModel } from './models/gamesession.model';
 import { ChangePasswordModel } from './models/changepassword.model';
 import { MessageModel, MessageCreateModel } from './models/message.model';
 import { NotificationAppModel } from './models/notification.model';
-import { ForumModel } from './models/forum.model';
+import { ForumModel, TopicCreateModel, MessageForumCreateModel, NewTopicModel } from './models/forum.model';
 import { TopicToPersonModel } from './models/topic-to-person.model';
 
 @Injectable()
@@ -90,7 +90,20 @@ export class ApiService {
             error => console.log(error));
     }
 
+    /*createTopic(topic: TopicCreateModel, bodyMessage: string) {
+        console.log(JSON.stringify(topic));
+        return this._http.post(this.url+'Topic', [topic, bodyMessage]).subscribe (
+            data => console.log(data));
+    }*/
 
+    createTopic(topic: NewTopicModel) {
+        return this._http.post(this.url+'Topic', topic).subscribe (
+            data => console.log(data));
+    }
+    createForumMessage(msg: MessageForumCreateModel) {
+        this._http.post(this.url+'MessageForum', msg).subscribe (
+            data => console.log(data));
+    }
 
 
 

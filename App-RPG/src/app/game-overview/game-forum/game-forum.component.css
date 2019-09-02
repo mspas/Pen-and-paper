@@ -1,0 +1,8 @@
+.forum-category {
+    position: relative;
+    height: 40px;
+}
+.forum-cat {
+    position: absolute; 
+    bottom: 0;
+}

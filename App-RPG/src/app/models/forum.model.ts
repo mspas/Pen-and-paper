@@ -9,6 +9,21 @@ export class ForumModel {
     ) { }
 }
 
+export class TopicCreateModel {
+    constructor(
+        public forumId: number,
+        public topicName: string,
+        public category: string,
+        public authorId: number,
+        public isPublic: boolean,
+        public messagesAmount: number,
+        public createDate: Date,
+        public lastActivityDate: Date,
+        public lastActivityUserId: number,
+        public totalPages: number
+    ) { }
+}
+
 export class TopicModel {
     constructor(
         public id: number,
@@ -46,5 +61,23 @@ export class MessageForumModel {
         public senderId: number,
         public topicId: number,
         public pageNumber: number
+    ) { }
+}
+
+export class MessageForumCreateModel {
+    constructor(
+        public sendDdate: Date,
+        public editDdate: Date,
+        public bodyMessage: string,
+        public senderId: number,
+        public topicId: number,
+        public pageNumber: number
+    ) { }
+}
+
+export class NewTopicModel {
+    constructor(
+        public topic: TopicCreateModel,
+        public bodyMessage: string
     ) { }
 }

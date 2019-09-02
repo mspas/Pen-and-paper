@@ -31,7 +31,7 @@ export class GameForumComponent implements OnInit {
           topicListModel.author = user;
       });
       this.topicToPersonData.forEach(t2p => {
-        if (t2p.lastActivitySeen < topic.lastActivityDate || t2p.lastActivitySeen == null)
+        if (t2p.lastActivitySeen <= topic.lastActivityDate)
           topicListModel.wasSeen = false;
       });
 
@@ -40,16 +40,14 @@ export class GameForumComponent implements OnInit {
           topicListModel.lastAuthor = user;
       });
 
-      if (topic.category == "general")
+      if (topic.category == "General")
         this.topicGeneralList.push(topicListModel);
-      if (topic.category == "game")
+      if (topic.category == "Game")
         this.topicGameList.push(topicListModel);
-      if (topic.category == "support")
+      if (topic.category == "Support")
         this.topicSupportList.push(topicListModel);
-      if (topic.category == "offtop")
+      if (topic.category == "Off-topic")
         this.topicOfftopList.push(topicListModel);
     });
   }
-  }
-
 }

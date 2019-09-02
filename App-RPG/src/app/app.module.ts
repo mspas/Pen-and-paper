@@ -1,5 +1,4 @@
 import { SearchGameResolve } from './search-game/search-game.resolve.service';
-import { FriendResolve } from './profile-page/profile-page.resolve';
 import { ApiService } from './api.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,7 +14,6 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 import { AuthService } from './auth/auth.service';
-import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { PersonalDataResolve } from './profile-view/page-view.resolve.service';
@@ -36,7 +34,6 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { ProfileDataResolve } from './side-bar/side-bar.resolve.service';
 import { DataService } from './data.service';
 import { FriendsService } from './friends.service';
-import { StartPageComponent } from './start-page/start-page.component';
 import { BphotoComponent } from './bphoto/bphoto.component';
 import { ViewProfileComponent } from './profile-view/view-profile/view-profile.component';
 import { ChatComponent } from './chat/chat.component';
@@ -50,7 +47,9 @@ import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { GameResolve } from './game-overview/game-overview.resolve.service';
 import { GameForumComponent } from './game-overview/game-forum/game-forum.component';
 import { CreateTopicComponent } from './game-overview/create-topic/create-topic.component';
-import { TopicAccessSettingComponent } from './game-overview/topic-access-setting/topic-access-setting.component';
+import { TopicAccessSettingComponent } from './game-overview/topic-forum/topic-access-setting/topic-access-setting.component';
+import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
+import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,6 @@ import { TopicAccessSettingComponent } from './game-overview/topic-access-settin
     HomeComponent,
     SignInComponent,
     SignUpComponent,
-    ProfilePageComponent,
     HeaderComponent,
     ProfileViewComponent,
     ProfileViewFriendsComponent,
@@ -69,7 +67,6 @@ import { TopicAccessSettingComponent } from './game-overview/topic-access-settin
     SearchGameComponent,
     InviteToGameComponent,
     SideBarComponent,
-    StartPageComponent,
     BphotoComponent,
     ViewProfileComponent,
     ChatComponent,
@@ -81,7 +78,8 @@ import { TopicAccessSettingComponent } from './game-overview/topic-access-settin
     GameOverviewComponent,
     GameForumComponent,
     CreateTopicComponent,
-    TopicAccessSettingComponent
+    TopicAccessSettingComponent,
+    TopicForumComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +92,6 @@ import { TopicAccessSettingComponent } from './game-overview/topic-access-settin
     AuthGuardService,
     ApiService,
     PersonalDataResolve,
-    FriendResolve,
     FriendViewResolve,
     SearchFriendResolve,
     CreateGameDataService,
@@ -106,7 +103,8 @@ import { TopicAccessSettingComponent } from './game-overview/topic-access-settin
     ProfileDataResolve,
     DataService,
     FriendsService,
-    ActivityResolve
+    ActivityResolve,
+    TopicResolve
   ],
   bootstrap: [AppComponent]
 })

@@ -6,11 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { PersonalDataResolve } from './profile-view/page-view.resolve.service';
 import { ProfileViewFriendsComponent } from './profile-view/view-friends/profile-view-friends.component';
-import { FriendResolve } from './profile-page/profile-page.resolve';
 import { FriendViewResolve } from './profile-view/view-friends/profile-view-friends.resolve.service';
 import { SearchFriendResolve } from './search-friend/search-friend.resolve.service';
 import { CreateGameComponent } from './create-game/create-game.component';
@@ -23,11 +21,12 @@ import { SearchGameResolve } from './search-game/search-game.resolve.service';
 import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game.component';
 import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
 import { SideBarComponent } from './side-bar/side-bar.component';
-import { StartPageComponent } from './start-page/start-page.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivityResolve } from './activity/activity.resolve.service';
 import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { GameResolve } from './game-overview/game-overview.resolve.service';
+import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
+import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
 
 const routes: Routes = [];
 
@@ -38,14 +37,6 @@ const routes: Routes = [];
       { path: 'home', component: HomeComponent },
       { path: 'sign-in', component: SignInComponent },
       { path: 'sign-up', component: SideBarComponent },
-      { 
-        path: 'start', 
-        component: StartPageComponent, 
-        canActivate: [AuthGuardService],
-        resolve: {
-          profiledata: FriendResolve
-        },
-      },
       { 
         path: 'search-game/:value', 
         component: SearchGameComponent,
@@ -64,14 +55,6 @@ const routes: Routes = [];
         canActivate: [AuthGuardService],
         resolve: {
           profiledata: SearchFriendResolve
-        },
-      },
-      { 
-        path: 'my-profile', 
-        component: ProfilePageComponent, 
-        canActivate: [AuthGuardService],
-        resolve: {
-          profiledata: FriendResolve
         },
       },
       {
@@ -128,6 +111,14 @@ const routes: Routes = [];
           canActivate: [AuthGuardService],
           resolve: {
             profiledata: GameResolve
+          },
+      },
+      {
+          path: 'game/:id/:topicid/:page/:mode', 
+          component: TopicForumComponent,
+          canActivate: [AuthGuardService],
+          resolve: {
+            profiledata: TopicResolve
           },
       }
   ])

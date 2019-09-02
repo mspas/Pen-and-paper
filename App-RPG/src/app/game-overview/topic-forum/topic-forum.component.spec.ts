@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileViewGamesComponent } from './profile-view-games.component';
+import { TopicForumComponent } from './topic-forum.component';
 
-describe('ProfileViewGamesComponent', () => {
-  let component: ProfileViewGamesComponent;
-  let fixture: ComponentFixture<ProfileViewGamesComponent>;
+describe('TopicForumComponent', () => {
+  let component: TopicForumComponent;
+  let fixture: ComponentFixture<TopicForumComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileViewGamesComponent ]
+      declarations: [ TopicForumComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileViewGamesComponent);
+    fixture = TestBed.createComponent(TopicForumComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

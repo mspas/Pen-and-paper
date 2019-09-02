@@ -17,12 +17,12 @@ export class GameOverviewComponent implements OnInit {
   gameData: GameAppModel;
   topicToPersonData: TopicToPersonModel[];
   profileData: PersonalDataModel;
+  subpage: string;
 
   topicGeneralList: TopicListModel[] = [];
   topicGameList: TopicListModel[] = [];
   topicSupportList: TopicListModel[] = [];
   topicOfftopList: TopicListModel[] = [];
-  subpage: string;
   iAmGameMaster: boolean = false;
 
   constructor(private route: ActivatedRoute) { }

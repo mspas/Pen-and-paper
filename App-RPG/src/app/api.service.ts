@@ -49,15 +49,27 @@ export class ApiService {
         let profile =  this._http
             .get<PersonalDataModel[]>(this.url + 'pdata/' + localStorage.getItem("nick").toString());
         let forum =  this._http
-            .get<ForumModel>(this.url + 'Forum/' + gameId.toString())
-            .do(data => console.log("forum " + JSON.stringify(data)));
+            .get<ForumModel>(this.url + 'Forum/' + gameId.toString());
         let game = this._http
-            .get<GameAppModel[]>(this.url + 'Game/' + gameId.toString())
-            .do(data => console.log('game: ' + JSON.stringify(data)));
-        let notif = this._http
-            .get<TopicToPersonModel[]>(this.url + 'TopicToPerson/' + localStorage.getItem("id").toString() +"/" + gameId.toString())
-            .do(data => console.log('t2p: ' + JSON.stringify(data)));
-        return Observable.forkJoin([profile, forum, game, notif]);
+            .get<GameAppModel[]>(this.url + 'Game/' + gameId.toString());
+        let t2p = this._http
+            .get<TopicToPersonModel[]>(this.url + 'TopicToPerson/' + localStorage.getItem("id").toString() +"/" + gameId.toString());
+        return Observable.forkJoin([profile, forum, game, t2p]);
+    }
+
+    getTopic(gameId: number, topicId: number, page: number): Observable<any> {
+        let profileId = localStorage.getItem("id").toString();
+        let profileName = localStorage.getItem("nick").toString();
+
+        let profile =  this._http
+            .get<PersonalDataModel[]>(this.url + 'pdata/' + profileName);
+        let forum =  this._http
+            .get<ForumModel>(this.url + 'Forum/' + gameId.toString());
+        let topic =  this._http
+            .get<ForumModel>(this.url + 'Topic/' + profileId + "/" + topicId.toString());
+        let t2p = this._http
+            .get<TopicToPersonModel[]>(this.url + 'TopicToPerson/' + profileId + "/" + gameId.toString());
+        return Observable.forkJoin([profile, forum, topic, t2p]);
     }
 
     getConversation(relationId: number) {

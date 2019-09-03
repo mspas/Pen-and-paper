@@ -1,4 +1,5 @@
 import { PersonalDataModel } from "./personaldata.model";
+import { TopicToPersonModel } from "./topic-to-person.model";
 
 export class ForumModel {
     constructor(
@@ -37,7 +38,9 @@ export class TopicModel {
         public lastActivityDate: Date,
         public lastActivityUserId: number,
         public totalPages: number,
-        public messages: MessageForumModel[]
+        public messages: MessageForumModel[],
+        public userConnected: TopicToPersonModel[]
+
     ) { }
 }
 
@@ -79,5 +82,13 @@ export class NewTopicModel {
     constructor(
         public topic: TopicCreateModel,
         public bodyMessage: string
+    ) { }
+}
+
+export class PostModel {
+    constructor(
+        public message: MessageForumModel,
+        public user: PersonalDataModel,
+        public photo: any
     ) { }
 }

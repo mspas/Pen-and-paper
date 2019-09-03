@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TopicModel, ForumModel } from '../../models/forum.model';
+import { TopicModel, ForumModel, MessageForumModel } from '../../models/forum.model';
 import { TopicToPersonModel } from '../../models/topic-to-person.model';
 import { PersonalDataModel } from '../../models/personaldata.model';
 import { ActivatedRoute } from '@angular/router';
@@ -19,11 +19,14 @@ export class TopicForumComponent implements OnInit {
   topicToPersonData: TopicToPersonModel[];
   profileData: PersonalDataModel;
   subpage: string;
+  participants: PersonalDataModel[];
+  iAmGameMaster: boolean = false;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.subpage = this.route.snapshot.params.subpage;
+    console.log("siema" + this.subpage);
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.data = profiledata.profiledata;
     });
@@ -35,7 +38,11 @@ export class TopicForumComponent implements OnInit {
     this.topicToPersonData = this.data[3];
     this.gameData = this.data[4].pop();
 
-    console.log(JSON.stringify(this.gameData));
+    if (this.gameData.masterId == this.profileData.id)
+      this.iAmGameMaster = true;
+
+    this.participants = this.gameData.participants;
+    console.log("siema" + JSON.stringify(this.topicData.messages));
 
     //dane są, dziś marcin-frontend
   }

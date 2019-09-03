@@ -114,7 +114,7 @@ const routes: Routes = [];
           },
       },
       {
-          path: 'game/:id/:topicid/:page/:mode', 
+          path: 'game/:id/:topicid/:page/:subpage', 
           component: TopicForumComponent,
           canActivate: [AuthGuardService],
           resolve: {

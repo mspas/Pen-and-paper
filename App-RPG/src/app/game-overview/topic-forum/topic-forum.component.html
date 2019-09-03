@@ -1,10 +1,19 @@
 <div class="container">
-  <div class="content1 default-font" >
+  <div class="content default-font" >
 
-    <div class="title-panel1">
-      <div class="content-top1">
-        <div style="max-width: 1100px">
-          <span class="text-outline text-title">{{ gameData.title }}</span>
+    <div class="title-panel">
+      <div class="content-top">
+        <div style="display: inline-block; min-width: 400px;">
+          <span class="text-outline text-title" [routerLink]="['/game', gameData.id, 'main']">{{ gameData.title }}</span>
+          <span class="directory">
+            /<a class="link" href="game/{{gameData.id}}/overview/forum"> Forum</a>
+            /<a class="link" href="game/{{gameData.id}}/{{topicData.id}}/{{topicData.totalPages}}/view"> {{topicData.topicName}}</a>
+          </span>
+        </div>
+        <div class="btn-wrap default-font" style="display: inline-block;">
+            <span class="btn-forum" id="btn-user-access"><img class="btn-ico" src="assets/baner.png">USER'S ACCESS</span>
+            <span class="btn-forum" id="btn-settings"><img class="btn-ico" src="assets/fix.png">MANAGE GAME SETTINGS</span>
+            <span class="btn-forum" id="btn-edit"><img class="btn-ico" src="assets/pencil.png">MANAGE PLAYERS</span>
         </div>
       </div> 
     </div>

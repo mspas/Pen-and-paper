@@ -55,7 +55,7 @@ body {
     box-shadow: 0 5px 5px -5px #333;
 }
 .content-body {
-    padding: 50px 25px;
+    padding: 50px 25px 0px 25px;
 }
 .text-title {
     position: absolute;

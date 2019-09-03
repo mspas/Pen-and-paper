@@ -50,6 +50,7 @@ import { CreateTopicComponent } from './game-overview/create-topic/create-topic.
 import { TopicAccessSettingComponent } from './game-overview/topic-forum/topic-access-setting/topic-access-setting.component';
 import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
 import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
+import { PostsComponent } from './game-overview/topic-forum/posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service'
     GameForumComponent,
     CreateTopicComponent,
     TopicAccessSettingComponent,
-    TopicForumComponent
+    TopicForumComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,

@@ -69,7 +69,9 @@ export class ApiService {
             .get<ForumModel>(this.url + 'Topic/' + profileId + "/" + topicId.toString());
         let t2p = this._http
             .get<TopicToPersonModel[]>(this.url + 'TopicToPerson/' + profileId + "/" + gameId.toString());
-        return Observable.forkJoin([profile, forum, topic, t2p]);
+        let game = this._http
+            .get<GameAppModel[]>(this.url + 'Game/' + gameId.toString());
+        return Observable.forkJoin([profile, forum, topic, t2p, game]);
     }
 
     getConversation(relationId: number) {

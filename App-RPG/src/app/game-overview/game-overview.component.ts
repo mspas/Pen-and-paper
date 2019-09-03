@@ -68,5 +68,5 @@ export class GameOverviewComponent implements OnInit {
 
     if (this.gameData.masterId == this.profileData.id)
       this.iAmGameMaster = true;
-
+  }
 }

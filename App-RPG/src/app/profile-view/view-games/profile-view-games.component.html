@@ -14,7 +14,7 @@
     <tbody>
       <tr *ngFor="let game of gamesAccepted">
         <td>{{game.game.id}}</td>
-        <td type="button" class="button-name" [routerLink]="['/game', game.game.id]">{{game.game.title}}</td>
+        <td type="button" class="button-name" [routerLink]="['/game', game.game.id, 'view']">{{game.game.title}}</td>
         <td>
           <span *ngIf="game.isGameMaster == true" title="Game Master" class="glyphicon glyphicon-star"></span>
         </td>

@@ -27,24 +27,24 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">
-                <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                <span class="topic-title link"><a class="link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.topicName}}</a></span>
                 <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/3/view">3</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                     ...
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages - 1}}/view">{{topic.topicData.totalPages - 1}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.totalPages}}</a></li>
                 </ul>
               </h4>
               <h4 class="media-bottom">
@@ -72,24 +72,24 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">
-                <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                <span class="topic-title link"><a class="link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.topicName}}</a></span>
                 <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/3/view">3</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                     ...
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages - 1}}/view">{{topic.topicData.totalPages - 1}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.totalPages}}</a></li>
                 </ul>
               </h4>
               <h4 class="media-bottom">
@@ -117,24 +117,24 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">
-                <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                <span class="topic-title link"><a class="link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.topicName}}</a></span>
                 <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/3/view">3</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                     ...
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages - 1}}/view">{{topic.topicData.totalPages - 1}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.totalPages}}</a></li>
                 </ul>
               </h4>
               <h4 class="media-bottom">
@@ -162,24 +162,24 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">
-                <span class="topic-title link">{{topic.topicData.topicName}}</span>
+                <span class="topic-title link"><a class="link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.topicName}}</a></span>
                 <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/2/view">2</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/3/view">3</a></li>
                 </ul>
                 <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/1/view">1</a></li>
                     ...
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages - 1}}</a></li>
-                    <li class="page-item"><a class="page-link" href="#">{{topic.topicData.totalPages}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages - 1}}/view">{{topic.topicData.totalPages - 1}}</a></li>
+                    <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topic.topicData.id}}/{{topic.topicData.totalPages}}/view">{{topic.topicData.totalPages}}</a></li>
                 </ul>
               </h4>
               <h4 class="media-bottom">

@@ -1,45 +1,45 @@
 <div class="container">
-  <div class="profile-nav">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="profile-photo-wrap">
-          <img src="assets/unknown.png" alt="Profile image" class="profile-photo" *ngIf="defaultImage == true">
-          <img [src]="imageToShow" alt="Profile image" class="profile-photo" *ngIf="defaultImage == false">
+  <div class="content">
+  
+    <div class="content-top">
+      <div class="row">
+        <div class="col-md-3">
+            <img src="assets/unknown.png" alt="Profile image" class="profile-photo" *ngIf="defaultImage == true">
+            <img [src]="imageToShow" alt="Profile image" class="profile-photo" *ngIf="defaultImage == false">
         </div>
-      </div>
-      <div class="col-md-4 col-name">
-        <span class="text-outline" id="big-name">{{ userProfileData.firstname }} {{ userProfileData.lastname }}</span>
-        <span class="title-panel-sm" id="nickname">{{ userProfileData.login }}</span>
-      </div>
-      <div class="col-md-5">
-        <div class="nav-tabs-wrap">
-          <ul class="nav nav-tabs">
-            <li class="active" id="nav-profile">
-              <a (click)="onNavClick($event)" id="anav-profile">
-                <span (click)="onNavClick($event)" id="anav-profile" class="glyphicon glyphicon-user"></span> 
-                Profile
-              </a>
+        <div class="col-md-4">
+          <span class="text-outline" id="big-name">{{ userProfileData.firstname }} {{ userProfileData.lastname }}</span>
+          <span class="title-panel-sm" id="nickname">{{ userProfileData.login }}</span>
+        </div>
+        <div class="col-md-5">
+          <div class="nav-tabs-wrap">
+            <ul class="nav nav-tabs">
+              <li class="active" id="nav-profile">
+                <a (click)="onNavClick($event)" id="anav-profile">
+                  <span (click)="onNavClick($event)" id="anav-profile" class="glyphicon glyphicon-user"></span> 
+                  Profile
+                </a>
+                </li>
+              <li id="nav-friends" >
+                <a (click)="onNavClick($event)" id="anav-friends">
+                  <span (click)="onNavClick($event)" id="anav-friends" class="glyphicon glyphicon-list-alt">
+                  </span> Friends
+                </a>
               </li>
-            <li id="nav-friends" >
-              <a (click)="onNavClick($event)" id="anav-friends">
-                <span (click)="onNavClick($event)" id="anav-friends" class="glyphicon glyphicon-list-alt">
-                </span> Friends
-              </a>
-            </li>
-            <li id="nav-games">
-              <a (click)="onNavClick($event)" id="anav-games">
-                <span (click)="onNavClick($event)" id="anav-games" class="glyphicon glyphicon-tower"></span> 
-                Games</a>
-              </li>
-          </ul>
+              <li id="nav-games">
+                <a (click)="onNavClick($event)" id="anav-games">
+                  <span (click)="onNavClick($event)" id="anav-games" class="glyphicon glyphicon-tower"></span> 
+                  Games</a>
+                </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="content">
-    <div class="content-top"></div>
-    <app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
-    <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends"></app-view-friends>
-    <app-view-games *ngIf="gamesChild == true" [userGamesAPPList]="userGamesAPPList" [myGamesAPPList]="myGamesAPPList"></app-view-games>
+    <div class="content-body">
+      <app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
+      <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends"></app-view-friends>
+      <app-view-games *ngIf="gamesChild == true" [userGamesAPPList]="userGamesAPPList" [myGamesAPPList]="myGamesAPPList"></app-view-games>
+    </div>
   </div>
 </div>

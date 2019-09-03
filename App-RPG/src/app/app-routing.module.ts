@@ -82,7 +82,7 @@ const routes: Routes = [];
           },
       },
       {
-          path: 'game/:id', 
+          path: 'game/:id/:view', 
           component: GameViewComponent,
           canActivate: [AuthGuardService],
           resolve: {

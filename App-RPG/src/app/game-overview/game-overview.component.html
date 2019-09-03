@@ -1,24 +1,26 @@
 <div class="container">
-  <div class="title-panel">
-    <div style="max-width: 1100px">
-      <span class="text-outline">{{ gameData.title }}</span>
-    </div>
-  </div>
-  <div class="btn-wrap title-panel-btns default-font">
-      <span class="btn-forum" id="btn-user-access"><img class="btn-ico" src="assets/baner.png">USER'S ACCESS</span>
-      <span class="btn-forum" id="btn-settings"><img class="btn-ico" src="assets/fix.png">MANAGE GAME SETTINGS</span>
-      <span class="btn-forum" id="btn-edit"><img class="btn-ico" src="assets/pencil.png">MANAGE PLAYERS</span>
-  </div>
   <div class="content default-font" >
-    <div class="content-top"></div> 
-
-    <div class="btn-wrap">
-      <a href="game/{{gameData.id}}/overview/new-topic"><span class="btn-forum" id="btn-add-topic"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</span></a>
-      <span class="btn-forum" id="btn-your-character"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</span>
-      <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>
+    <div class="title-panel">
+      <div class="content-top">
+        <div style="max-width: 1100px">
+          <span class="text-outline text-title">{{ gameData.title }}</span>
+        </div>
+        <div class="btn-wrap default-font">
+            <span class="btn-forum" id="btn-user-access"><img class="btn-ico" src="assets/baner.png">USER'S ACCESS</span>
+            <span class="btn-forum" id="btn-settings"><img class="btn-ico" src="assets/fix.png">MANAGE GAME SETTINGS</span>
+            <span class="btn-forum" id="btn-edit"><img class="btn-ico" src="assets/pencil.png">MANAGE PLAYERS</span>
+        </div>
+      </div> 
     </div>
+    <div class="content-body" style="padding-top: 25px">
+      <div class="btn-wrap">
+        <a href="game/{{gameData.id}}/overview/new-topic"><span class="btn-forum" id="btn-add-topic"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</span></a>
+        <span class="btn-forum" id="btn-your-character"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</span>
+        <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>
+      </div>
 
-    <app-game-forum *ngIf="subpage == 'forum'" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData"></app-game-forum>
-    <app-create-topic *ngIf="subpage == 'new-topic'" [forumData]="forumData" [profileData]="profileData" [iAmGameMaster]="iAmGameMaster"></app-create-topic>
+      <app-game-forum *ngIf="subpage == 'forum'" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData"></app-game-forum>
+      <app-create-topic *ngIf="subpage == 'new-topic'" [forumData]="forumData" [profileData]="profileData" [iAmGameMaster]="iAmGameMaster"></app-create-topic>
+    </div>
   </div>
 </div>

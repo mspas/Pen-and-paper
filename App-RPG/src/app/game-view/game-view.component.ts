@@ -43,12 +43,14 @@ export class GameViewComponent implements OnInit {
   newGameSessions: GameSessionCreateModel[] = [];
   isNewInvited: boolean = false;
   isImageLoading: boolean;
+  subpage: string;
 
 
   
-  constructor(private route: ActivatedRoute, private _api: ApiService, private _router: Router) { }
+  constructor(private route: ActivatedRoute, private _api: ApiService, private _router: Router,) { }
 
   ngOnInit() {
+    this.subpage = this.route.snapshot.params.view;
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.data = profiledata.profiledata;
     });
@@ -105,8 +107,10 @@ export class GameViewComponent implements OnInit {
       });
     });
 
-    if (this.iAmParticipant || this.iAmMaster) {
-      this.goToGameOverview();
+    if (this.subpage == "view") {
+      if (this.iAmParticipant || this.iAmMaster) {
+        this.goToGameOverview();
+      }
     }
 
     
@@ -161,10 +165,10 @@ export class GameViewComponent implements OnInit {
  }
 
  async goToGameOverview() {
-  console.log("oh je " + this.iAmMaster);
-  var res = await this._router.navigate(['/game', this.gameData.id, 'overview', 'forum']);
-  var snapshot = this.route.snapshot;
-  window.location.reload();
+    console.log("oh je " + this.iAmMaster);
+    var res = await this._router.navigate(['/game', this.gameData.id, 'overview', 'forum']);
+    var snapshot = this.route.snapshot;
+    //window.location.reload();         MOGLO SIE ZEPSUC TUTAJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  }
 
   onJoin() {

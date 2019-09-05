@@ -26,6 +26,41 @@
           <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>-->
         </div>
         <span class="topic-name">{{topicData.topicName}}</span>
+        <span>Pages:</span>
+        <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="{{linkPrevious}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+        </ul>
+        <ul *ngIf="topicData.totalPages == 1" class="pagination">
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/1/view">1</a></li>
+        </ul>
+        <ul *ngIf="topicData.totalPages == 2" class="pagination">
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/1/view">1</a></li>
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/2/view">2</a></li>
+        </ul>
+        <ul *ngIf="topicData.totalPages == 3" class="pagination">
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/1/view">1</a></li>
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/2/view">2</a></li>
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/3/view">3</a></li>
+        </ul>
+        <ul *ngIf="topicData.totalPages > 3" class="pagination">
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/1/view">1</a></li>
+            ...
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/{{topicData.totalPages - 1}}/view">{{topicData.totalPages - 1}}</a></li>
+            <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/{{topicData.id}}/{{topicData.totalPages}}/view">{{topicData.totalPages}}</a></li>
+        </ul>
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="{{linkNext}}" aria-label="Previous">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+        </ul>
       </div>
   
       <div>

@@ -21,12 +21,16 @@ export class TopicForumComponent implements OnInit {
   subpage: string;
   participants: PersonalDataModel[];
   iAmGameMaster: boolean = false;
+  page: number;
+  linkPrevious: string;
+  linkNext: string;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.subpage = this.route.snapshot.params.subpage;
-    console.log("siema" + this.subpage);
+    this.page = parseInt(this.route.snapshot.params.page);
+    
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.data = profiledata.profiledata;
     });
@@ -43,7 +47,17 @@ export class TopicForumComponent implements OnInit {
 
     this.participants = this.gameData.participants;
 
-    //dane są, dziś marcin-frontend
+    this.linkPrevious = "game/" + this.gameData.id.toString() + "/" + this.topicData.id.toString() + "/";
+    let numPage = this.page - 1;
+    if (numPage < 1) 
+      numPage = 1;
+    this.linkPrevious += numPage.toString() + "/view";    
+    
+    this.linkNext = "game/" + this.gameData.id.toString() + "/" + this.topicData.id.toString() + "/";
+    numPage = this.page + 1;
+    if (numPage > this.topicData.totalPages) 
+      numPage = this.topicData.totalPages;
+    this.linkNext += numPage.toString() + "/view";    
   }
 
 }

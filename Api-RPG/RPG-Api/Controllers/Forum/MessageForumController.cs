@@ -40,7 +40,7 @@ namespace mdRPG.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MessageForum message)
         {
-            var toUpdateTopic = context.Topics.Include(mbox => mbox.UsersConnected).First(mbox => mbox.Id == message.topicId);
+            var toUpdateTopic = context.Topics.Include(mbox => mbox.UsersConnected).Include(mbox => mbox.Messages).First(mbox => mbox.Id == message.topicId);
             var toUpdateForum = context.Forums.Find(toUpdateTopic.forumId);
             var toUpdateGame = context.Games.Include(mbox => mbox.participants).First(mbox => mbox.Id == toUpdateForum.Id);
 
@@ -59,6 +59,15 @@ namespace mdRPG.Controllers
                         context.NotificationsData.Update(toUpdateNotification);
                     }
                 }
+            }
+
+            int pages = toUpdateTopic.Messages.Count() / 10;
+            int modpages = toUpdateTopic.Messages.Count() % 10;
+            Console.WriteLine(pages + " i " + modpages + " " + toUpdateTopic.Messages.Count());
+            if (pages >= toUpdateTopic.totalPages && modpages >= 0)
+            {
+                Console.WriteLine("weszlem ");
+                toUpdateTopic.totalPages += 1; 
             }
 
             context.Topics.Update(toUpdateTopic);

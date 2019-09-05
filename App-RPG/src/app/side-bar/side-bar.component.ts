@@ -5,7 +5,6 @@ import { PersonalDataModel } from '../models/personaldata.model';
 import { GameToPersonAppModel } from '../models/game-to-person.model';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
-import { FriendsService } from '../friends.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -26,8 +25,7 @@ export class SideBarComponent implements OnInit {
   isNewInvite: boolean; isDataReady = false;
   test: number = 9;
 
-  constructor(private route: ActivatedRoute, private _api: ApiService, private _data: DataService, friendsService: FriendsService){
-    this.friendsAll = friendsService.getFriends();
+  constructor(private route: ActivatedRoute, private _api: ApiService, private _data: DataService){
   }
 
   ngOnInit() {

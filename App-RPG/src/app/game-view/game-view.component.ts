@@ -47,7 +47,7 @@ export class GameViewComponent implements OnInit {
 
 
   
-  constructor(private route: ActivatedRoute, private _api: ApiService, private _router: Router,) { }
+  constructor(private route: ActivatedRoute, private _api: ApiService, private _router: Router) { }
 
   ngOnInit() {
     this.subpage = this.route.snapshot.params.view;

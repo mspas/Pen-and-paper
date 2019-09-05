@@ -33,6 +33,7 @@ export class ViewProfileComponent implements OnInit {
    }
 
   ngOnInit() {
+    console.log(this.myProfilePage);
   }
 
   onSendInvite() {

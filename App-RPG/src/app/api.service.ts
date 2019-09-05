@@ -13,15 +13,16 @@ import { GameSessionCreateModel } from './models/gamesession.model';
 import { ChangePasswordModel } from './models/changepassword.model';
 import { MessageModel, MessageCreateModel } from './models/message.model';
 import { NotificationAppModel } from './models/notification.model';
-import { ForumModel, TopicCreateModel, MessageForumCreateModel, NewTopicModel } from './models/forum.model';
+import { ForumModel, TopicCreateModel, MessageForumCreateModel, NewTopicModel, TopicModel } from './models/forum.model';
 import { TopicToPersonModel } from './models/topic-to-person.model';
+import { ForumService } from './forum.service';
 
 @Injectable()
 export class ApiService {
 
     url = 'http://localhost:50168/api/';
 
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient, private _forum: ForumService) {
     }
 
     getAllDataProfile(nick: string, login: string): Observable<any> {
@@ -73,6 +74,10 @@ export class ApiService {
             .get<GameAppModel[]>(this.url + 'Game/' + gameId.toString());
         return Observable.forkJoin([profile, forum, topic, t2p, game]);
     }
+    getOnlyTopic(topicId: number) {
+        return this._http
+            .get<TopicModel>(this.url + 'Topic/' + localStorage.getItem("id").toString() + "/" + topicId.toString());
+    }
 
     getConversation(relationId: number) {
         //this._http.post(this.url + 'Message/', new MessageModel(0, new Date(Date.UTC(2019, 6, 19, 1,1,1,1)), false, "hello dude", 2)).subscribe (
@@ -104,19 +109,14 @@ export class ApiService {
             error => console.log(error));
     }
 
-    /*createTopic(topic: TopicCreateModel, bodyMessage: string) {
-        console.log(JSON.stringify(topic));
-        return this._http.post(this.url+'Topic', [topic, bodyMessage]).subscribe (
-            data => console.log(data));
-    }*/
-
     createTopic(topic: NewTopicModel) {
         return this._http.post(this.url+'Topic', topic).subscribe (
             data => console.log(data));
     }
+
     createForumMessage(msg: MessageForumCreateModel) {
         this._http.post(this.url+'MessageForum', msg).subscribe (
-            data => console.log(data));
+            (data: number) => this._forum.changeIdResponse(data));
     }
 
 

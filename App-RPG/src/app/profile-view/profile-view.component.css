@@ -144,3 +144,7 @@ h3 {
     margin-left: 40%;
     margin-right: 40%;
 }
+
+.content-body {
+    padding-bottom: 0px !important;
+}

@@ -19,13 +19,19 @@
     </div>
 
     <div class="content-body">
-      <div class="btn-wrap">
-        <a href="game/{{gameData.id}}/overview/new-topic"><span class="btn-forum" id="btn-add-topic"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</span></a>
-        <span class="btn-forum" id="btn-your-character"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</span>
-        <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>
+      <div class="content-body-heading">
+        <div class="btn-wrap">
+          <a href="game/{{gameData.id}}/{{topicData.id}}/{{topicData.totalPages}}/reply"><span class="btn-forum" id="btn-add-topic"><img class="btn-ico" src="assets/plus.png">REPLY</span></a>
+          <!--<span class="btn-forum" id="btn-your-character"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</span>
+          <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>-->
+        </div>
+        <span class="topic-name">{{topicData.topicName}}</span>
       </div>
   
-      <app-posts *ngIf="subpage == 'view'" [topicData]="topicData" [participants]="participants" [iAmGameMaster]="iAmGameMaster"></app-posts>
+      <div>
+        <app-posts *ngIf="subpage == 'view'" [topicData]="topicData" [participants]="participants" [iAmGameMaster]="iAmGameMaster"></app-posts>
+        <app-create-post *ngIf="subpage == 'reply'" [topicData]="topicData" [gameId]="gameData.id" [iAmGameMaster]="iAmGameMaster"></app-create-post>
+      </div>
     </div>
   
   </div>

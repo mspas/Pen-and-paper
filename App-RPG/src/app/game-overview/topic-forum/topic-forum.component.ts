@@ -42,7 +42,6 @@ export class TopicForumComponent implements OnInit {
       this.iAmGameMaster = true;
 
     this.participants = this.gameData.participants;
-    console.log("siema" + JSON.stringify(this.topicData.messages));
 
     //dane są, dziś marcin-frontend
   }

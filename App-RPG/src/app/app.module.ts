@@ -33,7 +33,6 @@ import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.se
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { ProfileDataResolve } from './side-bar/side-bar.resolve.service';
 import { DataService } from './data.service';
-import { FriendsService } from './friends.service';
 import { BphotoComponent } from './bphoto/bphoto.component';
 import { ViewProfileComponent } from './profile-view/view-profile/view-profile.component';
 import { ChatComponent } from './chat/chat.component';
@@ -51,6 +50,8 @@ import { TopicAccessSettingComponent } from './game-overview/topic-forum/topic-a
 import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
 import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
 import { PostsComponent } from './game-overview/topic-forum/posts/posts.component';
+import { CreatePostComponent } from './game-overview/topic-forum/create-post/create-post.component';
+import { ForumService } from './forum.service';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { PostsComponent } from './game-overview/topic-forum/posts/posts.componen
     CreateTopicComponent,
     TopicAccessSettingComponent,
     TopicForumComponent,
-    PostsComponent
+    PostsComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,
@@ -104,9 +106,9 @@ import { PostsComponent } from './game-overview/topic-forum/posts/posts.componen
     GameInviteResolve,
     ProfileDataResolve,
     DataService,
-    FriendsService,
     ActivityResolve,
-    TopicResolve
+    TopicResolve,
+    ForumService
   ],
   bootstrap: [AppComponent]
 })

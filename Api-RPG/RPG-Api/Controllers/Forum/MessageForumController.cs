@@ -66,7 +66,7 @@ namespace mdRPG.Controllers
             context.Games.Update(toUpdateGame);
             context.MessagesForum.Add(message);
             await context.SaveChangesAsync();
-            return Ok(message);
+            return Ok(message.Id);
         }
 
         [HttpPut("{id}")]

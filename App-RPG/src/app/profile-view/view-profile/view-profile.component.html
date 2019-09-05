@@ -42,7 +42,7 @@
             <td>Nickname:</td>
             <td>{{userProfileData.login}}</td>
           </tr>
-          <tr *ngIf="isFriend == true">
+          <tr *ngIf="isFriend == true || myProfilePage == true">
             <td>Email:</td>
             <td>{{userProfileData.email}}</td>
           </tr>

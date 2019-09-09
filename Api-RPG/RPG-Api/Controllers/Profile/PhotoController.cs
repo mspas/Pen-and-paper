@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using mdRPG.Controllers.Resources;
-using mdRPG.Models;
-using mdRPG.Persistence;
+using RPG.Api.Resources;
+using RPG.Api.Domain.Models;
+using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +28,6 @@ namespace mdRPG.Controllers
         {
             this.host = host;
             this.context = context;
-            this.mapper = mapper;
             allAccounts = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
         }
 

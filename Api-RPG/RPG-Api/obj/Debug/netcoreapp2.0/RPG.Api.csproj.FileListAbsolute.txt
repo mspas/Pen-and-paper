@@ -1,0 +1,11 @@
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\obj\Debug\netcoreapp2.0\RPG.Api.csprojAssemblyReference.cache
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\obj\Debug\netcoreapp2.0\RPG.Api.csproj.CoreCompileInputs.cache
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\obj\Debug\netcoreapp2.0\RPG.Api.AssemblyInfoInputs.cache
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\obj\Debug\netcoreapp2.0\RPG.Api.AssemblyInfo.cs
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\bin\Debug\netcoreapp2.0\RPG.Api.deps.json
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\bin\Debug\netcoreapp2.0\RPG.Api.runtimeconfig.json
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\bin\Debug\netcoreapp2.0\RPG.Api.runtimeconfig.dev.json
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\bin\Debug\netcoreapp2.0\RPG.Api.dll
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\bin\Debug\netcoreapp2.0\RPG.Api.pdb
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\obj\Debug\netcoreapp2.0\RPG.Api.dll
+G:\git\Pen-and-paper\Api-RPG\RPG-Api\obj\Debug\netcoreapp2.0\RPG.Api.pdb

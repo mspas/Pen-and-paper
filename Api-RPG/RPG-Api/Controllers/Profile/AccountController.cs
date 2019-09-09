@@ -1,8 +1,8 @@
 ﻿
 using AutoMapper;
-using mdRPG.Controllers.Resources;
-using mdRPG.Models;
-using mdRPG.Persistence;
+using RPG.Api.Resources;
+using RPG.Api.Domain.Models;
+using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

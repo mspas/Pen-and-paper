@@ -1,43 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\20181105125224_AddLists.cs" />
-    <Compile Remove="Migrations\20181105125224_AddLists.Designer.cs" />
-    <Compile Remove="Migrations\20181105131507_AddList.cs" />
-    <Compile Remove="Migrations\20181105131507_AddList.Designer.cs" />
-    <Compile Remove="Migrations\20181105200656_AddFriendGame.cs" />
-    <Compile Remove="Migrations\20181105200656_AddFriendGame.Designer.cs" />
-    <Compile Remove="Migrations\20181105201039_AddFriendGame.cs" />
-    <Compile Remove="Migrations\20181105201039_AddFriendGame.Designer.cs" />
-    <Compile Remove="Migrations\20181105203620_AddFriend.cs" />
-    <Compile Remove="Migrations\20181105203620_AddFriend.Designer.cs" />
-    <Compile Remove="Migrations\20190121140757_ProfilePhoto.cs" />
-    <Compile Remove="Migrations\20190121140757_ProfilePhoto.Designer.cs" />
-    <Compile Remove="Migrations\20190121161458_ProfilePhotoNameInPData.cs" />
-    <Compile Remove="Migrations\20190121161458_ProfilePhotoNameInPData.Designer.cs" />
-    <Compile Remove="Migrations\20190823114501_Forum v1.0.cs" />
-    <Compile Remove="Migrations\20190823114501_Forum v1.0.Designer.cs" />
-    <Compile Remove="Migrations\20190823120805_Forum v1.0.cs" />
-    <Compile Remove="Migrations\20190823120805_Forum v1.0.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.Dependencyinjection" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
-  </ItemGroup>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
 </Project>

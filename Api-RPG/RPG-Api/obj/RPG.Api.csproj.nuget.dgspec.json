@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "restore": {
+    "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG.Api.csproj": {}
+  },
+  "projects": {
+    "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG.Api.csproj",
+        "projectName": "RPG.Api",
+        "projectPath": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG.Api.csproj",
+        "packagesPath": "C:\\Users\\Marcin\\.nuget\\packages\\",
+        "outputPath": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Marcin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.0": {
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.Dependencyinjection": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.0.9, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.0.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

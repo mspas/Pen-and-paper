@@ -13509,9 +13509,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG-Api.csproj",
-      "projectName": "RPG-Api",
-      "projectPath": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG-Api.csproj",
+      "projectUniqueName": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG.Api.csproj",
+      "projectName": "RPG.Api",
+      "projectPath": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\RPG.Api.csproj",
       "packagesPath": "C:\\Users\\Marcin\\.nuget\\packages\\",
       "outputPath": "G:\\git\\Pen-and-paper\\Api-RPG\\RPG-Api\\obj\\",
       "projectStyle": "PackageReference",

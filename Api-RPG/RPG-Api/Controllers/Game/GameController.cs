@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
-using mdRPG.Controllers.Resources;
-using mdRPG.Models;
-using mdRPG.Persistence;
-using mdRPG.Services;
+using RPG.Api.Resources;
+using RPG.Api.Domain.Models;
+using RPG.Api.Persistence;
+using RPG.Api.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace mdRPG.Controllers
+namespace RPG.Api.Domain.Controllers
 {
     [Route("api/[controller]")]
 public class GameController : Controller

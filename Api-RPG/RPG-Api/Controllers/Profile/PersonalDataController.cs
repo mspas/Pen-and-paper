@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
-using mdRPG.Controllers.Resources;
-using mdRPG.Models;
-using mdRPG.Persistence;
+using RPG.Api.Resources;
+using RPG.Api.Domain.Models;
+using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,17 +19,19 @@ namespace mdRPG.Controllers
     public class PersonalDataController : Controller
     {
         private readonly RpgDbContext context;
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
+        private readonly IPersonalDataService _personalDataService;
         public List<PersonalDataResource> per = new List<PersonalDataResource>();
         public List<AccountResource> allAccounts;
 
 
-        public PersonalDataController(RpgDbContext context, IMapper mapper)
+        public PersonalDataController(RpgDbContext context, IPersonalDataService personalDataService, IMapper mapper)
         {
             this.context = context;
-            this.mapper = mapper;
+            _mapper = mapper;
+            _personalDataService = personalDataService;
             var acc = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
-            allAccounts = mapper.Map<List<Account>, List<AccountResource>>(acc);
+            allAccounts = _mapper.Map<List<Account>, List<AccountResource>>(acc);
             foreach (AccountResource a in allAccounts)
             {
                 per.Add(a.PersonalData);
@@ -41,85 +44,12 @@ namespace mdRPG.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
+
         [HttpGet("{data}")]
         public List<PersonalDataResource> Get(string data)
         {
-            var foundData = new List<PersonalDataResource>();
-            var pattern = "";
-
-            foreach (PersonalDataResource p in per)     
-            {
-                if (p.login == data)
-                {
-                    foundData.Add(p);
-                    return foundData;
-                }
-            }
-
-            string[] dataSearch = data.Split(".");
-            if (dataSearch.Length > 0)                    
-            {
-                if (dataSearch[0] != "")
-                    pattern += "(" + dataSearch[0] + ")";
-                pattern += @"\w*(.)";
-
-                if (dataSearch[1] != "")
-                    pattern += "(" + dataSearch[1] + ")";
-                pattern += @"\w*(.)";
-
-                if (dataSearch[2] != "")
-                    pattern += "(" + dataSearch[2] + ")";
-                pattern += @"\w*";
-            }
-            Regex rgx = new Regex(pattern);
-
-            foreach (PersonalDataResource p in per)
-            {
-                var nextData = p.firstname + "." + p.lastname + "." + p.login;
-                if (rgx.IsMatch(nextData))
-                {
-                    foundData.Add(p);
-                }
-            }
-            return foundData;
-
+            return _mapper.Map<List<PersonalData>, List<PersonalDataResource>>(_personalDataService.FindProfiles(data));
         }
-
-
-
-
-         /*   if (dataSearch.Length > 1)                    //szukanie imie i nazwisko
-            {
-                foreach (PersonalDataResource p in per)
-                {
-                    if (dataSearch[1] == p.lastname)        //szukanie nazwisko
-                    {
-                        if (dataSearch[0] == p.firstname)   //szukanie imie wsrod znalezionych nazwisk
-                        {
-                            foundData.Add(p);
-                        }
-                    }
-                }
-            }
-            else                                            //wpisano do szukania tylko jedno co nie jest loginem
-            {
-                foreach (PersonalDataResource p in per)
-                {
-                    if (dataSearch[0] == p.lastname)        //szukanie nazwisko
-                    {
-                        foundData.Add(p);
-                    }
-                    if (dataSearch[0] == p.firstname)        //szukanie imie
-                    {
-                        foundData.Add(p);
-                    }
-                }
-            }
-            return foundData;
-
-        }*/
-
 
 
         // PUT api/<controller>/5

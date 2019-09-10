@@ -12,6 +12,7 @@ namespace RPG.Api.Resources
         public string password { get; set; }
         public string email { get; set; }
         public virtual PersonalDataResource PersonalData { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
         public AccountResource()
         {

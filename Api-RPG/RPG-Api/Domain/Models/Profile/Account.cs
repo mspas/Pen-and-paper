@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace RPG.Api.Domain.Models
 {
@@ -12,6 +10,7 @@ namespace RPG.Api.Domain.Models
         public string password { get; set; }
         public string email { get; set; }
         public virtual PersonalData PersonalData { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; } = new Collection<UserRole>();
 
         public Account()
         {

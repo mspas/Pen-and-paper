@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AuthModel } from '../models/auth.model';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
+import { TokenModel, TokenModelSuspicious } from '../models/token.model';
 
 @Injectable()
 export class AuthService {
@@ -46,20 +47,23 @@ export class AuthService {
 
   signInUser(email: string, password: string) {
     const user: AuthModel = new AuthModel(email, password);
-    this._http.post(this.url+'login', user).subscribe(
-      (token: string) => {
-        localStorage.setItem('token', token['token']);
-        let tokenn = localStorage.getItem("token");
-        let tokenInfo = this.getDecodedAccessToken(tokenn);
-        localStorage.setItem("id", tokenInfo.id);
-        localStorage.setItem("nick", tokenInfo.login);
-        this.router.navigate(['/profile', tokenInfo.login]);
+    this._http.post<TokenModelSuspicious>(this.url+'login', user).subscribe(
+      (token: TokenModelSuspicious) => {
+        let accessToken = token.token.token.token; //xD
+        localStorage.setItem('token', accessToken);
+        //let tokenn = localStorage.getItem("token");
+        let tokenInfo = this.getDecodedAccessToken(accessToken);
+        localStorage.setItem("id", tokenInfo.unique_name);
+        localStorage.setItem("nick", tokenInfo.sub);
+        this.router.navigate(['/profile', tokenInfo.sub]);
       },
       //error => console.log(error)
       error => this.loginError.next(true)
     );
 
   }
+
+
 
   getDecodedAccessToken(token: string): any {
     try{

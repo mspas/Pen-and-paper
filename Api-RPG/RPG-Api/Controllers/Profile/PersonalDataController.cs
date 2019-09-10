@@ -48,7 +48,9 @@ namespace mdRPG.Controllers
         [HttpGet("{data}")]
         public List<PersonalDataResource> Get(string data)
         {
-            return _mapper.Map<List<PersonalData>, List<PersonalDataResource>>(_personalDataService.FindProfiles(data));
+            var profileList = _personalDataService.FindProfiles(data);
+            var resources = _mapper.Map<List<PersonalData>, List<PersonalDataResource>>(profileList);
+            return resources;
         }
 
 

@@ -10,37 +10,91 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using RPG.Api.Resources;
+using RPG.Api.Domain.Services.Security;
+using RPG.Api.Domain.Services.Security.Tokens;
+using RPG.Api.Domain.Services.Communication;
 
 namespace RPG.Api.Domain.Services
 {
-    public interface IAuthorizeService
-    {
-        string Authenticate(LoginModel loginModel, List<AccountResource> repository);
-        Task<bool> CreateAdminAccount(LoginModel loginModel);
-    }
-
     public class AuthorizeService : IAuthorizeService
     {
         private const string CollectionName = "AdministratorsCollection";
         private readonly IConfiguration _config;
+        private readonly IAccountService _accountService;
+        private readonly IPasswordHasher _passwordHasher;
+        private readonly ITokenHandler _tokenHandler;
         private AccountResource foundAccount;
-        //private readonly List<AccountResource> _repository;
 
-        public AuthorizeService(IConfiguration config)
+        public AuthorizeService(IAccountService accountService, IPasswordHasher passwordHasher, ITokenHandler tokenHandler, IConfiguration config)
         {
+            _accountService = accountService;
+            _passwordHasher = passwordHasher;
+            _tokenHandler = tokenHandler;
             _config = config;
-           // _repository = repository;
         }
 
-        public string Authenticate(LoginModel loginModel, List<AccountResource> repository)
+        //private readonly List<AccountResource> _repository;
+
+        /*public string Authenticate(LoginModel loginModel)
         {
             if (CheckLoginAndPassword(loginModel, repository))
                 return BuildToken(loginModel);
 
             return null;
+        }*/
+
+
+        /*public TokenResponse Authenticate(LoginModel loginModel)
+        {
+            var user = _accountService.FindByLoginAsync(loginModel.login);
+
+            if (user == null || !_passwordHasher.PasswordMatches(loginModel.password, user.password))
+            {
+                return new TokenResponse(false, "Invalid login or password.", null);
+            }
+            else
+            {
+                BuildToken(loginModel.login);
+            }
+
+            var token = _tokenHandler.CreateAccessToken(user);
+
+            return new TokenResponse(true, null, token);
+        }*/
+        public TokenResponse CreateAccessToken(LoginModel loginModel)
+        {
+            var user = _accountService.FindByLoginAsync(loginModel.login);
+
+            if (user == null || !_passwordHasher.PasswordMatches(loginModel.password, user.password))
+            {
+                return new TokenResponse(false, "Invalid login or password.", null);
+            }
+
+            var token = _tokenHandler.CreateAccessToken(user);
+
+            return new TokenResponse(true, null, token);
         }
 
-        private bool CheckLoginAndPassword(LoginModel loginModel, List<AccountResource> repository)
+        private string BuildToken(string login)
+        {
+            var claims = new[] {
+                new Claim(JwtRegisteredClaimNames.UniqueName, login),
+                new Claim("login", login)
+            };
+
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+              _config["Jwt:Issuer"],
+              claims,
+              expires: DateTime.Now.AddMinutes(600),
+              signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        /*private bool CheckLoginAndPassword(LoginModel loginModel)
         {
             var entities = repository;
                 foreach (AccountResource acc in entities)
@@ -52,9 +106,9 @@ namespace RPG.Api.Domain.Services
                     }
                 }
             return false;
-        }
+        }*/
 
-        private string BuildToken(LoginModel loginModel)
+        /*private string BuildToken(LoginModel loginModel)
         {
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.UniqueName, loginModel.login),
@@ -80,7 +134,7 @@ namespace RPG.Api.Domain.Services
           //    signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        }*/
 
         public async Task<bool> CreateAdminAccount(LoginModel loginModel)
         {

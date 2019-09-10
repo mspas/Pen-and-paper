@@ -16,6 +16,9 @@ using Microsoft.Extensions.Options;
 using RPG.Api.Domain.Repositories;
 using RPG.Api.Persistence.Repositories;
 using RPG.Api.Services;
+using RPG.Api.Domain.Services.Security;
+using RPG.Api.Services.Security.Tokens;
+using RPG.Api.Domain.Services.Security.Tokens;
 
 namespace RPG.Api
 {
@@ -41,11 +44,27 @@ namespace RPG.Api
             services.AddAutoMapper();
             services.AddMvc().AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDbContext<RpgDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+
             services.AddScoped<IAuthorizeService, AuthorizeService>();
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            services.AddSingleton<ITokenHandler, TokenHandler>();
+
+            services.Configure<TokenOptions>(Configuration.GetSection("TokenOptions"));
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
             services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();
             services.AddScoped<IPersonalDataService, PersonalDataService>();
 
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
             services.AddScoped<DbRepository>();
+
+            var signingConfigurations = new SigningConfigurations();
+            services.AddSingleton(signingConfigurations);
 
             services
                .AddAuthentication(
@@ -62,9 +81,13 @@ namespace RPG.Api
                       ValidateAudience = true,
                       ValidateLifetime = true,
                       ValidateIssuerSigningKey = true,
-                      ValidIssuer = Configuration["Jwt:Issuer"],
-                      ValidAudience = Configuration["Jwt:Issuer"],
-                     // IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                      ValidIssuer = tokenOptions.Issuer,
+                      ValidAudience = tokenOptions.Audience,
+                      IssuerSigningKey = signingConfigurations.Key,
+                      ClockSkew = TimeSpan.Zero
+                      //ValidIssuer = Configuration["Jwt:Issuer"],
+                      //ValidAudience = Configuration["Jwt:Issuer"],
+                      // IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                   };
               });
         }

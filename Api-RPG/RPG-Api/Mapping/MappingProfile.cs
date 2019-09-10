@@ -12,8 +12,12 @@ namespace RPG.Api.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Account, AccountResource>();
+            //CreateMap<Account, AccountResource>();
+            CreateMap<Account, AccountResource>()
+                .ForMember(u => u.Roles, opt => opt.MapFrom(u => u.UserRoles.Select(ur => ur.Role.Name)));
+            CreateMap<AccountCredentialsResource, Account>();
             CreateMap<PersonalData, PersonalDataResource>();
+            CreateMap<PersonalDataCredentialsResource, PersonalData>();
         }
     }
 }

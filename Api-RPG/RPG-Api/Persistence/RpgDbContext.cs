@@ -14,6 +14,7 @@ namespace RPG.Api.Persistence
         }
 
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameToPerson> GamesToPerson { get; set; }

@@ -23,7 +23,8 @@ export class PersonalDataModel {
       public lastname: string,
       public city: string,
       public age: number,
-      public notificationData: NotificationModel
+      public photoname: string,
+      public isPhotoUploaded: boolean
     ) {}
   }
 

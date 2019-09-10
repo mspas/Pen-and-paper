@@ -20,7 +20,7 @@ namespace mdRPG.Controllers
     {
         private readonly IAuthorizeService _authorizeService;
         private readonly RpgDbContext context;
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
 
         public List<AccountResource> allAccounts;
 
@@ -28,7 +28,7 @@ namespace mdRPG.Controllers
         {
             _authorizeService = authorizeService;
             this.context = context;
-            this.mapper = mapper;
+            _mapper = mapper;
             var acc = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
             allAccounts = mapper.Map<List<Account>, List<AccountResource>>(acc);
         }
@@ -37,15 +37,14 @@ namespace mdRPG.Controllers
         [HttpPost("/api/login")]
         public IActionResult CreateToken([FromBody] LoginModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             IActionResult response = Unauthorized();
 
-            var account = new LoginModel
-            {
-                login = model.login,
-                password = model.password,
-            };
-
-            var tokenString = _authorizeService.Authenticate(account, allAccounts);
+            var tokenString = _authorizeService.CreateAccessToken(model);
             if (tokenString != null)
                 return Ok(new { token = tokenString });
 

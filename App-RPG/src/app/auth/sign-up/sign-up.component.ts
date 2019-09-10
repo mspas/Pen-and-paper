@@ -21,8 +21,8 @@ export class SignUpComponent implements OnInit {
 
   onSignUp(form: NgForm) {
     console.log(form.value.email + " " + form.value.password + " " + form.value.login);
-    const notif: NotificationModel = new NotificationModel(null, null, null, null, null, null);
-    const pd: PersonalDataCreateModel = new PersonalDataCreateModel(form.value.login, form.value.email, form.value.firstname, form.value.lastname, form.value.city, form.value.age, notif); 
+    //const notif: NotificationModel = new NotificationModel(null, null, null, null, null, null);
+    const pd: PersonalDataCreateModel = new PersonalDataCreateModel(form.value.login, form.value.email, form.value.firstname, form.value.lastname, form.value.city, form.value.age, "unknown.png", false); 
     const account: AccountCreateModel = new AccountCreateModel(form.value.login, form.value.password, form.value.email, pd);
     this.authService.createAccountDB(account); 
     this.authService.currentAccMsg.subscribe(data => this.accMsg = data);

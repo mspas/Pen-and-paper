@@ -35,20 +35,22 @@ namespace mdRPG.Controllers
 
         [AllowAnonymous]
         [HttpPost("/api/login")]
-        public IActionResult CreateToken([FromBody] LoginModel model)
+        public async Task<IActionResult> CreateToken([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IActionResult response = Unauthorized();
+            //IActionResult response = Unauthorized();
 
-            var tokenString = _authorizeService.CreateAccessToken(model);
-            if (tokenString != null)
-                return Ok(new { token = tokenString });
+            var response = _authorizeService.CreateAccessToken(model);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
 
-            return response;
+            return Ok(response.Token);
         }
 
         [HttpGet, Authorize]
@@ -58,5 +60,38 @@ namespace mdRPG.Controllers
             var login = currentUser.Claims.First(c => c.Type == ClaimTypes.Name).Value;
             return Ok(login);
         }
+
+        [HttpPost("/api/login/refresh")]
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenResource refreshToken)
+        {
+            Console.WriteLine("refresh " + refreshToken.Token);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            var response = _authorizeService.RefreshTokenAsync(refreshToken.Token, refreshToken.Login);
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+
+            //var tokenResource = _mapper.Map<AccessToken, AccessTokenResource>(response.Token);
+            return Ok(response.Token);
+        }
+
+        [Route("/api/login/revoke")]
+        [HttpPost]
+        public IActionResult RevokeToken([FromBody] string revokeToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _authorizeService.RevokeRefreshToken(revokeToken);
+            return NoContent();
+        }
+
     }
 }

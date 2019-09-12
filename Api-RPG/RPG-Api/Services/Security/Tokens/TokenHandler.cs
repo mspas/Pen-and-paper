@@ -32,17 +32,33 @@ namespace RPG.Api.Services.Security.Tokens
             var accessToken = BuildAccessToken(account, refreshToken);
             _refreshTokens.Add(refreshToken);
 
+            foreach (RefreshToken refresh in _refreshTokens)
+            {
+                Console.WriteLine("take ref " + refresh.Token);
+            }
+
             return accessToken;
         }
 
         public void RevokeRefreshToken(string token)
         {
-            throw new NotImplementedException();
+            TakeRefreshToken(token);
         }
 
         public RefreshToken TakeRefreshToken(string token)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(token))
+                return null;
+
+            var refreshToken = _refreshTokens.SingleOrDefault(t => t.Token == token);
+            if (refreshToken != null)
+                _refreshTokens.Remove(refreshToken);
+
+            foreach (RefreshToken refresh in _refreshTokens)
+            {
+                Console.WriteLine("take ref " + refresh.Token);
+            }
+            return refreshToken;
         }
 
 
@@ -63,6 +79,7 @@ namespace RPG.Api.Services.Security.Tokens
         private AccessToken BuildAccessToken(Account account, RefreshToken refreshToken)
         {
             var accessTokenExpiration = DateTime.UtcNow.AddSeconds(_tokenOptions.AccessTokenExpiration);
+            Console.WriteLine(accessTokenExpiration);
 
             var securityToken = new JwtSecurityToken
             (

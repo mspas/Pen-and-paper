@@ -11,5 +11,7 @@ namespace RPG.Api.Domain.Services
     {
         TokenResponse CreateAccessToken(LoginModel loginModel);
         Task<bool> CreateAdminAccount(LoginModel loginModel);
+        TokenResponse RefreshTokenAsync(string refreshToken, string login);
+        void RevokeRefreshToken(string revokeToken);
     }
 }

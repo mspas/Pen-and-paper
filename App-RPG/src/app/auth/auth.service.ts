@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { AuthModel } from '../models/auth.model';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
-import { TokenModel, TokenModelSuspicious } from '../models/token.model';
+import { TokenModel, TokenModelSuspicious, AccessToken, RefreshTokenCredentials } from '../models/token.model';
 
 @Injectable()
 export class AuthService {
@@ -30,8 +30,18 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  getRefreshToken(): string {
+    return localStorage.getItem('refreshToken');
+  }
+  getLogin(): string {
+    return localStorage.getItem('nick');
+  }
+
   public isAuthenticated(): boolean {
     const token = this.getToken();
+    let isValid = tokenNotExpired(null, token);
+    if (!isValid && token != null)
+      this.refreshToken(this.getRefreshToken(), this.getLogin());
     return tokenNotExpired(null, token);
   }
 
@@ -47,15 +57,10 @@ export class AuthService {
 
   signInUser(email: string, password: string) {
     const user: AuthModel = new AuthModel(email, password);
-    this._http.post<TokenModelSuspicious>(this.url+'login', user).subscribe(
-      (token: TokenModelSuspicious) => {
-        let accessToken = token.token.token.token; //xD
-        localStorage.setItem('token', accessToken);
-        //let tokenn = localStorage.getItem("token");
-        let tokenInfo = this.getDecodedAccessToken(accessToken);
-        localStorage.setItem("id", tokenInfo.unique_name);
-        localStorage.setItem("nick", tokenInfo.sub);
-        this.router.navigate(['/profile', tokenInfo.sub]);
+    this._http.post<AccessToken>(this.url+'login', user).subscribe(
+      (token: AccessToken) => {
+        let login = this.decodeToken(token);
+        this.router.navigate(['/profile', login]);
       },
       //error => console.log(error)
       error => this.loginError.next(true)
@@ -63,6 +68,50 @@ export class AuthService {
 
   }
 
+  refreshToken(token: string, login: string) {
+    let data = new RefreshTokenCredentials(token, login);
+    console.log(JSON.stringify(data));
+    this._http.post<AccessToken>(this.url+'login/refresh', data).subscribe(
+      (token: AccessToken) => {
+        let login = this.decodeToken(token);
+        console.log(token.token);
+        //this.router.navigate(['/profile', login]);
+      },
+      //error => console.log(error)
+      error => this.loginError.next(true)
+    );
+  }
+
+  decodeToken(token : AccessToken) {
+    let accessToken = token.token;
+    let accessTokenExp = token.expiration;
+
+    let refreshToken = token.refreshToken.token;  
+    let refreshTokenExp = token.refreshToken.expiration;
+    
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('token-exp', accessTokenExp.toString());
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('refreshToken-exp', refreshTokenExp.toString());
+
+    let tokenInfo = this.getDecodedAccessToken(accessToken);
+    localStorage.setItem("id", tokenInfo.unique_name);
+    localStorage.setItem("nick", tokenInfo.sub);
+
+    return tokenInfo.sub;
+  }
+
+        /*var yourDate = new Date();  // for example
+
+        // the number of .net ticks at the unix epoch
+        var epochTicks = 621355968000000000;
+        
+        // there are 10000 .net ticks per millisecond
+        var ticksPerMillisecond = 10000;
+        
+        // calculate the total number of .net ticks for your date
+        var yourTicks = epochTicks + (yourDate.getTime() * ticksPerMillisecond);
+        console.log(yourTicks);*/
 
 
   getDecodedAccessToken(token: string): any {
@@ -76,7 +125,11 @@ export class AuthService {
 
   public logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('token-exp');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('refreshToken-exp');
     localStorage.removeItem('id');
+    localStorage.removeItem('nick');
     this.router.navigate(['/home']);
   }
 

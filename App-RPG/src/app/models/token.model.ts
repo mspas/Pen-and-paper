@@ -26,3 +26,10 @@ export class RefreshToken {
         public expiration: number
     ) {}
 }
+
+export class RefreshTokenCredentials {
+    constructor(
+        public token: string,
+        public login: string
+    ) {}
+}

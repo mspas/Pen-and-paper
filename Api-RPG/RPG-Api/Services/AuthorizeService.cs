@@ -94,6 +94,35 @@ namespace RPG.Api.Domain.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public TokenResponse RefreshTokenAsync(string refreshToken, string login)
+        {
+            var token = _tokenHandler.TakeRefreshToken(refreshToken);
+
+            if (token == null)
+            {
+                return new TokenResponse(false, "Invalid refresh token.", null);
+            }
+
+            if (token.IsExpired())
+            {
+                return new TokenResponse(false, "Expired refresh token.", null);
+            }
+
+            var user = _accountService.FindByLoginAsync(login);
+            if (user == null)
+            {
+                return new TokenResponse(false, "Invalid refresh token.", null);
+            }
+
+            var accessToken = _tokenHandler.CreateAccessToken(user);
+            return new TokenResponse(true, null, accessToken);
+        }
+
+        public void RevokeRefreshToken(string refreshToken)
+        {
+            _tokenHandler.RevokeRefreshToken(refreshToken);
+        }
+
         /*private bool CheckLoginAndPassword(LoginModel loginModel)
         {
             var entities = repository;

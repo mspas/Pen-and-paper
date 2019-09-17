@@ -22,10 +22,10 @@ namespace RPG.Api.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<PersonalData>> FindProfiles(string data)
+        public async Task<List<PersonalData>> FindProfilesAsync(string data)
         {
             var foundData = new List<PersonalData>();
-            var profile = await GetProfile(data);
+            var profile = await GetProfileAsync(data);
 
             if (profile != null)
             {
@@ -64,10 +64,10 @@ namespace RPG.Api.Services
             return foundData;
         }
 
-        public async Task<BaseResponse> EditProfileData(int id, PersonalData newProfile)
+        public async Task<BaseResponse> EditProfileDataAsync(int id, PersonalData newProfile)
         {
             var oldProfile= _personalDataRepository.GetProfile(id).Result;
-            var toUpdateProfile = UpdateDataProfile(newProfile, oldProfile);
+            var toUpdateProfile = UpdateDataProfileAsync(newProfile, oldProfile);
             var response = await _personalDataRepository.UpdateProfile(toUpdateProfile);
 
             await _unitOfWork.CompleteAsync();
@@ -75,18 +75,18 @@ namespace RPG.Api.Services
             return response;
         }
 
-        public async Task<PersonalData> GetProfile(string login)
+        public async Task<PersonalData> GetProfileAsync(string login)
         {
             return await _personalDataRepository.GetProfile(login);
         }
 
-        public Task<PersonalData> GetProfile(int id)
+        public Task<PersonalData> GetProfileAsync(int id)
         {
             return _personalDataRepository.GetProfile(id);
         }
 
 
-        public PersonalData UpdateDataProfile(PersonalData newProfile, PersonalData profileToUpdate)
+        private PersonalData UpdateDataProfileAsync(PersonalData newProfile, PersonalData profileToUpdate)
         {
             profileToUpdate.firstname = newProfile.firstname;
             profileToUpdate.lastname = newProfile.lastname;

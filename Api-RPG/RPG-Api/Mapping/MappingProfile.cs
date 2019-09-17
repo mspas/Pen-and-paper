@@ -18,6 +18,7 @@ namespace RPG.Api.Mapping
             CreateMap<AccountCredentialsResource, Account>();
             CreateMap<PersonalData, PersonalDataResource>();
             CreateMap<PersonalDataCredentialsResource, PersonalData>();
+            CreateMap<Friend, FriendResource>();
         }
     }
 }

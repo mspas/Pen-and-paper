@@ -32,7 +32,7 @@ namespace mdRPG.Controllers
         [HttpGet("{data}")]
         public async Task<List<PersonalDataResource>> Get(string data)
         {
-            var profileList = await _personalDataService.FindProfiles(data);
+            var profileList = await _personalDataService.FindProfilesAsync(data);
             var resources = _mapper.Map<List<PersonalData>, List<PersonalDataResource>>(profileList);
             return resources;
         }
@@ -42,7 +42,7 @@ namespace mdRPG.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]PersonalData profile)
         {
-            var response = await _personalDataService.EditProfileData(id, profile);
+            var response = await _personalDataService.EditProfileDataAsync(id, profile);
             if (response.Success)
             {
                 return Ok();

@@ -10,9 +10,9 @@ namespace RPG.Api.Domain.Services
 {
     public interface IPersonalDataService
     {
-        Task<PersonalData> GetProfile(string login);
-        Task<PersonalData> GetProfile(int id);
-        Task<List<PersonalData>> FindProfiles(string data);
-        Task<BaseResponse> EditProfileData(int id, PersonalData newProfile);
+        Task<PersonalData> GetProfileAsync(string login);
+        Task<PersonalData> GetProfileAsync(int id);
+        Task<List<PersonalData>> FindProfilesAsync(string data);
+        Task<BaseResponse> EditProfileDataAsync(int id, PersonalData newProfile);
     }
 }

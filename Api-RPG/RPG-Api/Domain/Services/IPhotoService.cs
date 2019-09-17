@@ -10,8 +10,8 @@ namespace RPG.Api.Domain.Services
 {
     public interface IPhotoService
     {
-        Task<BaseResponse> UploadPhoto(int pdataId, IFormFile file);
-        Task<BaseResponse> DeletePhoto(int userId, string fileName);
+        Task<BaseResponse> UploadPhotoAsync(int pdataId, IFormFile file);
+        Task<BaseResponse> DeletePhotoAsync(int userId, string fileName);
         string GetMimeType(string fileName);
     }
 }

@@ -40,9 +40,9 @@ export class AuthService {
   public isAuthenticated(): boolean {
     const token = this.getToken();
     let isValid = tokenNotExpired(null, token);
-    if (!isValid && token != null)
+    /*if (!isValid && token != null)
       this.refreshToken(this.getRefreshToken(), this.getLogin());
-    return tokenNotExpired(null, token);
+    */return tokenNotExpired(null, token);
   }
 
   getAccounts() {

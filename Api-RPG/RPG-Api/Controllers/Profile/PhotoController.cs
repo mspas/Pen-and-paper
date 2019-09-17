@@ -32,7 +32,7 @@ namespace mdRPG.Controllers
         [HttpPost]
         public async Task<BaseResponse> Upload(int pdataId, IFormFile file)
         {
-            return await _photoService.UploadPhoto(pdataId, file);
+            return await _photoService.UploadPhotoAsync(pdataId, file);
         }
 
         [HttpGet("/api/photos/{filename}")]
@@ -60,7 +60,7 @@ namespace mdRPG.Controllers
         [HttpDelete("/api/photos/{userId}/{fileName}")]
         public async Task<BaseResponse> DeleteFile(int userId, string fileName)
         {
-            return await _photoService.DeletePhoto(userId, fileName);
+            return await _photoService.DeletePhotoAsync(userId, fileName);
         }
     }
 }

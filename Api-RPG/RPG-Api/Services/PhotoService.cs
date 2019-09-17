@@ -24,7 +24,7 @@ namespace RPG.Api.Services
             _host = host;
         }
 
-        public async Task<BaseResponse> UploadPhoto(int pdataId, IFormFile file)
+        public async Task<BaseResponse> UploadPhotoAsync(int pdataId, IFormFile file)
         {
             var profile = await _personalDataRepository.GetProfile(pdataId);
 
@@ -56,7 +56,7 @@ namespace RPG.Api.Services
             return new BaseResponse(true, null);
         }
         
-        public async Task<BaseResponse> DeletePhoto(int userId, string fileName)
+        public async Task<BaseResponse> DeletePhotoAsync(int userId, string fileName)
         {
             var profile = await _personalDataRepository.GetProfile(userId);
 
@@ -65,7 +65,7 @@ namespace RPG.Api.Services
             throw new NotImplementedException();
         }
         
-        string IPhotoService.GetMimeType(string fileName)
+        public string GetMimeType(string fileName)
         {
             string extension = Path.GetExtension(fileName).ToLowerInvariant();
             switch (extension)

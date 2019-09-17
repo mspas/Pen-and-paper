@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,124 +19,76 @@ namespace mdRPG.Controllers
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     public class FriendController : Controller
-{
-    private readonly RpgDbContext context;
-    private readonly IMapper mapper;
-    public List<PersonalDataResource> per = new List<PersonalDataResource>();
-    public List<AccountResource> allAccounts;
-
-
-    public FriendController(RpgDbContext context, IMapper mapper)
     {
-        this.context = context;
-        this.mapper = mapper;
-        var acc = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
-        allAccounts = mapper.Map<List<Account>, List<AccountResource>>(acc);
-        foreach (AccountResource a in allAccounts)
+        private readonly IMapper _mapper;
+        private readonly IFriendService _friendService;
+        private readonly IPersonalDataService _personalDataService;
+
+        public FriendController(IMapper mapper, IFriendService friendService, IPersonalDataService personalDataService)
         {
-                per.Add(a.PersonalData);
+            _mapper = mapper;
+            _friendService = friendService;
+            _personalDataService = personalDataService;
         }
-     }
-        // GET: api/<controller>
-        [HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "value1", "value2" };
-    }
 
-    // GET api/<controller>/5
-    [HttpGet("{nick}")]
-    public List<PersonalDataFriendResource> Get(string nick)
-    {
-            var friends = context.Friends.ToList();
-            var foundFriends = new List<PersonalDataFriendResource>();
+
+        // GET api/<controller>/5
+        [HttpGet("{nick}")]
+        public async Task<List<FriendResource>> Get(string nick)
+        {
+            var foundFriends = new List<FriendResource>();
 
             if (int.TryParse(nick, out int relationId))
             {
-                foreach (Friend fr in friends)
-                {
-                    if (fr.Id == relationId)
-                    {
-                        var friendSet = new PersonalDataFriendResource(fr.Id, null, fr.isAccepted, true, fr.isFriendRequest, fr.lastMessageDate);
-                        foundFriends.Add(friendSet);
-                        return foundFriends;
-                    }
-                }
+                foundFriends.Add(await _friendService.GetFriendForTimestampAsync(relationId));
+                return foundFriends;
             }
 
-            int id = -1;
-            foreach (PersonalDataResource p in per)
+            var profileList = await _personalDataService.FindProfilesAsync(nick);
+            if (profileList == null)
             {
-                if (p.login == nick)
-                {
-                    id = p.Id;
-                    break;
-                }
+                return null;
             }
 
-            foreach (Friend fr in friends)
-            {
-                if (fr.isFriendRequest)
-                {
-                    if (fr.player1Id == id)
-                    {
-                        var isReceiver = false;
-                        var friendSet = new PersonalDataFriendResource(fr.Id, per.Find(ob => ob.Id == fr.player2Id), fr.isAccepted, isReceiver, fr.isFriendRequest, fr.lastMessageDate);
-                        foundFriends.Add(friendSet);
-                    }
-                    if (fr.player2Id == id)
-                    {
-                        var isReceiver = true;
-                        var friendSet = new PersonalDataFriendResource(fr.Id, per.Find(ob => ob.Id == fr.player1Id), fr.isAccepted, isReceiver, fr.isFriendRequest, fr.lastMessageDate);
-                        foundFriends.Add(friendSet);
-                    }
-                }
-            }
+            var profile = profileList.First();
+            foundFriends = await _friendService.GetFriendsListAsync(profile.Id);
             return foundFriends;
-    }
+
+        }
         
-        [AllowAnonymous]
         [HttpPost]
-    public async Task<IActionResult> CreateFriend([FromBody] Friend friend)
-    {
-        context.Friends.Add(friend);
-        await context.SaveChangesAsync();
-        return Ok(friend);
-    }
-
-    // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Friend friend)
+        public async Task<IActionResult> CreateFriend([FromBody] Friend friend)
         {
-            var toUpdate = context.Friends.Find(id);
-            if (toUpdate == null)
+            var response = await _friendService.AddFriendAsync(friend);
+            if (response.Success)
             {
-               return NotFound();
+                return Ok(response.Friend);
             }
-
-            toUpdate.isAccepted = friend.isAccepted;
-            toUpdate.isFriendRequest = friend.isFriendRequest;
-            toUpdate.lastMessageDate = friend.lastMessageDate;
-
-            
-            context.Friends.Update(toUpdate);
-            await context.SaveChangesAsync();
             return NoContent();
         }
 
-     // DELETE api/<controller>/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-            var toDelete = context.Friends.Find(id);
-            if (toDelete == null)
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] Friend friend)
+        {
+            var response = await _friendService.EditFriendAsync(friend);
+            if (response.Success)
             {
-                return NotFound();
+                return Ok(response.Friend);
             }
-
-            context.Friends.Remove(toDelete);
-            await context.SaveChangesAsync();
             return NoContent();
+        }
+
+         // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var response = await _friendService.DeleteFriendAsync(id);
+            if (response.Success)
+            {
+                return Ok(true);
+            }
+            return NoContent();
+        }
     }
-}
 }

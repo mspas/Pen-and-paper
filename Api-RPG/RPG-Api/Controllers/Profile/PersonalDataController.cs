@@ -18,37 +18,21 @@ namespace mdRPG.Controllers
     [Route("api/pdata")]
     public class PersonalDataController : Controller
     {
-        private readonly RpgDbContext context;
         private readonly IMapper _mapper;
         private readonly IPersonalDataService _personalDataService;
-        public List<PersonalDataResource> per = new List<PersonalDataResource>();
-        public List<AccountResource> allAccounts;
 
 
-        public PersonalDataController(RpgDbContext context, IPersonalDataService personalDataService, IMapper mapper)
+        public PersonalDataController(IPersonalDataService personalDataService, IMapper mapper)
         {
-            this.context = context;
             _mapper = mapper;
             _personalDataService = personalDataService;
-            var acc = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
-            allAccounts = _mapper.Map<List<Account>, List<AccountResource>>(acc);
-            foreach (AccountResource a in allAccounts)
-            {
-                per.Add(a.PersonalData);
-            }
-        }
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
         }
 
 
         [HttpGet("{data}")]
-        public List<PersonalDataResource> Get(string data)
+        public async Task<List<PersonalDataResource>> Get(string data)
         {
-            var profileList = _personalDataService.FindProfiles(data);
+            var profileList = await _personalDataService.FindProfiles(data);
             var resources = _mapper.Map<List<PersonalData>, List<PersonalDataResource>>(profileList);
             return resources;
         }
@@ -58,27 +42,15 @@ namespace mdRPG.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]PersonalData profile)
         {
-            Console.WriteLine(id + " id");
-            var toUpdate = context.Accounts.Find(id);
-            Console.WriteLine(id + " " + toUpdate.PersonalData.firstname + " " + toUpdate.PersonalData.lastname + " " + toUpdate.PersonalData.age);
-            Console.WriteLine(id + " " + profile.firstname + " " + profile.lastname + " " + profile.age);
-            if (toUpdate == null)
+            var response = await _personalDataService.EditProfileData(id, profile);
+            if (response.Success)
             {
-                return NotFound();
+                return Ok();
             }
-
-            //toUpdate.PersonalData = profile;
-            toUpdate.PersonalData.firstname = profile.firstname;
-            toUpdate.PersonalData.lastname = profile.lastname;
-            toUpdate.PersonalData.email = profile.email;
-            toUpdate.PersonalData.age = profile.age;
-            toUpdate.PersonalData.city = profile.city;
-
-            Console.WriteLine(id + " " + toUpdate.PersonalData.firstname + " " + toUpdate.PersonalData.lastname + " " + toUpdate.PersonalData.age);
-
-            context.Accounts.Update(toUpdate);
-            await context.SaveChangesAsync();
-            return NoContent();
+            else
+            {
+                return NotFound(response.Message);
+            }
         }
 
         // DELETE api/<controller>/5

@@ -1,6 +1,8 @@
-﻿using RPG.Api.Domain.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using RPG.Api.Domain.Models;
 using RPG.Api.Domain.Repositories;
 using RPG.Api.Domain.Services;
+using RPG.Api.Domain.Services.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +14,18 @@ namespace RPG.Api.Services
     public class PersonalDataService : IPersonalDataService
     {
         private readonly IPersonalDataRepository _personalDataRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PersonalDataService(IPersonalDataRepository personalDataRepository)
+        public PersonalDataService(IPersonalDataRepository personalDataRepository, IUnitOfWork unitOfWork)
         {
             _personalDataRepository = personalDataRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public List<PersonalData> FindProfiles(string data)
+        public async Task<List<PersonalData>> FindProfiles(string data)
         {
             var foundData = new List<PersonalData>();
-            var profile = GetProfile(data);
+            var profile = await GetProfile(data);
 
             if (profile != null)
             {
@@ -29,7 +33,7 @@ namespace RPG.Api.Services
                 return foundData;
             }
 
-            var padataList = _personalDataRepository.GetList();
+            var padataList = await _personalDataRepository.GetList();
             var pattern = "";
             string[] dataSearch = data.Split(".");
 
@@ -60,14 +64,37 @@ namespace RPG.Api.Services
             return foundData;
         }
 
-        public PersonalData GetProfile(string login)
+        public async Task<BaseResponse> EditProfileData(int id, PersonalData newProfile)
         {
-            return _personalDataRepository.GetProfile(login);
+            var oldProfile= _personalDataRepository.GetProfile(id).Result;
+            var toUpdateProfile = UpdateDataProfile(newProfile, oldProfile);
+            var response = await _personalDataRepository.UpdateProfile(toUpdateProfile);
+
+            await _unitOfWork.CompleteAsync();
+
+            return response;
         }
 
-        public PersonalData GetProfile(int id)
+        public async Task<PersonalData> GetProfile(string login)
+        {
+            return await _personalDataRepository.GetProfile(login);
+        }
+
+        public Task<PersonalData> GetProfile(int id)
         {
             return _personalDataRepository.GetProfile(id);
+        }
+
+
+        public PersonalData UpdateDataProfile(PersonalData newProfile, PersonalData profileToUpdate)
+        {
+            profileToUpdate.firstname = newProfile.firstname;
+            profileToUpdate.lastname = newProfile.lastname;
+            profileToUpdate.email = newProfile.email;
+            profileToUpdate.age = newProfile.age;
+            profileToUpdate.city = newProfile.city;
+
+            return profileToUpdate;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services.Communication;
 
 namespace RPG.Api.Persistence.Repositories
 {
@@ -14,9 +15,9 @@ namespace RPG.Api.Persistence.Repositories
         {
         }
 
-        public List<PersonalData> GetList()
+        public async Task<List<PersonalData>> GetList()
         {
-            var accounts = _context.Accounts.Include(mbox => mbox.PersonalData).ToList();
+            var accounts = await _context.Accounts.Include(mbox => mbox.PersonalData).ToListAsync();
             var pdata = new List<PersonalData>();
             foreach (Account acc in accounts)
             {
@@ -25,16 +26,24 @@ namespace RPG.Api.Persistence.Repositories
             return pdata;
         }
         
-        public PersonalData GetProfile(string login)
+        public async Task<PersonalData> GetProfile(string login)
         {
-            var account =  _context.Accounts.Include(mbox => mbox.PersonalData).First(mbox => mbox.PersonalData.login == login);
+            var account =  await _context.Accounts.Include(mbox => mbox.PersonalData).FirstAsync(mbox => mbox.PersonalData.login == login);
             return account.PersonalData;
         }
 
-        public PersonalData GetProfile(int id)
+        public async Task<PersonalData> GetProfile(int id)
         {
-            var account =  _context.Accounts.Include(mbox => mbox.PersonalData).First( mbox => mbox.Id == id);
+            var account =  await _context.Accounts.Include(mbox => mbox.PersonalData).FirstAsync( mbox => mbox.Id == id);
             return account.PersonalData;
+        }
+
+        public async Task<BaseResponse> UpdateProfile(PersonalData toUpdate)
+        {
+            var account = await _context.Accounts.Include(mbox => mbox.PersonalData).FirstAsync(mbox => mbox.Id == toUpdate.Id);
+            account.PersonalData = toUpdate;
+            _context.Accounts.Update(account);
+            return new BaseResponse(true, null);
         }
 
         /*public async Task<PersonalData> GetProfileAsync(string login)

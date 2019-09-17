@@ -1,4 +1,5 @@
 ﻿using RPG.Api.Domain.Models;
+using RPG.Api.Domain.Services.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,9 @@ namespace RPG.Api.Domain.Repositories
 {
     public interface IPersonalDataRepository
     {
-        PersonalData GetProfile(string login);
-        PersonalData GetProfile(int id);
-        List<PersonalData> GetList();
+        Task<PersonalData> GetProfile(string login);
+        Task<PersonalData> GetProfile(int id);
+        Task<List<PersonalData>> GetList();
+        Task<BaseResponse> UpdateProfile(PersonalData toUpdate);
     }
 }

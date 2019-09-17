@@ -1,4 +1,6 @@
-﻿using RPG.Api.Domain.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using RPG.Api.Domain.Models;
+using RPG.Api.Domain.Services.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +10,9 @@ namespace RPG.Api.Domain.Services
 {
     public interface IPersonalDataService
     {
-        PersonalData GetProfile(string login);
-        PersonalData GetProfile(int id);
-        List<PersonalData> FindProfiles(string data);
+        Task<PersonalData> GetProfile(string login);
+        Task<PersonalData> GetProfile(int id);
+        Task<List<PersonalData>> FindProfiles(string data);
+        Task<BaseResponse> EditProfileData(int id, PersonalData newProfile);
     }
 }

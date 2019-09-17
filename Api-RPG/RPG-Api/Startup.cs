@@ -55,6 +55,7 @@ namespace RPG.Api
 
             services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();
             services.AddScoped<IPersonalDataService, PersonalDataService>();
+            services.AddScoped<IPhotoService, PhotoService>();
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAccountRepository, AccountRepository>();

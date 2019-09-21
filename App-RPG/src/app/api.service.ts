@@ -98,6 +98,23 @@ export class ApiService {
         this._http.post(this.url + 'Message/', msg).subscribe (
             error => console.log(error));
     }
+    
+    sendFriendInvite(idS: number, idR: number) {
+        let friendInvite = new FriendCreateModel(false, idS, idR);
+        this._http.post(this.url + 'Friend/', friendInvite).subscribe (
+            error => console.log(error));
+    }
+    
+    acceptFriendInvite(invite: FriendModel) {
+        console.log(invite.id);
+        this._http.put<number>(this.url + 'Friend/' + invite.id.toString(), invite).subscribe (
+            error => console.log(error));
+    }
+
+    declineFriendInvite(inviteId: number) {
+        this._http.delete(this.url + 'Friend/' + inviteId.toString()).subscribe (
+            error => console.log(error));
+    }
 
     getNotificationData(id: number) {
         return this._http
@@ -170,24 +187,8 @@ export class ApiService {
         return Observable.forkJoin([profile, list]);
     }
 
-    sendFriendInvite(idS: number, idR: number) {
-        let friendInvite = new FriendCreateModel(false, idS, idR);
-        this._http.post(this.url + 'Friend/', friendInvite).subscribe (
-            error => console.log(error));
-    }
-
     editRelation(invite: FriendModel) {
         this._http.put<FriendModel>(this.url + 'Friend/' + invite.id.toString(), invite).subscribe (
-            error => console.log(error));
-    }
-
-    acceptFriendInvite(invite: FriendModel) {
-        this._http.put<FriendModel>(this.url + 'Friend/' + invite.id.toString(), invite).subscribe (
-            error => console.log(error));
-    }
-
-    declineFriendInvite(inviteId: number) {
-        this._http.delete(this.url + 'Friend/' + inviteId.toString()).subscribe (
             error => console.log(error));
     }
         

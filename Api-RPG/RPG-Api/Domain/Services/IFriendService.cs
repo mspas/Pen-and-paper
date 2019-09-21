@@ -14,7 +14,7 @@ namespace RPG.Api.Domain.Services
         Task<FriendResource> GetFriendAsync(int userId, int friendId);
         Task<FriendResource> GetFriendForTimestampAsync(int friendId);
         Task<FriendResponse> AddFriendAsync(Friend friend);
-        Task<FriendResponse> EditFriendAsync(Friend friend);
+        Task<FriendResponse> EditFriendAsync(FriendResource newFriendData);
         Task<BaseResponse> DeleteFriendAsync(int friendId);
     }
 }

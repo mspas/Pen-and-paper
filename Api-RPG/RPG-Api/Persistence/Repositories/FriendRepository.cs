@@ -2,6 +2,7 @@
 using RPG.Api.Domain.Models;
 using RPG.Api.Domain.Repositories;
 using RPG.Api.Domain.Services.Communication;
+using RPG.Api.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,16 @@ namespace RPG.Api.Persistence.Repositories
             return new BaseResponse(true, null);
         }
 
-        public FriendResponse EditFriend(Friend friend)
+        public FriendResponse EditFriend(FriendResource newFriendData, Friend friend)
         {
-            if (friend == null)
+            if (friend == null || newFriendData == null)
             {
-                return new FriendResponse(false, null, null);
+                return new FriendResponse(false, "Friend not found", null);
             }
+
+            friend.isAccepted = newFriendData.isAccepted;
+            friend.isFriendRequest = newFriendData.isFriendRequest;
+            friend.lastMessageDate = friend.lastMessageDate;
 
             _context.Friends.Update(friend);
             return new FriendResponse(true, null, friend);

@@ -41,8 +41,8 @@ export class AuthService {
     const token = this.getToken();
     let isValid = tokenNotExpired(null, token);
     /*if (!isValid && token != null)
-      this.refreshToken(this.getRefreshToken(), this.getLogin());
-    */return tokenNotExpired(null, token);
+      this.refreshToken(this.getRefreshToken(), this.getLogin());*/
+    return tokenNotExpired(null, token);
   }
 
   getAccounts() {

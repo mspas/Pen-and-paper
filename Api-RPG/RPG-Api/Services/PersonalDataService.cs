@@ -25,19 +25,25 @@ namespace RPG.Api.Services
         public async Task<List<PersonalData>> FindProfilesAsync(string data)
         {
             var foundData = new List<PersonalData>();
-            var profile = await GetProfileAsync(data);
+            var padataList = new List<PersonalData>();
 
-            if (profile != null)
-            {
-                foundData.Add(profile);
-                return foundData;
-            }
-
-            var padataList = await _personalDataRepository.GetList();
-            var pattern = "";
             string[] dataSearch = data.Split(".");
 
-            if (dataSearch.Length > 0)
+            switch (dataSearch.Length)
+            {
+                case 0:
+                    return null;
+                case 1:
+                    var profile = await _personalDataRepository.GetProfile(data);
+                    foundData.Add(profile);
+                    return foundData;
+                default:
+                    padataList = await _personalDataRepository.GetList();
+                    break;
+            }
+
+            var pattern = "";
+            if (dataSearch.Length > 1)
             {
                 if (dataSearch[0] != "")
                     pattern += "(" + dataSearch[0] + ")";

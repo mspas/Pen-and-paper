@@ -41,9 +41,10 @@ namespace RPG.Api.Services
             return response;
         }
 
-        public async Task<FriendResponse> EditFriendAsync(Friend friend)
+        public async Task<FriendResponse> EditFriendAsync(FriendResource newFriendData)
         {
-            var response = _friendRepository.EditFriend(friend);
+            var friend = await _friendRepository.GetFriendAsync(newFriendData.Id);
+            var response = _friendRepository.EditFriend(newFriendData, friend);
             await _unitOfWork.CompleteAsync();
             return response;
         }

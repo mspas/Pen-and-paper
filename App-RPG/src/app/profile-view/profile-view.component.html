@@ -38,8 +38,8 @@
     </div>
     <div class="content-body">
       <app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
-      <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends"></app-view-friends>
-      <app-view-games *ngIf="gamesChild == true" [userGamesAPPList]="userGamesAPPList" [myGamesAPPList]="myGamesAPPList"></app-view-games>
+      <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends" [myProfilePage]="myProfilePage"></app-view-friends>
+      <app-view-games *ngIf="gamesChild == true" [userGamesAPPList]="userGamesAPPList" [myGamesAPPList]="myGamesAPPList" [myProfilePage]="myProfilePage"></app-view-games>
     </div>
   </div>
 </div>

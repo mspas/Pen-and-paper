@@ -21,9 +21,14 @@ export class ProfileViewFriendsComponent implements OnInit {
 
   @Input("userFriends") userFriends: FriendModel[] = [];
   @Input("myFriends") myFriends: FriendModel[] = [];
+  @Input("myProfilePage") myProfilePage: boolean;
   friendsAccepted: PersonalDataModel[] = [];
   friendsAcceptedNoPhoto: PersonalDataModel[] = [];
   friendsAcceptedPhoto: FriendListModel[] = [];
+  
+  invitations: PersonalDataModel[] = [];
+  invitationsNoPhoto: PersonalDataModel[] = [];
+  invitationsPhoto: FriendListModel[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private _api : ApiService) { 
   }
@@ -42,6 +47,9 @@ export class ProfileViewFriendsComponent implements OnInit {
         if (fr.isAccepted) {
           this.friendsAccepted.push(fr.personalData);
         }
+        if (!fr.isAccepted && fr.isReceiver) {
+          this.invitations.push(fr.personalData);
+        }
       });
     }
     
@@ -59,7 +67,7 @@ export class ProfileViewFriendsComponent implements OnInit {
         let id = this.friendsAcceptedPhoto.length - 1;
         this.isImageLoading = true;
         this._api.getImage(element.photoName).subscribe(data => {
-          this.createImageFromBlob(data, id);
+          this.createImageFromBlob(data, id, true);
           this.isImageLoading = false;
         }, error => {
           this.isImageLoading = false;
@@ -70,12 +78,34 @@ export class ProfileViewFriendsComponent implements OnInit {
         this.friendsAcceptedNoPhoto.push(element);
       }
     });
+
+    this.invitations.forEach(element => {
+      if (element.photoName != null && element.photoName != "") {
+        let friend = new FriendListModel(element, null);
+        this.invitationsPhoto.push(friend);
+        let id = this.invitationsPhoto.length - 1;
+        this.isImageLoading = true;
+        this._api.getImage(element.photoName).subscribe(data => {
+          this.createImageFromBlob(data, id, false);
+          this.isImageLoading = false;
+        }, error => {
+          this.isImageLoading = false;
+          console.log(error);
+        });
+      }
+      else {
+        this.invitationsNoPhoto.push(element);
+      }
+    });
   }
 
-  createImageFromBlob(image: Blob, id: number) {
+  createImageFromBlob(image: Blob, id: number, check: boolean) {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
-       this.friendsAcceptedPhoto[id].photo = reader.result;
+      if (check) 
+        this.friendsAcceptedPhoto[id].photo = reader.result;
+      else
+        this.invitationsPhoto[id].photo = reader.result;
     }, false);
  
     if (image) {
@@ -89,6 +119,24 @@ export class ProfileViewFriendsComponent implements OnInit {
     var res = await this.router.navigate(['/profile', friend]);
     var snapshot = this.route.snapshot;
     window.location.reload();
+ }
+
+ async onAcceptFriend(id: number) {
+  this.userFriends.forEach(element => {
+    if (element.personalData.id == id){
+      element.isAccepted = true;
+      this._api.acceptFriendInvite(element);
+      window.location.reload();
+    }
+  });
+ }
+
+ onRemoveFriend(id: number) {
+  this.userFriends.forEach(element => {
+    if (element.personalData.id == id)
+      this._api.declineFriendInvite(element.id);
+      window.location.reload();
+  });
  }
 
 

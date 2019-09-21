@@ -16,6 +16,7 @@ export class ProfileViewGamesComponent implements OnInit {
   profileData: PersonalDataModel;
   @Input("myGamesAPPList") myGamesAPPList: GameToPersonAppModel[];
   @Input("userGamesAPPList") userGamesAPPList: GameToPersonAppModel[];
+  @Input("myProfilePage") myProfilePage: boolean;
   gamesAccepted: GameToPersonAppModel[] = [];
   invitations: GameToPersonAppModel[] = [];
   participantsCount: number;

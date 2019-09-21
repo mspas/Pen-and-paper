@@ -39,7 +39,7 @@ export class ViewProfileComponent implements OnInit {
   onSendInvite() {
     let loggedID = parseInt(localStorage.getItem("id"));
     if (this.ourRelation == null)
-      this._api.sendFriendInvite(loggedID, this.myProfileData.id);
+      this._api.sendFriendInvite(loggedID, this.userProfileData.id);
     if (this.ourRelation != null && this.isInvited == false && this.isFriend == false) {
       let relation = this.ourRelation;
       relation.isFriendRequest = true;

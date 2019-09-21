@@ -1,5 +1,6 @@
 ﻿using RPG.Api.Domain.Models;
 using RPG.Api.Domain.Services.Communication;
+using RPG.Api.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace RPG.Api.Domain.Repositories
         Task<List<Friend>> GetFriendListAsync(int id);
         Task<FriendResponse> AddFriendAsync(Friend friend);
         BaseResponse DeleteFriend(Friend friend);
-        FriendResponse EditFriend(Friend friend);
+        FriendResponse EditFriend(FriendResource newFriendData, Friend friend);
     }
 }

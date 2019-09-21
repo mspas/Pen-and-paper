@@ -69,12 +69,12 @@ namespace mdRPG.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Friend friend)
+        public async Task<IActionResult> Put(int id, [FromBody] FriendResource friend)
         {
             var response = await _friendService.EditFriendAsync(friend);
             if (response.Success)
             {
-                return Ok(response.Friend);
+                return Ok(response.Friend.Id);
             }
             return NoContent();
         }

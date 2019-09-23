@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using RPG.Api.Domain.Services;
-using RPG.Api.Domain.Repositories;
+using RPG.Api.Domain.Services.Profile;
+using RPG.Api.Domain.Repositories.Profile;
 using System.IO;
 using RPG.Api.Domain.Services.Communication;
 using RPG.Api.Domain.Models;
+using RPG.Api.Domain.Repositories;
 
-namespace RPG.Api.Services
+namespace RPG.Api.Services.Profile
 {
     public class PhotoService : IPhotoService
     {

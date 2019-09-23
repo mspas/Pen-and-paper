@@ -1,49 +1,48 @@
 <div class="container">
-  <div class="profile-nav">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="profile-photo-wrap">
-          <img src="assets/unknown.png" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == true">
-          <img [src]="imageToShow" alt="Profile image" style="width:200px; height: 200px" *ngIf="defaultImage == false">
+  <div class="content">
+    <div class="content-top">
+      <div class="row">
+        <div class="col-md-3">
+          <img src="assets/unknown.png" alt="Profile image" class="profile-photo" *ngIf="defaultImage == true">
+          <img [src]="imageToShow" alt="Profile image" class="profile-photo" *ngIf="defaultImage == false">
         </div>
-      </div>
-      <div class="col-md-9">
-        <div class="nav-tabs-wrap">
-          <ul class="nav nav-tabs">
-            <li id="acc-messages">
-              <a (click)="onNavClick($event)" id="messages">
-                <span (click)="onNavClick($event)" id="messages" class="glyphicon glyphicon-user"></span> 
-                MESSAGES <span *ngIf="notificationSet.message">(!)</span>
-              </a>
+        <div class="col-md-9">
+          <div class="nav-tabs-wrap">
+            <ul class="nav nav-tabs">
+              <li id="acc-messages">
+                <a (click)="onNavClick($event)" id="messages">
+                  <span (click)="onNavClick($event)" id="messages" class="glyphicon glyphicon-user"></span> 
+                  MESSAGES <span *ngIf="notificationSet.message">(!)</span>
+                </a>
+                </li>
+              <li id="acc-games" >
+                <a (click)="onNavClick($event)" id="games">
+                  <span (click)="onNavClick($event)" id="games" class="glyphicon glyphicon-list-alt"></span> 
+                  MY GAMES <span *ngIf="notificationSet.game">(!)</span>
+                </a>
               </li>
-            <li id="acc-games" >
-              <a (click)="onNavClick($event)" id="games">
-                <span (click)="onNavClick($event)" id="games" class="glyphicon glyphicon-list-alt"></span> 
-                MY GAMES <span *ngIf="notificationSet.game">(!)</span>
-              </a>
-            </li>
-            <li id="acc-friends">
-              <a (click)="onNavClick($event)" id="friends">
-                <span (click)="onNavClick($event)" id="friends" class="glyphicon glyphicon-tower"></span> 
-                MY FRIENDS <span *ngIf="notificationSet.friend">(!)</span>
-              </a>
-            </li>
-            <li id="acc-settings">
-              <a (click)="onNavClick($event)" id="settings">
-                <span (click)="onNavClick($event)" id="settings" class="glyphicon glyphicon-tower"></span> 
-                SETTINGS
-              </a>
-            </li>
-          </ul>
+              <li id="acc-friends">
+                <a (click)="onNavClick($event)" id="friends">
+                  <span (click)="onNavClick($event)" id="friends" class="glyphicon glyphicon-tower"></span> 
+                  MY FRIENDS <span *ngIf="notificationSet.friend">(!)</span>
+                </a>
+              </li>
+              <li id="acc-settings">
+                <a (click)="onNavClick($event)" id="settings">
+                  <span (click)="onNavClick($event)" id="settings" class="glyphicon glyphicon-tower"></span> 
+                  SETTINGS
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="content" style="height: 1000px">
-    <div class="content-top"></div>
-    <app-account-messages *ngIf="messagesChild == true" [allConversations]="allConversations" [notificationSet]="notificationSet" [myFriends]="myFriends"></app-account-messages>
-    <app-account-games *ngIf="gamesChild == true" [myGamesAPPList]="myGamesAPPList"></app-account-games>
-    <app-account-friends *ngIf="friendsChild == true" [myFriends]="myFriends"></app-account-friends>
-    <app-account-settings *ngIf="settingsChild == true" [myProfileData]="myProfileData"></app-account-settings>
+    <div class="content-body">
+      <app-account-messages *ngIf="messagesChild == true" [allConversations]="allConversations" [notificationSet]="notificationSet" [myFriends]="myFriends"></app-account-messages>
+      <app-account-games *ngIf="gamesChild == true" [myGamesAPPList]="myGamesAPPList"></app-account-games>
+      <app-account-friends *ngIf="friendsChild == true" [myFriends]="myFriends"></app-account-friends>
+      <app-account-settings *ngIf="settingsChild == true" [myProfileData]="myProfileData"></app-account-settings>
+    </div>
   </div>
 </div>

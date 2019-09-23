@@ -1,5 +1,5 @@
 ﻿using RPG.Api.Domain.Models;
-using RPG.Api.Domain.Repositories;
+using RPG.Api.Domain.Repositories.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RPG.Api.Domain.Services.Communication;
 
-namespace RPG.Api.Persistence.Repositories
+namespace RPG.Api.Persistence.Repositories.Profile
 {
     public class PersonalDataRepository : BaseRepository, IPersonalDataRepository
     {

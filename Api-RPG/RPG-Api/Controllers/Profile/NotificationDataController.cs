@@ -8,6 +8,7 @@ using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services.Profile;
 
 namespace RPG_Api.Controllers
 {
@@ -15,52 +16,28 @@ namespace RPG_Api.Controllers
     [Route("api/NotificationData")]
     public class NotificationDataController : Controller
     {
-        private readonly RpgDbContext context;
+        private readonly INotificationService _notificationService;
         private readonly IMapper mapper;
-        public List<NotificationData> allNotfData;
 
-        public NotificationDataController(RpgDbContext context, IMapper mapper)
+        public NotificationDataController(INotificationService notificationService, IMapper mapper)
         {
-            this.context = context;
+            _notificationService = notificationService;
             this.mapper = mapper;
-            allNotfData = context.NotificationsData.ToList();
         }
 
-
         [HttpGet("{id}")]
-        public NotificationData Get(int id)
+        public async Task<NotificationData> Get(int id)
         {
-            var result = new NotificationData();
-            foreach (NotificationData notf in allNotfData)
-            {
-                if (notf.Id == id)
-                {
-                    result = notf;
-                }
-            }
-            return result;
+            return await _notificationService.GetNotificationDataAsync(id);
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] NotificationData data)
         {
-            var toUpdate = context.NotificationsData.Find(id);
-            if (toUpdate == null)
-            {
-                return NotFound();
-            }
-
-            toUpdate.lastMessageDate = data.lastMessageDate;
-            toUpdate.lastGameNotificationDate = data.lastGameNotificationDate;
-            toUpdate.lastFriendNotificationDate = data.lastFriendNotificationDate;
-            toUpdate.lastMessageSeen = data.lastMessageSeen;
-            toUpdate.lastGameNotificationSeen = data.lastGameNotificationSeen;
-            toUpdate.lastFriendNotificationSeen = data.lastFriendNotificationSeen;
-
-
-            context.NotificationsData.Update(toUpdate);
-            await context.SaveChangesAsync();
+            var response = await _notificationService.UpdateNotificationDataAsync(id, data);
+            if (response.Success)
+                return Ok(response.Message);
             return NoContent();
         }
 

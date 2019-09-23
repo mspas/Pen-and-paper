@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPG.Api.Domain.Repositories
+namespace RPG.Api.Domain.Repositories.Profile
 {
     public interface IFriendRepository
     {
@@ -15,5 +15,6 @@ namespace RPG.Api.Domain.Repositories
         Task<FriendResponse> AddFriendAsync(Friend friend);
         BaseResponse DeleteFriend(Friend friend);
         FriendResponse EditFriend(FriendResource newFriendData, Friend friend);
+        FriendResponse UpdateNotificationFriend(Friend friend);
     }
 }

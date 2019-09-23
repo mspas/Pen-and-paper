@@ -13,6 +13,7 @@ using RPG.Api.Resources;
 using RPG.Api.Domain.Services.Security;
 using RPG.Api.Domain.Services.Security.Tokens;
 using RPG.Api.Domain.Services.Communication;
+using RPG.Api.Domain.Services.Profile;
 
 namespace RPG.Api.Domain.Services
 {

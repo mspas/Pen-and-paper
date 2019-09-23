@@ -13,7 +13,7 @@
 }
 .content-top {
     position: fixed;
-    bottom: 375px;
+    /*bottom: 375px;*/
     right: 45px;
     height: 30px;
     width: 350px;
@@ -60,11 +60,13 @@
 
 .chat-nav {
     display: inline-block;
+    min-width: 39px;
+    padding-left: 15px;
 }
 #name {
-    width: 293px;
+    /*width: 293px;*/
     max-width: 293px;
-    padding-left: 25px;
+    /*padding-left: 25px;*/
 }
 .icon {
     cursor: pointer;

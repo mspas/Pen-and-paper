@@ -1,14 +1,10 @@
-﻿using AutoMapper;
-using RPG.Api.Resources;
+﻿using RPG.Api.Resources;
 using RPG.Api.Domain.Models;
-using RPG.Api.Persistence;
 using RPG.Api.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,18 +15,11 @@ namespace mdRPG.Controllers
     public class AuthorizeController : Controller
     {
         private readonly IAuthorizeService _authorizeService;
-        private readonly RpgDbContext context;
-        private readonly IMapper _mapper;
 
-        public List<AccountResource> allAccounts;
 
-        public AuthorizeController(IAuthorizeService authorizeService, RpgDbContext context, IMapper mapper)
+        public AuthorizeController(IAuthorizeService authorizeService)
         {
             _authorizeService = authorizeService;
-            this.context = context;
-            _mapper = mapper;
-            var acc = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
-            allAccounts = mapper.Map<List<Account>, List<AccountResource>>(acc);
         }
 
         [AllowAnonymous]

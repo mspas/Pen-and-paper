@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPG.Api.Domain.Repositories
+namespace RPG.Api.Domain.Repositories.Profile
 {
     public interface IAccountRepository
     {

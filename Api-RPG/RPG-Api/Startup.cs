@@ -19,6 +19,10 @@ using RPG.Api.Services;
 using RPG.Api.Domain.Services.Security;
 using RPG.Api.Services.Security.Tokens;
 using RPG.Api.Domain.Services.Security.Tokens;
+using RPG.Api.Domain.Repositories.Profile;
+using RPG.Api.Persistence.Repositories.Profile;
+using RPG.Api.Domain.Services.Profile;
+using RPG.Api.Services.Profile;
 
 namespace RPG.Api
 {
@@ -59,6 +63,11 @@ namespace RPG.Api
 
             services.AddScoped<IFriendRepository, FriendRepository>();
             services.AddScoped<IFriendService, FriendService>();
+
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAccountRepository, AccountRepository>();

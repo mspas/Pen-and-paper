@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RPG.Api.Domain.Models;
-using RPG.Api.Domain.Repositories;
+using RPG.Api.Domain.Repositories.Profile;
 using RPG.Api.Domain.Services.Communication;
 using RPG.Api.Resources;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPG.Api.Persistence.Repositories
+namespace RPG.Api.Persistence.Repositories.Profile
 {
     public class FriendRepository : BaseRepository, IFriendRepository
     {
@@ -58,7 +58,14 @@ namespace RPG.Api.Persistence.Repositories
             var list1 = await _context.Friends.Where(mbox => mbox.player1Id == id).ToListAsync();
             var list2 = await _context.Friends.Where(mbox => mbox.player2Id == id).ToListAsync();
             list2.ForEach(p => list1.Add(p));
-            return list2;
+
+            return list1;
+        }
+
+        public FriendResponse UpdateNotificationFriend(Friend friend)
+        {
+            _context.Friends.Update(friend);
+            return new FriendResponse(true, null, friend);
         }
     }
 }

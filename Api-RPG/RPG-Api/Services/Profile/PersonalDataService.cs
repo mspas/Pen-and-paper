@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RPG.Api.Domain.Models;
-using RPG.Api.Domain.Repositories;
-using RPG.Api.Domain.Services;
+using RPG.Api.Domain.Repositories.Profile;
+using RPG.Api.Domain.Services.Profile;
 using RPG.Api.Domain.Services.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using RPG.Api.Domain.Repositories;
 
-namespace RPG.Api.Services
+namespace RPG.Api.Services.Profile
 {
     public class PersonalDataService : IPersonalDataService
     {

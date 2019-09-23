@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPG.Api.Domain.Services
+namespace RPG.Api.Domain.Services.Profile
 {
     public interface IAccountService
     {

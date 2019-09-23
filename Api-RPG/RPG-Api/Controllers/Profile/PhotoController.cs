@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using RPG.Api.Domain.Services;
+using RPG.Api.Domain.Services.Profile;
 using RPG.Api.Domain.Services.Communication;
 
 namespace mdRPG.Controllers

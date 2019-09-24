@@ -117,7 +117,7 @@ namespace RPG.Api.Domain.Services
             return foundConnections;
         }
 
-        public GameResource GetGame(int id)
+       /* public GameResource GetGame(int id)
         {
             var game2persons = context.GamesToPerson.ToList();
             var games = context.Games.ToList();
@@ -196,7 +196,7 @@ namespace RPG.Api.Domain.Services
             }
             return null;
         }
-
+        */
 
     }
 }

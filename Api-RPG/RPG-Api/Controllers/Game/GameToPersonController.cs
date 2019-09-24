@@ -37,38 +37,31 @@ public class GameToPersonController : Controller
                 per.Add(a.PersonalData);
             }
         }
-
-// GET: api/<controller>
-[HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "value1", "value2" };
-    }
-
-    // GET api/<controller>/5
-    [HttpGet("{nick}")]
-    public List<GameToPersonResource> Get(string nick)
-    {
-            int id = 0;
-            foreach (PersonalDataResource p in per)
-            {
-                if (p.login == nick)
+        
+        // GET api/<controller>/5
+        [HttpGet("{nick}")]
+        public List<GameToPersonResource> Get(string nick)
+        {
+                int id = 0;
+                foreach (PersonalDataResource p in per)
                 {
-                    id = p.Id;
-                    break;
+                    if (p.login == nick)
+                    {
+                        id = p.Id;
+                        break;
+                    }
                 }
-            }
-            return dbRepository.GetPlayersGames(id);
-    }
+                return dbRepository.GetPlayersGames(id);
+        }
 
-    // POST api/<controller>
-    [HttpPost]
-    public async Task<IActionResult> Post([FromBody]GameToPerson g2p)
-    {
-        context.GamesToPerson.Add(g2p);
-        await context.SaveChangesAsync();
-        return Ok(g2p);
-    }
+        // POST api/<controller>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]GameToPerson g2p)
+        {
+            context.GamesToPerson.Add(g2p);
+            await context.SaveChangesAsync();
+            return Ok(g2p);
+        }
 
     // PUT api/<controller>/5
         [HttpPut("{id}")]

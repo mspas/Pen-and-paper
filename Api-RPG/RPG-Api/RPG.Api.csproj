@@ -26,14 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Repositories\Forum\" />
-    <Folder Include="Domain\Repositories\Game\" />
-    <Folder Include="Domain\Services\Forum\" />
-    <Folder Include="Domain\Services\Game\" />
-    <Folder Include="Persistence\Repositories\Forum\" />
-    <Folder Include="Persistence\Repositories\Game\" />
-    <Folder Include="Services\Forum\" />
-    <Folder Include="Services\Game\" />
+    <Folder Include="Domain\Services\SForum\" />
+    <Folder Include="Services\SForum\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

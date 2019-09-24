@@ -7,146 +7,91 @@ using AutoMapper;
 using RPG.Api.Resources;
 using RPG.Api.Domain.Models;
 using RPG.Api.Persistence;
-using RPG.Api.Domain.Services;
+using RPG.Api.Domain.Services.SGame;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services.Profile;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RPG.Api.Domain.Controllers
 {
     [Route("api/[controller]")]
-public class GameController : Controller
-{
-        private readonly RpgDbContext context;
-        private readonly IMapper mapper;
-        public List<PersonalDataResource> personalDataAll = new List<PersonalDataResource>();
-        public List<AccountResource> allAccounts;
-        public List<Game> allGames = new List<Game>();
-        private DbRepository dbRepository;
+    public class GameController : Controller
+    {
+        private readonly IGameService _gameService;
+        private readonly IPersonalDataService _personalDataService;
+        private readonly IMapper _mapper;
 
-        public GameController(RpgDbContext context, IMapper mapper, DbRepository dbRepository)
+        public GameController(IGameService gameService, IPersonalDataService personalDataService, IMapper mapper)
         {
-            this.context = context;
-            this.dbRepository = dbRepository;
-            var acc = context.Accounts.Include(mbox => mbox.PersonalData).ToList();
-            allAccounts = mapper.Map<List<Account>, List<AccountResource>>(acc);
-            allGames = context.Games.Include(mbox => mbox.gameMaster).Include(mbox => mbox.participants).Include(mbox => mbox.sessions).Include(mbox => mbox.skillSetting).ToList();
-
-
-            foreach (AccountResource a in allAccounts)
-            {
-                personalDataAll.Add(a.PersonalData);
-            }
+            _gameService = gameService;
+            _personalDataService = personalDataService;
+            _mapper = mapper;
         }
 
-        // GET: api/<controller>
-        [HttpGet]
-    public List<Game> Get()
-    {
-            //var allGames = context.Games.Include(mbox => mbox.gameMaster).Include(mbox => mbox.participants).Include(mbox => mbox.sessions).Include(mbox => mbox.skillSetting).ToList();
-            return allGames;
-            
-    }
 
-    // GET api/<controller>/5
+
+        // GET api/<controller>/5
 
         [HttpGet("{data}")]
-        public List<GameResource> Get(string data)
+        public async Task<List<GameResource>> Get(string data)
         {
-            var foundData = new List<GameResource>();
-            var pattern = "";
-            DateTime dateFrom = DateTime.Parse("1000-01-01");
-            DateTime dateTo = DateTime.Parse("9999-01-01");
-            bool onlyFree = true;
+            var gamesList = await _gameService.FindGamesAsync(data);
+            var gamesListResource = _mapper.Map<List<Game>, List<GameResource>>(gamesList);
 
-            if (Int32.TryParse(data, out int id))
+            foreach (GameResource g in gamesListResource)
             {
-                foundData.Add(dbRepository.GetGame(id));
-                return foundData;
-            }
-            else
-            {
-                string[] dataSearch = data.Split(".");
-                if (dataSearch.Length > 0)
+                var participantsProfiles = new List<PersonalDataResource>();
+
+                foreach (GameToPerson g2p in g.participants)
                 {
-                    if (dataSearch[0] != "")
-                        pattern += "(" + dataSearch[0] + ")";
-                    pattern += @"\w*(.)";
-
-                    if (dataSearch[1] != "")
-                        pattern += "(" + dataSearch[1] + ")";
-                    pattern += @"(.)";
-
-                    if (dataSearch[2] != "")
-                        pattern += "(" + dataSearch[2] + ")";
-                    pattern += @"\w*";
-
-                    if (dataSearch[3] != "")
-                        dateFrom = DateTime.Parse(dataSearch[3]);
-
-                    if (dataSearch[4] != "")
-                        dateTo = DateTime.Parse(dataSearch[4]);
-
-                    if (dataSearch[5] != "Yes")
-                        onlyFree = false;
+                    var profile = await _personalDataService.GetProfileAsync(g2p.playerId);
+                    var profileResource = _mapper.Map<PersonalData, PersonalDataResource>(profile);
+                    participantsProfiles.Add(profileResource);
                 }
-                Regex rgx = new Regex(pattern);
 
-                var foundGamesWithFree = new List<GameResource>();
-
-                foreach (Game game in allGames)
-                {
-                    var nextData = game.title + "." + game.category + "." + game.location;
-                    if (rgx.IsMatch(nextData))
-                    {
-                        if (onlyFree)
-                        {
-                            if (game.nofplayers - game.participants.Count > 0)
-                            {
-                                if (DateTime.Compare(dateFrom, game.date) < 0 && DateTime.Compare(game.date, dateTo) < 0)
-                                    foundData.Add(dbRepository.GetGame(game.Id));
-                            }
-                        }
-                        else
-                        {
-                            if (DateTime.Compare(dateFrom, game.date) < 0 && DateTime.Compare(game.date, dateTo) < 0)
-                                foundData.Add(dbRepository.GetGame(game.Id));
-                        }
-                    }
-                }
+                g.participantsProfiles = participantsProfiles;
             }
-            return foundData;
-    }
 
-    // POST api/<controller>
-    [HttpPost]
-    public async Task<IActionResult> Post([FromBody]Game game)
-    {
-        context.Games.Add(game);
-        var gameToPerson = new GameToPerson
+            return gamesListResource;
+        }
+
+        // POST api/<controller>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]Game game)
         {
-            gameId = game.Id,
-            playerId = game.masterId,
-            isGameMaster = true,
-            isAccepted = true,
-            isMadeByPlayer = true
-        };
-        context.GamesToPerson.Add(gameToPerson);
-        await context.SaveChangesAsync();
-        return Ok(gameToPerson);
-    }
+            var response = await _gameService.AddGameAsync(game);
+            Console.WriteLine(response.Game.Id + " " + response.Game.title);
+            if (response.Success)
+            {
+                return Ok(response.Game.Id);
+            }
+            return NotFound();
+        }
 
-    // PUT api/<controller>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody]string value)
-    {
-    }
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Game game)
+        {
+            var response = await _gameService.EditGameAsync(game);
+            if (response.Success)
+            {
+                return Ok(response.Game.Id);
+            }
+            return NoContent();
+        }
 
-    // DELETE api/<controller>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var response = await _gameService.DeleteGameAsync(id);
+            if (response.Success)
+            {
+                return Ok(response.Success);
+            }
+            return NoContent();
+        }
     }
-}
 }

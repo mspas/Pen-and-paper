@@ -38,10 +38,10 @@ export class GameCreateModel {
       public isActive: boolean,
       public lastActivityDate: Date,
       public gameMaster: PersonalDataModel,
-      public participants: PersonalDataModel[],
+      public participants: GameToPersonAppModel[],
       public skillSetting: SkillModel[],
       public sessions: GameSessionModel[],
-      public cards: GameToPersonAppModel[]
+      public participantsProfiles: PersonalDataModel[],
     ) { }
   }
 

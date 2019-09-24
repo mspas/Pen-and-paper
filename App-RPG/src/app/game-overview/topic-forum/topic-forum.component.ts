@@ -45,7 +45,7 @@ export class TopicForumComponent implements OnInit {
     if (this.gameData.masterId == this.profileData.id)
       this.iAmGameMaster = true;
 
-    this.participants = this.gameData.participants;
+    this.participants = this.gameData.participantsProfiles;
 
     this.linkPrevious = "game/" + this.gameData.id.toString() + "/" + this.topicData.id.toString() + "/";
     let numPage = this.page - 1;

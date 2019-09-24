@@ -73,11 +73,11 @@ export class GameViewComponent implements OnInit {
       this.imageUrl = this.urlSciFi;
 
 
-    this.gameData.participants.forEach(player => {
+    this.gameData.participantsProfiles.forEach(player => {
       if (this.gameData.masterId == player.id)
         this.gameMaster = player;
       if (this.profileData.id == player.id && !this.iAmMaster) {
-        this.gameData.cards.forEach(card => {
+        this.gameData.participants.forEach(card => {
           if (this.profileData.id == card.playerId) {
             if (card.isAccepted) {
               this.iAmParticipant = true;
@@ -90,7 +90,7 @@ export class GameViewComponent implements OnInit {
           }
         });
       }
-      this.gameData.cards.forEach(card => {
+      this.gameData.participants.forEach(card => {
         //if (card.playerId == player.id && card.id != this.gameMaster.id) {
           if (card.playerId == player.id) {
           if (card.isAccepted) {
@@ -186,14 +186,14 @@ export class GameViewComponent implements OnInit {
   }
 
   onAcceptRequest(playerId: number) {
-    this.gameData.cards.forEach(card => {
+    this.gameData.participants.forEach(card => {
       if (card.playerId == playerId) 
         this._api.acceptJoinGame(card);
     });
   }
 
   onDeclineRequest(playerId: number) {
-    this.gameData.cards.forEach(card => {
+    this.gameData.participants.forEach(card => {
       if (card.playerId == playerId) 
         this._api.declineJoinGame(card.id);
     });

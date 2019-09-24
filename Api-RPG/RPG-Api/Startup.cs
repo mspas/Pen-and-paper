@@ -23,6 +23,10 @@ using RPG.Api.Domain.Repositories.Profile;
 using RPG.Api.Persistence.Repositories.Profile;
 using RPG.Api.Domain.Services.Profile;
 using RPG.Api.Services.Profile;
+using RPG.Api.Domain.Services.SGame;
+using RPG.Api.Domain.Repositories.RGame;
+using RPG.Api.Services.SGame;
+using RPG.Api.Persistence.Repositories.RGame;
 
 namespace RPG.Api
 {
@@ -68,6 +72,12 @@ namespace RPG.Api
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationService, NotificationService>();
+
+
+            services.AddScoped<IGameToPersonRepository, GameToPersonRepository>();
+            services.AddScoped<IGameToPersonService, GameToPersonService>();
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IGameService, GameService>();
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAccountRepository, AccountRepository>();

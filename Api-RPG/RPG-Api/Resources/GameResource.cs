@@ -8,7 +8,7 @@ namespace RPG.Api.Resources
 {
     public class GameResource
 {
-        public GameResource(int id, int masterId, string title, string category, int nofparticipants, int nofplayers, string description, string location, string book, string comment, DateTime date, bool needInvite, bool isActive, PersonalDataResource gameMaster, List<PersonalDataResource> participants, List<SkillResource> skillSetting, List<GameSession> sessions, List<GameToPersonResource> cards)
+        /*public GameResource(int id, int masterId, string title, string category, int nofparticipants, int nofplayers, string description, string location, string book, string comment, DateTime date, bool needInvite, bool isActive, PersonalDataResource gameMaster, List<PersonalDataResource> participants, List<SkillResource> skillSetting, List<GameSession> sessions, List<GameToPersonResource> cards)
         {
             Id = id;
             this.masterId = masterId;
@@ -28,7 +28,7 @@ namespace RPG.Api.Resources
             this.skillSetting = skillSetting;
             this.sessions = sessions;
             this.cards = cards;
-        }
+        }*/
 
         public int Id { get; set; }
         public int masterId { get; set; }
@@ -45,11 +45,11 @@ namespace RPG.Api.Resources
         public bool isActive { get; set; }
         public DateTime? lastActivityDate { get; set; }
         public PersonalDataResource gameMaster { get; set; }
-        public List<PersonalDataResource> participants { get; set; }
+        public List<GameToPerson> participants { get; set; }
         public List<SkillResource> skillSetting { get; set; }
         public List<GameSession> sessions { get; set; }
-        public List<GameToPersonResource> cards { get; set; }
+        public List<PersonalDataResource> participantsProfiles { get; set; }
 
-      
+
     }
 }

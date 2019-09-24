@@ -26,7 +26,7 @@ export class GameForumComponent implements OnInit {
   ngOnInit() {
     this.forumData.topics.forEach(topic => {
       let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
-      this.gameData.participants.forEach(user => {
+      this.gameData.participantsProfiles.forEach(user => {
         if (user.id == topic.authorId) 
           topicListModel.author = user;
       });
@@ -35,7 +35,7 @@ export class GameForumComponent implements OnInit {
           topicListModel.wasSeen = false;
       });
 
-      this.gameData.participants.forEach(user => {
+      this.gameData.participantsProfiles.forEach(user => {
         if (user.id == topic.messages[topic.messagesAmount-1].senderId)
           topicListModel.lastAuthor = user;
       });

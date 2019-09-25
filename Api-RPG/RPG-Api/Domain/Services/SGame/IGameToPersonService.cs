@@ -10,10 +10,10 @@ namespace RPG.Api.Domain.Services.SGame
 {
     public interface IGameToPersonService
     {
-        Task<List<GameToPersonResource>> GetG2PListAsync(string login);
-        Task<GameToPersonResource> GetG2PAsync(int g2pId);
-        Task<GameToPersonResponse> AddG2PAsync(GameToPerson g2pId);
-        Task<GameToPersonResponse> EditG2PAsync(GameToPerson g2pId);
+        Task<List<GameToPerson>> GetG2PListAsync(string login);
+        Task<GameToPerson> GetG2PAsync(int g2pId);
+        Task<GameToPersonResponse> AddG2PAsync(GameToPerson g2p);
+        Task<GameToPersonResponse> EditG2PAsync(GameToPerson g2p);
         Task<BaseResponse> DeleteG2PAsync(int g2pId);
     }
 }

@@ -21,13 +21,13 @@ namespace RPG.Api.Persistence.Repositories.RGame
             return new GameResponse(true, null, game);
         }
 
-        public BaseResponse DeleteGameAsync(Game game)
+        public BaseResponse DeleteGame(Game game)
         {
             _context.Games.Remove(game);
             return new BaseResponse(true, null);
         }
 
-        public GameResponse EditGameAsync(Game game)
+        public GameResponse EditGame(Game game)
         {
             _context.Games.Update(game);
             return new GameResponse(true, null, game);

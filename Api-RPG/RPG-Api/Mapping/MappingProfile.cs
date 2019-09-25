@@ -20,6 +20,7 @@ namespace RPG.Api.Mapping
             CreateMap<PersonalDataCredentialsResource, PersonalData>();
             CreateMap<Friend, FriendResource>();
             CreateMap<Game, GameResource>();
+            CreateMap<GameToPerson, GameToPersonResource>();
             CreateMap<Forum, ForumResource>();
             CreateMap<Skill, SkillResource>();
             CreateMap<MySkill, MySkillResource>();

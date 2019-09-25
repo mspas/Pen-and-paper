@@ -62,7 +62,7 @@ namespace RPG.Api.Services.SGame
             var game = await _gameRepository.GetGameAsync(gameId);
             var gameResource = _mapper.Map<Game, GameResource>(game);
             gameResource.participants.ForEach(p => _gameToPersonRepository.DeleteG2P(p));
-            var response = _gameRepository.DeleteGameAsync(game);
+            var response = _gameRepository.DeleteGame(game);
             await _unitOfWork.CompleteAsync();
             return response;
         }

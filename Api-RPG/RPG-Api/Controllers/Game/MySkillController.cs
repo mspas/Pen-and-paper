@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using RPG.Api.Domain.Models;
 using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using RPG.Api.Domain.Services.SGame;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,56 +15,57 @@ namespace mdRPG.Controllers
     [Route("api/[controller]")]
     public class MySkillController : Controller
     {
+        private readonly IMySkillService _mySkillService;
+        private readonly IMapper _mapper;
 
-        private readonly RpgDbContext context;
-
-        public MySkillController(RpgDbContext context)
+        public MySkillController(IMySkillService mySkillService, IMapper mapper)
         {
-            this.context = context;
+            _mySkillService = mySkillService;
+            _mapper = mapper;
         }
 
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{g2pId}")]
+        public async Task<List<MySkill>> Get(int g2pId)
         {
-            return "value";
+            return await _mySkillService.GetMySkillListAsync(g2pId);
         }
 
         // POST api/<controller>
         [HttpPost]
         public async Task<IActionResult> CreateMySkill([FromBody] MySkill mySkill)
         {
-            context.MySkills.Add(mySkill);
-            await context.SaveChangesAsync();
-            return Ok(mySkill);
+            var response = await _mySkillService.AddMySkillAsync(mySkill);
+            if (response.Success)
+            {
+                return Ok(response.MySkill);
+            }
+            return NotFound(response.Message);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, [FromBody] MySkill mySkill)
         {
+            var response = await _mySkillService.EditMySkillAsync(mySkill);
+            if (response.Success)
+            {
+                return Ok(response.MySkill);
+            }
+            return NotFound(response.Message);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var toDelete = context.MySkills.Find(id);
-            if (toDelete == null)
+            var response = await _mySkillService.DeleteMySkillAsync(id);
+            if (response.Success)
             {
-                return NotFound();
+                return Ok(response.Success);
             }
-
-            context.MySkills.Remove(toDelete);
-            await context.SaveChangesAsync();
-            return NoContent();
+            return NotFound(response.Message);
         }
     }
 }

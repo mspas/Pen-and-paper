@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using RPG.Api.Domain.Models;
 using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using RPG.Api.Domain.Services.SGame;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,36 +15,32 @@ namespace mdRPG.Controllers
     [Route("api/[controller]")]
     public class SkillController : Controller
     {
+        private readonly ISkillService _skillService;
+        private readonly IMapper _mapper;
 
-
-        private readonly RpgDbContext context;
-
-        public SkillController(RpgDbContext context)
+        public SkillController(ISkillService skillService, IMapper mapper)
         {
-            this.context = context;
-        }
-
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
+            _skillService = skillService;
+            _mapper = mapper;
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{gameId}")]
+        public async Task<List<Skill>> Get(int gameId)
         {
-            return "value";
+            return await _skillService.GetSkillListAsync(gameId);
         }
 
         // POST api/<controller>
         [HttpPost]
         public async Task<IActionResult> CreateSkill([FromBody] Skill skill)
         {
-            context.Skills.Add(skill);
-            await context.SaveChangesAsync();
-            return Ok(skill);
+            var response = await _skillService.AddSkillAsync(skill);
+            if (response.Success)
+            {
+                return Ok(response.Skill);
+            }
+            return NotFound(response.Message);
         }
 
 
@@ -56,15 +54,12 @@ namespace mdRPG.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var toDelete = context.Skills.Find(id);
-            if (toDelete == null)
+            var response = await _skillService.DeleteSkillAsync(id);
+            if (response.Success)
             {
-                return NotFound();
+                return Ok(response.Success);
             }
-
-            context.Skills.Remove(toDelete);
-            await context.SaveChangesAsync();
-            return NoContent();
+            return NotFound(response.Message);
         }
     }
 }

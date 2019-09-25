@@ -86,7 +86,12 @@ namespace RPG.Api
 
             services.AddScoped<IForumRepository, ForumRepository>();
             services.AddScoped<IForumService, ForumService>();
-            
+
+            services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<IMySkillRepository, MySkillRepository>();
+            services.AddScoped<IMySkillService, MySkillService>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             services.AddScoped<DbRepository>();

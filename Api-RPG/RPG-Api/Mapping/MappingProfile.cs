@@ -21,6 +21,8 @@ namespace RPG.Api.Mapping
             CreateMap<Friend, FriendResource>();
             CreateMap<Game, GameResource>();
             CreateMap<Forum, ForumResource>();
+            CreateMap<Skill, SkillResource>();
+            CreateMap<MySkill, MySkillResource>();
         }
     }
 }

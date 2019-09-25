@@ -8,9 +8,8 @@ namespace RPG.Api.Domain.Models
 {
     public class Forum
     {
-        public Forum(int id)
+        public Forum()
         {
-            Id = id;
             isPublic = true;
             lastActivityDate = DateTime.Now;
         }

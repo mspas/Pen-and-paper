@@ -1,4 +1,5 @@
-﻿using RPG.Api.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Models;
 using RPG.Api.Domain.Repositories.RForum;
 using RPG.Api.Domain.Services.Communication;
 using System;
@@ -32,9 +33,9 @@ namespace RPG.Api.Persistence.Repositories.RForum
             return new BaseResponse(true, null);
         }
 
-        public Task<Forum> GetForumAsync(int gameId)
+        public async Task<Forum> GetForumAsync(int gameId)
         {
-            throw new NotImplementedException();
+            return await  _context.Forums.Include(mbox => mbox.Topics).FirstAsync(mbox => mbox.Id == gameId);
         }
 
         public Task<List<Forum>> GetForumListAsync()

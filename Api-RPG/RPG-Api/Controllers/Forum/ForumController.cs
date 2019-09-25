@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RPG.Api.Domain.Models;
-using RPG.Api.Persistence;
+using RPG.Api.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services.SForum;
+using AutoMapper;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,39 +16,32 @@ namespace mdRPG.Controllers
     [Route("api/[controller]")]
     public class ForumController : Controller
     {
-        // GET: /<controller>/
-        private readonly RpgDbContext context;
-        private readonly List<Topic> allTopics = new List<Topic>();
+        private readonly IForumService _forumService;
+        private readonly IMapper _mapper;
 
-        public ForumController(RpgDbContext context)
+        public ForumController(IForumService forumService, IMapper mapper)
         {
-            this.context = context;
-            allTopics = context.Topics.Include(m => m.Messages).ToList();
+            _forumService = forumService;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public Forum Get(int id)
+        public async Task<ForumResource> Get(int id)
         {
-            var forum = context.Forums.Include(mbox => mbox.Topics).First(mbox => mbox.Id == id);
-            forum.Topics = new List<Topic>();
-            foreach (Topic topic in allTopics)
-            {
-                if (topic.forumId == forum.Id)
-                    forum.Topics.Add(topic);
-            }
-            return forum;
+            var forum = await _forumService.GetForumAsync(id);
+            var forumResource = _mapper.Map<Forum, ForumResource>(forum);
+            return forumResource;
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Forum forum)
         {
-            var toUpdate = context.Forums.Include(mbox => mbox.Topics).First(mbox => mbox.Id == id);
-            toUpdate.lastActivityDate = forum.lastActivityDate;
-            toUpdate.isPublic = forum.isPublic;
-
-            context.Forums.Update(toUpdate);
-            await context.SaveChangesAsync();
-            return NoContent();
+            var response = await _forumService.EditForumAsync(forum);
+            if (response.Success)
+            {
+                return Ok(response.Success);
+            }
+            return NotFound();
         }
     }
 }

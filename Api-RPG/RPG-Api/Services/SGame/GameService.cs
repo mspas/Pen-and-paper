@@ -47,7 +47,7 @@ namespace RPG.Api.Services.SGame
 
             await _unitOfWork.CompleteAsync();
 
-            await _forumRepository.AddForumAsync(new Forum(gameResponse.Game.Id));
+            await _forumRepository.AddForumAsync(new Forum());
             await _unitOfWork.CompleteAsync();
 
             if (gameResponse.Success && g2pResponse.Success)

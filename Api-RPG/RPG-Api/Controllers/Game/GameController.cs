@@ -62,7 +62,6 @@ namespace RPG.Api.Domain.Controllers
         public async Task<IActionResult> Post([FromBody]Game game)
         {
             var response = await _gameService.AddGameAsync(game);
-            Console.WriteLine(response.Game.Id + " " + response.Game.title);
             if (response.Success)
             {
                 return Ok(response.Game.Id);

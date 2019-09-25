@@ -27,6 +27,10 @@ using RPG.Api.Domain.Services.SGame;
 using RPG.Api.Domain.Repositories.RGame;
 using RPG.Api.Services.SGame;
 using RPG.Api.Persistence.Repositories.RGame;
+using RPG.Api.Domain.Repositories.RForum;
+using RPG.Api.Domain.Services.SForum;
+using RPG.Api.Persistence.Repositories.RForum;
+using RPG.Api.Services.SForum;
 
 namespace RPG.Api
 {
@@ -61,6 +65,8 @@ namespace RPG.Api
             services.Configure<TokenOptions>(Configuration.GetSection("TokenOptions"));
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();
             services.AddScoped<IPersonalDataService, PersonalDataService>();
             services.AddScoped<IPhotoService, PhotoService>();
@@ -73,15 +79,14 @@ namespace RPG.Api
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationService, NotificationService>();
 
-
             services.AddScoped<IGameToPersonRepository, GameToPersonRepository>();
             services.AddScoped<IGameToPersonService, GameToPersonService>();
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();
 
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IAccountRepository, AccountRepository>();
-
+            services.AddScoped<IForumRepository, ForumRepository>();
+            services.AddScoped<IForumService, ForumService>();
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             services.AddScoped<DbRepository>();

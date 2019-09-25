@@ -26,8 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Services\SForum\" />
-    <Folder Include="Services\SForum\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

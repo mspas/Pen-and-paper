@@ -15,9 +15,9 @@ namespace RPG.Api.Persistence.Repositories.Profile
         {
         }
 
-        public async Task<NotificationData> GetNotificationDataAsync(int messageId)
+        public async Task<NotificationData> GetNotificationDataAsync(int userId)
         {
-            return await _context.NotificationsData.FirstAsync(mbox => mbox.Id == messageId);
+            return await _context.NotificationsData.FirstAsync(mbox => mbox.Id == userId);
         }
 
         public BaseResponse UpdateNotificationDataAsync(NotificationData notificationData)

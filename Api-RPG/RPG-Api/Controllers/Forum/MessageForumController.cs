@@ -6,6 +6,7 @@ using RPG.Api.Domain.Models;
 using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services.SForum;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,100 +14,60 @@ namespace mdRPG.Controllers
 {
     [Route("api/[controller]")]
     public class MessageForumController : Controller
-{
-        // GET: /<controller>/
+    {
+        private readonly IMessageForumService _messageForumService;
 
-        private RpgDbContext context;
-
-        public MessageForumController(RpgDbContext context)
+        public MessageForumController(IMessageForumService messageForumService)
         {
-            this.context = context;
+            _messageForumService = messageForumService;
         }
 
-        // GET api/<controller>/5 but its a id of relation person-person 
-        /*[HttpGet("{id}")]
-        public List<Message> Get(int id)
+        [HttpGet("{id}/{page}")]
+        public async Task<List<MessageForum>> Get(int id, int page) // page == 0 => all pages, pages == -1, only one message
         {
-            var messages = context.Messages.ToList();
-            var conversation = new List<Message>();
-            foreach (Message msg in messages)
+            var msg = new List<MessageForum>();
+            if (page < 0)
             {
-                if (msg.relationId == id)
-                    conversation.Add(msg);
+                msg.Add(await _messageForumService.GetMessageAsync(id));
+                return msg;
             }
-            return conversation;
-        }*/
+            return await _messageForumService.GetMessageListAsync(id, page);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MessageForum message)
         {
-            var toUpdateTopic = context.Topics.Include(mbox => mbox.UsersConnected).Include(mbox => mbox.Messages).First(mbox => mbox.Id == message.topicId);
-            var toUpdateForum = context.Forums.Find(toUpdateTopic.forumId);
-            var toUpdateGame = context.Games.Include(mbox => mbox.participants).First(mbox => mbox.Id == toUpdateForum.Id);
+            var response = await _messageForumService.AddMessageAsync(message);
 
-            toUpdateTopic.lastActivityDate = message.sendDdate;
-            toUpdateForum.lastActivityDate = message.sendDdate;
-            toUpdateGame.lastActivityDate = message.sendDdate;
-
-            foreach (GameToPerson player in toUpdateGame.participants)
+            if (response.Success)
             {
-                foreach (TopicToPerson per in toUpdateTopic.UsersConnected)
-                {
-                    if (player.playerId == per.userId)
-                    {
-                        var toUpdateNotification = context.NotificationsData.Find(player.playerId);
-                        toUpdateNotification.lastGameNotificationDate = message.sendDdate;
-                        context.NotificationsData.Update(toUpdateNotification);
-                    }
-                }
+                return Ok(response.MessageForum);
             }
-
-            int pages = toUpdateTopic.Messages.Count() / 10;
-            int modpages = toUpdateTopic.Messages.Count() % 10;
-            Console.WriteLine(pages + " i " + modpages + " " + toUpdateTopic.Messages.Count());
-            if (pages >= toUpdateTopic.totalPages && modpages >= 0)
-            {
-                Console.WriteLine("weszlem ");
-                toUpdateTopic.totalPages += 1; 
-            }
-
-            context.Topics.Update(toUpdateTopic);
-            context.Forums.Update(toUpdateForum);
-            context.Games.Update(toUpdateGame);
-            context.MessagesForum.Add(message);
-            await context.SaveChangesAsync();
-            return Ok(message.Id);
+            return NotFound(response.Message);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] MessageForum message)
         {
-            var toUpdate = context.MessagesForum.Find(id);
-            if (toUpdate == null)
+            var response = await _messageForumService.EditMessageAsync(message);
+
+            if (response.Success)
             {
-                return NotFound();
+                return Ok(response.MessageForum);
             }
-
-            toUpdate.bodyMessage = message.bodyMessage;
-            toUpdate.editDate = message.editDate;
-
-            context.MessagesForum.Update(toUpdate);
-            await context.SaveChangesAsync();
-            return NoContent();
+            return NotFound(response.Message);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var toDelete = context.MessagesForum.Find(id);
-            if (toDelete == null)
-            {
-                return NotFound();
-            }
+            var response = await _messageForumService.DeleteMessageAsync(id);
 
-            context.MessagesForum.Remove(toDelete);
-            await context.SaveChangesAsync();
-            return NoContent();
+            if (response.Success)
+            {
+                return Ok(response.Success);
+            }
+            return NotFound(response.Message);
         }
     }
 }

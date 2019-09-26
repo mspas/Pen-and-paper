@@ -42,5 +42,10 @@ namespace RPG.Api.Persistence.Repositories.RForum
         {
             return await _context.MessagesForum.Where(mbox => mbox.topicId == topicId).ToListAsync();
         }
+
+        public async Task<List<MessageForum>> GetMessageListWithPageAsync(int topicId, int page)
+        {
+            return await _context.MessagesForum.Where(mbox => mbox.topicId == topicId && mbox.pageNumber == page).ToListAsync();
+        }
     }
 }

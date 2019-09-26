@@ -38,7 +38,6 @@ namespace RPG.Api.Persistence.Repositories.RGame
         {
             return await _context.GamesToPerson.Include(p => p.game)
                                     .Include(p => p.player)
-                                    .Include(p => p.characterHealth)
                                     .Include(p => p.characterSkills)
                                     .FirstAsync(mbox => mbox.Id == g2pId);
         }
@@ -47,7 +46,6 @@ namespace RPG.Api.Persistence.Repositories.RGame
         {
             return await _context.GamesToPerson.Include(p => p.game)
                                     .Include(p => p.player)
-                                    .Include(p => p.characterHealth)
                                     .Include(p => p.characterSkills)
                                     .Where(mbox => mbox.playerId == userId)
                                     .ToListAsync();

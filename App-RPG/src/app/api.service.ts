@@ -127,6 +127,7 @@ export class ApiService {
     }
 
     createTopic(topic: NewTopicModel) {
+        console.log(JSON.stringify(topic));
         return this._http.post(this.url+'Topic', topic).subscribe (
             data => console.log(data));
     }

@@ -24,6 +24,10 @@ namespace RPG.Api.Mapping
             CreateMap<Forum, ForumResource>();
             CreateMap<Skill, SkillResource>();
             CreateMap<MySkill, MySkillResource>();
+            CreateMap<Topic, TopicResource>();
+            CreateMap<TopicCredentials, Topic>();
+            CreateMap<TopicToPerson, TopicToPersonResource>();
+            CreateMap<MessageForum, MessageForumResource>();
         }
     }
 }

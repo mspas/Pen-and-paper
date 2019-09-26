@@ -8,11 +8,11 @@ namespace RPG.Api.Domain.Services.Communication
 {
     public class MessageResponse : BaseResponse
     {
-        public Message Message { get; set; }
+        public Message MessageBody { get; set; }
 
         public MessageResponse(bool success, string message, Message messagePost) : base(success, message)
         {
-            Message = messagePost;
+            MessageBody = messagePost;
         }
     }
 }

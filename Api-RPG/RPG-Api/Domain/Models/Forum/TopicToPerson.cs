@@ -25,5 +25,12 @@ namespace RPG.Api.Domain.Models
         public TopicToPerson()
         {
         }
+        public TopicToPerson(int forumId, int topicId, int userId, DateTime lastActivitySeen)
+        {
+            this.forumId = forumId;
+            this.topicId = topicId;
+            this.userId = userId;
+            this.lastActivitySeen = lastActivitySeen;
+        }
     }
 }

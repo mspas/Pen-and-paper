@@ -28,9 +28,7 @@ namespace mdRPG.Controllers
         [HttpGet("{id}")]
         public async Task<ForumResource> Get(int id)
         {
-            var forum = await _forumService.GetForumAsync(id);
-            var forumResource = _mapper.Map<Forum, ForumResource>(forum);
-            return forumResource;
+            return await _forumService.GetForumAsync(id);
         }
 
         [HttpPut("{id}")]

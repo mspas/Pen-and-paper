@@ -6,6 +6,9 @@ using RPG.Api.Domain.Models;
 using RPG.Api.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RPG.Api.Domain.Services.SForum;
+using AutoMapper;
+using RPG.Api.Resources;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,94 +16,57 @@ namespace RPG.Api.Controllers
 {
     [Route("api/[controller]")]
     public class TopicController : Controller
-{
-        // GET: /<controller>/
-        private readonly RpgDbContext context;
-        //private readonly List<Topic> allTopics = new List<Topic>();
+    {
+        private readonly ITopicService _topicService;
+        private readonly IMapper _mapper;
 
-        public TopicController(RpgDbContext context)
+        public TopicController(ITopicService topicService, IMapper mapper)
         {
-            this.context = context;
-            //allTopics = context.Topics.Include(m => m.Messages).ToList();
+            _topicService = topicService;
+            _mapper = mapper;
         }
 
         [HttpGet("{userId}/{topicId}")]
-        public Topic Get(int userId, int topicId)
+        public async Task<Topic> Get(int userId, int topicId)
         {
-            var topic = context.Topics.Include(mbox => mbox.Messages).Include(mbox => mbox.UsersConnected).First(mbox => mbox.Id == topicId);
-            if (topic.isPublic == false)
-            {
-                if (topic.UsersConnected.Count > 0)
-                {
-                    foreach (TopicToPerson per in topic.UsersConnected)
-                    {
-                        if (per.userId == userId)
-                            return topic;
-                    }
-                    return null;
-                }
-                else
-                    return null;
-            }
-            return topic;
+            return await _topicService.GetTopicAsync(userId, topicId);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]CreateTopic data)
+        public async Task<IActionResult> Post([FromBody]TopicCredentialsResource data)
         {
-            Topic topic = data.topic;
-            string bodyMessage = data.bodyMessage;
-            Console.WriteLine("msg wtf: " + bodyMessage);
-            MessageForum message = new MessageForum(topic.createDate, bodyMessage, topic.authorId, 1);
-            var game = context.Games.Include(mbox => mbox.participants).First(mbox => mbox.Id == topic.forumId);
-            context.Topics.Add(topic);
-            await context.SaveChangesAsync();
-            message.topicId = topic.Id;
-            if (topic.isPublic)
+            var topic = _mapper.Map<TopicCredentials, Topic>(data.topic);
+            var response = await _topicService.AddTopicAsync(topic, data.bodyMessage);
+
+            if (response.Success)
             {
-                foreach (GameToPerson player in game.participants)
-                {
-                    var t2p = new TopicToPerson(topic.forumId, topic.Id, player.playerId);
-                    if (player.Id == topic.authorId)
-                        t2p.lastActivitySeen = topic.createDate;
-                    context.TopicsToPersons.Add(t2p);
-                }
+                return Ok(response.Topic);
             }
-            context.MessagesForum.Add(message);
-            await context.SaveChangesAsync();
-            return Ok(topic);
+            return NotFound(response.Message);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Topic topic)
         {
-            var toUpdate = context.Topics.Find(id);
-            if (toUpdate == null)
+            var response = await _topicService.EditTopicAsync(topic);
+
+            if (response.Success)
             {
-                return NotFound();
+                return Ok(response.Topic);
             }
-
-            toUpdate.lastActivityDate = topic.lastActivityDate;
-            toUpdate.isPublic = topic.isPublic;
-            toUpdate.topicName = topic.topicName;
-
-            context.Topics.Update(toUpdate);
-            await context.SaveChangesAsync();
-            return NoContent();
+            return NotFound(response.Message);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var toDelete = context.Topics.Find(id);
-            if (toDelete == null)
-            {
-                return NotFound();
-            }
+            var response = await _topicService.DeleteTopicAsync(id);
 
-            context.Topics.Remove(toDelete);
-            await context.SaveChangesAsync();
-            return NoContent();
+            if (response.Success)
+            {
+                return Ok(response.Success);
+            }
+            return NotFound(response.Message);
         }
     }
 }

@@ -4,6 +4,7 @@ using RPG.Api.Domain.Repositories;
 using RPG.Api.Domain.Repositories.RForum;
 using RPG.Api.Domain.Services.Communication;
 using RPG.Api.Domain.Services.SForum;
+using RPG.Api.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace RPG.Api.Services.SForum
     public class ForumService : IForumService
     {
         private readonly IForumRepository _forumRepository;
+        private readonly ITopicRepository _topicRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ForumService(IForumRepository forumRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public ForumService(IForumRepository forumRepository, ITopicRepository topicRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _forumRepository = forumRepository;
+            _topicRepository = topicRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -49,9 +52,12 @@ namespace RPG.Api.Services.SForum
             return response;
         }
 
-        public async Task<Forum> GetForumAsync(int forumId)
+        public async Task<ForumResource> GetForumAsync(int forumId)
         {
-            return await _forumRepository.GetForumAsync(forumId);
+            var forum = await _forumRepository.GetForumAsync(forumId);
+            var forumResource = _mapper.Map<Forum, ForumResource>(forum);
+            forumResource.Topics = await _topicRepository.GetTopicListAsync(forumResource.Id);
+            return forumResource;
         }
     }
 }

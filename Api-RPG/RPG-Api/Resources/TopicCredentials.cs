@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPG.Api.Domain.Models
+namespace RPG.Api.Resources
 {
-    public class Topic
+    public class TopicCredentials
     {
         public int Id { get; set; }
         public int forumId { get; set; }
@@ -18,8 +18,5 @@ namespace RPG.Api.Domain.Models
         public DateTime? lastActivityDate { get; set; }
         public int lastActivityUserId { get; set; }
         public int totalPages { get; set; }
-        public virtual Forum forum { get; set; }
-        public virtual ICollection<MessageForum> Messages { get; set; }
-        public virtual ICollection<TopicToPerson> UsersConnected { get; set; }
     }
 }

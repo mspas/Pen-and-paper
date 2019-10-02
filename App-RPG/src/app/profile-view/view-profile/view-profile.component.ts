@@ -6,6 +6,7 @@ import { FriendModel } from '../../models/friend.model';
 import { DataService } from '../../data.service';
 import { NgForm } from '@angular/forms';
 import { ChangePasswordModel } from '../../models/changepassword.model';
+import { HostListener } from "@angular/core";
 
 @Component({
   selector: 'app-view-profile',
@@ -33,8 +34,8 @@ export class ViewProfileComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.myProfilePage);
   }
+
 
   onSendInvite() {
     let loggedID = parseInt(localStorage.getItem("id"));
@@ -121,6 +122,7 @@ export class ViewProfileComponent implements OnInit {
 
   onSavePassword(form: NgForm) {
   }
+
 
 
 }

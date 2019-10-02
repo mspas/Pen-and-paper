@@ -21,9 +21,6 @@
 <header *ngIf="userIsLogged == true" style="height:50px;">
   <app-header></app-header>
 </header>
-<div *ngIf="userIsLogged == true">
-  <app-bphoto></app-bphoto>
-</div>
 <!--<div *ngIf="userIsLogged == true" id="animated-bar">
   <app-side-bar></app-side-bar>
 </div>-->
@@ -31,5 +28,8 @@
   <app-chat></app-chat>
 </div>
 <div class="main-content-wrap" id="router">
+  <div *ngIf="userIsLogged == true" class="container bphoto-wrap">
+    <img id="bphoto" src="assets/book.jpg">
+  </div>
   <router-outlet></router-outlet>
 </div>

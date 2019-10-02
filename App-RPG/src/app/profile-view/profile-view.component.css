@@ -21,6 +21,9 @@
     margin-top: 20px;
     margin-left: 40px;
 }
+
+
+
 .col-md-3 {
     padding: 25px 50px;
 }
@@ -31,6 +34,30 @@
     border-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+@media screen and (max-width: 1200px) {
+    .col-md-3 {
+        padding: 25px 25px;
+    }
+    .profile-photo {
+        margin-top: -100px;
+        width: 150px;
+        height: 150px;
+    }
+}
+@media screen and (max-width: 991px) {
+    .col-md-3 {
+        padding: 5px;
+        padding-bottom: 0;
+    }
+    .profile-photo {
+        margin-top: -80px;
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+
 .nav-tabs-wrap {
     min-width: 350px;
     display: inline-block;
@@ -53,12 +80,38 @@ li a:hover {
     background-color: #e4e3e3;
 }
 
+
+
+
 #big-name {
     color: #ffffff;
     font-size: 32px;
     letter-spacing: 2px;
     font-family: Montserrat, sans-serif;
 }
+@media screen and (max-width: 1200px) {
+    .col-md-4 {
+        padding: 0;
+    }
+    #big-name {
+        color: #ffffff;
+        font-size: 27px;
+        letter-spacing: 2px;
+        font-family: Montserrat, sans-serif;
+    }
+}
+@media screen and (max-width: 1000px) {
+    #big-name {
+        color: #ffffff;
+        font-size: 27px;
+        letter-spacing: 2px;
+        font-family: Montserrat, sans-serif;
+    }
+}
+
+
+
+
 #nickname {
     position: absolute;
     float: right;

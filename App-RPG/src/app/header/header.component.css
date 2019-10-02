@@ -10,6 +10,14 @@
     border-radius: 0;
     font-family: Montserrat, sans-serif;
 }
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+    .container {
+        margin: 0;
+    }
+    .navbar-right {
+        margin-right: -50px;
+    }
+}
 .navbar li a, .navbar {
     color: #000000 !important;
 }

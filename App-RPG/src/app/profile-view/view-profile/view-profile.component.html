@@ -1,5 +1,5 @@
 
-
+<div class="container" style="position: relative; width: 100%">
   <div class="btn-wrap" *ngIf="myProfilePage == false">
     <div class="btn-profile" id="send_message" data-toggle="tooltip" title="Send nudes pls" (click)="onSendMessage()">
       <p class="btn-text">Send<br> message</p>
@@ -14,21 +14,26 @@
       <p class="btn-text">Delete<br> friend</p>
     </div>
   </div>
-  <div class="btn-wrap" id="my-page" *ngIf="myProfilePage == true">
-    <div class="btn-my-profile" id="change_personal_data" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangeData()">
-      <p class="my-page-btn">Change<br> profile info</p>
+  <div class="btn-wrap btn-big" id="my-page" *ngIf="myProfilePage == true">
+    <div class="btn-profile" id="change_personal_data" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangeData()">
+      <p class="btn-text">Change<br> profile info</p>
     </div>
-    <div class="btn-my-profile" id="change_passwrod" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePassword()">
-      <p class="my-page-btn">Change<br> password</p>
+    <div class="btn-profile" id="change_passwrod" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePassword()">
+      <p class="btn-text">Change<br> password</p>
     </div>
-    <div class="btn-my-profile" id="change_image" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePicture()">
-      <p class="my-page-btn">Change<br> your image</p>
+    <div class="btn-profile" id="change_image" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePicture()">
+      <p class="btn-text">Change<br> your image</p>
+    </div>
+  </div>
+  <div class="btn-wrap btn-mobile" id="my-page" *ngIf="myProfilePage == true">
+    <div class="btn-profile" id="change_personal_data" (click)="onGoToSettings()">
+      <p class="btn-text">Setting</p>
     </div>
   </div>
 
   <p class="text-outline" id="information-text">Player details:</p>    
   <div class="container information">                                                                                  
-    <div class="table-responsive" style="width:75%;">          
+    <div class="table-responsive">          
       <table class="table table-info">
         <thead>
           <tr>
@@ -70,7 +75,7 @@
       </table>
     </div>
  </div>
-
+</div>
         <div id="modalChangeData" class="modal fade" role="dialog" style=" margin-top: 50px;">
           <div class="modal-dialog modal-lg">
         

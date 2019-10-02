@@ -21,6 +21,7 @@
     height: 100vh;*/
     background-image: url("assets/desk.png");
     background-repeat: no-repeat;
+    min-width: 100vh;
 }
 
 .desk {
@@ -47,8 +48,7 @@
     height: 116px;
     transition: all 0.3s ease;
     cursor: pointer;
-}
-    
+} 
 .home_btn:hover {
     -webkit-transform: translateY(-11px);
     transform: translateY(-11px);
@@ -70,17 +70,6 @@
     z-index: 19;
   }
 
-.yellow_note {
-    background-image: url("assets/note1.png") no-repeat;
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 270px;
-    margin-left: 315px;
-    margin-right: 0px;
-    width: 521px;
-    height: 479px;
-    border: none;
-}
 
 .note {
     background-image: url("assets/note1.png");
@@ -90,6 +79,46 @@
     width: 552px;
     height: 455px;
     z-index: 21;
+  }
+  @media screen and (max-width: 1025px) {
+    .main-content {
+        background-image: url("assets/desk.png");
+        background-repeat: no-repeat;
+        min-width: 100vh;
+        min-height: 100vw;
+    }
+    .note {
+        background-image: url("assets/mnote1.png");
+        position: absolute;
+        left: 0px;
+        top: 75px;
+        width: 483px;
+        height: 448px;
+        z-index: 21;
+    }
+    .home_btn {
+        position: absolute;
+        top: 35px;
+        width: 108px;
+        height: 116px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    #btn_in {
+        background-image: url("assets/sign-in.png");
+        left: 107px;
+        z-index: 17;
+    }
+    #btn_up {
+        background-image: url("assets/sign-up.png");
+        left: 217px;
+        z-index: 18;
+    }
+    #btn_about {
+        background-image: url("assets/about.png");
+        left: 325px;
+        z-index: 19;
+    }
   }
   
   

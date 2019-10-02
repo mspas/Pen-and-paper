@@ -54,6 +54,20 @@
         width: 100px;
         height: 100px;
     }
+    .navbar-toggle {
+        position: absolute;
+        top: -70px;
+        right: 0px;
+        font-size: 20px;
+    }
+    #nickname {
+        position: absolute;
+        float: right;
+        margin-top: 45px;
+        left: 15px;
+        font-size: 15px;
+        letter-spacing: 2px;
+    }
 }
 
 
@@ -78,6 +92,16 @@ li a:hover {
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     background-color: #e4e3e3;
+}
+.icon {
+    display:block;
+    width:22px;
+    height:2px;
+    border-radius:1px;
+    border:1px solid #575757;
+}
+.icon:hover {
+    color: #f4511e;
 }
 
 
@@ -200,4 +224,67 @@ h3 {
 
 .content-body {
     padding-bottom: 0px !important;
+}
+
+
+
+@media (max-width: 1200px) { /*override to change breakpoint of navbar toggle*/
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        position: absolute;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        border-bottom: 1px solid;
+        border-left: 1px solid;
+        border-right: 1px solid;
+        border-color: #cccbcb;
+        border-top: 1px solid transparent;
+        background-color:#e4e3e3;
+        z-index: 50;
+        min-width: 65px;
+        right: 10px;
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    #workffs {
+        padding-left: 25%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+        display:block !important;
+    }
+   .navbar-nav .open .dropdown-menu {
+       position: static;
+       float: none;
+       width: auto;
+       margin-top: 0;
+       background-color: transparent;
+       border: 0;
+       -webkit-box-shadow: none;
+       box-shadow: none;
+    }
 }

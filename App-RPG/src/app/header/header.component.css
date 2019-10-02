@@ -1,8 +1,8 @@
 .navbar {
     margin-bottom: 0;
-    background-color: #e4e3e3;
+    background-color:#e4e3e3;
     /*ececec*/
-    z-index: 9999;
+    z-index: 999;
     border: 0;
     font-size: 12px !important;
     line-height: 1.42857143 !important;
@@ -18,6 +18,7 @@
         margin-right: -50px;
     }
 }
+
 .navbar li a, .navbar {
     color: #000000 !important;
 }
@@ -36,16 +37,16 @@
 }
 .drop:hover {
     color: #f4511e !important;
-    background-color: #fff !important;
+    background-color: #fff;
 }
 .drop-focus {
     color: #f4511e !important;
-    background-color: #fff !important;
+    background-color: #fff;
 }
 
 .drop-opt {
     width: 177px;
-    background-color: rgba(255, 255, 255, 0.795);
+    background-color:#e4e3e3;
     padding-top: 0px;
     margin-top: 0px;
     border: 0px;
@@ -62,9 +63,85 @@
 
 .navbar-nav li a:hover, .navbar-nav li.active a {
     color: #f4511e !important;
-    background-color: #fff !important;
+    background-color: #fff;
 }
-.navbar-default .navbar-toggle {
+.navbar-default {
+    background-color: #CC3333;
+}
+.navbar-custom {
+    background-color: #CC3333;
+}
+/*.navbar-default .navbar-toggle {
     border-color: transparent;
     color: #fff !important;
+}*/
+
+.icon-bar {
+    display:block;
+    width:22px;
+    height:2px;
+    border-radius:1px;
+    border:1px solid #575757;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 1200px) { /*override to change breakpoint of navbar toggle*/
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        border-bottom: 1px solid transparent;
+        border-bottom-color: #575757;
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-left: 25%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    #workffs {
+        padding-left: 25%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+        display:block !important;
+    }
+   .navbar-nav .open .dropdown-menu {
+       position: static;
+       float: none;
+       width: auto;
+       margin-top: 0;
+       background-color: transparent;
+       border: 0;
+       -webkit-box-shadow: none;
+       box-shadow: none;
+    }
 }

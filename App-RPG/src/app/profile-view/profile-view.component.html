@@ -13,26 +13,36 @@
         </div>
         <div class="col-md-5">
           <div class="nav-tabs-wrap">
-            <ul class="nav nav-tabs">
-              <li class="active" id="nav-profile">
-                <a (click)="onNavClick($event)" id="anav-profile">
-                  <span (click)="onNavClick($event)" id="anav-profile" class="glyphicon glyphicon-user"></span> 
-                  Profile
-                </a>
-                </li>
-              <li id="nav-friends" >
-                <a (click)="onNavClick($event)" id="anav-friends">
-                  <span (click)="onNavClick($event)" id="anav-friends" class="glyphicon glyphicon-list-alt">
-                  </span> Friends
-                </a>
-              </li>
-              <li id="nav-games">
-                <a (click)="onNavClick($event)" id="anav-games">
-                  <span (click)="onNavClick($event)" id="anav-games" class="glyphicon glyphicon-tower"></span> 
-                  Games</a>
-                </li>
-            </ul>
+          <nav class="navbar">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#profileNavbar">
+                    <span class="glyphicon glyphicon-triangle-bottom icon"></span>                      
+                  </button>
+                </div>
+                <div class="collapse navbar-collapse" id="profileNavbar">
+                  <ul class="nav navbar-nav navbar-right nav-tabs">
+                    <li class="active" id="nav-profile">
+                      <a (click)="onNavClick($event)" id="anav-profile">
+                        <span (click)="onNavClick($event)" id="anav-profile" class="glyphicon glyphicon-user"></span> 
+                        Profile
+                      </a>
+                      </li>
+                    <li id="nav-friends" >
+                      <a (click)="onNavClick($event)" id="anav-friends">
+                        <span (click)="onNavClick($event)" id="anav-friends" class="glyphicon glyphicon-list-alt">
+                        </span> Friends
+                      </a>
+                    </li>
+                    <li id="nav-games">
+                      <a (click)="onNavClick($event)" id="anav-games">
+                        <span (click)="onNavClick($event)" id="anav-games" class="glyphicon glyphicon-tower"></span> 
+                        Games</a>
+                      </li>
+                  </ul>
+                </div>
+            </nav>
           </div>
+
         </div>
       </div>
     </div>

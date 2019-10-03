@@ -23,3 +23,9 @@
 #animated-bar:hover{
     left: 0px;
 }
+
+@media screen and (max-width: 360px) {
+    .container {
+        min-width: 360px;
+    }
+}

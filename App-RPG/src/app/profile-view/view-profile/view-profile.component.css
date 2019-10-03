@@ -144,6 +144,15 @@
     color: #f4511e;
 }
 
+#settings {
+    background-image: url("assets/btn-pdata.png");
+}
+#settings:hover {
+    background-image: url("assets/btn-pdata-hover.png");
+    background-color: rgb(244, 81, 30, 0.1);
+    color: #f4511e;
+}
+
 .table-info {
     color: #252525;
     font-family: Montserrat, sans-serif;

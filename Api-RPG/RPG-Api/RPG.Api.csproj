@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20190823114501_Forum v1.0.Designer.cs" />
     <Compile Remove="Migrations\20190823120805_Forum v1.0.cs" />
     <Compile Remove="Migrations\20190823120805_Forum v1.0.Designer.cs" />
+    <Compile Remove="Migrations\20191004143935_Game rmv location, some minor changes.cs" />
+    <Compile Remove="Migrations\20191004143935_Game rmv location, some minor changes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

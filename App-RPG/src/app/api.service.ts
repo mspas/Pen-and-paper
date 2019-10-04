@@ -16,13 +16,14 @@ import { NotificationAppModel } from './models/notification.model';
 import { ForumModel, TopicCreateModel, MessageForumCreateModel, NewTopicModel, TopicModel } from './models/forum.model';
 import { TopicToPersonModel } from './models/topic-to-person.model';
 import { ForumService } from './forum.service';
+import { DataService } from './data.service';
 
 @Injectable()
 export class ApiService {
 
     url = 'http://localhost:50168/api/';
 
-    constructor(private _http: HttpClient, private _forum: ForumService) {
+    constructor(private _http: HttpClient, private _forum: ForumService, private _data: DataService) {
     }
 
     getAllDataProfile(nick: string, login: string): Observable<any> {
@@ -201,7 +202,7 @@ export class ApiService {
 
     createGameDB(game: GameCreateModel) {
         this._http.post(this.url+'Game', game).subscribe (
-            data => console.log(data));
+            (data: number) => this._data.changeNewGameId(data));
     }
 
     getGame(id: number): Observable<GameAppModel[]> {
@@ -310,16 +311,16 @@ export class ApiService {
             error => console.log(error));
     }
 
-    uploadPhoto(id: number, file) {
+    uploadPhoto(profileOrGame: boolean, id: number, isBgPhoto: boolean, file) {
         var formData = new FormData();
         formData.append('file', file);
-        this._http.post(this.url + "pdata/" + id + "/photos", formData).subscribe (
+        this._http.post(this.url + "Photo/" + profileOrGame + "/" + isBgPhoto + "/" + id, formData).subscribe (
             error => console.log(error));
     }
 
     getImage(fileName: string): Observable<Blob> {
-        console.log(this.url + 'photos/' + fileName);
-        return this._http.get(this.url + 'photos/' + fileName, { responseType: 'blob' });
+        console.log(this.url + 'Photo/' + fileName);
+        return this._http.get(this.url + 'Photo/' + fileName, { responseType: 'blob' });
     }
 
 }

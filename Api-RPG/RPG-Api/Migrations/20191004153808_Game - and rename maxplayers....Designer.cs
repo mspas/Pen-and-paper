@@ -11,9 +11,10 @@ using System;
 namespace RPGApi.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    partial class RpgDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191004153808_Game - and rename maxplayers...")]
+    partial class Gameandrenamemaxplayers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,15 +286,11 @@ namespace RPGApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BackgroundPhotoId");
-
                     b.Property<int?>("NotificationDataId");
 
                     b.Property<int?>("ProfilePhotoId");
 
                     b.Property<int>("age");
-
-                    b.Property<string>("bgPhotoName");
 
                     b.Property<string>("city");
 
@@ -310,8 +307,6 @@ namespace RPGApi.Migrations
                     b.Property<string>("photoName");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BackgroundPhotoId");
 
                     b.HasIndex("NotificationDataId");
 
@@ -531,10 +526,6 @@ namespace RPGApi.Migrations
 
             modelBuilder.Entity("RPG.Api.Domain.Models.PersonalData", b =>
                 {
-                    b.HasOne("RPG.Api.Domain.Models.Photo", "BackgroundPhoto")
-                        .WithMany()
-                        .HasForeignKey("BackgroundPhotoId");
-
                     b.HasOne("RPG.Api.Domain.Models.NotificationData", "NotificationData")
                         .WithMany()
                         .HasForeignKey("NotificationDataId");

@@ -1,45 +1,60 @@
-<div class="container jumbotron">
-  <form class="form-signin" (ngSubmit)="onCreate(f)" #f="ngForm">
-    <h1 style="font-size: 26px">What are you planning?</h1>
+<div class="container">
+  <div class="content">
+    <form class="form-signin" (ngSubmit)="onCreate(f)" #f="ngForm" name="ngForm">
+      <p class="text-outline">Create your game</p>
 
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" placeholder="Title" style="font-size: 19px" ngModel class="form-control"> 
+      <label for="gametitle">GAME TITLE*</label>
+      <input required type="text" id="gametitle" name="gametitle" placeholder="GAME TITLE" ngModel class="form-control">
 
-    <label for="genre">Game setting / Genre:</label>
-    <select class="form-control" id="genre" [(ngModel)]="genre" name="genre">
-      <option *ngFor="let option of gameCategories">
-        {{option}}
-      </option>
-    </select>
+      <label for="file">GAME LOGO</label>
+      <span class="text-sm" style="font-size: 14px">(Preferred size: 200x200 px. You can do it later, or use a default picture.)</span>
+      <input type="file" id="file" name="file"  required #fileInput>
 
-    <label for="location">Location:</label><br>
-    <input type="text" id="location" name="location" placeholder="Location" style="font-size: 19px" ngModel class="form-control">
+      <label for="genre">GAME CATEGORY / GENRE*</label>
+      <select required class="form-control" id="genre" [(ngModel)]="genre" name="genre">
+        <option *ngFor="let option of gameCategories">
+          {{option}}
+        </option>
+      </select>
 
-    <label for="date">Start date:</label>
-    <input type="date" id="date" name="date" placeholder="Start date" style="font-size: 19px" ngModel class="form-control">
+      <!--<label for="location">LOCATION</label><br>
+      <input type="text" id="location" name="location" placeholder="Location" ngModel class="form-control">-->
 
-    <label for="nofplayers">Max. players:</label>
-    <select class="form-control" id="nofplayers" [(ngModel)]="nofplayers" name="nofplayers">
-      <option *ngFor="let i of numberOfPlayers">
-        {{i}}
-      </option>
-    </select>
-    <!--<input type="number" min="1" max="20" id="age" name="age" style="font-size: 19px" ngModel class="form-control" required>-->
+      <label for="date">START DATE* (APPROXIMATELY)</label>
+      <input required type="date" id="date" name="date" placeholder="Start date" ngModel class="form-control">
 
-    <label for="book">Book / Vademecum:</label>
-    <input type="text" id="book" name="book" placeholder="Book / Vademecum" style="font-size: 19px" ngModel class="form-control">
-    
-    <label for="description">Story description:</label>
-    <textarea id="description" name="description" placeholder="Shortly describe your in-game world, introduce the background of the story, some character's models. But remember to keep some plots in secret..." rows="5" style="font-size: 19px" ngModel class="form-control"></textarea>
+      <label for="nofplayers">MAX. PLAYERS*</label>
+      <input required type="number" id="nofplayers" name="nofplayers" ngModel class="form-control">
+      <!--<select class="form-control" id="nofplayers" [(ngModel)]="nofplayers" name="nofplayers">
+        <option *ngFor="let i of numberOfPlayers">
+          {{i}}
+        </option>
+      </select>
+      <input type="number" min="1" max="20" id="age" name="age" ngModel class="form-control" required>-->
 
-    <label for="comment">Comment for creating character's card:</label>
-    <textarea id="comment" name="comment" placeholder="Tips for players to properly create theris characters cards. ( can leave it blank)" rows="5" style="font-size: 19px" ngModel class="form-control"></textarea>
+      <label for="book">BASE BOOK</label>
+      <input type="text" id="book" name="book" placeholder="Book / Vademecum" ngModel class="form-control">
+      
+      <label for="description">STORY DESCRIPTION*</label>
+      <textarea required id="description" name="description" placeholder="Shortly describe your in-game world, introduce the background of the story, some character's models. But remember to keep some plots in secret..." rows="5" ngModel class="form-control"></textarea>
 
-    <label for="box">Allow joining without invitation?</label>
-    <input id="box" type="checkbox" (click)='onBox(box.checked);' #box>
-    
+      <label for="comment">ADDITIONAL COMMENT</label>
+      <textarea id="comment" name="comment" placeholder="Tips for players to properly imagine theris characters, etc. (you can leave it blank)" rows="5" ngModel class="form-control"></textarea>
 
-    <br>
-    <button class="btn btn-lg btn-success btn-block" style="font-size: 20px" type="submit">Save and create</button>
-  </form>
+      <label for="box">ALLOW JOINING WITHOUT INVITATION?*</label>
+      <input id="needInviteBox" type="checkbox" style="margin: 15px 0 15px 10px" (click)='onBox(needInviteBox.checked);' #needInviteBox>
+
+      <label for="box">ALLOW JOINING AFTER THE GAME STARTED?*</label>
+      <input id="hotJoinBox" type="checkbox" style="margin: 15px 0 15px 10px" (click)='onBoxHotJoin(hotJoinBox.checked);' #hotJoinBox>
+            
+      <div class="row" style="margin-top: 15px;">
+        <div class="col-md-8">
+          <p class="text-sm">Fields with (*) are required!</p>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-lg" style="font-size: 20px" type="submit">SAVE & CREATE</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

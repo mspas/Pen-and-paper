@@ -118,12 +118,12 @@ namespace RPG.Api.Services.SGame
 
                 foreach (Game game in gamesList)
                 {
-                    var nextData = game.title + "." + game.category + "." + game.location;
+                    var nextData = game.title + "." + game.category + "." + game.status;
                     if (rgx.IsMatch(nextData))
                     {
                         if (onlyFree)
                         {
-                            if (game.nofplayers - game.participants.Count > 0)
+                            if (game.maxplayers - game.participants.Count > 0)
                             {
                                 if (DateTime.Compare(dateFrom, game.date) < 0 && DateTime.Compare(game.date, dateTo) < 0)
                                     foundData.Add(await GetGameAsync(game.Id));

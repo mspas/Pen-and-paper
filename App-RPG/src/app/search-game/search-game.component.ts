@@ -12,9 +12,9 @@ import { NgForm } from '@angular/forms';
 export class SearchGameComponent implements OnInit {
 
   gameCategories: string[] = ["Fantasy", "Sci-fi", "Mafia"];
+  statusOfGame: string[] = ["Active", "Ongoing", "Ended"];
   foundData: GameAppModel[] = [];
   wasSearched: boolean = false;
-  asd: string;
 
   constructor(private route: ActivatedRoute, private _api: ApiService, private router: Router) { }
 
@@ -22,7 +22,6 @@ export class SearchGameComponent implements OnInit {
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.foundData = profiledata.profiledata;
     });
-    console.log(JSON.stringify(this.foundData));
   }
 
   onSearch(form: NgForm) {
@@ -38,9 +37,9 @@ export class SearchGameComponent implements OnInit {
       searchValue += category;
     searchValue += ".";
 
-    let city = form.value.city;
-    if (city != null) 
-      searchValue += city;
+    let status = form.value.status;
+    if (status != null) 
+      searchValue += status;
     searchValue += ".";
 
     let dateFrom = form.value.datef;

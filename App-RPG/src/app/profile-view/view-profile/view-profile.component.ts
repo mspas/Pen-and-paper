@@ -87,7 +87,7 @@ export class ViewProfileComponent implements OnInit {
 
   uploadPhoto() {
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-    this._api.uploadPhoto(this.pd.id, nativeElement.files[0]);
+    this._api.uploadPhoto(true, this.pd.id, false, nativeElement.files[0]);
   }
 
   onSaveChanges(form: NgForm) {

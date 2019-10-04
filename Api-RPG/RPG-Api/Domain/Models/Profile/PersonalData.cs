@@ -17,6 +17,7 @@ namespace RPG.Api.Domain.Models
         public string city { get; set; }
         public int age { get; set; }
         public string photoName { get; set; }
+        public string bgPhotoName { get; set; }
         public bool isPhotoUploaded{ get; set; }
 
         public virtual ICollection<Friend> MyFriends { get; set; }
@@ -24,6 +25,7 @@ namespace RPG.Api.Domain.Models
         public virtual ICollection<Game> MyGamesMaster { get; set; }
         public virtual ICollection<GameToPerson> MyGames { get; set; }
         public Photo ProfilePhoto { get; set; }
+        public Photo BackgroundPhoto { get; set; }
         public virtual NotificationData NotificationData { get; set; }
 
         public PersonalData()

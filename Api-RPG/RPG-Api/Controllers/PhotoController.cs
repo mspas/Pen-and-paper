@@ -12,12 +12,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using RPG.Api.Domain.Services.Profile;
+using RPG.Api.Domain.Services;
 using RPG.Api.Domain.Services.Communication;
 
 namespace mdRPG.Controllers
 {
-    [Route("/api/pdata/{pdataId}/photos")]
+    [Route("/api/[controller]")]
     public class PhotoController : Controller
     {
         private readonly IHostingEnvironment _host;
@@ -29,13 +29,14 @@ namespace mdRPG.Controllers
             _photoService = photoService;
         }
 
-        [HttpPost]
-        public async Task<BaseResponse> Upload(int pdataId, IFormFile file)
+        [HttpPost("/api/Photo/{profileOrGame}/{isBgPhoto}/{id}")]
+        public async Task<BaseResponse> Upload(bool profileOrGame, int id, bool isBgPhoto, IFormFile file)
         {
-            return await _photoService.UploadPhotoAsync(pdataId, file);
+            Console.WriteLine("helo " + id);
+            return await _photoService.UploadPhotoAsync(profileOrGame, id, isBgPhoto, file);
         }
 
-        [HttpGet("/api/photos/{filename}")]
+        [HttpGet("{filename}")]
         public async Task<IActionResult> DownloadFile(string filename)
         {
             try
@@ -57,8 +58,8 @@ namespace mdRPG.Controllers
             }
         }
 
-        [HttpDelete("/api/photos/{userId}/{fileName}")]
-        public async Task<BaseResponse> DeleteFile(int userId, string fileName)
+        [HttpDelete("{profileOrGame}/{userId}/{fileName}")]
+        public async Task<BaseResponse> DeleteFile(bool profileOrGame, int userId, string fileName)
         {
             return await _photoService.DeletePhotoAsync(userId, fileName);
         }

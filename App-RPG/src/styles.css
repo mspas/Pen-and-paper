@@ -6,8 +6,11 @@ body {
     font: 400 15px Lato, sans-serif;
     line-height: 1.8;
     color: #818181;
-    /*background-color: #252525;*/
-    background-color: #ececec;
+    /*background-color: #ececec;*/
+    background-image: url("assets/2894040.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 .main-content-wrap {
     /*background-color: #1bf5b411;
@@ -115,17 +118,18 @@ body {
     margin: 15px 0 0 150px;
 }
 .information {
-    background-image: url("assets/notepad.png");
+    background-image: url("assets/notepad-sm.png");
     background-repeat: no-repeat;
     margin-top: 50px;
     margin-left: -10px;
     padding-top: 60px;
     padding-left: 125px;
     max-width: 1074px;
+    height: 377px;
     color: #252525;
     font-family: Montserrat, sans-serif;
-    border-radius: 30px 0 0 0;
-    box-shadow:  15px -10px 15px -15px rgba(0, 0, 0, 0.2),  5px 0 5px -5px rgba(0, 0, 0, 0.19);
+    border-radius: 30px 0 0 40px;
+    box-shadow:  15px -10px 15px -15px rgba(0, 0, 0, 0.2),  10px 10px 5px -5px rgba(0, 0, 0, 0.2);     /*poziom, pion, blur, spread*/
 }
 .link {
   color: #303030 !important;

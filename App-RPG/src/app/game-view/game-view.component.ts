@@ -28,7 +28,8 @@ export class GameViewComponent implements OnInit {
   gameData: GameAppModel;
   gameMaster: PersonalDataModel;
   buttonManager: ButtonManager;
-  status: string = "Ended";
+  hotJoinString: string = "No";
+  needInviteString: string = "No";
   info: string = "Join game";
   modalTitle: string = "";
   iAmMaster: boolean = false;
@@ -72,6 +73,10 @@ export class GameViewComponent implements OnInit {
     if (this.gameData.category == "Sci-fi")
       this.imageUrl = this.urlSciFi;
 
+    if (this.gameData.hotJoin)
+      this.hotJoinString = "Yes";
+    if (this.gameData.needInvite)
+      this.needInviteString = "Yes";
 
     this.gameData.participantsProfiles.forEach(player => {
       if (this.gameData.masterId == player.id)
@@ -121,9 +126,6 @@ export class GameViewComponent implements OnInit {
       this.isNewRequest = true;
     if (this.waitingInvited.length > 0)
       this.isNewInvited = true;
-
-    if (this.gameData.isActive)
-      this.status = "Active";
 
     if (this.gameMaster.photoName != null && this.gameMaster.photoName != "") {
         this._api.getImage(this.gameMaster.photoName).subscribe(data => {

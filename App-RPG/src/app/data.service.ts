@@ -14,6 +14,7 @@ export class DataService {
   private conversationData = new BehaviorSubject<ConversationDataModel>(null);
   private chatControl = new BehaviorSubject<boolean>(false);
   private relationId = new BehaviorSubject<number>(-1);
+  private newGameId = new BehaviorSubject<number>(-1);
   private notificationSet = new BehaviorSubject<CheckNotificationModel>({message: false, game: false, friend: false});
   private notificationData = new BehaviorSubject<NotificationAppModel>(null);
 
@@ -23,6 +24,7 @@ export class DataService {
   currentConversationData = this.conversationData.asObservable();
   currentChatControl = this.chatControl.asObservable();
   currentRelationId = this.relationId.asObservable();
+  currentNewGameId = this.newGameId.asObservable();
   currentNotificationSet = this.notificationSet.asObservable();
   currentNotificationData = this.notificationData.asObservable();
 
@@ -51,6 +53,10 @@ export class DataService {
   
   changeRelationId(id: number) {
     this.relationId.next(id);
+  }
+
+  changeNewGameId(id: number) {
+    this.newGameId.next(id);
   }
 
   changeNotificationSet(check: CheckNotificationModel) {

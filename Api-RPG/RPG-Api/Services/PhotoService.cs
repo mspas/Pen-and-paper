@@ -3,34 +3,47 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using RPG.Api.Domain.Services.Profile;
+using RPG.Api.Domain.Services;
 using RPG.Api.Domain.Repositories.Profile;
 using System.IO;
 using RPG.Api.Domain.Services.Communication;
 using RPG.Api.Domain.Models;
 using RPG.Api.Domain.Repositories;
+using RPG.Api.Domain.Repositories.RGame;
 
-namespace RPG.Api.Services.Profile
+namespace RPG.Api.Services
 {
     public class PhotoService : IPhotoService
     {
         private readonly IPersonalDataRepository _personalDataRepository;
+        private readonly IGameRepository _gameRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHostingEnvironment _host;
 
-        public PhotoService(IPersonalDataRepository personalDataRepository, IUnitOfWork unitOfWork, IHostingEnvironment host)
+        public PhotoService(IPersonalDataRepository personalDataRepository, IGameRepository gameRepository, IUnitOfWork unitOfWork, IHostingEnvironment host)
         {
             _personalDataRepository = personalDataRepository;
+            _gameRepository = gameRepository;
             _unitOfWork = unitOfWork;
             _host = host;
         }
 
-        public async Task<BaseResponse> UploadPhotoAsync(int pdataId, IFormFile file)
+        public async Task<BaseResponse> UploadPhotoAsync(bool profileOrGame, int id, bool isBgPhoto, IFormFile file)
         {
-            var profile = await _personalDataRepository.GetProfile(pdataId);
-
-            if (profile == null)
-                return new BaseResponse(false, "Account not found.");
+            var profile = new PersonalData();
+            var game = new Game();
+            if (profileOrGame)
+            {
+                profile = await _personalDataRepository.GetProfile(id);
+                if (profile == null)
+                    return new BaseResponse(false, "Account not found.");
+            }
+            else
+            {
+                game = await _gameRepository.GetGameAsync(id);
+                if (game == null)
+                    return new BaseResponse(false, "Game not found.");
+            }
 
             var uploadFolderPath = Path.Combine(_host.WebRootPath, "uploads");
             if (!Directory.Exists(uploadFolderPath))
@@ -46,11 +59,38 @@ namespace RPG.Api.Services.Profile
 
             var photo = new Photo { FileName = fileName };
 
-            profile.ProfilePhoto = photo;
-            profile.photoName = fileName;
-            profile.isPhotoUploaded = true;
+            if (profileOrGame)
+            {
+                if (isBgPhoto)
+                {
+                    profile.BackgroundPhoto = photo;
+                    profile.bgPhotoName = fileName;
+                }
+                else
+                {
+                    profile.ProfilePhoto = photo;
+                    profile.photoName = fileName;
+                    profile.isPhotoUploaded = true;
+                }
 
-            var response = await _personalDataRepository.UpdateProfile(profile);
+                var response = await _personalDataRepository.UpdateProfile(profile);
+            }
+            else
+            {
+                if (isBgPhoto)
+                {
+                    game.BackgroundPhoto = photo;
+                    game.bgPhotoName = fileName;
+                }
+                else
+                {
+                    game.ProfilePhoto = photo;
+                    game.photoName = fileName;
+                }
+
+                var response = _gameRepository.EditGame(game);
+
+            }
 
             await _unitOfWork.CompleteAsync();
 

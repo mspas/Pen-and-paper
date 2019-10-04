@@ -35,14 +35,16 @@ namespace RPG.Api.Resources
         public string title { get; set; }
         public string category { get; set; }
         public int nofparticipants { get; set; }
-        public int nofplayers { get; set; }
+        public int maxplayers { get; set; }
         public string description { get; set; }
-        public string location { get; set; }
         public string book { get; set; }
         public string comment { get; set; }
         public DateTime date { get; set; }
         public bool needInvite { get; set; }
-        public bool isActive { get; set; }
+        public bool hotJoin { get; set; }
+        public string status { get; set; }
+        public string photoName { get; set; }
+        public string bgPhotoName { get; set; }
         public DateTime? lastActivityDate { get; set; }
         public PersonalDataResource gameMaster { get; set; }
         public List<GameToPerson> participants { get; set; }

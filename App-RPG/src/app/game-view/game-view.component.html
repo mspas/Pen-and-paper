@@ -207,16 +207,12 @@
           <td>{{gameData.category}}</td>
         </tr>
         <tr>
-          <td>Location:</td>
-          <td>{{gameData.location}}</td>
-        </tr>
-        <tr>
           <td>Date:</td>
           <td>{{gameData.date}}</td>
         </tr>
         <tr>
           <td>Number of players:</td>
-          <td>{{gameData.nofparticipants}}/{{gameData.nofplayers}}</td>
+          <td>{{gameData.nofparticipants}}/{{gameData.maxplayers}}</td>
         </tr>
         <tr>
           <td>Book:</td>
@@ -224,7 +220,15 @@
         </tr>
         <tr>
           <td>Status:</td>
-          <td>{{status}}</td>
+          <td>{{gameData.status}}</td>
+        </tr>
+        <tr>
+          <td>Can I join without invitation?</td>
+          <td>{{gameData.location}}</td>
+        </tr>
+        <tr>
+          <td>Can I join after the game started?</td>
+          <td>{{gameData.location}}</td>
         </tr>
         <tr>
           <td>Game master:</td>

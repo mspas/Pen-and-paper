@@ -1,35 +1,23 @@
-.modal-header {
-    background-color: #13976f;
-    font-size: 12px !important;
-    line-height: 1.42857143 !important;
-    letter-spacing: 4px;
-    font-family: Montserrat, sans-serif;
+.content {
+    position: relative;
+    padding: 0 15% 10% 15%;
 }
-
-.modal-title {
-    border-color: transparent;
-    color: #fff !important;
+.text-sm {
+    font-style: italic;
+    font-size: 17px;
 }
-
-.modal-btn-close {
-    border-color: transparent;
-    color: azure;
-}
-
-.modal-content {
-    background-color: #3a3a3a;
-}
-
-.modal-body {
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
 .btn-confirm {
     margin-left: 40%;
     margin-right: 40%;
 }
-
+label {
+    margin-top: 15px;    
+    font-size: 16px;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+}
 input[type=checkbox]
 {
   /* Double-sized Checkboxes */
@@ -38,3 +26,23 @@ input[type=checkbox]
   -webkit-transform: scale(2); /* Safari and Chrome */
   -o-transform: scale(2); /* Opera */
 }
+button {
+    width: 250px;
+    height: 50px;
+    background-image: url("assets/btn-save.png");
+    background-color: #a4fca4;
+    background-repeat: no-repeat;
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-color: #e2ffdad3;
+    padding: 10px 16px 10px 50px;
+    box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.2);
+}
+button:hover {
+    background-image: url("assets/btn-save-hover.png");
+    background-color: #b1fcb1c2;
+    border-color: #c0f7b1d3;
+    color: #f4511e;
+    box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.1);
+}
+

@@ -1,9 +1,9 @@
-import { ApiService } from './../api.service';
+import { ApiService } from '../../services/api.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
-import { GameCreateModel } from '../models/game.model';
+import { GameCreateModel } from '../../models/game.model';
 import { Router } from '@angular/router';
-import { DataService } from '../data.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-create-game',

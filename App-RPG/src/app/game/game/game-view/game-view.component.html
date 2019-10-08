@@ -1,0 +1,77 @@
+  <div class="panel">
+      <div class="content-top panel-heading">
+        <h4 class="panel-title">
+          <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#game">
+            <span class="title-panel-bg text-outline">{{ gameData.title }}</span>
+            <span class="title-panel-sm">- {{ gameData.category }} - {{ status }} -</span>
+          </a>
+          <a class="toggle" data-toggle="collapse" data-parent="#list" href="#game">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+          </a>
+        </h4>
+      </div>
+      <div id="game" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="description">{{gameData.description}}</p>  
+          <p class="text-outline" id="information-text">Game details:</p>    
+          <div class="container information">                                                                                  
+           <div class="table-responsive">          
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Category:</td>
+                  <td>{{gameData.category}}</td>
+                </tr>
+                <tr>
+                  <td>Date:</td>
+                  <td>{{gameData.date}}</td>
+                </tr>
+                <tr>
+                  <td>Number of players:</td>
+                  <td>{{gameData.nofparticipants}}/{{gameData.maxplayers}}</td>
+                </tr>
+                <tr>
+                  <td>Book:</td>
+                  <td>{{gameData.book}}</td>
+                </tr>
+                <tr>
+                  <td>Status:</td>
+                  <td>{{gameData.status}}</td>
+                </tr>
+                <tr>
+                  <td>Can I join without invitation?</td>
+                  <td>{{gameData.location}}</td>
+                </tr>
+                <tr>
+                  <td>Can I join after the game started?</td>
+                  <td>{{gameData.location}}</td>
+                </tr>
+                <tr>
+                  <td>Game master:</td>
+                  <td [routerLink]="['/profile', gameMaster.login]">
+                    <p class="profile-link" role="button">
+                      <img [src]="imageToShow" class="profile-photo" alt="Profile image">{{gameMaster.firstname}} {{gameMaster.lastname}} ({{gameMaster.login}})
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                    <td>Players:</td>
+                    <td>
+                      <table>
+                        <tr *ngFor="let player of acceptedPlayers">
+                            <td [routerLink]="['/profile', player.login]">
+                              <p class="profile-link" role="button">
+                                <img [src]="player.photo" class="profile-photo" alt="Profile image">{{player.data.firstname}} {{player.data.lastname}} ({{player.data.login}})
+                              </p>
+                            </td>
+                        </tr>
+                      </table>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+           </div>
+         </div>
+        </div>
+      </div>
+  </div>

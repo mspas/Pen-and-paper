@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TopicModel, MessageForumCreateModel } from '../../../models/forum.model';
-import { ApiService } from '../../../api.service';
-import { ForumService } from '../../../forum.service';
+import { ApiService } from '../../../services/api.service';
+import { ForumService } from '../../../services/forum.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

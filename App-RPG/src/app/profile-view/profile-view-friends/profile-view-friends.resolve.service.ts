@@ -4,7 +4,7 @@ import {
     ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../services/api.service';
 import { FriendModel } from '../../models/friend.model';
 
 

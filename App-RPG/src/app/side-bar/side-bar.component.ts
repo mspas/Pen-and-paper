@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { ApiService } from '../services/api.service';
 import { FriendModel } from '../models/friend.model';
 import { PersonalDataModel } from '../models/personaldata.model';
 import { GameToPersonAppModel } from '../models/game-to-person.model';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-side-bar',

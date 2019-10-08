@@ -3,7 +3,7 @@ import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { CheckNotificationModel } from '../models/notification.model';
 
 @Component({

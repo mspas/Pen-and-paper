@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TopicModel, PostModel } from '../../../models/forum.model';
 import { PersonalDataModel } from '../../../models/personaldata.model';
-import { ApiService } from '../../../api.service';
+import { ApiService } from '../../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

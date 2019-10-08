@@ -11,15 +11,15 @@ import { PersonalDataResolve } from './profile-view/page-view.resolve.service';
 import { ProfileViewFriendsComponent } from './profile-view/view-friends/profile-view-friends.component';
 import { FriendViewResolve } from './profile-view/view-friends/profile-view-friends.resolve.service';
 import { SearchFriendResolve } from './search-friend/search-friend.resolve.service';
-import { CreateGameComponent } from './create-game/create-game.component';
+import { CreateGameComponent } from './game/create-game/create-game.component';
 import { GamesViewResolve } from './profile-view/view-games/profile-view-games.resolve.service';
 import { ProfileViewGamesComponent } from './profile-view/view-games/profile-view-games.component';
 import { GameViewResolve } from './game-view/game.resolve.service';
-import { GameViewComponent } from './game-view/game-view.component';
+//import { GameViewComponent } from './game-view/game-view.component';
 import { SearchGameComponent } from './search-game/search-game.component';
 import { SearchGameResolve } from './search-game/search-game.resolve.service';
-import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game.component';
-import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
+import { InviteToGameComponent } from './game/game/game-view/invite-to-game/invite-to-game.component';
+import { GameInviteResolve } from './game/game/game-view/invite-to-game/invite-resolver.service';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivityResolve } from './activity/activity.resolve.service';
@@ -27,6 +27,7 @@ import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { GameResolve } from './game-overview/game-overview.resolve.service';
 import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
 import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
+import { GameComponent } from './game/game/game.component';
 
 const routes: Routes = [];
 
@@ -82,11 +83,11 @@ const routes: Routes = [];
           },
       },
       {
-          path: 'game/:id/:view', 
-          component: GameViewComponent,
+          path: 'game/:id', 
+          component: GameComponent,
           canActivate: [AuthGuardService],
           resolve: {
-            profiledata: GameViewResolve
+            profiledata: GameResolve
           },
       },
       {

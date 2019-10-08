@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { PersonalDataModel } from '../../models/personaldata.model';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../services/api.service';
 import { MessageModel, ConversationDataModel } from '../../models/message.model';
 import { FriendModel } from '../../models/friend.model';
-import { DataService } from '../../data.service';
+import { DataService } from '../../services/data.service';
 import { NgForm } from '@angular/forms';
 import { ChangePasswordModel } from '../../models/changepassword.model';
 import { HostListener } from "@angular/core";
@@ -115,7 +115,7 @@ export class ViewProfileComponent implements OnInit {
 
     if (this.modalPicture) {
       var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-      this._api.uploadPhoto(this.myProfileData.id, nativeElement.files[0]);
+      this._api.uploadPhoto(true, this.myProfileData.id, false, nativeElement.files[0]);
       window.location.reload();
     }
   }

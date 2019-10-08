@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConversationModel, MessageCreateModel, MessageModel } from '../../models/message.model';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../services/api.service';
 import { Observable } from 'rxjs';
 import { CheckNotificationModel, NotificationAppModel } from '../../models/notification.model';
-import { DataService } from '../../data.service';
+import { DataService } from '../../services/data.service';
 import { FriendModel, FriendListModel } from '../../models/friend.model';
 
 @Component({

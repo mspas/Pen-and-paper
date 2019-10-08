@@ -3,7 +3,7 @@ import {
     Router, Resolve,
     ActivatedRouteSnapshot
 } from '@angular/router';
-import { ApiService } from '../api.service';
+import { ApiService } from '../services/api.service';
 import { GameAppModel } from '../models/game.model';
 
 

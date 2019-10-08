@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { FriendModel } from './models/friend.model';
-import { ConversationDataModel } from './models/message.model';
-import { CheckNotificationModel, NotificationAppModel } from './models/notification.model';
+import { FriendModel } from '../models/friend.model';
+import { ConversationDataModel } from '../models/message.model';
+import { CheckNotificationModel, NotificationAppModel } from '../models/notification.model';
 
 
 @Injectable()

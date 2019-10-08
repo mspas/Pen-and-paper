@@ -1,4 +1,4 @@
-import { ApiService } from './../api.service';
+import { ApiService } from '../services/api.service';
 import { PersonalDataModel } from './../models/personaldata.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';

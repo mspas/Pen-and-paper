@@ -77,12 +77,12 @@
                 <td>Game Master:</td><td><div class ="button-name" role="button" [routerLink]="['/profile', game.gameMaster.login]">{{game.gameMaster.firstname}} {{game.gameMaster.lastname}} ({{game.gameMaster.login}})</div></td>
               </tr>
               <tr>
-                <td>Number of players:</td><td>{{game.nofparticipants}} / {{game.nofplayers}}</td>
+                <td>Number of players:</td><td>{{game.nofparticipants}} / {{game.maxplayers}}</td>
               </tr>
               <tr>
                 <td></td>
                 <td>
-                  <button type="button" class="btn btn-warning" [routerLink]="['/game', game.id, '/view']">
+                  <button type="button" class="btn btn-warning" [routerLink]="['/game', game.id]">
                     <span class="glyphicon glyphicon-share-alt"></span> Go to game
                   </button>
                 </td>

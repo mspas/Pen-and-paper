@@ -1,0 +1,28 @@
+<div class="content-body" style="padding-top: 25px">
+  <div class="row">
+    <div class="col col-md-4">
+      <span class="btn-forum" id="btn-user-access"><img class="btn-ico" src="assets/baner.png">USER'S ACCESS</span>
+    </div>
+    <div class="col col-md-4">
+      <span class="btn-forum" id="btn-settings"><img class="btn-ico" src="assets/fix.png">MANAGE GAME SETTINGS</span>
+    </div>
+    <div class="col col-md-4">
+      <span class="btn-forum" id="btn-edit"><img class="btn-ico" src="assets/pencil.png">MANAGE PLAYERS</span>
+    </div>
+  </div>
+  <div class="row">
+    <!--<a href="game/{{gameData.id}}/overview/new-topic">-->
+    <div class="col col-md-4">
+      <span class="btn-forum" id="btn-add-topic" (click)="onCreateTopic()"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</span>
+    </div>
+    <div class="col col-md-4">
+      <span class="btn-forum" id="btn-your-character"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</span>
+    </div>
+    <div class="col col-md-4">
+      <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>
+    </div>
+  </div>
+
+  <app-topic-list *ngIf="showTopicList" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData"></app-topic-list>
+  <app-create-topic *ngIf="showCreateTopic" (valueChange)="closeCreateTopic($event)" [forumData]="forumData" [profileData]="profileData" [iAmGameMaster]="iAmGameMaster"></app-create-topic>
+</div>

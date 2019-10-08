@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { ApiService } from './api.service';
+import { ApiService } from './services/api.service';
 import { FriendModel } from './models/friend.model';
-import { DataService } from './data.service';
+import { DataService } from './services/data.service';
 import { ConversationModel } from './models/message.model';
 import { NotificationAppModel, CheckNotificationModel } from './models/notification.model';
 import { Observable } from 'rxjs';

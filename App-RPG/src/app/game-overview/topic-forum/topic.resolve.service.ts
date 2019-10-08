@@ -4,7 +4,7 @@ import {
     ActivatedRouteSnapshot
 } from '@angular/router';
 import { TopicModel } from '../../models/forum.model';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../services/api.service';
 
 
 @Injectable()

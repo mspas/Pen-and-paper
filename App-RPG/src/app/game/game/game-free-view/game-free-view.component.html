@@ -1,0 +1,78 @@
+    <div class="content" >
+      <div class="content-top">
+          <span class="title-panel-bg text-outline">{{ gameData.title }}</span>
+          <span class="title-panel-sm">- {{ gameData.category }} - {{ status }} -</span>
+      </div>
+  
+      <div class="nav-wrap">
+        <div class="row">
+          <div class="col-md-4" style="padding: 0px 0 0 50px;">
+            <img src="{{imageUrl}}" alt="Mafia image">
+          </div>
+          <div class="col-md-8" style="padding: 30px 0 0 300px;">
+            <div class="btn-join" data-toggle="tooltip" title="Send nudes pls" (click)="onSendMessage()">
+              <p class="btn-text">JOIN GAME</p>
+            </div>
+        </div>
+      </div>
+  
+    <p class="description">{{gameData.description}}</p>  
+    <p class="text-outline" id="information-text">Game details:</p>    
+     <div class="container information">                                                                                  
+      <div class="table-responsive">          
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Category:</td>
+            <td>{{gameData.category}}</td>
+          </tr>
+          <tr>
+            <td>Date:</td>
+            <td>{{gameData.date}}</td>
+          </tr>
+          <tr>
+            <td>Number of players:</td>
+            <td>{{gameData.nofparticipants}}/{{gameData.maxplayers}}</td>
+          </tr>
+          <tr>
+            <td>Book:</td>
+            <td>{{gameData.book}}</td>
+          </tr>
+          <tr>
+            <td>Status:</td>
+            <td>{{gameData.status}}</td>
+          </tr>
+          <tr>
+            <td>Can I join without invitation?</td>
+            <td>{{gameData.location}}</td>
+          </tr>
+          <tr>
+            <td>Can I join after the game started?</td>
+            <td>{{gameData.location}}</td>
+          </tr>
+          <tr>
+            <td>Game master:</td>
+            <td [routerLink]="['/profile', gameMaster.login]">
+              <p class="profile-link" role="button">
+                <img [src]="imageToShow" class="profile-photo" alt="Profile image">{{gameMaster.firstname}} {{gameMaster.lastname}} ({{gameMaster.login}})
+              </p>
+            </td>
+          </tr>
+          <tr>
+              <td>Players:</td>
+              <td>
+                <table>
+                  <tr *ngFor="let player of acceptedPlayers">
+                      <td [routerLink]="['/profile', player.login]">
+                        <p class="profile-link" role="button">
+                          <img [src]="player.photo" class="profile-photo" alt="Profile image">{{player.data.firstname}} {{player.data.lastname}} ({{player.data.login}})
+                        </p>
+                      </td>
+                  </tr>
+                </table>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>

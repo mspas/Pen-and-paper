@@ -1,7 +1,7 @@
 import { FriendModel, FriendListModel } from '../../models/friend.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { PersonalDataModel } from '../../models/personaldata.model';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../services/api.service';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { RouterModule } from '@angular/router';
 

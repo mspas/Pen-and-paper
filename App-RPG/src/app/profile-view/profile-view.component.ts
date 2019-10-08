@@ -2,7 +2,7 @@
 import { PersonalDataModel } from './../models/personaldata.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../api.service';
+import { ApiService } from '../services/api.service';
 import { GameToPersonAppModel } from '../models/game-to-person.model';
 import { FriendModel } from '../models/friend.model';
 

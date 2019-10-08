@@ -3,19 +3,19 @@ import {
     Router, Resolve,
     ActivatedRouteSnapshot
 } from '@angular/router';
-import { ApiService } from '../../api.service';
-import { FriendModel } from '../../models/friend.model';
+import { ApiService } from '../services/api.service';
+import { ForumModel } from '../models/forum.model';
 
 
 @Injectable()
-export class GameInviteResolve implements Resolve<any[]> {
+export class GameResolve implements Resolve<ForumModel> {
 
     
     constructor(private _api: ApiService, private router: Router) {
      }
 
     resolve(route: ActivatedRouteSnapshot) {
-        let gameId = +route.params['id'];
-        return this._api.getGameAndFriends(gameId);
+        let id = +route.params['id'];
+        return this._api.getGameAndForum(id);
     }
 }

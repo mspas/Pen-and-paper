@@ -1,10 +1,10 @@
-import { GameToPersonCreateModel } from './../../models/game-to-person.model';
+import { GameToPersonCreateModel } from '../../../../models/game-to-person.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../api.service';
-import { PersonalDataModel } from '../../models/personaldata.model';
-import { GameAppModel } from '../../models/game.model';
-import { FriendModel, FriendListModel } from '../../models/friend.model';
+import { ApiService } from '../../../../services/api.service';
+import { PersonalDataModel } from '../../../../models/personaldata.model';
+import { GameAppModel } from '../../../../models/game.model';
+import { FriendModel, FriendListModel } from '../../../../models/friend.model';
 
 @Component({
   selector: 'app-invite-to-game',

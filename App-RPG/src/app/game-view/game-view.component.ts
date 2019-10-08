@@ -1,5 +1,5 @@
 import { ButtonManager } from './button-manager';
-import { ApiService } from './../api.service';
+import { ApiService } from '../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { PersonalDataModel, PersonalDataListModel } from '../models/personaldata.model';
 import { GameToPersonAppModel, GameToPersonCreateModel } from '../models/game-to-person.model';
@@ -14,7 +14,7 @@ import { SkillCreateModel } from '../models/skill.model';
   templateUrl: './game-view.component.html',
   styleUrls: ['./game-view.component.css']
 })
-export class GameViewComponent implements OnInit {
+export class GameViewFreeAccessComponent implements OnInit {
 
   
   urlMafia: string = "assets/mafia1.png";

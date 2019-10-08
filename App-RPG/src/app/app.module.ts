@@ -1,5 +1,5 @@
 import { SearchGameResolve } from './search-game/search-game.resolve.service';
-import { ApiService } from './api.service';
+import { ApiService } from './services/api.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -21,18 +21,18 @@ import { ProfileViewFriendsComponent } from './profile-view/view-friends/profile
 import { FriendViewResolve } from './profile-view/view-friends/profile-view-friends.resolve.service';
 import { SearchFriendComponent } from './search-friend/search-friend.component';
 import { SearchFriendResolve } from './search-friend/search-friend.resolve.service';
-import { CreateGameComponent } from './create-game/create-game.component';
-import { CreateGameDataService } from './create-game/create-game.service';
+//import { CreateGameComponent } from './create-game/create-game.component';
+import { CreateGameDataService } from './services/create-game.service';
 import { ProfileViewGamesComponent } from './profile-view/view-games/profile-view-games.component';
 import { GamesViewResolve } from './profile-view/view-games/profile-view-games.resolve.service';
-import { GameViewComponent } from './game-view/game-view.component';
+//import { GameViewComponent } from './game-view/game-view.component';
 import { GameViewResolve } from './game-view/game.resolve.service';
 import { SearchGameComponent } from './search-game/search-game.component';
-import { InviteToGameComponent } from './game-view/invite-to-game/invite-to-game.component';
-import { GameInviteResolve } from './game-view/invite-to-game/invite-resolver.service';
+import { InviteToGameComponent } from './game/game/game-view/invite-to-game/invite-to-game.component';
+import { GameInviteResolve } from './game/game/game-view/invite-to-game/invite-resolver.service';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { ProfileDataResolve } from './side-bar/side-bar.resolve.service';
-import { DataService } from './data.service';
+import { DataService } from './services/data.service';
 import { BphotoComponent } from './bphoto/bphoto.component';
 import { ViewProfileComponent } from './profile-view/view-profile/view-profile.component';
 import { ChatComponent } from './chat/chat.component';
@@ -45,13 +45,14 @@ import { AccountGamesComponent } from './activity/account-games/account-games.co
 import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { GameResolve } from './game-overview/game-overview.resolve.service';
 import { GameForumComponent } from './game-overview/game-forum/game-forum.component';
-import { CreateTopicComponent } from './game-overview/create-topic/create-topic.component';
+import { CreateTopicComponent } from './game/game/forum-view/create-topic/create-topic.component';
 import { TopicAccessSettingComponent } from './game-overview/topic-forum/topic-access-setting/topic-access-setting.component';
 import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
 import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
 import { PostsComponent } from './game-overview/topic-forum/posts/posts.component';
 import { CreatePostComponent } from './game-overview/topic-forum/create-post/create-post.component';
-import { ForumService } from './forum.service';
+import { ForumService } from './services/forum.service';
+import { GameModule } from './game/game.module';
 
 @NgModule({
   declarations: [
@@ -63,9 +64,9 @@ import { ForumService } from './forum.service';
     ProfileViewComponent,
     ProfileViewFriendsComponent,
     SearchFriendComponent,
-    CreateGameComponent,
+    //CreateGameComponent,
     ProfileViewGamesComponent,
-    GameViewComponent,
+    //GameViewComponent,
     SearchGameComponent,
     InviteToGameComponent,
     SideBarComponent,
@@ -79,7 +80,6 @@ import { ForumService } from './forum.service';
     AccountGamesComponent,
     GameOverviewComponent,
     GameForumComponent,
-    CreateTopicComponent,
     TopicAccessSettingComponent,
     TopicForumComponent,
     PostsComponent,
@@ -89,7 +89,8 @@ import { ForumService } from './forum.service';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GameModule
   ],
   providers: [
     AuthService,

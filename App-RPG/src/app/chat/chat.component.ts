@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiService } from '../api.service';
-import { DataService } from '../data.service';
+import { ApiService } from '../services/api.service';
+import { DataService } from '../services/data.service';
 import { ConversationDataModel, MessageModel, MessageCreateModel } from '../models/message.model';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';

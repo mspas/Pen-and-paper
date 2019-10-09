@@ -24,7 +24,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivityResolve } from './activity/activity.resolve.service';
 import { GameOverviewComponent } from './game-overview/game-overview.component';
-import { GameResolve } from './game-overview/game-overview.resolve.service';
+import { GameResolve } from './game/game.resolve.service';
 import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
 import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
 import { GameComponent } from './game/game/game.component';
@@ -39,16 +39,16 @@ const routes: Routes = [];
       { path: 'sign-in', component: SignInComponent },
       { path: 'sign-up', component: SideBarComponent },
       { 
+        path: 'create-game', 
+        component: CreateGameComponent, 
+        canActivate: [AuthGuardService] 
+      },
+      { 
         path: 'search-game/:value', 
         component: SearchGameComponent,
         resolve: {
           profiledata: SearchGameResolve
         }, 
-      },
-      { 
-        path: 'create-game', 
-        component: CreateGameComponent, 
-        canActivate: [AuthGuardService] 
       },
       { 
         path: 'search-friends/:value', 
@@ -67,23 +67,15 @@ const routes: Routes = [];
         },
       },
       {
-          path: 'profile/friends-list/:login', 
-          component: ProfileViewFriendsComponent,
-          canActivate: [AuthGuardService],
-          resolve: {
-            profiledata: FriendViewResolve
-          },
-      },
-      {
-          path: 'profile/games-list/:login', 
-          component: ProfileViewGamesComponent,
-          canActivate: [AuthGuardService],
-          resolve: {
-            profiledata: GamesViewResolve
-          },
-      },
-      {
           path: 'game/:id', 
+          component: GameComponent,
+          canActivate: [AuthGuardService],
+          resolve: {
+            profiledata: GameResolve
+          },
+      },
+      {
+          path: 'game/:id/topic/:topicId/:page', 
           component: GameComponent,
           canActivate: [AuthGuardService],
           resolve: {
@@ -104,22 +96,6 @@ const routes: Routes = [];
           canActivate: [AuthGuardService],
           resolve: {
             profiledata: ActivityResolve
-          },
-      },
-      {
-          path: 'game/:id/overview/:subpage', 
-          component: GameOverviewComponent,
-          canActivate: [AuthGuardService],
-          resolve: {
-            profiledata: GameResolve
-          },
-      },
-      {
-          path: 'game/:id/:topicid/:page/:subpage', 
-          component: TopicForumComponent,
-          canActivate: [AuthGuardService],
-          resolve: {
-            profiledata: TopicResolve
           },
       }
   ])

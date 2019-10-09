@@ -11,6 +11,11 @@ import { CreateGameComponent } from './create-game/create-game.component';
 import { ForumViewComponent } from './game/forum-view/forum-view.component';
 import { TopicListComponent } from './game/forum-view/topic-list/topic-list.component';
 import { CreateTopicComponent } from './game/forum-view/create-topic/create-topic.component';
+import { TopicViewComponent } from './game/forum-view/topic-view/topic-view.component';
+import { GameResolve } from './game.resolve.service';
+import { PostsComponent } from './game/forum-view/topic-view/posts/posts.component';
+import { ReplyComponent } from './game/forum-view/topic-view/reply/reply.component';
+import { ReplyPostComponent } from './game/forum-view/topic-view/reply-post/reply-post.component';
 
 @NgModule({
   imports: [
@@ -27,9 +32,16 @@ import { CreateTopicComponent } from './game/forum-view/create-topic/create-topi
     CreateGameComponent,
     ForumViewComponent,
     TopicListComponent,
-    CreateTopicComponent
+    CreateTopicComponent,
+    TopicViewComponent,
+    PostsComponent,
+    ReplyComponent,
+    ReplyPostComponent
   ],
   exports: [
+  ],
+  providers: [
+    GameResolve
   ]
 })
 export class GameModule { }

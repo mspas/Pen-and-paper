@@ -59,7 +59,7 @@ export class ApiService {
         return Observable.forkJoin([profile, forum, game, t2p]);
     }
 
-    getTopic(gameId: number, topicId: number, page: number): Observable<any> {
+    getGameForumTopic(gameId: number, topicId: number, page: number): Observable<any> {
         let profileId = localStorage.getItem("id").toString();
         let profileName = localStorage.getItem("nick").toString();
 
@@ -68,14 +68,14 @@ export class ApiService {
         let forum =  this._http
             .get<ForumModel>(this.url + 'Forum/' + gameId.toString());
         let topic =  this._http
-            .get<ForumModel>(this.url + 'Topic/' + profileId + "/" + topicId.toString());
+            .get<TopicModel>(this.url + 'Topic/' + profileId + "/" + topicId.toString());
         let t2p = this._http
             .get<TopicToPersonModel[]>(this.url + 'TopicToPerson/' + profileId + "/" + gameId.toString());
         let game = this._http
             .get<GameAppModel[]>(this.url + 'Game/' + gameId.toString());
-        return Observable.forkJoin([profile, forum, topic, t2p, game]);
+        return Observable.forkJoin([profile, forum, game, t2p, topic]);
     }
-    getOnlyTopic(topicId: number) {
+    getTopicData(topicId: number) {
         return this._http
             .get<TopicModel>(this.url + 'Topic/' + localStorage.getItem("id").toString() + "/" + topicId.toString());
     }

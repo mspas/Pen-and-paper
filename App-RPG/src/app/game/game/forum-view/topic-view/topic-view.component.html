@@ -1,0 +1,46 @@
+<div class="content-body-heading">
+  <div class="btn-wrap">
+    <a href="game/{{gameData.id}}/topic/{{topicData.id}}/reply"><span class="btn-forum" id="btn-add-topic"><img class="btn-ico" src="assets/plus.png">REPLY</span></a>
+  </div>
+  <span class="topic-name">{{topicData.topicName}}</span>
+  <span>Pages:</span>
+  <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="{{linkPrevious}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+  </ul>
+  <ul *ngIf="topicData.totalPages == 1" class="pagination">
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/1">1</a></li>
+  </ul>
+  <ul *ngIf="topicData.totalPages == 2" class="pagination">
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/1">1</a></li>
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/2">2</a></li>
+  </ul>
+  <ul *ngIf="topicData.totalPages == 3" class="pagination">
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/1">1</a></li>
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/2">2</a></li>
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/3">3</a></li>
+  </ul>
+  <ul *ngIf="topicData.totalPages > 3" class="pagination">
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/1">1</a></li>
+      ...
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/{{topicData.totalPages - 1}}">{{topicData.totalPages - 1}}</a></li>
+      <li class="page-item"><a class="page-link" href="game/{{gameData.id}}/topic/{{topicData.id}}/{{topicData.totalPages}}">{{topicData.totalPages}}</a></li>
+  </ul>
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="{{linkNext}}" aria-label="Previous">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <app-posts *ngIf="!replyPage" [topicData]="topicData" [participants]="participants" [iAmGameMaster]="iAmGameMaster"></app-posts>
+  <app-reply-post *ngIf="replyPage" [topicData]="topicData" [gameId]="gameData.id" [iAmGameMaster]="iAmGameMaster"></app-reply-post>
+</div>

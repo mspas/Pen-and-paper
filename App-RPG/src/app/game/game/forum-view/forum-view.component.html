@@ -25,4 +25,5 @@
 
   <app-topic-list *ngIf="showTopicList" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData"></app-topic-list>
   <app-create-topic *ngIf="showCreateTopic" (valueChange)="closeCreateTopic($event)" [forumData]="forumData" [profileData]="profileData" [iAmGameMaster]="iAmGameMaster"></app-create-topic>
+  <app-topic-view *ngIf="topicIdParam != null" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData" [topicData]="topicData"></app-topic-view>
 </div>

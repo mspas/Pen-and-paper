@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ForumModel, TopicListModel } from '../../models/forum.model';
+import { ForumModel, TopicListModel, TopicModel } from '../../models/forum.model';
 import { GameAppModel } from '../../models/game.model';
 import { TopicToPersonModel } from '../../models/topic-to-person.model';
 import { PersonalDataModel } from '../../models/personaldata.model';
@@ -18,19 +18,16 @@ export class GameComponent implements OnInit {
   topicToPersonData: TopicToPersonModel[];
   profileData: PersonalDataModel;
   gameMaster: PersonalDataModel;
-  subpage: string;
+  topicData: TopicModel;
 
-  topicGeneralList: TopicListModel[] = [];
-  topicGameList: TopicListModel[] = [];
-  topicSupportList: TopicListModel[] = [];
-  topicOfftopList: TopicListModel[] = [];
   iAmGameParticipant: boolean = false;
   iAmGameMaster: boolean = false;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    //this.subpage = this.route.snapshot.params.subpage;
+    var topicId = this.route.snapshot.params.topicId;
+    
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.data = profiledata.profiledata;
     });
@@ -41,6 +38,9 @@ export class GameComponent implements OnInit {
     let gameList = this.data[2];
     this.gameData = gameList.pop();
     this.topicToPersonData = this.data[3];
+    if (topicId) {
+      this.topicData = this.data[4];
+    }
 
     this.forumData.topics.forEach(topic => {
       let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
@@ -64,15 +64,6 @@ export class GameComponent implements OnInit {
 
       if (this.gameData.masterId == this.profileData.id)
         this.iAmGameMaster = true;
-
-      if (topic.category == "general")
-        this.topicGeneralList.push(topicListModel);
-      if (topic.category == "game")
-        this.topicGameList.push(topicListModel);
-      if (topic.category == "support")
-        this.topicSupportList.push(topicListModel);
-      if (topic.category == "offtop")
-        this.topicOfftopList.push(topicListModel);
     });
   }
 }

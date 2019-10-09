@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TopicModel, PostModel } from '../../../models/forum.model';
-import { PersonalDataModel } from '../../../models/personaldata.model';
-import { ApiService } from '../../../services/api.service';
+import { TopicModel, PostModel } from '../../../../../models/forum.model';
+import { PersonalDataModel } from '../../../../../models/personaldata.model';
+import { ApiService } from '../../../../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -90,7 +90,7 @@ export class PostsComponent implements OnInit {
   createImageFromBlob(image: Blob, id: number) {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
-      console.log(id + " " + reader.result);
+       //console.log(id + " " + reader.result);
        this.posts[id].photo = reader.result;
     }, false);
  

@@ -18,6 +18,6 @@ export class TopicResolve implements Resolve<TopicModel> {
         let gameId = +route.params['id'];
         let topicId = +route.params['topicid'];
         let page = +route.params['page'];
-        return this._api.getTopic(gameId, topicId, page);
+        return this._api.getTopicData(topicId);
     }
 }

@@ -21,11 +21,9 @@ import { ProfileViewFriendsComponent } from './profile-view/view-friends/profile
 import { FriendViewResolve } from './profile-view/view-friends/profile-view-friends.resolve.service';
 import { SearchFriendComponent } from './search-friend/search-friend.component';
 import { SearchFriendResolve } from './search-friend/search-friend.resolve.service';
-//import { CreateGameComponent } from './create-game/create-game.component';
 import { CreateGameDataService } from './services/create-game.service';
 import { ProfileViewGamesComponent } from './profile-view/view-games/profile-view-games.component';
 import { GamesViewResolve } from './profile-view/view-games/profile-view-games.resolve.service';
-//import { GameViewComponent } from './game-view/game-view.component';
 import { GameViewResolve } from './game-view/game.resolve.service';
 import { SearchGameComponent } from './search-game/search-game.component';
 import { InviteToGameComponent } from './game/game/game-view/invite-to-game/invite-to-game.component';
@@ -42,15 +40,8 @@ import { AccountSettingsComponent } from './activity/account-settings/account-se
 import { AccountMessagesComponent } from './activity/account-messages/account-messages.component';
 import { AccountFriendsComponent } from './activity/account-friends/account-friends.component';
 import { AccountGamesComponent } from './activity/account-games/account-games.component';
-import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { GameResolve } from './game-overview/game-overview.resolve.service';
-import { GameForumComponent } from './game-overview/game-forum/game-forum.component';
-import { CreateTopicComponent } from './game/game/forum-view/create-topic/create-topic.component';
-import { TopicAccessSettingComponent } from './game-overview/topic-forum/topic-access-setting/topic-access-setting.component';
-import { TopicForumComponent } from './game-overview/topic-forum/topic-forum.component';
 import { TopicResolve } from './game-overview/topic-forum/topic.resolve.service';
-import { PostsComponent } from './game-overview/topic-forum/posts/posts.component';
-import { CreatePostComponent } from './game-overview/topic-forum/create-post/create-post.component';
 import { ForumService } from './services/forum.service';
 import { GameModule } from './game/game.module';
 
@@ -64,9 +55,7 @@ import { GameModule } from './game/game.module';
     ProfileViewComponent,
     ProfileViewFriendsComponent,
     SearchFriendComponent,
-    //CreateGameComponent,
     ProfileViewGamesComponent,
-    //GameViewComponent,
     SearchGameComponent,
     InviteToGameComponent,
     SideBarComponent,
@@ -77,13 +66,7 @@ import { GameModule } from './game/game.module';
     AccountSettingsComponent,
     AccountMessagesComponent,
     AccountFriendsComponent,
-    AccountGamesComponent,
-    GameOverviewComponent,
-    GameForumComponent,
-    TopicAccessSettingComponent,
-    TopicForumComponent,
-    PostsComponent,
-    CreatePostComponent
+    AccountGamesComponent
   ],
   imports: [
     BrowserModule,

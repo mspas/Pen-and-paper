@@ -16,7 +16,6 @@
 .content-body-heading {
     position: relative;
     min-height: 77px;
-    min-width: 100%;
 }
 .topic-name{
     position: absolute;

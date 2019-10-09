@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ForumModel, TopicListModel } from '../../../models/forum.model';
+import { ForumModel, TopicListModel, TopicModel } from '../../../models/forum.model';
 import { GameAppModel } from '../../../models/game.model';
 import { TopicToPersonModel } from '../../../models/topic-to-person.model';
 import { PersonalDataModel } from '../../../models/personaldata.model';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-forum-view',
@@ -15,6 +17,9 @@ export class ForumViewComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
+  @Input() topicData: TopicModel;
+
+  topicIdParam: number = null;
 
   topicGeneralList: TopicListModel[] = [];
   topicGameList: TopicListModel[] = [];
@@ -23,11 +28,18 @@ export class ForumViewComponent implements OnInit {
   iAmGameMaster: boolean = false;
 
   showCreateTopic: boolean = false;
-  showTopicList: boolean = true;
+  showTopicList: boolean = false;
   
-  constructor() { }
+  constructor(private route: ActivatedRoute, private _api: ApiService) { }
 
   ngOnInit() {
+    var topicId = this.route.snapshot.params.topicId;
+    if (topicId) {
+      this.topicIdParam = parseInt(topicId);
+    }
+    else 
+      this.showTopicList = true;
+
     this.forumData.topics.forEach(topic => {
       let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
       this.gameData.participantsProfiles.forEach(user => {

@@ -2,6 +2,6 @@
   <app-game-free-view *ngIf="!iAmGameParticipant" [profileData]="profileData" [gameData]="gameData" [gameMaster]="gameMaster"></app-game-free-view>
   <div *ngIf="iAmGameParticipant" class="content">
       <app-game-view [profileData]="profileData" [gameData]="gameData" [gameMaster]="gameMaster"></app-game-view>
-      <app-forum-view [profileData]="profileData" [gameData]="gameData" [forumData]="forumData" [topicToPersonData]="topicToPersonData"></app-forum-view>
+      <app-forum-view [profileData]="profileData" [gameData]="gameData" [forumData]="forumData" [topicToPersonData]="topicToPersonData" [topicData]="topicData"></app-forum-view>
   </div>
 </div>

@@ -67,6 +67,7 @@ namespace RPG.Api.Services.SForum
             {
                 toUpdateTopic.totalPages += 1;
             }
+            toUpdateTopic.messagesAmount += 1;
 
             var responseTopic = _topicRepository.EditTopic(toUpdateTopic);
             var responseForum = _forumRepository.EditForum(toUpdateForum);

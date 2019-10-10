@@ -48,12 +48,12 @@
                 </ul>
               </h4>
               <h4 class="media-bottom">
-                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate | date: 'h:mm:ss dd-MM-yyy'}} -  LAST POST </div>
               </h4>
             </div>
         </td>
         <td>
-          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> {{topic.topicData.createDate | date: 'h:mm:ss dd-MM-yyy'}} </div>
         </td>
         <td>
           {{topic.topicData.messagesAmount}}
@@ -93,12 +93,12 @@
                 </ul>
               </h4>
               <h4 class="media-bottom">
-                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate | date: 'h:mm:ss dd-MM-yyy'}} -  LAST POST </div>
               </h4>
             </div>
         </td>
         <td>
-          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> {{topic.topicData.createDate | date: 'h:mm:ss dd-MM-yyy'}} </div>
         </td>
         <td>
           {{topic.topicData.messagesAmount}}
@@ -138,12 +138,12 @@
                 </ul>
               </h4>
               <h4 class="media-bottom">
-                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate | date: 'h:mm:ss dd-MM-yyy'}} -  LAST POST </div>
               </h4>
             </div>
         </td>
         <td>
-          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> {{topic.topicData.createDate | date: 'h:mm:ss dd-MM-yyy'}} </div>
         </td>
         <td>
           {{topic.topicData.messagesAmount}}
@@ -183,12 +183,12 @@
                 </ul>
               </h4>
               <h4 class="media-bottom">
-                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate}} -  LAST POST </div>
+                <div class="default-font"><span class="link" [routerLink]="['/profile', topic.author.login]">{{topic.lastAuthor.firstname}} {{topic.lastAuthor.lastname}} ({{topic.lastAuthor.login}})</span> - {{topic.lastPostDate | date: 'h:mm:ss dd-MM-yyy'}} -  LAST POST </div>
               </h4>
             </div>
         </td>
         <td>
-          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> - {{topic.topicData.createDate}} - </div>
+          <div><div class="link" [routerLink]="['/profile', topic.author.login]">{{topic.author.firstname}} {{topic.author.lastname}} ({{topic.author.login}})</div><br> {{topic.topicData.createDate | date: 'h:mm:ss dd-MM-yyy'}} </div>
         </td>
         <td>
           {{topic.topicData.messagesAmount}}

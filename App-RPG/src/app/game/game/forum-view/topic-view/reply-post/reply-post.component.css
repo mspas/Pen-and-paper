@@ -3,7 +3,7 @@
     padding-right: 20px;
 }
 #btn-send {
-    width: 125px;
+    max-width: 125px;
     background-color: #caffca6c;
     border-color: #e2ffdad3;
 }
@@ -16,4 +16,5 @@
 }
 .table-responsive {
     margin-top: 0px !important;
+    padding: 0 50px;
 }

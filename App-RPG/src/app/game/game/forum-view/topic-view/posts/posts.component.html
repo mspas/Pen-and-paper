@@ -6,8 +6,8 @@
     </div>
     <div class="media-body">
       <p class="media-heading default-font"><a class="link" href="/profile/{{post.user.login}}">{{post.user.firstname}} {{post.user.lastname}} ({{post.user.login}})</a>
-        <small *ngIf="post.message.editDdate == null"><i>Posted on {{post.message.sendDdate}}</i></small>
-        <small *ngIf="post.message.editDdate != null"><i>Edited on {{post.message.editDdate}}</i></small>
+        <small *ngIf="post.message.editDdate == null"><i>Posted on {{post.message.sendDdate | date: 'long'}}</i></small>
+        <small *ngIf="post.message.editDdate != null"><i>Edited on {{post.message.editDdate | date: 'long'}}</i></small>
       </p>
       <h4>{{post.message.bodyMessage}}</h4>
     </div>

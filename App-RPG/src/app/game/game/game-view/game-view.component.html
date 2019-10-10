@@ -3,7 +3,7 @@
         <h4 class="panel-title">
           <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#game">
             <span class="title-panel-bg text-outline">{{ gameData.title }}</span>
-            <span class="title-panel-sm">- {{ gameData.category }} - {{ status }} -</span>
+            <span class="title-panel-sm">- {{ gameData.category }} - {{ gameData.status }} -</span>
           </a>
           <a class="toggle" data-toggle="collapse" data-parent="#list" href="#game">
             <span class="glyphicon glyphicon-chevron-down"></span>
@@ -19,35 +19,35 @@
             <table class="table">
               <tbody>
                 <tr>
-                  <td>Category:</td>
+                  <td class="text-default">CATEGORY:</td>
                   <td>{{gameData.category}}</td>
                 </tr>
                 <tr>
-                  <td>Date:</td>
-                  <td>{{gameData.date}}</td>
+                  <td class="text-default">START DATE:</td>
+                  <td>{{gameData.date | date: 'dd-MM-yyy'}}</td>
                 </tr>
                 <tr>
-                  <td>Number of players:</td>
+                  <td class="text-default">NUMBER OF PLAYERS:</td>
                   <td>{{gameData.nofparticipants}}/{{gameData.maxplayers}}</td>
                 </tr>
                 <tr>
-                  <td>Book:</td>
+                  <td class="text-default">BOOK:</td>
                   <td>{{gameData.book}}</td>
                 </tr>
                 <tr>
-                  <td>Status:</td>
+                  <td class="text-default">STATUS:</td>
                   <td>{{gameData.status}}</td>
                 </tr>
                 <tr>
-                  <td>Can I join without invitation?</td>
-                  <td>{{gameData.location}}</td>
+                  <td class="text-default">CAN I JOIN WITHOUT INVITATION?</td>
+                  <td>{{gameData.needInvite | transformYesNoBoolean}}</td>
                 </tr>
                 <tr>
-                  <td>Can I join after the game started?</td>
-                  <td>{{gameData.location}}</td>
+                  <td class="text-default">CAN I JOIN AFTER THE GAME STARTED?</td>
+                  <td>{{gameData.hotJoin | transformYesNoBoolean}}</td>
                 </tr>
                 <tr>
-                  <td>Game master:</td>
+                  <td class="text-default">GAME MASTER:</td>
                   <td [routerLink]="['/profile', gameMaster.login]">
                     <p class="profile-link" role="button">
                       <img [src]="imageToShow" class="profile-photo" alt="Profile image">{{gameMaster.firstname}} {{gameMaster.lastname}} ({{gameMaster.login}})
@@ -55,7 +55,7 @@
                   </td>
                 </tr>
                 <tr>
-                    <td>Players:</td>
+                    <td class="text-default">PLAYERS:</td>
                     <td>
                       <table>
                         <tr *ngFor="let player of acceptedPlayers">

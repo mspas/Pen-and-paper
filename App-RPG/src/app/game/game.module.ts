@@ -14,8 +14,8 @@ import { CreateTopicComponent } from './game/forum-view/create-topic/create-topi
 import { TopicViewComponent } from './game/forum-view/topic-view/topic-view.component';
 import { GameResolve } from './game.resolve.service';
 import { PostsComponent } from './game/forum-view/topic-view/posts/posts.component';
-import { ReplyComponent } from './game/forum-view/topic-view/reply/reply.component';
 import { ReplyPostComponent } from './game/forum-view/topic-view/reply-post/reply-post.component';
+import { TransformYesNoBooleanPipe } from '../shared/transform-yes-no-boolean.pipe';
 
 @NgModule({
   imports: [
@@ -35,10 +35,11 @@ import { ReplyPostComponent } from './game/forum-view/topic-view/reply-post/repl
     CreateTopicComponent,
     TopicViewComponent,
     PostsComponent,
-    ReplyComponent,
-    ReplyPostComponent
+    ReplyPostComponent,
+    TransformYesNoBooleanPipe
   ],
   exports: [
+    TransformYesNoBooleanPipe
   ],
   providers: [
     GameResolve

@@ -92,7 +92,14 @@ body {
     position: absolute;
     padding: 15px 0;
 }
-
+.text-default {    
+    position: relative;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+}
 .title-panel-sm {
     margin-left: 40px; 
     color: #000000;

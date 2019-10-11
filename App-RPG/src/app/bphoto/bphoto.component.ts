@@ -13,9 +13,9 @@ export class BphotoComponent implements OnInit {
   ngOnInit() {
   }
   ngAfterContentChecked(){
-    let name = "";
+    /*let name = "";
     this._data.currentBPhoto.subscribe(data => name = data);
-    document.getElementById("bphoto").style.backgroundImage = name;
+    document.getElementById("bphoto").style.backgroundImage = name;*/
   }
 
 }

@@ -41,10 +41,6 @@ export class AppComponent {
     else {
       document.getElementById('router').setAttribute('class', 'main-content-wrap');
     }
-    /*if (this.userIsLogged) {
-      this._api.getFriendsList(parseInt(localStorage.getItem("id"))).subscribe(data => this.friendsAll = data);
-      console.log("app " + this.friendsAll)
-    }*/
   }
 
   async getConversation() {
@@ -56,41 +52,45 @@ export class AppComponent {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  async refreshData() {
-    //this._api.getConversation(this.conversationData.relationId).subscribe(data => this.conversation = data);
-    //await this.delay(4000);
-    await this._api.getNotificationData(Number.parseInt(localStorage.getItem("id"))).subscribe(data => {
-      this.notificationData = data;
-      this.subscribeToData();
-    });
+  async refreshData() {         //god, have mercy... ur gonna see weird shieeet
+    if (this.userIsLogged) {    
+      this._api.getNotificationData(Number.parseInt(localStorage.getItem("id"))).subscribe(data => {
+        this.notificationData = data;
+        this.subscribeToData();
+      });
 
-    if (this.notificationData == null) 
-      await this.delay(1000);
-    else 
-      await this.delay(3000);
-    
-
-    var notificationSet = new CheckNotificationModel(false, false, false);
-
-    if (this.notificationData != null) {
-      if (this.notificationData.lastMessageDate > this.notificationData.lastMessageSeen) 
-        notificationSet.message = true;
+      if (this.notificationData == null) 
+        await this.delay(1000);
       else 
-        notificationSet.message = false;
+        await this.delay(3000);
+      
 
-      if (this.notificationData.lastGameNotificationDate > this.notificationData.lastGameNotificationSeen)
-        notificationSet.game = true;
-      else 
-        notificationSet.game = false;
+      var notificationSet = new CheckNotificationModel(false, false, false);
 
-      if (this.notificationData.lastFriendNotificationDate > this.notificationData.lastFriendNotificationSeen)
-        notificationSet.friend = true;
-      else 
-        notificationSet.friend = false;
+      if (this.notificationData != null) {
+        if (this.notificationData.lastMessageDate > this.notificationData.lastMessageSeen) 
+          notificationSet.message = true;
+        else 
+          notificationSet.message = false;
+
+        if (this.notificationData.lastGameNotificationDate > this.notificationData.lastGameNotificationSeen)
+          notificationSet.game = true;
+        else 
+          notificationSet.game = false;
+
+        if (this.notificationData.lastFriendNotificationDate > this.notificationData.lastFriendNotificationSeen)
+          notificationSet.friend = true;
+        else 
+          notificationSet.friend = false;
+      }
+
+      this._data.changeNotificationSet(notificationSet);
+      this._data.changeNotificationData(this.notificationData);
     }
-
-    this._data.changeNotificationSet(notificationSet);
-    this._data.changeNotificationData(this.notificationData);
+    else {
+      await this.delay(5000);
+      this.refreshData();
+    }
   }
 
   private subscribeToData(): void {

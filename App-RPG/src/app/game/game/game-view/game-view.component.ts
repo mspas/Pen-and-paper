@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PersonalDataModel, PersonalDataListModel } from '../../../models/personaldata.model';
 import { GameAppModel } from '../../../models/game.model';
-import { ButtonManager } from '../../../game-view/button-manager';
+import { ButtonManager } from '../../button-manager';
 import { GameSessionCreateModel } from '../../../models/gamesession.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';

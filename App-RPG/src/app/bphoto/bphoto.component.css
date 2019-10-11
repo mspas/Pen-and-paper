@@ -10,8 +10,8 @@
 
 .bphoto-wrap {
     position: relative;
-    max-width: 1140px;
-    padding: 0 15px;
+    max-width: 100%;
+    padding: 0;
 }
 
 #bphoto {
@@ -21,4 +21,5 @@
     margin-right: auto;
     z-index: -1;
     width: 100%;
+    min-height: 133px;
 }

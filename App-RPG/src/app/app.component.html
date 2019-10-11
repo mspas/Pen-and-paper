@@ -28,8 +28,9 @@
   <app-chat></app-chat>
 </div>
 <div class="main-content-wrap" id="router">
-  <div *ngIf="userIsLogged == true" class="container bphoto-wrap">
+  <app-bphoto *ngIf="userIsLogged == true"></app-bphoto>
+  <!--<div *ngIf="userIsLogged == true" class="container bphoto-wrap">
     <img id="bphoto" src="assets/book.jpg">
-  </div>
+  </div>-->
   <router-outlet></router-outlet>
 </div>

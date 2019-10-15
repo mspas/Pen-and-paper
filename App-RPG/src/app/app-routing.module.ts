@@ -61,6 +61,14 @@ const routes: Routes = [];
           },
       },
       {
+          path: 'game/:id/:subpage', 
+          component: GameComponent,
+          canActivate: [AuthGuardService],
+          resolve: {
+            profiledata: GameResolve
+          },
+      },
+      {
           path: 'game/:id/topic/:topicId/:page', 
           component: GameComponent,
           canActivate: [AuthGuardService],

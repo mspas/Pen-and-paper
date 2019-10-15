@@ -18,6 +18,7 @@ import { ReplyPostComponent } from './game/forum-view/topic-view/reply-post/repl
 
 import { GameResolve } from './game.resolve.service';
 import { TransformYesNoBooleanPipe } from '../shared/transform-yes-no-boolean.pipe';
+import { PlayersComponent } from './game/forum-view/players/players.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { TransformYesNoBooleanPipe } from '../shared/transform-yes-no-boolean.pi
     TopicViewComponent,
     PostsComponent,
     ReplyPostComponent,
-    TransformYesNoBooleanPipe
+    TransformYesNoBooleanPipe,
+    PlayersComponent
   ],
   exports: [
     TransformYesNoBooleanPipe

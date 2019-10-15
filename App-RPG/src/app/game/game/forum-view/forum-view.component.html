@@ -1,30 +1,44 @@
 <div class="content-body" style="padding-top: 0">
   <div class="btn-wrap">
-    <div class="row">
+    <div *ngIf="iAmGameMaster" class="row">
       <div class="col col-md-4">
-        <span class="btn-forum" id="btn-user-access"><img class="btn-ico" src="assets/baner.png">USER'S ACCESS</span>
+        <button class="btn-forum" id="btn-user-access" (click)="onUserAccess()"><img class="btn-ico" src="assets/baner.png">USER'S ACCESS</button>
       </div>
       <div class="col col-md-4">
-        <span class="btn-forum" id="btn-settings"><img class="btn-ico" src="assets/fix.png">MANAGE GAME SETTINGS</span>
+        <button class="btn-forum" id="btn-settings" (click)="onGameSettings()"><img class="btn-ico" src="assets/fix.png">GAME SETTINGS</button>
       </div>
       <div class="col col-md-4">
-        <span class="btn-forum" id="btn-edit"><img class="btn-ico" src="assets/pencil.png">MANAGE PLAYERS</span>
+        <button class="btn-forum" id="btn-edit" (click)="onManagePlayers()"><img class="btn-ico" src="assets/pencil.png">MANAGE PLAYERS</button>
       </div>
     </div>
-    <div class="row">
-      <!--<a href="game/{{gameData.id}}/overview/new-topic">-->
+    <div *ngIf="iAmGameMaster" class="row">
       <div class="col col-md-4">
-        <span class="btn-forum" id="btn-add-topic" (click)="onCreateTopic()"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</span>
+        <button class="btn-forum" id="btn-add-topic" (click)="onCreateTopic()"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</button>
       </div>
       <div class="col col-md-4">
-        <span class="btn-forum" id="btn-your-character"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</span>
+        <button class="btn-forum" id="btn-your-character" (click)="onYourCharacter()"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</button>
       </div>
       <div class="col col-md-4">
-        <span class="btn-forum" id="btn-game-page"><img class="btn-ico" src="assets/gogame.png">GAME PAGE</span>
+        <button class="btn-forum" id="btn-game-page" (click)="onEndGame()"><img class="btn-ico" src="assets/gogame.png">END GAME</button>
+      </div>
+    </div>
+    <div *ngIf="!iAmGameMaster" class="row">
+      <div class="col col-md-3">
+        <button class="btn-forum" id="btn-add-topic" (click)="onCreateTopic()"><img class="btn-ico" src="assets/plus.png">CREATE TOPIC</button>
+      </div>
+      <div class="col col-md-3">
+        <button class="btn-forum" id="btn-your-character" (click)="onYourCharacter()"><img class="btn-ico" src="assets/character.png">YOUR CHARACTER</button>
+      </div>
+      <div class="col col-md-3">
+        <button class="btn-forum" id="btn-your-character" (click)="onManagePlayers()"><img class="btn-ico" src="assets/character.png">PLAYERS</button>
+      </div>
+      <div class="col col-md-3">
+        <button class="btn-forum" id="btn-game-page" (click)="onLeaveGame()"><img class="btn-ico" src="assets/gogame.png">LEAVE GAME</button>
       </div>
     </div>
   </div>
-  <app-topic-list *ngIf="showTopicList" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData"></app-topic-list>
-  <app-create-topic *ngIf="showCreateTopic" (valueChange)="closeCreateTopic($event)" [forumData]="forumData" [profileData]="profileData" [iAmGameMaster]="iAmGameMaster"></app-create-topic>
   <app-topic-view *ngIf="topicIdParam != null" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData" [topicData]="topicData"></app-topic-view>
+  <app-topic-list *ngIf="subpageManager.topicList" [forumData]="forumData" [gameData]="gameData" [topicToPersonData]="topicToPersonData"[profileData]="profileData"></app-topic-list>
+  <app-create-topic *ngIf="subpageManager.createTopic" (valueChange)="closeChildComponent($event)" [forumData]="forumData" [profileData]="profileData" [iAmGameMaster]="iAmGameMaster"></app-create-topic>
+  <app-players *ngIf="subpageManager.managePlayers" (valueChange)="closeChildComponent($event)" [gameData]="gameData" [profileData]="profileData"></app-players>
 </div>

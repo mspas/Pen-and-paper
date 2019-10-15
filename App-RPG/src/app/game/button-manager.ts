@@ -1,64 +1,49 @@
 export class ButtonManager {
     constructor(
-        public manageRequests: boolean,
-        public setScheme: boolean,
-        public newSession: boolean,
-        public showPlayers: boolean,
-        public setCard: boolean,
-        public showSessions: boolean
+        public topicList: boolean,
+        public managePlayers: boolean,
+        public gameSettings: boolean,
+        public userAccess: boolean,
+        public createTopic: boolean,
+        public yourCharacter: boolean
     ) {}
-
-    onManageRequests() {
-        this.manageRequests = true;
-        this.setScheme = false;
-        this.newSession = false;
-        this.showPlayers = false;
-        this.setCard = false;
-        this.showSessions = false;
+    
+    showTopicList() {
+        this.setFalse();
+        this.topicList = true;
     }
 
-    onSetScheme() {
-        this.manageRequests = false;
-        this.setScheme = true;
-        this.newSession = false;
-        this.showPlayers = false;
-        this.setCard = false;
-        this.showSessions = false;
+    showManagePlayers() {
+        this.setFalse();
+        this.managePlayers = true;
     }
 
-    onNewSession() {
-        this.manageRequests = false;
-        this.setScheme = false;
-        this.newSession = true;
-        this.showPlayers = false;
-        this.setCard = false;
-        this.showSessions = false;
+    showGameSettings() {
+        this.setFalse();
+        this.gameSettings = true;
     }
 
-    onShowPlayers() {
-        this.manageRequests = false;
-        this.setScheme = false;
-        this.newSession = false;
-        this.showPlayers = true;
-        this.setCard = false;
-        this.showSessions = false;
+    showUserAccess() {
+        this.setFalse();
+        this.userAccess = true;
     }
 
-    onSetCard() {
-        this.manageRequests = false;
-        this.setScheme = false;
-        this.newSession = false;
-        this.showPlayers = false;
-        this.setCard = true;
-        this.showSessions = false;
+    showCreateTopic() {
+        this.setFalse();
+        this.createTopic = true;
     }
 
-    onShowSessions() {
-        this.manageRequests = false;
-        this.setScheme = false;
-        this.newSession = false;
-        this.showPlayers = false;
-        this.setCard = false;
-        this.showSessions = true;
+    showYourCharacter() {
+        this.setFalse();
+        this.yourCharacter = true;
+    }
+    
+    private setFalse() {
+        this.topicList = false;
+        this.managePlayers = false;
+        this.gameSettings = false;
+        this.userAccess = false;
+        this.createTopic = false;
+        this.yourCharacter = false;
     }
 }

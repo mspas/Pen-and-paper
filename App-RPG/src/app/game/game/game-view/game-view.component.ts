@@ -247,13 +247,13 @@ export class GameViewComponent implements OnInit {
   }
 
   onSaveChanges() {
-    if (this.buttonManager.setScheme && this.newSkillsNames != null) {
+    if (this.buttonManager.gameSettings && this.newSkillsNames != null) {
       this.newSkillsNames.forEach(skillName => {
         this._api.addSkill(new SkillCreateModel(skillName, this.gameData.id));
       });
     }
 
-    if (this.buttonManager.newSession && this.newGameSessions != null) {
+    if (this.buttonManager.userAccess && this.newGameSessions != null) {
       this.newGameSessions.forEach(session => {
         this._api.addSession(new GameSessionCreateModel(session.sessionName, session.date, this.gameData.id));
       });
@@ -261,36 +261,6 @@ export class GameViewComponent implements OnInit {
 
     this.newSkillsNames = null;
     this.newGameSessions = null;
-  }
-
-  onManageRequests() {
-    this.modalTitle= "Join-requests for your game:";
-    this.buttonManager.onManageRequests();
-  }
-
-  onSetScheme() {
-    this.modalTitle= "Set scheme for character's card:";
-    this.buttonManager.onSetScheme();
-  }
-
-  onNewSession() {
-    this.modalTitle= "Create new session:";
-    this.buttonManager.onNewSession();
-  }
-
-  onShowPlayers() {
-    this.modalTitle= "Registered players:";
-    this.buttonManager.onShowPlayers();
-  }
-
-  onSetCard() {
-    this.modalTitle= "Set your character's card:";
-    this.buttonManager.onSetCard();
-  }
-
-  onShowSessions() {
-    this.modalTitle= "Game sessions:";
-    this.buttonManager.onShowSessions();
   }
 }
 

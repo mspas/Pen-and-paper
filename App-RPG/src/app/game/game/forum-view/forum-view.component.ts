@@ -3,8 +3,9 @@ import { ForumModel, TopicListModel, TopicModel } from '../../../models/forum.mo
 import { GameAppModel } from '../../../models/game.model';
 import { TopicToPersonModel } from '../../../models/topic-to-person.model';
 import { PersonalDataModel } from '../../../models/personaldata.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
+import { ButtonManager } from '../../button-manager';
 
 @Component({
   selector: 'app-forum-view',
@@ -29,16 +30,28 @@ export class ForumViewComponent implements OnInit {
 
   showCreateTopic: boolean = false;
   showTopicList: boolean = false;
+  showManagePlayers: boolean = false;
+  showUserAccess: boolean = false;
+  showGameSettings: boolean = false;
+  showYourCharacter: boolean = false;
+  showEndGame: boolean = false;
+
+  subpageManager: ButtonManager;
   
-  constructor(private route: ActivatedRoute, private _api: ApiService) { }
+  constructor(private route: ActivatedRoute, private _api: ApiService, private router: Router) { }
 
   ngOnInit() {
+    this.subpageManager = new ButtonManager(false, false, false, false, false, false);
+
     var topicId = this.route.snapshot.params.topicId;
-    if (topicId) {
+    if (topicId)
       this.topicIdParam = parseInt(topicId);
-    }
+    
+    var subpage = this.route.snapshot.params.subpage;
+    if (subpage)
+      this.setChildComponent(subpage);
     else 
-      this.showTopicList = true;
+      this.subpageManager.showTopicList();
 
     this.forumData.topics.forEach(topic => {
       let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
@@ -55,30 +68,76 @@ export class ForumViewComponent implements OnInit {
         if (user.id == topic.messages[topic.messagesAmount-1].senderId)
           topicListModel.lastAuthor = user;
       });
-
-      if (topic.category == "general")
-        this.topicGeneralList.push(topicListModel);
-      if (topic.category == "game")
-        this.topicGameList.push(topicListModel);
-      if (topic.category == "support")
-        this.topicSupportList.push(topicListModel);
-      if (topic.category == "offtop")
-        this.topicOfftopList.push(topicListModel);
+      
+      this.detectTopicCategory(topicListModel);
     });
 
     if (this.gameData.masterId == this.profileData.id)
       this.iAmGameMaster = true;
   }
 
-  onCreateTopic() {
-    this.showCreateTopic = true;
-    this.showTopicList = false;
+  setChildComponent(subpage: string) {
+    if (subpage == "user-access" && this.iAmGameMaster)
+      this.subpageManager.showUserAccess();
+    if (subpage == "game-settings" && this.iAmGameMaster)
+      this.subpageManager.showGameSettings();
+    if (subpage == "create-topic")
+      this.subpageManager.showCreateTopic();
+    if (subpage == "manage-players" || subpage == "players")
+      this.subpageManager.showManagePlayers();
+    if (subpage == "my-character")
+      this.subpageManager.showYourCharacter();
   }
 
-  closeCreateTopic(check) {
+  detectTopicCategory(topicListModel: TopicListModel) {
+    if (topicListModel.topicData.category == "general")
+      this.topicGeneralList.push(topicListModel);
+    if (topicListModel.topicData.category == "game")
+      this.topicGameList.push(topicListModel);
+    if (topicListModel.topicData.category == "support")
+      this.topicSupportList.push(topicListModel);
+    if (topicListModel.topicData.category == "offtop")
+      this.topicOfftopList.push(topicListModel);
+  }
+
+  async onCreateTopic() {
+    this.subpageManager.showCreateTopic();
+    await this.router.navigate(['/game', this.gameData.id, "create-topic"]);
+  }
+
+  async onUserAccess(){
+    this.subpageManager.showUserAccess();
+    await this.router.navigate(['/game', this.gameData.id, "user-access"]);
+  }
+
+  async onGameSettings(){
+    this.subpageManager.showGameSettings();
+    await this.router.navigate(['/game', this.gameData.id, "game-settings"]);
+  }
+
+  async onManagePlayers() {
+    this.subpageManager.showManagePlayers();
+    if (this.iAmGameMaster)
+      await this.router.navigate(['/game', this.gameData.id, "manage-players"]);
+    else
+      await this.router.navigate(['/game', this.gameData.id, "players"]);
+  }
+
+  async onYourCharacter(){
+    this.subpageManager.showYourCharacter();
+    await this.router.navigate(['/game', this.gameData.id, "my-character"]);
+  }
+
+  onEndGame() {
+  }
+
+  onLeaveGame(){
+  }
+
+  async closeChildComponent(check) {
     if (check == "false") {
-      this.showCreateTopic = false;
-      this.showTopicList = true;
+      this.subpageManager.showTopicList();
+      var res = await this.router.navigate(['/game', this.gameData.id]);
     }
   }
 }

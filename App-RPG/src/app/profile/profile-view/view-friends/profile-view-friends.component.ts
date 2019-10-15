@@ -42,7 +42,6 @@ export class ProfileViewFriendsComponent implements OnInit {
     this.profileData = profile.pop();
     var viewUserFriends = this.data[1];*/
 
-    console.log(JSON.stringify(this.userFriends));
     if (this.userFriends != null) {
       this.userFriends.forEach(fr => {
         if (fr.isAccepted) {
@@ -79,8 +78,6 @@ export class ProfileViewFriendsComponent implements OnInit {
         this.friendsAcceptedNoPhoto.push(element);
       }
     });
-
-    console.log(JSON.stringify(this.friendsAcceptedPhoto));
 
     this.invitations.forEach(element => {
       if (element.photoName != null && element.photoName != "") {

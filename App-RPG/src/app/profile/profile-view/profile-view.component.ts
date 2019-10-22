@@ -9,7 +9,7 @@ import { FriendModel } from '../../models/friend.model';
 @Component({
   selector: 'app-profile-view',
   templateUrl: './profile-view.component.html',
-  styleUrls: ['./profile-view.component.css']
+  styleUrls: ['./profile-view.component.css', './buttons.css']
 })
 export class ProfileViewComponent implements OnInit {
 

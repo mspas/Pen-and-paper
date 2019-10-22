@@ -1,54 +1,100 @@
 <div class="container main">
   <div class="content">
   
-    <div class="content-top">
-      <div class="row">
-        <div class="col-md-3">
-            <img src="assets/unknown.png" alt="Profile image" class="profile-photo" *ngIf="defaultImage == true">
-            <img [src]="imageToShow" alt="Profile image" class="profile-photo" *ngIf="defaultImage == false">
-        </div>
-        <div class="col-md-4">
-          <span class="text-outline" id="big-name">{{ userProfileData.firstname }} {{ userProfileData.lastname }}</span>
-          <span class="title-panel-sm" id="nickname">{{ userProfileData.login }}</span>
-        </div>
-        <div class="col-md-5">
-          <div class="nav-tabs-wrap">
-            <nav class="navbar">
-                  <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#profileNavbar">
-                      <span class="icon">More...</span>                      
-                    </button>
-                  </div>
-                  <div class="collapse navbar-collapse" id="profileNavbar">
-                    <ul class="nav navbar-nav navbar-right nav-tabs">
-                      <li class="active" id="nav-profile">
-                        <a (click)="onNavClick($event)" id="anav-profile">
-                          <span (click)="onNavClick($event)" id="anav-profile" class="glyphicon glyphicon-user"></span> 
-                          Profile
-                        </a>
-                        </li>
-                      <li id="nav-friends" >
-                        <a (click)="onNavClick($event)" id="anav-friends">
-                          <span (click)="onNavClick($event)" id="anav-friends" class="glyphicon glyphicon-list-alt">
-                          </span> Friends
-                        </a>
-                      </li>
-                      <li id="nav-games">
-                        <a (click)="onNavClick($event)" id="anav-games">
-                          <span (click)="onNavClick($event)" id="anav-games" class="glyphicon glyphicon-tower"></span> 
-                          Games</a>
-                        </li>
-                    </ul>
-                  </div>
-              </nav>
+  <!--<div class="content-top">
+    <div class="nav-tabs-wrap">
+      <nav class="navbar">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#profileNavbar">
+                <span class="icon">More...</span>                      
+              </button>
             </div>
+            <div class="collapse navbar-collapse" id="profileNavbar">
+              <ul class="nav navbar-nav navbar-right nav-tabs">
+                <li class="active" id="nav-profile">
+                  <a (click)="onNavClick($event)" id="anav-profile">
+                    <span (click)="onNavClick($event)" id="anav-profile" class="glyphicon glyphicon-user"></span> 
+                    Profile
+                  </a>
+                  </li>
+                <li id="nav-friends" >
+                  <a (click)="onNavClick($event)" id="anav-friends">
+                    <span (click)="onNavClick($event)" id="anav-friends" class="glyphicon glyphicon-list-alt">
+                    </span> Friends
+                  </a>
+                </li>
+                <li id="nav-games">
+                  <a (click)="onNavClick($event)" id="anav-games">
+                    <span (click)="onNavClick($event)" id="anav-games" class="glyphicon glyphicon-tower"></span> 
+                    Games</a>
+                  </li>
+              </ul>
+            </div>
+        </nav>
+      </div>
+    </div>-->
+    <div class="content-body">
+      <div class="row">
+        <div class="col-xs-4 center-wrap">
+          <img src="assets/unknown.png" alt="Profile image" class="profile-photo" *ngIf="defaultImage == true">
+          <img [src]="imageToShow" alt="Profile image" class="profile-photo" *ngIf="defaultImage == false">
+        </div>
+        <div class="col-xs-8" style="position: relative;">
+          <div class="center-wrap">
+            <span class="text-outline" id="big-name">{{ userProfileData.firstname }} {{ userProfileData.lastname }}</span>
+            <span class="title-panel-sm" id="nickname">({{ userProfileData.login }})</span>
+          </div>
+          <div class="btn-wrap">
+            <div *ngIf="myProfilePage == false">
+              <div class="btn-profile" id="send_message" data-toggle="tooltip" title="Send nudes pls" (click)="onSendMessage()">
+                <p class="btn-text">Send<br> message</p>
+              </div>
+              <div *ngIf="isFriend == false && isInvited == false" class="btn-profile friend-opt" id="send_invite" (click)="onSendInvite()">
+                <p class="btn-text">Send<br> invite</p>
+              </div>
+              <div *ngIf="isFriend == false && isInvited == true" class="btn-profile friend-opt" id="invite_waiting">
+                <p class="btn-text">Invite<br> is waiting...</p>
+              </div>
+              <div *ngIf="isFriend == true" class="btn-profile friend-opt" id="delete_friend" (click)="deleteFriend()">
+                <p class="btn-text">Delete<br> friend</p>
+              </div>
+            </div>
+            <div class="btn-big" id="my-page" *ngIf="myProfilePage == true">
+              <div class="btn-profile" id="change_personal_data" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangeData()">
+                <p class="btn-text">Change<br> profile info</p>
+              </div>
+              <div class="btn-profile" id="change_passwrod" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePassword()">
+                <p class="btn-text">Change<br> password</p>
+              </div>
+              <div class="btn-profile" id="change_image" data-toggle="modal" data-target="#modalChangeData" (click)="onModalChangePicture()">
+                <p class="btn-text">Change<br> your image</p>
+              </div>
+            </div>
+            <div class="btn-mobile" id="my-page" *ngIf="myProfilePage == true">
+              <div class="btn-profile" id="settings" (click)="onGoToSettings()">
+                <p class="btn-text" style="padding: 13px 0 0 50px">Settings</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="content-body">
-      <app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
-      <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends" [myProfilePage]="myProfilePage"></app-view-friends>
-      <app-view-games *ngIf="gamesChild == true" [userGamesAPPList]="userGamesAPPList" [myGamesAPPList]="myGamesAPPList" [myProfilePage]="myProfilePage"></app-view-games>
+      <div class="profile-level-wrap">
+        <div class="level">
+          <span class="lvl-number text-outline">101</span>
+        </div>
+        <div class="exp-bar">
+          <span class="lvl-text text-outline">Level</span>
+          <svg width="120" height="25">
+            <rect width="220" height="25"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <!--<app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
+        <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends" [myProfilePage]="myProfilePage"></app-view-friends>
+        <app-view-games *ngIf="gamesChild == true" [userGamesAPPList]="userGamesAPPList" [myGamesAPPList]="myGamesAPPList" [myProfilePage]="myProfilePage"></app-view-games>
+        -->
+      </div>
     </div>
   </div>
 </div>

@@ -78,22 +78,30 @@
           </div>
         </div>
       </div>
-      <div class="profile-level-wrap">
-        <div class="level">
-          <span class="lvl-number text-outline">101</span>
+      <div class="row" style="min-height: 0;">
+        <div class="col-xs-6">
+          <div class="profile-level-wrap">
+            <div class="level">
+              <span class="lvl-number text-outline">101</span>
+            </div>
+            <div class="exp-bar">
+              <span class="lvl-text text-outline">Level</span>
+              <svg width="120" height="25">
+                <rect width="220" height="25"/>
+              </svg>
+            </div>
+          </div>
         </div>
-        <div class="exp-bar">
-          <span class="lvl-text text-outline">Level</span>
-          <svg width="120" height="25">
-            <rect width="220" height="25"/>
-          </svg>
+        <div class="col-xs-6">
+          <img src="assets/btn-profile-hover.png" id="ico-profile" alt="Profile" class="btn-nav" (click)="onCoinClick($event)">
+          <img src="assets/btn-friends.png" id="ico-friends" alt="Friends list" class="btn-nav" (click)="onCoinClick($event)">
+          <img src="assets/btn-games.png" id="ico-games" alt="Games" class="btn-nav" (click)="onCoinClick($event)">
         </div>
       </div>
       <div class="row">
-        <!--<app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
+        <app-view-profile *ngIf="profileChild == true" [userProfileData]="userProfileData" [myProfileData]="myProfileData" [isInvited]="isInvited" [isFriend]="isFriend" [ourRelation]="ourRelation" [myProfilePage]="myProfilePage"></app-view-profile>
         <app-view-friends *ngIf="friendsChild == true" [userFriends]="userFriends" [myFriends]="myFriends" [myProfilePage]="myProfilePage"></app-view-friends>
         <app-view-games *ngIf="gamesChild == true" [userGamesAPPList]="userGamesAPPList" [myGamesAPPList]="myGamesAPPList" [myProfilePage]="myProfilePage"></app-view-games>
-        -->
       </div>
     </div>
   </div>

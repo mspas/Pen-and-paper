@@ -61,7 +61,7 @@ export class ProfileViewFriendsComponent implements OnInit {
     });*/
 
     this.friendsAccepted.forEach(element => {
-      if (element.photoName != null && element.photoName != "") {
+      if (element.photoName != null && element.photoName != "unknown.png") {
         let friend = new FriendListModel(element, null);
         this.friendsAcceptedPhoto.push(friend);
         let id = this.friendsAcceptedPhoto.length - 1;

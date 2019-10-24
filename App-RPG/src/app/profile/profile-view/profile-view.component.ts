@@ -42,7 +42,6 @@ export class ProfileViewComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.data = profiledata.profiledata;
     });
@@ -140,6 +139,31 @@ export class ProfileViewComponent implements OnInit {
       this.friendsChild = false;
       this.gamesChild = true;
       document.getElementById("nav-games").setAttribute("class", "active");
+    }
+  }
+
+  onCoinClick(event: Event) {    
+    let elementId: string = (event.target as Element).id;
+
+    this.profileChild = false;
+    this.friendsChild = false;
+    this.gamesChild = false;
+
+    document.getElementById("ico-profile").setAttribute("src", "assets/btn-profile.png");
+    document.getElementById("ico-friends").setAttribute("src", "assets/btn-friends.png");
+    document.getElementById("ico-games").setAttribute("src", "assets/btn-games.png");
+
+    if (elementId == "ico-profile") {
+      this.profileChild = true;
+      document.getElementById("ico-profile").setAttribute("src", "assets/btn-profile-hover.png");
+    }
+    if (elementId == "ico-friends") {
+      this.friendsChild = true;
+      document.getElementById("ico-friends").setAttribute("src", "assets/btn-friends-hover.png");
+    }    
+    if (elementId == "ico-games") {
+      this.gamesChild = true;
+      document.getElementById("ico-games").setAttribute("src", "assets/btn-games-hover.png");
     }
   }
 

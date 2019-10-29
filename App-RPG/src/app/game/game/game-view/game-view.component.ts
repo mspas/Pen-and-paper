@@ -162,6 +162,15 @@ export class GameViewComponent implements OnInit {
     //window.location.reload();         MOGLO SIE ZEPSUC TUTAJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  }
 
+  toggleClick() {
+    var elem = document.getElementById("panel1");
+    if (elem.getAttribute("class") == "panel border")
+      elem.setAttribute("class", "panel"); 
+    else
+      elem.setAttribute("class", "panel border");
+  
+  }
+
   onJoin() {
     let invite = false;
     if (this.gameData.needInvite == false)

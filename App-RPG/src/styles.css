@@ -40,6 +40,17 @@ body {
     min-width: 360px;
 }
 
+.content-book {
+    min-height: 100vh;
+    margin-top: 60px;
+    background-color: transparent;
+    background-image: url("assets/pbook.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #252525;
+    box-shadow: none;
+    border-style: none;
+}
 
 .content {
     min-height: 88vh;

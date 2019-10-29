@@ -1,20 +1,20 @@
-  <div class="panel">
-      <div class="content-top panel-heading">
+  <div class="panel border" id="panel1">
+      <div class="panel-heading">
         <h4 class="panel-title">
           <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#game">
             <span class="title-panel-bg text-outline">{{ gameData.title }}</span>
             <span class="title-panel-sm">- {{ gameData.category }} - {{ gameData.status }} -</span>
           </a>
-          <a class="toggle" data-toggle="collapse" data-parent="#list" href="#game">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-          </a>
         </h4>
+        <a class="toggle" (click)="toggleClick()" data-toggle="collapse" data-parent="#list" href="#game">
+          <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
       </div>
       <div id="game" class="panel-collapse collapse">
         <div class="panel-body">
           <p class="description">{{gameData.description}}</p>  
-          <p class="text-outline" id="information-text">Game details:</p>    
-          <div class="container information">                                                                                  
+          <!--<p class="text-outline" id="information-text">Game details:</p>-->  
+          <div class="container details">                                                                                  
            <div class="table-responsive">          
             <table class="table">
               <tbody>
@@ -54,7 +54,7 @@
                     </p>
                   </td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td class="text-default">PLAYERS:</td>
                     <td>
                       <table>
@@ -67,7 +67,7 @@
                         </tr>
                       </table>
                     </td>
-                </tr>
+                </tr>-->
               </tbody>
             </table>
            </div>

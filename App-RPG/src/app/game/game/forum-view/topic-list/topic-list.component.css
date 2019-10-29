@@ -30,6 +30,10 @@
     border-radius: 0;
     font-family: Montserrat, sans-serif;
   }
+  .table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #fcf2bb;
+}
   td {
     line-height: 2 !important;
     max-width: 600px;

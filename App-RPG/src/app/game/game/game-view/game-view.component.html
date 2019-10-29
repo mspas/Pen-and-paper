@@ -12,65 +12,46 @@
       </div>
       <div id="game" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="description">{{gameData.description}}</p>  
+          <div class="description">{{gameData.description}}</div>  
           <!--<p class="text-outline" id="information-text">Game details:</p>-->  
-          <div class="container details">                                                                                  
-           <div class="table-responsive">          
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td class="text-default">CATEGORY:</td>
-                  <td>{{gameData.category}}</td>
-                </tr>
-                <tr>
-                  <td class="text-default">START DATE:</td>
-                  <td>{{gameData.date | date: 'dd-MM-yyy'}}</td>
-                </tr>
-                <tr>
-                  <td class="text-default">NUMBER OF PLAYERS:</td>
-                  <td>{{gameData.nofparticipants}}/{{gameData.maxplayers}}</td>
-                </tr>
-                <tr>
-                  <td class="text-default">BOOK:</td>
-                  <td>{{gameData.book}}</td>
-                </tr>
-                <tr>
-                  <td class="text-default">STATUS:</td>
-                  <td>{{gameData.status}}</td>
-                </tr>
-                <tr>
-                  <td class="text-default">CAN I JOIN WITHOUT INVITATION?</td>
-                  <td>{{gameData.needInvite | transformYesNoBoolean}}</td>
-                </tr>
-                <tr>
-                  <td class="text-default">CAN I JOIN AFTER THE GAME STARTED?</td>
-                  <td>{{gameData.hotJoin | transformYesNoBoolean}}</td>
-                </tr>
-                <tr>
-                  <td class="text-default">GAME MASTER:</td>
-                  <td [routerLink]="['/profile', gameMaster.login]">
-                    <p class="profile-link" role="button">
-                      <img [src]="imageToShow" class="profile-photo" alt="Profile image">{{gameMaster.firstname}} {{gameMaster.lastname}} ({{gameMaster.login}})
-                    </p>
-                  </td>
-                </tr>
-                <!--<tr>
-                    <td class="text-default">PLAYERS:</td>
-                    <td>
-                      <table>
-                        <tr *ngFor="let player of acceptedPlayers">
-                            <td [routerLink]="['/profile', player.login]">
-                              <p class="profile-link" role="button">
-                                <img [src]="player.photo" class="profile-photo" alt="Profile image">{{player.data.firstname}} {{player.data.lastname}} ({{player.data.login}})
-                              </p>
-                            </td>
-                        </tr>
-                      </table>
-                    </td>
-                </tr>-->
-              </tbody>
-            </table>
-           </div>
+          <div class="container details">
+            <div class="row">
+              <div class="col-xs-6 text-default">CATEGORY:</div>
+              <div class="col-xs-6">{{gameData.category}}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6 text-default">START DATE:</div>
+              <div class="col-xs-6">{{gameData.date | date: 'dd-MM-yyy'}}</div>
+            </div>    
+            <div class="row">
+              <div class="col-xs-6 text-default">NUMBER OF PLAYERS:</div>
+              <div class="col-xs-6">{{gameData.nofparticipants}}/{{gameData.maxplayers}}</div>
+            </div>    
+            <div class="row">
+              <div class="col-xs-6 text-default">BOOK:</div>
+              <div class="col-xs-6">{{gameData.book}}</div>
+            </div>    
+            <div class="row">
+              <div class="col-xs-6 text-default">STATUS:</div>
+              <div class="col-xs-6">{{gameData.status}}</div>
+            </div>    
+            <div class="row">
+              <div class="col-xs-6 text-default">CAN I JOIN WITHOUT INVITATION?</div>
+              <div class="col-xs-6">{{gameData.needInvite | transformYesNoBoolean}}</div>
+            </div>    
+            <div class="row">
+              <div class="col-xs-6 text-default">CAN I JOIN AFTER THE GAME STARTED?</div>
+              <div class="col-xs-6">{{gameData.hotJoin | transformYesNoBoolean}}</div>
+            </div>    
+            <div class="row">
+              <div class="col-xs-6 text-default">GAME MASTER:</div>
+              <div class="col-xs-6"[routerLink]="['/profile', gameMaster.login]">
+                <p class="profile-link" role="button">
+                  <img [src]="imageToShow" class="profile-photo" alt="Profile image">{{gameMaster.firstname}} {{gameMaster.lastname}} ({{gameMaster.login}})
+                </p>
+              </div>
+            </div>    
+
          </div>
         </div>
       </div>

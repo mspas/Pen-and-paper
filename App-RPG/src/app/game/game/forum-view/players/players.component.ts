@@ -91,5 +91,12 @@ export class PlayersComponent implements OnInit {
   onClickBack() {
     this.valueChange.emit("false");
   }
+  
+  onAccept(playerId: number) {
+    this.gameData.participants.forEach(card => {
+      if (card.playerId == playerId) 
+        this._api.acceptJoinGame(card);
+    });
+  }
 
 }

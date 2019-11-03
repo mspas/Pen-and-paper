@@ -17,8 +17,8 @@ import { PostsComponent } from './game/forum-view/topic-view/posts/posts.compone
 import { ReplyPostComponent } from './game/forum-view/topic-view/reply-post/reply-post.component';
 
 import { GameResolve } from './game.resolve.service';
-import { TransformYesNoBooleanPipe } from '../shared/transform-yes-no-boolean.pipe';
 import { PlayersComponent } from './game/forum-view/players/players.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -27,6 +27,7 @@ import { PlayersComponent } from './game/forum-view/players/players.component';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    SharedModule
   ],
   declarations: [
     GameComponent, 
@@ -39,11 +40,7 @@ import { PlayersComponent } from './game/forum-view/players/players.component';
     TopicViewComponent,
     PostsComponent,
     ReplyPostComponent,
-    TransformYesNoBooleanPipe,
     PlayersComponent
-  ],
-  exports: [
-    TransformYesNoBooleanPipe
   ],
   providers: [
     GameResolve

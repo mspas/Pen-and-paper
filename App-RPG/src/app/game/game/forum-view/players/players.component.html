@@ -2,7 +2,12 @@
   <button class="btn-forum" id="btn-back" (click)="onClickBack()">
     <span class="glyphicon glyphicon-arrow-left" style="padding-right: 20px"></span> BACK
   </button>
-</div>                                                                                   
+</div> 
+
+<div appPlayersList [acceptedPlayers]="acceptedPlayers">
+
+</div>
+
 <div class="table-responsive">          
   <table class="table">
     <tbody>

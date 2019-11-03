@@ -1,6 +1,6 @@
 html, body {
-    height: 90vh;
-    width: 100vw;
+    width: 100%;
+    min-height: 100vh;
 }
 body {
     font: 400 15px Lato, sans-serif;
@@ -13,11 +13,6 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
-.main-content-wrap {
-    /*background-color: #1bf5b411;
-    background-color: transparent;
-    padding-top: 120px;*/
-}  
 .container-fluid {
     padding: 60px 50px;
 }
@@ -147,16 +142,30 @@ body {
     border-radius: 30px 0 0 40px;
     /*box-shadow:  15px -10px 15px -15px rgba(0, 0, 0, 0.2),  10px 10px 5px -5px rgba(0, 0, 0, 0.2);*/     /*poziom, pion, blur, spread*/
 }
-.link {
-  color: #303030 !important;
-  letter-spacing: 4px;
-  cursor: pointer;
-}
-.link:hover {
-  color: #f4511e !important;
-}
 
 
+/* directives */
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 40px;
+}
+.player-card {
+    background-image: url("assets/card.png");
+    background-repeat: no-repeat;
+    width: 250px;
+    height: 351px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s;
+}
 
 
 
@@ -177,7 +186,4 @@ h4 {
 }
 a {
     text-decoration: none !important;
-}
-.font19 {
-    font-size: 19px;    
 }

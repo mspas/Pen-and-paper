@@ -27,6 +27,7 @@ import { AuthService } from './auth/auth.service';
 import { CreateGameDataService } from './services/create-game.service';
 import { DataService } from './services/data.service';
 import { ForumService } from './services/forum.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ForumService } from './services/forum.service';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    SharedModule,
     GameModule,
     ProfileModule,
     ActivityModule

@@ -1,10 +1,14 @@
 
 import { PersonalDataModel } from './../../models/personaldata.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { GameToPersonAppModel } from '../../models/game-to-person.model';
 import { FriendModel } from '../../models/friend.model';
+import { ConversationDataModel } from '../../models/message.model';
+import { NgForm } from '@angular/forms';
+import { ChangePasswordModel } from '../../models/changepassword.model';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-profile-view',
@@ -13,6 +17,8 @@ import { FriendModel } from '../../models/friend.model';
 })
 export class ProfileViewComponent implements OnInit {
 
+  @ViewChild('fileInput') fileInput: ElementRef;
+  
   imageToShow: any;
   isImageLoading: boolean;
   isFriend: boolean = false;
@@ -37,7 +43,7 @@ export class ProfileViewComponent implements OnInit {
   myProfilePage: boolean = false;
   //loggedUserFriends: PersonalDataModel[] = [];
 
-  constructor(private route: ActivatedRoute, private _api : ApiService) { 
+  constructor(private route: ActivatedRoute, private _api : ApiService, private _data: DataService) { 
     this.userID = parseInt(route.snapshot.params['id']);
   }
 
@@ -107,14 +113,10 @@ export class ProfileViewComponent implements OnInit {
     }
  }
 
-  onSendInvite() {
+  /*onSendInvite() {
     let loggedID = parseInt(localStorage.getItem("id"));
     this._api.sendFriendInvite(loggedID, this.myProfileData.id);
-  }
-
-  deleteFriend() {
-
-  }
+  }*/
 
   onNavClick(event: Event) {    
     let elementId: string = (event.target as Element).id;
@@ -167,4 +169,68 @@ export class ProfileViewComponent implements OnInit {
     }
   }
 
+  
+  onSendInvite() {
+    let loggedID = parseInt(localStorage.getItem("id"));
+    if (this.ourRelation == null)
+      this._api.sendFriendInvite(loggedID, this.userProfileData.id);
+    if (this.ourRelation != null && this.isInvited == false && this.isFriend == false) {
+      let relation = this.ourRelation;
+      relation.isFriendRequest = true;
+      this._api.editRelation(relation);
+    }
+  }
+
+  deleteFriend() {
+
+  }
+
+  onSendMessage(){
+    if (this.ourRelation != null) {
+      //await this._api.getConversation(this.ourRelation.id).subscribe(data => this.conversation = data); //wyjebac to do app comp i viewchildem do chatu elo ide spac
+      this._data.changeConversationData(new ConversationDataModel(this.ourRelation, this.myProfileData, this.userProfileData));
+      this._data.changeChatControl(true);
+    }
+    else {
+      this._data.changeConversationData(new ConversationDataModel(null, null, this.userProfileData));
+      this._data.changeChatControl(true);
+    }
+  }
+
+  uploadPhoto() {
+    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+    this._api.uploadPhoto(true, this.myProfileData.id, false, nativeElement.files[0]);
+  }
+
+  onSaveChanges(form: NgForm) {
+    var profile = this.myProfileData;
+    if (form.value.email.length > 0) 
+      profile.email = form.value.email;
+    if (form.value.firstname.length > 0)
+      profile.firstname = form.value.firstname;
+    if (form.value.lastname.length > 0)
+      profile.lastname = form.value.lastname;
+    if (form.value.city.length > 0)
+      profile.city = form.value.city;
+    if (parseInt(form.value.age) > 0)
+      profile.age = parseInt(form.value.age);
+    this._api.editPersonalData(profile);
+  }
+
+  onSavePassword(form: NgForm) {
+    if (form.value.password == form.value.repeatpassword) {
+      let data = new ChangePasswordModel(form.value.password, form.value.oldpassword);
+      this._api.editPassword(data);
+    }
+  }
+
+  onSaveImage(form: NgForm) {
+    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+    this._api.uploadPhoto(true, this.myProfileData.id, false, nativeElement.files[0]);
+    window.location.reload();
+  }
 }
+
+
+
+

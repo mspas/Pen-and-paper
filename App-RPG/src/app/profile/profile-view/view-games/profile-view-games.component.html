@@ -1,7 +1,5 @@
  
-<div class="container" style="position: relative; width: 100%">
-  <p class="text-outline" id="information-text">Game history:</p>    
-  <div class="container information">                                                                          
+  <p class="text-outline" id="information-text">Game history:</p>                                                
   <div class="table-responsive">          
   <table class="table">
     <thead>
@@ -10,7 +8,6 @@
         <th>Title</th>
         <th></th>
         <th>Players</th>
-        <th>City</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -22,7 +19,6 @@
           <span *ngIf="game.isGameMaster == true" title="Game Master" class="glyphicon glyphicon-star"></span>
         </td>
         <td>{{game.game.nofparticipants}} / {{game.game.maxplayers}}</td>
-        <td>{{game.game.location}}</td>
         <td>
           <span *ngIf="game.game.isActive == true">Active</span>
           <span *ngIf="game.game.isActive == false">Ended</span>
@@ -40,7 +36,6 @@
         <th>#</th>
         <th>Title</th>
         <th>Players</th>
-        <th>City</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -49,7 +44,6 @@
         <td>{{game.game.id}}</td>
         <td type="button" class="button-name" [routerLink]="['/game', game.game.id]">{{game.game.title}}</td>
         <td>{{game.game.nofparticipants}} / {{game.game.nofplayers}}</td>
-        <td>{{game.game.location}}</td>
         <td>
           <span *ngIf="game.game.isActive == true">Active</span>
           <span *ngIf="game.game.isActive == false">Ended</span>
@@ -67,4 +61,3 @@
       </tr>
     </tbody>
   </table>
-  </div>

@@ -3,9 +3,10 @@
     box-shadow: none;
 }
 .row {
-    min-height: 200px;
+    margin: 0;
 }
 .profile-photo {
+    min-width: 100px;
     width: 200px; 
     height: 200px;
     border-radius: 25px;
@@ -50,7 +51,14 @@ rect {
     stroke-width: 3;
     stroke: rgb(0,0,0);
 }
-.center-wrap {
+#center-left {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#center-right {
+    text-align: justify;
+    text-justify: inter-word;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -72,8 +80,8 @@ rect {
 }
 .btn-nav {
     margin-right: 25px;
-    height: 120px;
-    width: 120px;
+    height: 110px;
+    width: 110px;
     cursor: pointer;
 }
 #ico-profile:hover {
@@ -112,12 +120,13 @@ rect {
     letter-spacing: 2px;
 }
 
-
 @media screen and (max-width: 1200px) {
-    .col-md-4 {
-        padding: 0;
+    .col-lg-6 {
+        display:flex;
+        justify-content:center;
+        align-items:center;
     }
-    #big-name {
+    /*#big-name {
         color: #ffffff;
         font-size: 27px;
         letter-spacing: 2px;
@@ -136,7 +145,7 @@ rect {
         font-size: 14px;
         letter-spacing: 2px;
         font-family: Montserrat, sans-serif;
-    }
+    }*/
 }
 @media screen and (max-width: 1000px) {
     #big-name {
@@ -148,8 +157,8 @@ rect {
 }
 @media screen and (max-width: 991px) {
     .profile-photo {
-        width: 100px;
-        height: 100px;
+        width: 170px;
+        height: 170px;
     }
     #nickname {
         position: absolute;
@@ -160,7 +169,21 @@ rect {
         letter-spacing: 2px;
     }
 }
+@media screen and (max-width: 775px) {
+    .col-xs-8 {
+        padding-left: 25px;
+    }
+    .information {
+        margin-left: 5%;
+        width: 95%;
+        height: auto;
+    }
+}
 @media screen and (max-width: 545px) {
+    .profile-photo {
+        height: auto;
+        border-radius: 20px;
+    }
     .text-outline {
         -webkit-text-stroke: 1px black;
         color: white;
@@ -174,8 +197,17 @@ rect {
         letter-spacing: 4px;
         font-family: Montserrat, sans-serif;
     }
+    .btn-nav {
+        margin-right: 10px;
+        height: auto;
+        width: 25%;
+        cursor: pointer;
+    }
+    .level {
+        display: none;
+    }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 768px) {
     .btn-big {
         display: none;
     }
@@ -183,7 +215,7 @@ rect {
         display: block;
     }
 }
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 768px) {
     .btn-mobile {
         display: none;
     }
@@ -280,7 +312,7 @@ rect {
 }
 
 /*modals*/
-.information {
+.information-modal {
     background-color: transparent;
     background-size: contain;
     margin: 0;

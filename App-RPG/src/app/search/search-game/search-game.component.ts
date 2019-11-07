@@ -11,10 +11,21 @@ import { NgForm } from '@angular/forms';
 })
 export class SearchGameComponent implements OnInit {
 
-  gameCategories: string[] = ["Fantasy", "Sci-fi", "Mafia"];
+  gameCategories: any[] = [
+            {name: "Fantasy", checked: false },
+            {name: "SciFi", checked: false },
+            {name: "Mafia", checked: false },
+            {name: "Cyberpunk", checked: false },
+            {name: "Steampunk", checked: false },
+            {name: "PostApo", checked: false },
+            {name: "Zombie", checked: false },
+            {name: "AltHistory", checked: false },
+            {name: "Other", checked: false }
+          ];
   statusOfGame: string[] = ["Active", "Ongoing", "Ended"];
   foundData: GameAppModel[] = [];
   wasSearched: boolean = false;
+  join: boolean;
 
   constructor(private route: ActivatedRoute, private _api: ApiService, private router: Router) { }
 
@@ -22,6 +33,19 @@ export class SearchGameComponent implements OnInit {
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.foundData = profiledata.profiledata;
     });
+  }
+
+  onBoxJoin(value: boolean) {
+    this.join = value;
+  }
+
+  categoryClick(index: number) {
+    const checked = !this.gameCategories[index].checked;
+    this.gameCategories[index].checked = checked;
+    if (checked)
+      document.getElementById("category"+index.toString()).setAttribute("class", "category-name text-default focus");
+    else
+      document.getElementById("category"+index.toString()).setAttribute("class", "category-name text-default");
   }
 
   onSearch(form: NgForm) {

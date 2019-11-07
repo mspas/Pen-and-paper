@@ -1,96 +1,84 @@
-<div class="container jumbotron">
-    <h1 style="font-size: 26px">Find your adventure! (use at least one input below)</h1>
-  <div class="form-group row">
-    <form class="form-signin" (ngSubmit)="onSearch(f)" #f="ngForm">
-      <div class="row">
-        <div class="col-xs-3">
-          <label for="title">Title</label>
-          <input type="text" id="title" name="title" placeholder="Title" ngModel class="form-control input-lg font19">
-        </div>
-        <div class="col-xs-3">
-          <label for="category">Category</label>
-          <select class="form-control sel-cat" id="genre" [(ngModel)]="genre" name="genre">
-            <option *ngFor="let option of gameCategories">
-              {{option}}
-            </option>
-          </select>
-        </div>
-        <div class="col-xs-3">
-          <label for="city">City</label>
-          <input type="text" id="city" name="city" placeholder="City" ngModel class="form-control input-lg font19">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-3">
-          <label for="date">Start date (from -</label>
-          <input type="date" id="datef" name="datef" placeholder="Nickname" ngModel class="form-control input-lg font19">
-        </div>
-        <div class="col-xs-3">
-          <label for="date"> to)</label>
-          <input type="date" id="datet" name="datet" placeholder="Nickname" ngModel class="form-control input-lg font19">
-        </div>
-        <div class="col-xs-3">
-          <label for="category">Show only games with free slots?</label>
-          <select class="form-control sel-cat" id="free" [(ngModel)]="free" name="free">
-            <option selected>Yes</option>
-            <option>No</option>
-          </select>
-        </div>
-        <div class="col-xs-3">
-          <button class="btn btn-lg btn-success btn-block" type="submit" style="width: 95%"><span class="glyphicon glyphicon-search"></span> Search</button>
-        </div>
-        <!--<div style="padding-top:8%; padding-left: 76%">
-          <button class="btn btn-lg btn-success btn-block" type="submit" style="width: 95%"><span class="glyphicon glyphicon-search"></span> Search</button>
-        </div>-->
-      </div>
-    </form>
+<div class="container main">
+  <div class="book-head">
+    <img src="assets/pbook-header.png" alt="">
   </div>
-  <br>
-  <p>Search results:</p>
-  <div *ngFor="let game of foundData; let i = index">                                                                                   
-  <div class="panel green-back">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#games{{i}}">
-              <span class="glyphicon glyphicon-tower"> </span> 
-              {{game.title}} - {{game.category}} - {{game.location}}
-          </a>
-        </h4>
+  <div class="book-body">
+    <div class="content-body">
+      <p class="text-default" style="font-size: 20px; text-align: right;">You must gather your party before venturing forth... 
+        <br><span style="font-size: 15px;">Or just find one!</span>
+      </p>
+      <div class="filters">
+        <form class="form-signin" (ngSubmit)="onSearch(f)" #f="ngForm">
+          <input type="text" id="title" name="title" placeholder="Title" ngModel class="form-control">
+          <label for="categories" style="margin-top: 20px;">Categories:</label>
+          <p id="categories">
+            <span *ngFor="let category of gameCategories; let i = index" class="category-name text-default" id="category{{i}}" (click)="categoryClick(i)">{{category.name}}</span>
+          </p>
+          <div class="row">
+            <div class="col-xs-6">
+              <!--<label for="joinBox" style="margin-top: -15px;">Only join avaliable</label>
+              <input id="joinBox" type="checkbox" style="width: 18px; height: 18px; margin: 10px 0 0 10px" (click)='onBoxJoin(joinBox.checked);' #joinBox><br>-->
+              <div class="checkbox">
+                  <label><input id="joinBox" type="checkbox" style="width: 18px; height: 18px;" (click)='onBoxJoin(joinBox.checked);' #joinBox value="">Only avaliable games</label>
+                </div>
+            </div>
+            <div class="col-xs-6">
+              <button class="btn btn-forum" id="btn-send" type="submit"><img class="btn-ico" src="assets/plus.png">SEARCH</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div id="games{{i}}" class="panel-collapse collapse">
-        <div class="panel-body">
-          <table class="table center">
-            <tbody>
-              <tr>
-                <td>Title:</td><td>{{game.title}}</td>
-              </tr>
-              <tr>
-                <td>Category:</td><td>{{game.category}}</td>
-              </tr>
-              <tr>
-                <td>City:</td><td>{{game.location}}</td>
-              </tr>
-              <tr>
-                <td>Date:</td><td>{{game.date}}</td>
-              </tr>
-              <tr>
-                <td>Game Master:</td><td><div class ="button-name" role="button" [routerLink]="['/profile', game.gameMaster.login]">{{game.gameMaster.firstname}} {{game.gameMaster.lastname}} ({{game.gameMaster.login}})</div></td>
-              </tr>
-              <tr>
-                <td>Number of players:</td><td>{{game.nofparticipants}} / {{game.maxplayers}}</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <button type="button" class="btn btn-warning" [routerLink]="['/game', game.id]">
-                    <span class="glyphicon glyphicon-share-alt"></span> Go to game
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+      <div class="search-results">
+        <p>Search results:</p>
+        <div *ngFor="let game of foundData; let i = index">                                                                                   
+          <div class="panel green-back">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#games{{i}}">
+                      <span class="glyphicon glyphicon-tower"> </span> 
+                      {{game.title}} - {{game.category}} - {{game.location}}
+                  </a>
+                </h4>
+              </div>
+              <div id="games{{i}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <table class="table center">
+                    <tbody>
+                      <tr>
+                        <td>Title:</td><td>{{game.title}}</td>
+                      </tr>
+                      <tr>
+                        <td>Category:</td><td>{{game.category}}</td>
+                      </tr>
+                      <tr>
+                        <td>City:</td><td>{{game.location}}</td>
+                      </tr>
+                      <tr>
+                        <td>Date:</td><td>{{game.date}}</td>
+                      </tr>
+                      <tr>
+                        <td>Game Master:</td><td><div class ="button-name" role="button" [routerLink]="['/profile', game.gameMaster.login]">{{game.gameMaster.firstname}} {{game.gameMaster.lastname}} ({{game.gameMaster.login}})</div></td>
+                      </tr>
+                      <tr>
+                        <td>Number of players:</td><td>{{game.nofparticipants}} / {{game.maxplayers}}</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <button type="button" class="btn btn-warning" [routerLink]="['/game', game.id]">
+                            <span class="glyphicon glyphicon-share-alt"></span> Go to game
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
         </div>
       </div>
+    </div>
   </div>
-  </div>
+  <div class="book-footer"></div>
 </div>

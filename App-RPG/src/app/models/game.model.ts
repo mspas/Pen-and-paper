@@ -49,6 +49,15 @@ export class GameCreateModel {
     ) { }
   }
 
+  export class GameListModel {
+    constructor(
+      public data: GameAppModel,
+      public defaultImage: boolean,
+      public photo: any,
+      public photoGM: any
+    ) { } 
+  }
+
   export class GameModel {
     constructor(
       public gameData: GameAppModel,

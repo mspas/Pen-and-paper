@@ -14,7 +14,7 @@ import { DataService } from '../../services/data.service';
 export class CreateGameComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
-  gameCategories: string[] = ["Fantasy", "Sci-fi", "Mafia", "Cyberpunk", "Steampunk", "Post-Apo", "Zombie" ,"Alternative-history", "Other"];
+  gameCategories: string[] = ["Fantasy", "SciFi", "Mafia", "Cyberpunk", "Steampunk", "PostApo", "Zombie" ,"AltHistory", "Other"];
   numberOfPlayers: number[] = [1,2,3,4,5,6,7,8,9,10];
   info: string = "Set character card sheet";
   dismissBtn: string = "Save";

@@ -173,11 +173,6 @@ rect {
     .col-xs-8 {
         padding-left: 25px;
     }
-    .information {
-        margin-left: 5%;
-        width: 95%;
-        height: auto;
-    }
 }
 @media screen and (max-width: 545px) {
     .profile-photo {

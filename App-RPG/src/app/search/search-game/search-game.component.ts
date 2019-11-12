@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
-import { GameAppModel } from '../../models/game.model';
+import { GameAppModel, GameListModel } from '../../models/game.model';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -12,20 +12,29 @@ import { NgForm } from '@angular/forms';
 export class SearchGameComponent implements OnInit {
 
   gameCategories: any[] = [
-            {name: "Fantasy", checked: false },
-            {name: "SciFi", checked: false },
-            {name: "Mafia", checked: false },
-            {name: "Cyberpunk", checked: false },
-            {name: "Steampunk", checked: false },
-            {name: "PostApo", checked: false },
-            {name: "Zombie", checked: false },
-            {name: "AltHistory", checked: false },
-            {name: "Other", checked: false }
+            {name: "Fantasy", checked: false, urlImage: "assets/fantasy1.png"},
+            {name: "SciFi", checked: false, urlImage: "assets/scifi.png"},
+            {name: "Mafia", checked: false, urlImage: "assets/mafia1.png"},
+            {name: "Cyberpunk", checked: false, urlImage: "assets/fantasy1.png"},
+            {name: "Steampunk", checked: false, urlImage: "assets/fantasy1.png"},
+            {name: "PostApo", checked: false, urlImage: "assets/fantasy1.png"},
+            {name: "Zombie", checked: false, urlImage: "assets/fantasy1.png"},
+            {name: "AltHistory", checked: false, urlImage: "assets/fantasy1.png"},
+            {name: "Other", checked: false, urlImage: "assets/fantasy1.png"}
           ];
   statusOfGame: string[] = ["Active", "Ongoing", "Ended"];
+  
+  urlMafia: string = "assets/mafia1.png";
+  urlFantasy: string = "assets/fantasy1.png";
+  urlSciFi: string = "assets/scifi.png";
+  imageUrl: string = "";
+  
   foundData: GameAppModel[] = [];
+  foundGames: GameListModel[] = [];
   wasSearched: boolean = false;
   join: boolean;
+  end: boolean;
+  isImageLoading: boolean;
 
   constructor(private route: ActivatedRoute, private _api: ApiService, private router: Router) { }
 
@@ -33,10 +42,79 @@ export class SearchGameComponent implements OnInit {
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.foundData = profiledata.profiledata;
     });
+    this.prepareData(this.foundData);
   }
+
+  prepareData(data) {
+    this.foundData = data;
+    this.foundGames = [];
+    let i = 0;
+    let j = 0;
+    this.foundData.forEach(game => {
+      const foundGame = new GameListModel(game, false, null, null);
+      this.foundGames.push(foundGame);
+      if (game.photoName != null && game.photoName != "unknown.png") {
+        this.isImageLoading = true;
+        this._api.getImage(game.photoName).subscribe(data => {
+          this.createImageFromBlob(data, i, false);
+          this.isImageLoading = false;
+          i++;
+        }, error => {
+          this.isImageLoading = false;
+          console.log(error);
+        });
+      }
+      else
+        this.setDefaultImage(j);
+      j++;
+    });
+
+    let index2 = 0;
+    this.foundData.forEach(game => {
+      if (game.gameMaster.photoName != null && game.photoName != "unknown.png") {
+        this.isImageLoading = true;
+        this._api.getImage(game.gameMaster.photoName).subscribe(data => {
+          this.createImageFromBlob(data, index2, true);
+          this.isImageLoading = false;
+          index2++;
+        }, error => {
+          this.isImageLoading = false;
+          console.log(error);
+        });
+      }
+    });
+  }
+
+  createImageFromBlob(image: Blob, index: number, photoGM: boolean) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      if (!photoGM)
+        this.foundGames[index].photo = reader.result;
+      else {
+        this.foundGames[index].photoGM = reader.result;
+      }
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+ }
+
+ setDefaultImage(index: number) {
+    this.foundGames[index].defaultImage = true;
+    this.gameCategories.forEach(element => {
+      if (this.foundGames[index].data.category == element.name) {
+        this.foundGames[index].photo = element.urlImage;
+      }
+    });
+ }
 
   onBoxJoin(value: boolean) {
     this.join = value;
+    this.end = false;
+  }
+  onBoxEnd(value: boolean) {
+    this.end = value;
   }
 
   categoryClick(index: number) {
@@ -48,41 +126,35 @@ export class SearchGameComponent implements OnInit {
       document.getElementById("category"+index.toString()).setAttribute("class", "category-name text-default");
   }
 
-  onSearch(form: NgForm) {
+  async onSearch(form: NgForm) {
     let searchValue = "";
 
     let title = form.value.title;
     if (title.length > 0) 
       searchValue += title;
     searchValue += ".";
+    console.log(searchValue);
 
-    let category = form.value.genre;
-    if (category != null) 
-      searchValue += category;
+    this.gameCategories.forEach(category => {
+      if (category.checked)
+        searchValue += category.name + "&";
+    });
+    if (searchValue.length > 1)
+      searchValue = searchValue.slice(0, -1);
     searchValue += ".";
 
-    let status = form.value.status;
-    if (status != null) 
-      searchValue += status;
-    searchValue += ".";
+    if (this.join) 
+      searchValue += "Yes.";
+    else
+      searchValue += "No.";
 
-    let dateFrom = form.value.datef;
-    if (dateFrom.length > 0) 
-      searchValue += dateFrom;
-    searchValue += ".";
-
-    let dateTo = form.value.datet;
-    if (dateTo.length > 0) 
-      searchValue += dateTo;
-    searchValue += ".";
-
-    let free = form.value.free;
-    if (free == "Yes") 
+    if (this.end) 
       searchValue += "Yes";
     else
       searchValue += "No";
 
-    this.router.navigate(['search-game/' + searchValue]);
+    var res = await this.router.navigate(['search-game/' + searchValue]);
+    window.location.reload();
   }
 
 }

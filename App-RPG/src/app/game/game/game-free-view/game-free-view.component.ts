@@ -59,7 +59,7 @@ export class GameFreeViewComponent implements OnInit {
       this.imageUrl = this.urlMafia;
     if (this.gameData.category == "Fantasy")
       this.imageUrl = this.urlFantasy;
-    if (this.gameData.category == "Sci-fi")
+    if (this.gameData.category == "SciFi")
       this.imageUrl = this.urlSciFi;
 
     if (this.gameData.hotJoin)
@@ -168,7 +168,8 @@ export class GameFreeViewComponent implements OnInit {
 
     let newConnection = new GameToPersonCreateModel(this.gameData.id, this.profileData.id, false, invite, true, 10);
     this._api.joinGame(newConnection);
-    this._router.navigate(['/profile/games-list/', this.profileData.login]);
+    //this._router.navigate(['/profile/games-list/', this.profileData.login]);
+    window.location.reload(); 
   }
 
   onLeave() {

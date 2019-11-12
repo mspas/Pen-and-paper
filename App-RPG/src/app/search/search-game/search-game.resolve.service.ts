@@ -22,7 +22,7 @@ export class SearchGameResolve implements Resolve<GameAppModel[]> {
     resolve(route: ActivatedRouteSnapshot) {
         let value = route.params['value'];
         if (value == this.default)
-            value = ".....";
-        return this._api.getGame(value);
+            value = "...";
+        return this._api.searchGames(value);
     }
 }

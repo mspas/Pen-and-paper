@@ -76,9 +76,6 @@ namespace RPG.Api.Services.SGame
         {
             var foundData = new List<Game>();
             var pattern = "";
-            DateTime dateFrom = DateTime.Parse("1000-01-01");
-            DateTime dateTo = DateTime.Parse("9999-01-01");
-            bool onlyFree = true;
 
             if (Int32.TryParse(data, out int id))
             {
@@ -96,21 +93,29 @@ namespace RPG.Api.Services.SGame
                     pattern += @"\w*(.)";
 
                     if (dataSearch[1] != "")
+                    {
+                        dataSearch[1] = dataSearch[1].Replace('&', '|');
                         pattern += "(" + dataSearch[1] + ")";
+                    }
                     pattern += @"(.)";
 
                     if (dataSearch[2] != "")
-                        pattern += "(" + dataSearch[2] + ")";
-                    pattern += @"\w*";
+                    {
+                        if (dataSearch[2] == "Yes")
+                            pattern += "(Yes)";
+                        else
+                            pattern += "(Yes|No)";
+
+                    }
+                    pattern += @"(.)";
 
                     if (dataSearch[3] != "")
-                        dateFrom = DateTime.Parse(dataSearch[3]);
-
-                    if (dataSearch[4] != "")
-                        dateTo = DateTime.Parse(dataSearch[4]);
-
-                    if (dataSearch[5] != "Yes")
-                        onlyFree = false;
+                    {
+                        if (dataSearch[2] == "Yes")
+                            pattern += "(Yes|No)";
+                        else
+                            pattern += "(No)";
+                    }
                 }
                 Regex rgx = new Regex(pattern);
 
@@ -118,22 +123,24 @@ namespace RPG.Api.Services.SGame
 
                 foreach (Game game in gamesList)
                 {
-                    var nextData = game.title + "." + game.category + "." + game.status;
+                    var freeSpot = false;
+                    if (game.maxplayers - game.participants.Count > 0)
+                        freeSpot = true;
+
+                    var nextData = game.title + "." + game.category + ".";
+                    if ((game.status == "Active" && freeSpot) || (game.status == "Ongoing" && game.hotJoin && freeSpot))
+                        nextData += "Yes.";
+                    else
+                        nextData += "No.";
+
+                    if (game.status == "Ended")
+                        nextData += "Yes";
+                    else
+                        nextData += "No";
+
                     if (rgx.IsMatch(nextData))
                     {
-                        if (onlyFree)
-                        {
-                            if (game.maxplayers - game.participants.Count > 0)
-                            {
-                                if (DateTime.Compare(dateFrom, game.date) < 0 && DateTime.Compare(game.date, dateTo) < 0)
-                                    foundData.Add(await GetGameAsync(game.Id));
-                            }
-                        }
-                        else
-                        {
-                            if (DateTime.Compare(dateFrom, game.date) < 0 && DateTime.Compare(game.date, dateTo) < 0)
-                                foundData.Add(await GetGameAsync(game.Id));
-                        }
+                        foundData.Add(await GetGameAsync(game.Id));
                     }
                 }
             }

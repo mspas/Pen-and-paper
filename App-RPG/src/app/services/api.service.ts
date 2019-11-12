@@ -137,6 +137,17 @@ export class ApiService {
         this._http.post(this.url+'MessageForum', msg).subscribe (
             (data: number) => this._forum.changeIdResponse(data));
     }
+    
+    searchGames(value: string): Observable<GameAppModel[]> {
+        return this._http
+            .get<GameAppModel[]>(this.url + 'Game/' + value);
+    } 
+        
+    searchFriend(value: string): Observable<PersonalDataModel[]> {
+        return this._http
+            .get<PersonalDataModel[]>(this.url + 'pdata/' + value)
+            .do(data => console.log('All: ' + JSON.stringify(data)));
+    } 
 
 
 
@@ -193,12 +204,6 @@ export class ApiService {
         this._http.put<FriendModel>(this.url + 'Friend/' + invite.id.toString(), invite).subscribe (
             error => console.log(error));
     }
-        
-    searchFriend(value: string): Observable<PersonalDataModel[]> {
-        return this._http
-            .get<PersonalDataModel[]>(this.url + 'pdata/' + value)
-            .do(data => console.log('All: ' + JSON.stringify(data)));
-    }
 
     createGameDB(game: GameCreateModel) {
         this._http.post(this.url+'Game', game).subscribe (
@@ -207,8 +212,7 @@ export class ApiService {
 
     getGame(id: number): Observable<GameAppModel[]> {
         return this._http
-            .get<GameAppModel[]>(this.url + 'Game/' + id.toString())
-            .do(data => console.log('All: ' + JSON.stringify(data)));
+            .get<GameAppModel[]>(this.url + 'Game/' + id.toString());
     }    
 
     getGameAndFriends(gameId: number): Observable<any> {

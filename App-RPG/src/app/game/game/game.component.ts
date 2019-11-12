@@ -19,6 +19,7 @@ export class GameComponent implements OnInit {
   profileData: PersonalDataModel;
   gameMaster: PersonalDataModel;
   topicData: TopicModel;
+  game: {data: GameAppModel, photo: any};
 
   iAmGameParticipant: boolean = false;
   iAmGameMaster: boolean = false;

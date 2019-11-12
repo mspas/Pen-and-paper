@@ -1,5 +1,5 @@
 <div class="container main">
-  <div class="book-head">
+  <div class="book-header">
     <img src="assets/pbook-header.png" alt="">
   </div>
   <div class="book-body">
@@ -19,8 +19,11 @@
               <!--<label for="joinBox" style="margin-top: -15px;">Only join avaliable</label>
               <input id="joinBox" type="checkbox" style="width: 18px; height: 18px; margin: 10px 0 0 10px" (click)='onBoxJoin(joinBox.checked);' #joinBox><br>-->
               <div class="checkbox">
-                  <label><input id="joinBox" type="checkbox" style="width: 18px; height: 18px;" (click)='onBoxJoin(joinBox.checked);' #joinBox value="">Only avaliable games</label>
-                </div>
+                <label class="text-default" style="font-size: 15px;"><input id="joinBox" type="checkbox" style="width: 18px; height: 18px;" (click)='onBoxJoin(joinBox.checked);' #joinBox value="">Only avaliable games</label>
+              </div>
+              <div class="checkbox">
+                <label class="text-default" style="font-size: 15px;"><input [disabled]="join" [checked]="end" id="endBox" type="checkbox" style="width: 18px; height: 18px;" (click)='onBoxEnd(endBox.checked);' #endBox value="">Show ended games</label>
+              </div>
             </div>
             <div class="col-xs-6">
               <button class="btn btn-forum" id="btn-send" type="submit"><img class="btn-ico" src="assets/plus.png">SEARCH</button>
@@ -29,10 +32,37 @@
         </form>
       </div>
 
-      <div class="search-results">
-        <p>Search results:</p>
-        <div *ngFor="let game of foundData; let i = index">                                                                                   
-          <div class="panel green-back">
+      <div style="margin-top: 50px;">
+        <p class="text-default" style="font-size: 20px; text-align: right;">Search results:</p>
+        <div *ngFor="let game of foundGames; let i = index">
+          <div class="media">
+              <div class="media-left">
+                <a href="/game/{{game.data.id}}">
+                  <img *ngIf="game.defaultImage" src="{{game.photo}}" class="media-object" style="width:60px">
+                  <img *ngIf="!game.defaultImage" [src]="game.photo" class="media-object" style="width:60px">
+                </a>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">
+                  <a href="/game/{{game.data.id}}">{{game.data.title}}</a>
+                  <span style="margin-left: 25px;">- {{game.data.category}} -</span>                
+                  <span class="game-players text-default">
+                    Players: {{game.data.nofparticipants}} / {{game.data.maxplayers}}
+                  </span>
+                </h4>
+                <p style="display:flex;align-items:center;margin-top: 20px;">
+                  <span style="display: inline-block;">
+                    <img *ngIf="game.photoGM" [src]="game.photoGM" class="media-object" style="width:30px">
+                    <img *ngIf="!game.photoGM" src="/assets/unknown.png" class="media-object" style="width:30px">
+                  </span>
+                  <span class="game-master text-default">
+                    <a href="/game/{{game.data.gameMaster.login}}">{{game.data.gameMaster.firstname}} {{game.data.gameMaster.lastname}} ({{game.data.gameMaster.login}})</a>
+                  </span>
+                </p>
+                <p class="game-description">{{game.data.description}}</p>
+              </div>
+            </div>                                                                    
+          <!--<div class="panel green-back">
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a class="list-toggle" data-toggle="collapse" data-parent="#list" href="#games{{i}}">
@@ -75,7 +105,7 @@
                   </table>
                 </div>
               </div>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>

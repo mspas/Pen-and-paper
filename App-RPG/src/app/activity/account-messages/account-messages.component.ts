@@ -133,7 +133,7 @@ export class AccountMessagesComponent implements OnInit {
     this.defaultValue = "";
     var myDate = new Date();
     var msg = new MessageCreateModel(
-      myDate, false, body, this.allConversations[index].conversationData.relation.id, this.allConversations[index].conversationData.myProfile.id
+      myDate, false, body, this.allConversations[index].conversationData.relation.id, this.allConversations[index].conversationData.myProfile.id,false
     );
     this._api.sendMessage(msg);
     this.allConversations[index].conversationData.relation.lastMessageDate = myDate;
@@ -142,7 +142,7 @@ export class AccountMessagesComponent implements OnInit {
   }
 
   addMsgTemporary(msg: MessageCreateModel, index: number) {
-    this.allConversations[index].messages.push(new MessageModel(-1, null, false, msg.bodyMessage, msg.relationId, msg.senderId));
+    this.allConversations[index].messages.push(new MessageModel(-1, null, false, msg.bodyMessage, msg.relationId, msg.senderId, false));
   }
 
 }

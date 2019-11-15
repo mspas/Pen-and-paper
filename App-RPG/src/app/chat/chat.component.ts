@@ -116,7 +116,7 @@ export class ChatComponent implements OnInit {
     this.defaultValue = "";
     var myDate = new Date();
     var msg = new MessageCreateModel(
-      myDate, false, body, this.conversationData.relation.id, this.conversationData.myProfile.id
+      myDate, false, body, this.conversationData.relation.id, this.conversationData.myProfile.id,false
     );
     this._api.sendMessage(msg);
     this.conversationData.relation.lastMessageDate = myDate;
@@ -125,6 +125,6 @@ export class ChatComponent implements OnInit {
   }
 
   addMsgTemporary(msg: MessageCreateModel) {
-    this.conversation.push(new MessageModel(-1, null, false, msg.bodyMessage, msg.relationId, msg.senderId));
+    this.conversation.push(new MessageModel(-1, null, false, msg.bodyMessage, msg.relationId, msg.senderId, false));
   }
 }

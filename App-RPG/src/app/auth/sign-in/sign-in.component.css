@@ -63,6 +63,7 @@ input:focus, textarea:focus, select:focus{
     margin: auto;
     width: 100%;
     min-width: 300px;
+    max-height: 50px;
   }
   .inp .label {
     position: absolute;

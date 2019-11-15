@@ -13,6 +13,8 @@ namespace RPG.Api.Domain.Models
         public string bodyMessage { get; set; }
         public int senderId { get; set; }
         public int relationId { get; set; }
+        public bool isPhoto { get; set; }
+        public Photo photo { get; set; }
         public virtual Friend relation { get; set; }
     }
 }

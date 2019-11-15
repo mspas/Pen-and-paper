@@ -8,7 +8,8 @@ export class MessageModel {
         public wasSeen: boolean,
         public bodyMessage: string,
         public relationId: number,
-        public senderId: number
+        public senderId: number,
+        public isPhoto: boolean
     ) {}
   }
 
@@ -18,7 +19,8 @@ export class MessageModel {
         public wasSeen: boolean,
         public bodyMessage: string,
         public relationId: number,
-        public senderId: number
+        public senderId: number,
+        public isPhoto: boolean
     ) {}
   }
 

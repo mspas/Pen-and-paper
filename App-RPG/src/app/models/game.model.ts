@@ -32,7 +32,7 @@ export class GameCreateModel {
       public nofparticipants: number,
       public maxplayers: number,
       public description: string,
-      public book: string,
+      public storyDescription: string,
       public comment: string,
       public date: Date,
       public needInvite: boolean,

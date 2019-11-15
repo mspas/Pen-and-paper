@@ -48,10 +48,8 @@ export class ForumViewComponent implements OnInit {
       this.topicIdParam = parseInt(topicId);
     
     var subpage = this.route.snapshot.params.subpage;
-    if (subpage)
+    if (!this.topicIdParam)
       this.setChildComponent(subpage);
-    else 
-      this.subpageManager.showTopicList();
 
     this.forumData.topics.forEach(topic => {
       let topicListModel = new TopicListModel(topic, null, true, null, topic.messages[this.forumData.topics[0].messagesAmount-1].sendDdate);
@@ -72,6 +70,7 @@ export class ForumViewComponent implements OnInit {
       this.detectTopicCategory(topicListModel);
     });
 
+    console.log(this.subpageManager.topicList);
     if (this.gameData.masterId == this.profileData.id)
       this.iAmGameMaster = true;
   }
@@ -79,14 +78,16 @@ export class ForumViewComponent implements OnInit {
   setChildComponent(subpage: string) {
     if (subpage == "user-access" && this.iAmGameMaster)
       this.subpageManager.showUserAccess();
-    if (subpage == "game-settings" && this.iAmGameMaster)
+    else if (subpage == "game-settings" && this.iAmGameMaster)
       this.subpageManager.showGameSettings();
-    if (subpage == "create-topic")
+    else if (subpage == "create-topic")
       this.subpageManager.showCreateTopic();
-    if (subpage == "manage-players" || subpage == "players")
+    else if (subpage == "manage-players" || subpage == "players")
       this.subpageManager.showManagePlayers();
-    if (subpage == "my-character")
+    else if (subpage == "my-character")
       this.subpageManager.showYourCharacter();
+    else
+      this.subpageManager.showTopicList();
   }
 
   detectTopicCategory(topicListModel: TopicListModel) {

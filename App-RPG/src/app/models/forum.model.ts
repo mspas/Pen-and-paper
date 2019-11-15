@@ -63,7 +63,8 @@ export class MessageForumModel {
         public bodyMessage: string,
         public senderId: number,
         public topicId: number,
-        public pageNumber: number
+        public pageNumber: number,
+        public isPhoto: boolean
     ) { }
 }
 
@@ -74,7 +75,8 @@ export class MessageForumCreateModel {
         public bodyMessage: string,
         public senderId: number,
         public topicId: number,
-        public pageNumber: number
+        public pageNumber: number,
+        public isPhoto: boolean
     ) { }
 }
 

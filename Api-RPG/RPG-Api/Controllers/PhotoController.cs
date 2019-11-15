@@ -30,10 +30,21 @@ namespace mdRPG.Controllers
         }
 
         [HttpPost("/api/Photo/{profileOrGame}/{isBgPhoto}/{id}")]
-        public async Task<BaseResponse> Upload(bool profileOrGame, int id, bool isBgPhoto, IFormFile file)
+        public async Task<BaseResponse> Upload(int type, int id, bool isBgPhoto, IFormFile file)
         {
             Console.WriteLine("helo " + id);
-            return await _photoService.UploadPhotoAsync(profileOrGame, id, isBgPhoto, file);
+            switch (type)
+            {
+                case 1:
+                    return await _photoService.UploadProfilePhotoAsync(id, isBgPhoto, file);
+                case 2:
+                    return await _photoService.UploadGamePhotoAsync(id, isBgPhoto, file);
+                case 3:
+                    return await _photoService.UploadPostPhotoAsync(id, file);
+                default:
+                    return new BaseResponse(false, "Upload type error.");
+            }
+            //return await _photoService.UploadPhotoAsync(profileOrGame, id, isBgPhoto, file);
         }
 
         [HttpGet("{filename}")]

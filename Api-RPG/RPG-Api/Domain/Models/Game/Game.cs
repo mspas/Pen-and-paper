@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace RPG.Api.Domain.Models
         public int nofparticipants { get; set; }
         public int maxplayers { get; set; }
         public string description { get; set; }
-        public string book { get; set; }
+        public string storyDescription { get; set; }
         public string comment { get; set; }
         public DateTime date { get; set; }
         public bool needInvite { get; set; }

@@ -1,4 +1,4 @@
-<div class="posts-holder">
+<div class="posts-holder" id="posts-holder">
   <div class="media" *ngFor="let post of posts; let i=index">
     <div class="media-left">
       <img *ngIf="post.photo == null" src="assets/unknown.png" alt="Profile image" class="media-object" style="width:45px">
@@ -12,4 +12,5 @@
       <h4>{{post.message.bodyMessage}}</h4>
     </div>
   </div>
+  <div #divID></div>
 </div>

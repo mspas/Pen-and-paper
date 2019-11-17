@@ -149,7 +149,22 @@ export class ApiService {
             .do(data => console.log('All: ' + JSON.stringify(data)));
     } 
 
+    getPostImages(fileName: string): Observable<Blob> {
+        console.log(this.url + 'Photo/' + fileName);
+        return this._http.get(this.url + 'Photo/' + fileName, { responseType: 'blob' });
+    }
 
+    uploadPhoto(profileOrGame: boolean, id: number, isBgPhoto: boolean, file) {
+        var formData = new FormData();
+        formData.append('file', file);
+        this._http.post(this.url + "Photo/" + profileOrGame + "/" + isBgPhoto + "/" + id, formData).subscribe (
+            error => console.log(error));
+    }
+
+    getImage(fileName: string): Observable<Blob> {
+        console.log(this.url + 'Photo/' + fileName);
+        return this._http.get(this.url + 'Photo/' + fileName, { responseType: 'blob' });
+    }
 
 
 
@@ -313,18 +328,6 @@ export class ApiService {
         let id = localStorage.getItem("id"); 
         this._http.put<ChangePasswordModel>(this.url + 'account/' + id.toString(), passwordData).subscribe (
             error => console.log(error));
-    }
-
-    uploadPhoto(profileOrGame: boolean, id: number, isBgPhoto: boolean, file) {
-        var formData = new FormData();
-        formData.append('file', file);
-        this._http.post(this.url + "Photo/" + profileOrGame + "/" + isBgPhoto + "/" + id, formData).subscribe (
-            error => console.log(error));
-    }
-
-    getImage(fileName: string): Observable<Blob> {
-        console.log(this.url + 'Photo/' + fileName);
-        return this._http.get(this.url + 'Photo/' + fileName, { responseType: 'blob' });
     }
 
 }

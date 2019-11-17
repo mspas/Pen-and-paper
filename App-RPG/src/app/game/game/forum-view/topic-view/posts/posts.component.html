@@ -9,8 +9,10 @@
         <small *ngIf="post.message.editDdate == null"><i>Posted on {{post.message.sendDdate | date: 'long'}}</i></small>
         <small *ngIf="post.message.editDdate != null"><i>Edited on {{post.message.editDdate | date: 'long'}}</i></small>
       </p>
-      <h4>{{post.message.bodyMessage}}</h4>
+      <h4 id="message{{i}}"></h4>
+      <!--<h4>{{post.message.bodyMessage}}</h4>-->
     </div>
   </div>
-  <div #divID></div>
+  <div #divID></div><br>
+  <div id="divs"></div>
 </div>

@@ -94,3 +94,22 @@ export class PostModel {
         public photo: any
     ) { }
 }
+
+export class PostImageModel {
+    constructor(
+        public fileNames: string[],
+        public divId: number,
+        public html: string[],
+        public htmlsm: string[],
+        public photos: any
+    ) { }
+}
+
+export class PostImageModel2 {
+    constructor(
+        public fileName: MessageForumModel,
+        public divId: number,
+        public html: string[],
+        public photo: any
+    ) { }
+}

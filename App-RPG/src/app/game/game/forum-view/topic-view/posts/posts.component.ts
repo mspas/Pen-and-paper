@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { TopicModel, PostModel } from '../../../../../models/forum.model';
+import { TopicModel, PostModel, PostImageModel } from '../../../../../models/forum.model';
 import { PersonalDataModel } from '../../../../../models/personaldata.model';
 import { ApiService } from '../../../../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -21,6 +21,7 @@ export class PostsComponent implements OnInit {
   page: number;
   gameId: number;
   posts: PostModel[] = [];
+  postImages: PostImageModel[] = [];
   isImageLoading: boolean;
 
   constructor(private _api: ApiService, private route: ActivatedRoute) { }
@@ -61,37 +62,114 @@ export class PostsComponent implements OnInit {
       else {
         this.posts.push(post);  
       }
-      this.getPostImages(post.message.bodyMessage, i);
+      //this.getPostImages(post.message.bodyMessage, i);
+      /*let isImage = this.getFileNames(post.message.bodyMessage, i);
+      if (isImage){
+        let index = 0;
+        this.postImages.forEach(post => {
+          post.fileNames.forEach(fileName => {
+            this.getPostImage(fileName, index);
+          });
+          index++;
+        });
+        this.delay(500);
+        this.setUpPostHtml(this.postImages[index]);
+      }
+      else {
+        document.getElementById("message" + i.toString()).innerHTML = post.message.bodyMessage;
+      }*/
       i++;
     }
+  }
 
+  ngAfterViewInit() {
+    //console.log(JSON.stringify(this.postImages));
+    let i = 0;
+    this.posts.forEach(post => {
+      let isImage = this.getFileNames(post.message.bodyMessage, i);
+      //console.log(JSON.stringify(this.postImages));
+      if (!isImage){
+        document.getElementById("message" + i.toString()).innerHTML = post.message.bodyMessage;
+      }
+      i++;
+    });
+    
+    //console.log("elufka " + JSON.stringify(this.postImages));   //raz jest tylko, zle 
+    let index = 0;
+    this.postImages.forEach(async post => {
+      post.fileNames.forEach(fileName => {
+        this.getPostImage(fileName, index);
+      });
+      await this.delay(500);
+      //console.log(index);
+      //console.log(JSON.stringify(this.postImages[index]));
+      this.setUpPostHtml(this.postImages[index]);
+      index++;
+    });
+  }
+  
+  getFileNames(message: string, divId: number) {
+    let tab = message.split('src="');
+    let data = new PostImageModel([], divId, tab, [], []);
+    if (tab.length > 1) {
+      for (let i = 1; i < tab.length; i++) {
+        const element = tab[i];
+        let tab1 = element.split('">');
+        
+        //for (let j = 0; j < tab1.length; j++) {
+        data.fileNames.push(tab1[0]);
 
-     /* this.topicData.messages.forEach(message => {
-        let post = new PostModel(message, null, null);
-
-        this.participants.forEach(user => {
-          if (message.senderId == user.id) {
-            post.user = user;
-          }
-        });
-          
-        if (post.user.photoName != null && post.user.photoName != "") {
-          this.posts.push(post);
-          this.isImageLoading = true;
-          this._api.getImage(post.user.photoName).subscribe(data => {
-            this.createImageFromBlob(data, this.posts.length - 1);
-            this.isImageLoading = false;
-          }, error => {
-            this.isImageLoading = false;
-            console.log(error);
-          });
+        let pom: string[] = [];
+        for (let j = 0; j < i*2-1; j++) {
+          pom.push(data.html[j]);
         }
-        else {
-          this.posts.push(post);  
+        pom.push(tab1[0]);
+        pom.push(tab1[1]);
+        for (let j = i+1; j < data.html.length; j++) {
+          pom.push(data.html[j]);          
         }
-      });*/
-
+        data.html = pom;
+        data.htmlsm = tab1;
+      }
+      this.postImages.push(data);
+      return true;
     }
+    else {
+      return false;
+    }
+  }
+
+  getPostImage(fileName: string, index: number) {
+    this._api.getImage(fileName).subscribe(data => {   //post images
+      this.createImageFromBlobToPost(data, index);
+      this.isImageLoading = false;
+    }, error => {
+      this.isImageLoading = false;
+      console.log(error);
+    });
+  }
+
+  createImageFromBlobToPost(image: Blob, index: number) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.postImages[index].photos.push(reader.result);
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+  
+  setUpPostHtml(postImages: PostImageModel) {
+    for (let i = 0; i < postImages.fileNames.length; i++) {
+      postImages.html[i * 2 + 1] = 'src="' + postImages.photos[i] + '">';
+    }
+    let result = "";
+    for (let i = 0; i < postImages.html.length; i++) {
+      result += postImages.html[i];
+    }
+    document.getElementById("message" + postImages.divId.toString()).innerHTML = result;
+  }
 
   async getPostImages(message: string, divId: number) {
     let fileName: string;
@@ -140,16 +218,16 @@ export class PostsComponent implements OnInit {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-loadHtml(){
-    this.html = this.posts[this.posts.length-1].message.bodyMessage;
+  loadHtml(){
+      this.html = this.posts[this.posts.length-1].message.bodyMessage;
 
-    //sa dwa sposoby, albo przechowywac 20k znakow w stringu jako foto, albo z servera pobierac, w html jest pepe a w test doklejam bolka tera
+      //sa dwa sposoby, albo przechowywac 20k znakow w stringu jako foto, albo z servera pobierac, w html jest pepe a w test doklejam bolka tera
 
-    //console.log(JSON.stringify(this.posts[this.posts.length-2]));
-    this.html += "<img src='" + this.test + "' alt='Profile image' style='width:45px'>";
-    //this.divID.nativeElement.innerHTML = this.html;
-    document.getElementById("divs").innerHTML = this.html;
-} 
+      //console.log(JSON.stringify(this.posts[this.posts.length-2]));
+      this.html += "<img src='" + this.test + "' alt='Profile image' style='width:45px'>";
+      //this.divID.nativeElement.innerHTML = this.html;
+      document.getElementById("divs").innerHTML = this.html;
+  } 
   
   createImageFromBlob(image: Blob, id: number, isPost: boolean) {
     let reader = new FileReader();
@@ -169,5 +247,4 @@ loadHtml(){
        reader.readAsDataURL(image);
     }
  }
-
 }

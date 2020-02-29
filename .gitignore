@@ -1,1 +1,44 @@
+# compiled output
+/App-RPG/dist
+/App-RPG/tmp
+/App-RPG/out-tsc
+# Only exists if Bazel was run
+/App-RPG/bazel-out
+
+# dependencies
 /App-RPG/node_modules
+
+# profiling files
+/App-RPGchrome-profiler-events.json
+/App-RPGspeed-measure-plugin.json
+
+# IDEs and editors
+/App-RPG/.idea
+/App-RPG/.project
+/App-RPG/.classpath
+/App-RPG/.c9/
+/App-RPG/*.launch
+/App-RPG/.settings/
+/App-RPG/*.sublime-workspace
+
+# IDE - VSCode
+/App-RPG/.vscode/*
+/App-RPG/!.vscode/settings.json
+/App-RPG/!.vscode/tasks.json
+/App-RPG/!.vscode/launch.json
+/App-RPG/!.vscode/extensions.json
+/App-RPG/.history/*
+
+# misc
+/App-RPG/.sass-cache
+/App-RPG/connect.lock
+/App-RPG/coverage
+/App-RPG/libpeerconnection.log
+/App-RPG/npm-debug.log
+/App-RPG/yarn-error.log
+/App-RPG/testem.log
+/App-RPG/typings
+
+# System Files
+/App-RPG/.DS_Store
+/App-RPG/Thumbs.db

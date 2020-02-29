@@ -1,38 +1,67 @@
-<nav class="navbar ">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>                        
-        </button>
-        <a class="navbar-brand" href="home"><img src="assets/logo2.png" alt="Logo" ></a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar" *ngIf="isLoggedIn==true;">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="search-game/search"><span class="glyphicon glyphicon-search"></span> FIND GAME</a></li>
-          <li><a href="create-game"><span class="glyphicon glyphicon-tower"></span> CREATE GAME</a></li>
-          <li><a href="search-friends/search"><span class="glyphicon glyphicon-search"></span> SERACH FRIENDS</a></li>
-          <li data-toggle="dropdown" style="cursor: pointer" (click)="fixDropdown()">
-            <div class="dropdown drop" id="workffs"><div id="accountDropdown"><span class="glyphicon glyphicon-user"></span>MY ACCOUNT <span *ngIf="checkActiveNotifications()">(!)</span> <span class="caret"></span></div>
-              <ul class="dropdown-menu drop-opt" id="dropdown-menu">
-                <li class="opt"><a href="#" (click)="goToMyProfile()">My Profile</a></li>
-                <li class="opt"><a href="#" id="messages" (click)="goToMyAccount($event)">Messages <span *ngIf="notificationSet.message">(!)</span></a></li>
-                <li class="opt"><a href="#" id="games" (click)="goToMyAccount($event)">My Games <span *ngIf="notificationSet.games">(!)</span></a></li>
-                <li class="opt"><a href="#" id="friends" (click)="goToMyAccount($event)">Friends <span *ngIf="notificationSet.friends">(!)</span></a></li>
-                <li class="opt"><a href="#" id="settings" (click)="goToMyAccount($event)">Settings</a></li>
-              </ul>
-            </div>
-          </li>
-          <li><a href="home" (click)="onLogout()"><span class="glyphicon glyphicon-off"></span> LOGOUT</a></li>              
-        </ul>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar" *ngIf="isLoggedIn==false;">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="search-game/search"><span class="glyphicon glyphicon-search"></span> FIND GAME</a></li>
-          <li><a href="sign-in"><span class="glyphicon glyphicon-star"></span> SIGN IN</a></li>
-          <li><a href="sign-up"><span class="glyphicon glyphicon-star-empty"></span> SIGN UP</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="home"
+    ><img src="assets/logo.png" alt="Logo"
+  /></a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarTogglerDemo02"
+    aria-controls="navbarTogglerDemo02"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav ml-auto my-2 my-lg-0">
+      <li class="link">
+        <a href="search-game/search">FIND GAME</a>
+      </li>
+      <li class="link">
+        <a href="create-game">CREATE GAME</a>
+      </li>
+      <li class="link">
+        <a href="search-friends/search">SERACH FRIENDS</a>
+      </li>
+      <li class="link" data-toggle="dropdown" (click)="fixDropdown()">
+        <div class="dropdown drop" id="workffs">
+          <div id="accountDropdown">
+            MY ACCOUNT
+            <span *ngIf="checkActiveNotifications()">(!)</span>
+            <span class="caret"></span>
+          </div>
+          <ul class="dropdown-menu drop-opt" id="dropdown-menu">
+            <li class="opt">
+              <a href="#" (click)="goToMyProfile()">My Profile</a>
+            </li>
+            <li class="opt">
+              <a href="#" id="messages" (click)="goToMyAccount($event)"
+                >Messages <span *ngIf="notificationSet.message">(!)</span></a
+              >
+            </li>
+            <li class="opt">
+              <a href="#" id="games" (click)="goToMyAccount($event)"
+                >My Games <span *ngIf="notificationSet.games">(!)</span></a
+              >
+            </li>
+            <li class="opt">
+              <a href="#" id="friends" (click)="goToMyAccount($event)"
+                >Friends <span *ngIf="notificationSet.friends">(!)</span></a
+              >
+            </li>
+            <li class="opt">
+              <a href="#" id="settings" (click)="goToMyAccount($event)"
+                >Settings</a
+              >
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="link">
+        <a href="home" (click)="onLogout()">LOGOUT</a>
+      </li>
+    </ul>
+  </div>
+</nav>

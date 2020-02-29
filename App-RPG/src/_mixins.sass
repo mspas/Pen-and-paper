@@ -1,0 +1,11 @@
+@mixin linear-gradient($direction, $color-list) 
+    background: linear-gradient($direction, $color-list) 
+
+@mixin radial-gradient($position, $color1, $percentage1, $color2, $percentage2) 
+    background: radial-gradient(circle at $position, $color1 $percentage1, $color2 $percentage2)
+
+@mixin radial-gradient3($position, $color1, $percentage1, $color2_prctg, $color3_prctg) 
+    background: radial-gradient(circle at $position, $color1 $percentage1, $color2_prctg, $color3_prctg)
+
+@mixin linear-gradient($position, $color1, $percentage1, $color2, $percentage2) 
+    background: linear-gradient(to $position, $color1 $percentage1, $color2, $percentage2)

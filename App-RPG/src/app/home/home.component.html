@@ -1,23 +1,49 @@
-<main class="main-content">
-  
-    <div *ngIf="isSignIn == true" class="note">
-      <app-sign-in></app-sign-in>
-    </div>
-    <div *ngIf="isSignUp == true" class="note">
-      <app-sign-up></app-sign-up>
-    </div>
-    <div *ngIf="isAbout == true" class="note">
-      <div class="note_text" align="justify">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis ornare tellus, id luctus tellus rhoncus non. Sed luctus, metus id facilisis vulputate, ligula felis interdum mauris, sed auctor nunc urna a ligula. Integer volutpat mauris bibendum dignissim varius. Sed sit amet maximus eros, vel maximus lectus. Duis ornare convallis ullamcorper. 
+<div class="home-wrap">
+  <div class="row" style="height: 100%; width: 100%;">
+    <div class="col center">
+      <div class="home-p2 home-sign border">
+        <p class="welcome_text font-fofer" align="center">
+          Fantastic worlds are waiting for an adventurer just like you! All you
+          need is <br />
+          <img src="/assets/pnp1.png" />
+        </p>
       </div>
     </div>
-  
-  <div class="buttons_wrap">
-      <div class="home_btn" id="btn_in" (click)="btnClick($event)">
+    <div class="col center">
+      <div id="hp1" class="home-p-wrap">
+        <div
+          id="hp1-front"
+          class="home-p1 home-sign-front border center font-fofer"
+          (click)="flipCard($event)"
+        >
+          Sign in to your account!
+        </div>
+        <div
+          id="hp1-back"
+          class="home-p1 home-sign home-sign-back border center"
+          (click)="flipCard($event)"
+        >
+          <app-sign-in></app-sign-in>
+        </div>
       </div>
-      <div class="home_btn" id="btn_up" (click)="btnClick($event)">
+    </div>
+    <div class="col center">
+      <div id="hp3" class="home-p-wrap">
+        <div
+          id="hp3-front"
+          class="home-p3 home-sign-front border center font-fofer"
+          (click)="flipCard($event)"
+        >
+          Don't have an account? Sign up! That's really damn quick!
+        </div>
+        <div
+          id="hp3-back"
+          class="home-p3 home-sign home-sign-back border"
+          (click)="flipCard($event)"
+        >
+          <app-sign-up></app-sign-up>
+        </div>
       </div>
-      <div class="home_btn" id="btn_about" (click)="btnClick($event)">
-      </div>
+    </div>
   </div>
-  </main>
+</div>

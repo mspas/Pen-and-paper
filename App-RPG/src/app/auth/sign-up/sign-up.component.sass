@@ -1,0 +1,83 @@
+.font-weight-normal
+  font-weight: 400
+
+button
+  padding: 5px 0
+  width: 120px
+  border-style: none
+  border-radius: 20px
+  font-family: Fofer
+  font-size: 25px
+  font-weight: 200
+  letter-spacing: 4px
+  border: solid 1px black
+
+button:hover
+  background: rgba(252, 93, 93, 0.4)
+
+.btn
+  margin-left: 50%
+  margin-top: 10%
+
+input:focus, textarea:focus, select:focus
+  outline: none
+
+.inp
+  position: relative
+  margin: auto
+  width: 100%
+
+.inp .label
+  position: absolute
+  font-family: Fofer
+  top: 16px
+  left: 0
+  font-size: 29px
+  color: #1f2022
+  font-weight: 500
+  transform-origin: 0 0
+  transition: all 0.2s ease
+
+.inp .border
+  position: absolute
+  bottom: 0
+  left: 0
+  height: 2px
+  width: 100%
+  background: #000000
+  transform: scaleX(0)
+  transform-origin: 0 0
+  transition: all 0.15s ease
+
+.inp input
+  -webkit-appearance: none
+  width: 100%
+  border: 0
+  font-family: inherit
+  padding: 12px 0
+  height: 45px
+  font-size: 16px
+  font-weight: 500
+  border-bottom: 2px solid #000000
+  background: none
+  border-radius: 0
+  color: #223254
+  transition: all 0.15s ease
+  outline: none
+
+.inp input:hover
+  background: rgba(34,50,84,0.03)
+
+.inp input:not(:placeholder-shown) + span
+  color: #5a667f
+  transform: translateY(-26px) scale(0.75)
+
+.inp input:focus
+  background: none
+
+.inp input:focus + span
+  color: #3e4244
+  transform: translateY(-26px) scale(0.75)
+
+.inp input:focus + span + .border
+  transform: scaleX(1)

@@ -1,27 +1,36 @@
-import { AuthGuardService } from './../auth/auth-guard.service';
-import { AuthService } from './../auth/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { DataService } from '../services/data.service';
-import { CheckNotificationModel } from '../models/notification.model';
+import { timer as observableTimer, Observable } from "rxjs";
+
+import { first } from "rxjs/operators";
+import { AuthGuardService } from "./../auth/auth-guard.service";
+import { AuthService } from "./../auth/auth.service";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { DataService } from "../services/data.service";
+import { CheckNotificationModel } from "../models/notification.model";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.sass"]
 })
 export class HeaderComponent implements OnInit {
-
-  private isLoggedIn : boolean;
+  private isLoggedIn: boolean;
   private dropIsDown: boolean = false;
-  private auth : AuthService;
+  private auth: AuthService;
   private timerSubscription: any;
   private newNotificationSet: CheckNotificationModel;
-  private notificationSet: CheckNotificationModel = new CheckNotificationModel(false, false, false);
+  private notificationSet: CheckNotificationModel = new CheckNotificationModel(
+    false,
+    false,
+    false
+  );
 
-  constructor(private _auth : AuthService, private router: Router, private _data: DataService) {
-    this.auth = _auth; 
+  constructor(
+    private _auth: AuthService,
+    private router: Router,
+    private _data: DataService
+  ) {
+    this.auth = _auth;
     this.isLoggedIn = false;
   }
 
@@ -40,21 +49,23 @@ export class HeaderComponent implements OnInit {
 
   fixDropdown() {
     if (this.dropIsDown == false)
-      document.getElementById("workffs").setAttribute("class", "dropdown drop open drop-focus");
+      document
+        .getElementById("workffs")
+        .setAttribute("class", "dropdown drop open drop-focus");
     else
       document.getElementById("workffs").setAttribute("class", "dropdown drop");
 
-    this.dropIsDown = !this.dropIsDown
+    this.dropIsDown = !this.dropIsDown;
   }
 
   goToMyProfile() {
-    this.router.navigate(['/profile', localStorage.getItem("nick")]);
+    this.router.navigate(["/profile", localStorage.getItem("nick")]);
   }
 
   ngAfterContentChecked(): void {
     //Called after every check of the component's or directive's content.
     //Add 'implements AfterContentChecked' to the class.
-    
+
     /*if (this.newNotificationSet.friend == true) 
       this.notificationSet.friend = true;
     if (this.newNotificationSet.game == true) 
@@ -70,7 +81,7 @@ export class HeaderComponent implements OnInit {
   }
 
   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   async refreshData() {
@@ -85,34 +96,44 @@ export class HeaderComponent implements OnInit {
 
     //console.log(JSON.stringify(this.newNotificationSet));
 
-    if (this.newNotificationSet.friend == true) 
+    if (this.newNotificationSet.friend == true)
       this.notificationSet.friend = true;
-    if (this.newNotificationSet.game == true) 
-      this.notificationSet.game = true;
-    if (this.newNotificationSet.message == true) 
+    if (this.newNotificationSet.game == true) this.notificationSet.game = true;
+    if (this.newNotificationSet.message == true)
       this.notificationSet.message = true;
 
     this.refreshData();
   }
 
   private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(4000).first().subscribe(() => this.refreshData());
+    this.timerSubscription = observableTimer(4000)
+      .pipe(first())
+      .subscribe(() => this.refreshData());
   }
 
-  goToMyAccount(event: Event) {    
+  goToMyAccount(event: Event) {
     let elementId: string = (event.target as Element).id;
-    this.router.navigate(['/my-account', elementId]);
+    this.router.navigate(["/my-account", elementId]);
   }
 
   checkActiveNotifications(): boolean {
-    if (this.notificationSet.message || this.notificationSet.friend || this.notificationSet.game) {
-      document.getElementById("accountDropdown").setAttribute("class", "notification-active");
-      document.getElementById("dropdown-menu").setAttribute("class", "dropdown-menu drop-opt drop-opt-ext");
+    if (
+      this.notificationSet.message ||
+      this.notificationSet.friend ||
+      this.notificationSet.game
+    ) {
+      document
+        .getElementById("accountDropdown")
+        .setAttribute("class", "notification-active");
+      document
+        .getElementById("dropdown-menu")
+        .setAttribute("class", "dropdown-menu drop-opt drop-opt-ext");
       return true;
     }
     document.getElementById("accountDropdown").setAttribute("class", "");
-    document.getElementById("dropdown-menu").setAttribute("class", "dropdown-menu drop-opt");
+    document
+      .getElementById("dropdown-menu")
+      .setAttribute("class", "dropdown-menu drop-opt");
     return false;
   }
-
 }

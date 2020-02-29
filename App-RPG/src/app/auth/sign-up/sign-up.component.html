@@ -1,65 +1,62 @@
-
-  <form class="form-signin" (ngSubmit)="onSignUp(f)" #f="ngForm" ngNativeValidate>
-    <div class="alert alert-success" *ngIf="accMsg == true">
-      <strong>Success!</strong> Account created succesfully!
-    </div>
-    <div class="btn-wrap"><button type="submit">SIGN UP</button></div>    
-        <div class="input-group">
-          <label for="inp" class="inp">
-              <input type="email" id="inp" name="email" placeholder="&nbsp;" ngModel class="form-control">
-              <span class="label">Email</span>
-              <span class="border"></span>
-            </label>
-        </div>
-        <div class="input-group">
-            <label for="inp" class="inp">
-                <input type="login" id="inp" name="login" placeholder="&nbsp;" ngModel class="form-control">
-                <span class="label">Login</span>
-                <span class="border"></span>
-              </label>
-          </div>
-        <div class="input-group">
-            <label for="inp" class="inp">
-                <input type="password" id="inp" name="password" placeholder="&nbsp;" ngModel class="form-control">
-                <span class="label">Password</span>
-                <span class="border"></span>
-            </label>
-        </div>
-        <div class="input-group">
-            <label for="inp" class="inp">
-                <input type="password" id="inp" name="password2" placeholder="&nbsp;" ngModel class="form-control">
-                <span class="label">Confim password</span>
-                <span class="border"></span>
-            </label>
-        </div>
-        <!--
-        <div class="input-group">
-            <label for="inp" class="inp">
-                <input type="text" id="inp" name="firstname" placeholder="&nbsp;" ngModel class="form-control">
-                <span class="label">First name</span>
-                <span class="border"></span>
-            </label>
-        </div>
-        <div class="input-group">
-            <label for="inp" class="inp">
-                <input type="text" id="inp" name="lastname" placeholder="&nbsp;" ngModel class="form-control">
-                <span class="label">Last name</span>
-                <span class="border"></span>
-            </label>
-        </div>
-        <div class="input-group">
-            <label for="inp" class="inp">
-                <input type="text" id="inp" name="city" placeholder="&nbsp;" ngModel class="form-control">
-                <span class="label">City</span>
-                <span class="border"></span>
-            </label>
-        </div>
-        <div class="input-group">
-            <label for="inp" class="inp">
-                <input type="number" id="inp" name="age" placeholder="&nbsp;" ngModel class="form-control">
-                <span class="label">Age</span>
-                <span class="border"></span>
-            </label>
-        </div>
-    -->
-  </form>
+<form class="form-signin" (ngSubmit)="onSignUp(f)" ngNativeValidate>
+  <div class="alert alert-success" *ngIf="accMsg == true">
+    <strong>Success!</strong> Account created succesfully!
+  </div>
+  <div class="input-group">
+    <label for="inp" class="inp">
+      <input
+        type="email"
+        id="inp"
+        name="email"
+        placeholder="&nbsp;"
+        ngModel
+        class="form-control"
+      />
+      <span class="label">Email</span>
+      <span class="border"></span>
+    </label>
+  </div>
+  <div class="input-group">
+    <label for="inp" class="inp">
+      <input
+        type="login"
+        id="inp"
+        name="login"
+        placeholder="&nbsp;"
+        ngModel
+        class="form-control"
+      />
+      <span class="label">Login</span>
+      <span class="border"></span>
+    </label>
+  </div>
+  <div class="input-group">
+    <label for="inp" class="inp">
+      <input
+        type="password"
+        id="inp"
+        name="password"
+        placeholder="&nbsp;"
+        ngModel
+        class="form-control"
+      />
+      <span class="label">Password</span>
+      <span class="border"></span>
+    </label>
+  </div>
+  <div class="input-group">
+    <label for="inp" class="inp">
+      <input
+        type="password"
+        id="inp"
+        name="password2"
+        placeholder="&nbsp;"
+        ngModel
+        class="form-control"
+      />
+      <span class="label">Confim password</span>
+      <span class="border"></span>
+    </label>
+  </div>
+  <button class="btn" type="submit">SIGN UP</button>
+</form>

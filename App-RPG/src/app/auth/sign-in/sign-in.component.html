@@ -14,17 +14,16 @@
       <button class="btn btn-lg btn-success btn-block" style="font-size: 20px" type="submit">Sign in</button>
   </form>-->
 
-<form class="form-signin" (ngSubmit)="onSignIn(f)">
+<form class="form-signin" (ngSubmit)="onSignIn(f)" #f="ngForm">
   <div class="alert alert-danger" *ngIf="loginError == true">
     <strong>Error!</strong> Login or password incorrect!
   </div>
   <div class="input-group" style="padding-top: 10px; padding-bottom: 10px">
-    <label for="inp1" class="inp">
+    <label for="input1" class="inp">
       <input
         type="login"
-        id="inp1"
+        id="input1"
         name="login"
-        placeholder="&nbsp;"
         ngModel
         class="form-control"
       />
@@ -33,12 +32,11 @@
     </label>
   </div>
   <div class="input-group">
-    <label for="inp2" class="inp">
+    <label for="input2" class="inp">
       <input
         type="password"
-        id="inp2"
+        id="input2"
         name="password"
-        placeholder="&nbsp;"
         ngModel
         class="form-control"
       />

@@ -18,6 +18,7 @@ export class SignInComponent implements OnInit {
     this.loginError = false;
     const login = form.value.login;
     const password = form.value.password;
+    console.log(login, password);
     this.auth.signInUser(login, password);
     this.auth.currentLoginError.subscribe(data => (this.loginError = data));
   }

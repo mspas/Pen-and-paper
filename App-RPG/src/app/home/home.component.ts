@@ -11,13 +11,15 @@ export class HomeComponent implements OnInit {
   ngOnInit() {}
 
   flipCard(event) {
-    let id = event.target.id.slice(0, 3);
-    let e_back = document.getElementById(id + "-back");
-    let e = document.getElementById(id);
-    let c = e.getAttribute("class");
-    if (c.indexOf("flip") == -1) {
-      e.setAttribute("class", c + " flip");
-      e_back.style.backfaceVisibility = "visible";
+    if (event.target.id.slice(0, 2) == "hp") {
+      let id = event.target.id.slice(0, 3);
+      let e_back = document.getElementById(id + "-back");
+      let e = document.getElementById(id);
+      let c = e.getAttribute("class");
+      if (c.indexOf("flip") == -1) {
+        e.setAttribute("class", c + " flip");
+        e_back.style.backfaceVisibility = "visible";
+      }
     }
   }
 }

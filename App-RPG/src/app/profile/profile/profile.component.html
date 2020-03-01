@@ -1,0 +1,145 @@
+<div class="container">
+  <div class="profile-header row">
+    <div class="col-md-3 image-wrap center">
+      <img
+        src="assets/unknown.png"
+        alt="Profile image"
+        class="profile-photo"
+        *ngIf="defaultImage == true"
+      />
+      <img
+        [src]="imageToShow"
+        alt="Profile image"
+        class="profile-photo"
+        *ngIf="defaultImage == false"
+      />
+    </div>
+    <div class="col profile-control">
+      <p class="profile-name">
+        {{ userProfileData.firstname }} {{ userProfileData.lastname }}
+      </p>
+      <div class="btn-wrap">
+        <div *ngIf="myProfilePage == false && mobileView == false">
+          <button
+            class="btn-profile"
+            id="send_message"
+            data-toggle="tooltip"
+            title="Send nudes pls"
+            (click)="onSendMessage()"
+          >
+            <p class="btn-text">
+              Send<br />
+              message
+            </p>
+          </button>
+          <button
+            *ngIf="isFriend == false && isInvited == false"
+            class="btn-profile friend-opt"
+            id="send_invite"
+            (click)="onSendInvite()"
+          >
+            <p class="btn-text">
+              Send<br />
+              invite
+            </p>
+          </button>
+          <button
+            *ngIf="isFriend == false && isInvited == true"
+            class="btn-profile friend-opt"
+            id="invite_waiting"
+          >
+            <p class="btn-text">
+              Invite<br />
+              is waiting...
+            </p>
+          </button>
+          <button
+            *ngIf="isFriend == true"
+            class="btn-profile friend-opt"
+            id="delete_friend"
+            (click)="deleteFriend()"
+          >
+            <p class="btn-text">
+              Delete<br />
+              friend
+            </p>
+          </button>
+        </div>
+        <div class="btn-big" id="my-page" *ngIf="myProfilePage == true">
+          <button
+            class="btn-profile"
+            id="change_personal_data"
+            data-toggle="modal"
+            data-target="#modalChangeData"
+          >
+            <p class="btn-text">
+              Change<br />
+              profile info
+            </p>
+          </button>
+          <button
+            class="btn-profile"
+            id="change_passwrod"
+            data-toggle="modal"
+            data-target="#modalChangePassword"
+          >
+            <p class="btn-text">
+              Change<br />
+              password
+            </p>
+          </button>
+          <button
+            class="btn-profile"
+            id="change_image"
+            data-toggle="modal"
+            data-target="#modalChangeImage"
+          >
+            <p class="btn-text">
+              Change<br />
+              profile picture
+            </p>
+          </button>
+        </div>
+        <div
+          class="btn-mobile"
+          id="my-page"
+          *ngIf="myProfilePage == true && mobileView == true"
+        >
+          <button class="btn-profile" id="settings" (click)="onGoToSettings()">
+            <p class="btn-text">Settings</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col profile-info center">
+      <table>
+        <tbody>
+          <tr>
+            <td>Nickname:</td>
+            <td class="profile-data">{{ userProfileData.login }}</td>
+          </tr>
+          <tr *ngIf="isFriend == true || myProfilePage == true">
+            <td>Email:</td>
+            <td class="profile-data">{{ userProfileData.email }}</td>
+          </tr>
+          <tr>
+            <td>First name:</td>
+            <td class="profile-data">{{ userProfileData.firstname }}</td>
+          </tr>
+          <tr>
+            <td>Last name:</td>
+            <td class="profile-data">{{ userProfileData.lastname }}</td>
+          </tr>
+          <tr>
+            <td>City:</td>
+            <td class="profile-data">{{ userProfileData.city }}</td>
+          </tr>
+          <tr *ngIf="isFriend == true">
+            <td>Age:</td>
+            <td class="profile-data">{{ userProfileData.age }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

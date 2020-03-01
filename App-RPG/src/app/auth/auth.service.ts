@@ -44,9 +44,10 @@ export class AuthService {
   public isAuthenticated(): boolean {
     const token = this.getToken();
     let isValid = helper.isTokenExpired(token);
+    let isToken = localStorage.getItem("token") ? true : false;
     /*if (!isValid && token != null)
       this.refreshToken(this.getRefreshToken(), this.getLogin());*/
-    return helper.isTokenExpired(token);
+    return isToken;
   }
 
   getAccounts() {
@@ -61,6 +62,7 @@ export class AuthService {
   }
 
   signInUser(email: string, password: string) {
+    console.log(email, password);
     const user: AuthModel = new AuthModel(email, password);
     this._http.post<AccessToken>(this.url + "login", user).subscribe(
       (token: AccessToken) => {
@@ -107,7 +109,7 @@ export class AuthService {
 
   getDecodedAccessToken(token: string): any {
     try {
-      helper.decodeToken(token);
+      return helper.decodeToken(token);
     } catch (Error) {
       return null;
     }

@@ -1,0 +1,80 @@
+<div class="games-list-wrap">
+  <p>Game history:</p>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th></th>
+          <th>Players</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of gamesAccepted">
+          <td>{{ game.game.id }}</td>
+          <td type="button" class="button-name">
+            <a [routerLink]="['/game', game.game.id]">{{ game.game.title }}</a>
+          </td>
+          <td>
+            <span
+              *ngIf="game.isGameMaster == true"
+              title="Game Master"
+              class="glyphicon glyphicon-star"
+            ></span>
+          </td>
+          <td>{{ game.game.nofparticipants }} / {{ game.game.maxplayers }}</td>
+          <td>
+            {{ game.game.status }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="isMyProfileFlag == true" class="table-responsive">
+    <p>Avaliable invitations:</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Players</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of invitations">
+          <td>{{ game.game.id }}</td>
+          <td type="button" class="button-name">
+            <a [routerLink]="['/game', game.game.id]">{{ game.game.title }}</a>
+          </td>
+          <td>{{ game.game.nofparticipants }} / {{ game.game.nofplayers }}</td>
+          <td>
+            <span *ngIf="game.game.isActive == true">Active</span>
+            <span *ngIf="game.game.isActive == false">Ended</span>
+          </td>
+          <td>
+            <h2 class="decision">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="onAcceptRequest(game.id)"
+              >
+                <span class="glyphicon glyphicon-ok"></span> Accept
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="onDeclineRequest(game.id)"
+              >
+                <span class="glyphicon glyphicon-remove"></span> Decline
+              </button>
+            </h2>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

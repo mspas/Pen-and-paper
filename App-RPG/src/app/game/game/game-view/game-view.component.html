@@ -1,0 +1,79 @@
+<div class="panel" id="panel1">
+  <div class="panel-heading">
+    <p
+      class="panel-title toggle"
+      data-toggle="collapse"
+      href="#collapseGame"
+      role="button"
+      aria-expanded="false"
+      aria-controls="collapseGame"
+    >
+      <img src="{{ imageUrl }}" alt="Game image" />
+      <span class="title">{{ gameData.title }} </span>
+      <span class="title-status"> - {{ gameData.status }} -</span>
+    </p>
+  </div>
+  <div id="collapseGame" class="panel-collapse collapse">
+    <div class="container panel-body">
+      <div class="description">{{ gameData.description }}</div>
+      <table>
+        <tbody>
+          <tr>
+            <td>CATEGORY:</td>
+            <td class="profile-data">{{ gameData.category }}</td>
+          </tr>
+          <tr>
+            <td>START DATE:</td>
+            <td class="profile-data">
+              {{ gameData.date | date: "dd-MM-yyy" }}
+            </td>
+          </tr>
+          <tr>
+            <td>NUMBER OF PLAYERS:</td>
+            <td class="profile-data">
+              {{ gameData.nofparticipants }}/{{ gameData.maxplayers }}
+            </td>
+          </tr>
+          <tr>
+            <td>BOOK:</td>
+            <td class="profile-data">{{ gameData.book }}</td>
+          </tr>
+          <tr>
+            <td>STATUS:</td>
+            <td class="profile-data">{{ gameData.status }}</td>
+          </tr>
+          <tr>
+            <td>CAN I JOIN WITHOUT INVITATION?</td>
+            <td class="profile-data">
+              {{ gameData.needInvite | transformYesNoBoolean }}
+            </td>
+          </tr>
+          <tr>
+            <td>CAN I JOIN AFTER THE GAME STARTED?</td>
+            <td class="profile-data">
+              {{ gameData.hotJoin | transformYesNoBoolean }}
+            </td>
+          </tr>
+          <tr>
+            <td>GAME MASTER:</td>
+            <td class="profile-data">
+              <p
+                class="profile-link"
+                role="button"
+                [routerLink]="['/profile', gameMaster.login]"
+              >
+                <img
+                  [src]="imageToShow"
+                  class="profile-photo"
+                  alt="Profile image"
+                />{{ gameMaster.firstname }} {{ gameMaster.lastname }} ({{
+                  gameMaster.login
+                }})
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -19,16 +19,14 @@ export class ProfileComponent implements OnInit {
 
   imageToShow: any;
   isImageLoading: boolean;
-  isFriend: boolean = false;
-  isInvited: boolean = false;
   defaultImage: boolean = true;
-  mobileView = false;
-  userID: number;
-  data: any;
 
-  profileChild: boolean = true;
-  friendsChild: boolean = false;
-  gamesChild: boolean = false;
+  isFriendFlag = false;
+  isInvitedFlag = false;
+  mobileViewFlag = false;
+  viewChildFlag = true;
+  isMyProfileFlag = false;
+  data: any;
 
   myProfileData: PersonalDataModel;
   myGamesAPPList: GameToPersonAppModel[] = [];
@@ -39,7 +37,6 @@ export class ProfileComponent implements OnInit {
   userFriends: FriendModel[] = [];
 
   ourRelation: FriendModel = null;
-  myProfilePage: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,17 +80,17 @@ export class ProfileComponent implements OnInit {
     }
 
     if (this.myProfileData.id == this.userProfileData.id) {
-      this.myProfilePage = true;
+      this.isMyProfileFlag = true;
     } else {
       if (this.myFriends != null) {
         this.myFriends.forEach(fr => {
           if (fr.personalData.id == this.userProfileData.id) {
             if (fr.isAccepted) {
-              this.isFriend = true;
-              this.isInvited = false;
+              this.isFriendFlag = true;
+              this.isInvitedFlag = false;
             } else {
-              this.isFriend = false;
-              this.isInvited = true;
+              this.isFriendFlag = false;
+              this.isInvitedFlag = true;
             }
             this.ourRelation = fr;
           }
@@ -123,8 +120,8 @@ export class ProfileComponent implements OnInit {
       this._api.sendFriendInvite(loggedID, this.userProfileData.id);
     if (
       this.ourRelation != null &&
-      this.isInvited == false &&
-      this.isFriend == false
+      this.isInvitedFlag == false &&
+      this.isFriendFlag == false
     ) {
       let relation = this.ourRelation;
       relation.isFriendRequest = true;
@@ -193,5 +190,16 @@ export class ProfileComponent implements OnInit {
       nativeElement.files[0]
     );
     window.location.reload();
+  }
+
+  onNavProfile(event) {
+    if (event.target.getAttribute("class") !== "active") {
+      this.viewChildFlag = !this.viewChildFlag;
+
+      document.getElementById("nav-profile-games").removeAttribute("class");
+      document.getElementById("nav-profile-friends").removeAttribute("class");
+
+      event.target.setAttribute("class", "active");
+    }
   }
 }

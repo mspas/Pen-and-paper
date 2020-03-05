@@ -5,11 +5,10 @@ $photoSize: 200px
 $marginInfo: 50px
 
 .container
-    padding-top: $headerHeight + $marginInfo
     height: 100vh
     .profile-header
         min-height: $photoSize + 100px
-        background-color: #f7f7f7
+        background-color: $lightWhite
         border-radius: 5px
         box-shadow: 0px 0px 1px 1px #00000010
         img 
@@ -37,12 +36,12 @@ $marginInfo: 50px
                 color: white
                 border-radius: 2px
                 border: none
-                box-shadow: 0px 0px 1px 1px $btnGreen
-                background-color: $btnGreen
+                box-shadow: 0px 0px 1px 1px $green
+                background-color: $green
                 transition: all 0.1s ease-in-out
                 &:hover
                     transform: scale(1.1)
-                    box-shadow: 0px 0px 5px 1px $btnGreen
+                    box-shadow: 0px 0px 5px 1px $green
                 .btn-text 
                     text-align: center
                     line-height: 1.15
@@ -56,5 +55,38 @@ $marginInfo: 50px
                 tr
                     td
                         padding: 5px 20px
-
-            
+    .profile-content
+        margin-top: 20px
+        ul 
+            height: 40px
+            margin: 0
+            padding: 0
+            list-style-type: none
+            display: flex
+            justify-content: flex-end
+            align-items: center
+            li 
+                display: inline
+                padding: 10px 20px
+                margin-top: 2px
+                background-color: $lightWhite
+                border-radius: 5px
+                border: 1px solid #00000011
+                user-select: none
+                cursor: pointer
+                &:nth-child(1)
+                    border-right: none
+                &:hover
+                    color: $third
+                    background-color: #fff
+            .active
+                cursor: default
+                border-bottom: none
+                &:hover
+                    background-color: $lightWhite
+        .profile-children
+            min-height: 300px
+            width: 100%
+            background-color: $lightWhite
+            border-radius: 5px
+            box-shadow: 0px 0px 1px 1px #00000010

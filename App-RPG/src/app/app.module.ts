@@ -16,6 +16,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProfileModule } from "./profile/profile.module";
 import { AuthGuardService } from "./auth/auth-guard.service";
+import { GameModule } from "./game/game.module";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthGuardService } from "./auth/auth-guard.service";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ProfileModule
+    ProfileModule,
+    GameModule
   ],
   providers: [
     ApiService,

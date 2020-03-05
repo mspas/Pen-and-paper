@@ -19,7 +19,7 @@
         {{ userProfileData.firstname }} {{ userProfileData.lastname }}
       </p>
       <div class="btn-wrap">
-        <div *ngIf="myProfilePage == false && mobileView == false">
+        <div *ngIf="isMyProfileFlag == false && mobileView == false">
           <button
             class="btn-profile"
             id="send_message"
@@ -65,7 +65,7 @@
             </p>
           </button>
         </div>
-        <div class="btn-big" id="my-page" *ngIf="myProfilePage == true">
+        <div class="btn-big" id="my-page" *ngIf="isMyProfileFlag == true">
           <button
             class="btn-profile"
             id="change_personal_data"
@@ -103,7 +103,7 @@
         <div
           class="btn-mobile"
           id="my-page"
-          *ngIf="myProfilePage == true && mobileView == true"
+          *ngIf="isMyProfileFlag == true && mobileView == true"
         >
           <button class="btn-profile" id="settings" (click)="onGoToSettings()">
             <p class="btn-text">Settings</p>
@@ -118,7 +118,7 @@
             <td>Nickname:</td>
             <td class="profile-data">{{ userProfileData.login }}</td>
           </tr>
-          <tr *ngIf="isFriend == true || myProfilePage == true">
+          <tr *ngIf="isFriend == true || isMyProfileFlag == true">
             <td>Email:</td>
             <td class="profile-data">{{ userProfileData.email }}</td>
           </tr>
@@ -140,6 +140,30 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <ul class="profile-nav font-montserrat">
+      <li id="nav-profile-games" class="active" (click)="onNavProfile($event)">
+        GAMES
+      </li>
+      <li id="nav-profile-friends" (click)="onNavProfile($event)">
+        FRIENDS
+      </li>
+    </ul>
+    <div class="profile-children">
+      <app-profile-friends
+        *ngIf="viewChildFlag == false"
+        [userFriends]="userFriends"
+        [myFriends]="myFriends"
+        [isMyProfileFlag]="isMyProfileFlag"
+      ></app-profile-friends>
+      <app-profile-games
+        *ngIf="viewChildFlag == true"
+        [userGamesAPPList]="userGamesAPPList"
+        [isMyProfileFlag]="isMyProfileFlag"
+      ></app-profile-games>
     </div>
   </div>
 </div>

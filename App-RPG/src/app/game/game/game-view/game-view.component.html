@@ -1,6 +1,7 @@
 <div class="panel" id="panel1">
   <div class="panel-heading">
     <p
+      id="panel-collapser"
       class="panel-title toggle"
       data-toggle="collapse"
       href="#collapseGame"
@@ -17,7 +18,7 @@
     <div class="container panel-body">
       <div class="description">{{ gameData.description }}</div>
       <table>
-        <tbody>
+        <tbody class="font-montserrat">
           <tr>
             <td>CATEGORY:</td>
             <td class="profile-data">{{ gameData.category }}</td>
@@ -28,15 +29,43 @@
               {{ gameData.date | date: "dd-MM-yyy" }}
             </td>
           </tr>
-          <tr>
-            <td>NUMBER OF PLAYERS:</td>
+          <tr
+            class="toggle"
+            data-toggle="collapse"
+            href="#collapsePlayersList"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapsePlayersList"
+          >
+            <td class="clickable">NUMBER OF PLAYERS:</td>
             <td class="profile-data">
-              {{ gameData.nofparticipants }}/{{ gameData.maxplayers }}
+              <span class="clickable"
+                >{{ gameData.nofparticipants }}/{{ gameData.maxplayers }}</span
+              >
+              <div id="collapsePlayersList" class="collapse">
+                <a
+                  *ngFor="let player of acceptedPlayers; index as i"
+                  class="profile-link"
+                  role="button"
+                  [routerLink]="['/profile', player.data.login]"
+                  style="display: block;"
+                >
+                  <img
+                    *ngIf="player.photo"
+                    [src]="player.photo"
+                    alt="Profile image"
+                  />
+                  <img
+                    *ngIf="player.photo == null"
+                    src="assets/unknown-no-bg.png"
+                    alt="Profile image"
+                  />
+                  {{ player.data.firstname }} {{ player.data.lastname }} ({{
+                    player.data.login
+                  }})
+                </a>
+              </div>
             </td>
-          </tr>
-          <tr>
-            <td>BOOK:</td>
-            <td class="profile-data">{{ gameData.book }}</td>
           </tr>
           <tr>
             <td>STATUS:</td>
@@ -57,7 +86,7 @@
           <tr>
             <td>GAME MASTER:</td>
             <td class="profile-data">
-              <p
+              <a
                 class="profile-link"
                 role="button"
                 [routerLink]="['/profile', gameMaster.login]"
@@ -69,7 +98,7 @@
                 />{{ gameMaster.firstname }} {{ gameMaster.lastname }} ({{
                   gameMaster.login
                 }})
-              </p>
+              </a>
             </td>
           </tr>
         </tbody>

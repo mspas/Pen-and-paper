@@ -90,7 +90,10 @@ export class GameViewComponent implements OnInit {
       }
       this.gameData.participants.forEach(card => {
         //if (card.playerId == player.id && card.id != this.gameMaster.id) {
-        if (card.playerId == player.id) {
+        if (
+          card.playerId == player.id &&
+          this.gameData.masterId !== player.id
+        ) {
           if (card.isAccepted) {
             let playerListModel = new PersonalDataListModel(player, null);
             this.acceptedPlayers.push(playerListModel);
@@ -101,6 +104,13 @@ export class GameViewComponent implements OnInit {
         }
       });
     });
+
+    if (!this.iAmParticipant) {
+      document.getElementById("panel-collapser").removeAttribute("data-toggle");
+      document
+        .getElementById("collapseGame")
+        .setAttribute("class", "panel-collapse");
+    }
 
     if (this.subpage == "view") {
       if (this.iAmParticipant || this.iAmMaster) {
@@ -114,7 +124,11 @@ export class GameViewComponent implements OnInit {
     if (this.waitingSelfRequested.length > 0) this.isNewRequest = true;
     if (this.waitingInvited.length > 0) this.isNewInvited = true;
 
-    if (this.gameMaster.photoName != null && this.gameMaster.photoName != "") {
+    if (
+      this.gameMaster.photoName != null &&
+      this.gameMaster.photoName != "" &&
+      this.gameMaster.photoName != "unknown.png"
+    ) {
       this._api.getImage(this.gameMaster.photoName).subscribe(
         data => {
           this.createImageFromBlob(data, -1);
@@ -128,10 +142,17 @@ export class GameViewComponent implements OnInit {
     }
     let i = 0;
     this.acceptedPlayers.forEach(element => {
-      if (element.data.photoName != null && element.data.photoName != "") {
+      if (
+        element.data.photoName != null &&
+        element.data.photoName != "" &&
+        element.data.photoName != "unknown.png"
+      ) {
         this._api.getImage(element.data.photoName).subscribe(
           data => {
-            this.createImageFromBlob(data, i - 1);
+            this.createImageFromBlob(
+              data,
+              this.acceptedPlayers.indexOf(element)
+            );
             this.isImageLoading = false;
           },
           error => {

@@ -3,8 +3,8 @@
     
 .panel
     background-color: $lightWhite
-    border-radius: 5px
-    box-shadow: 0px 0px 1px 1px #00000010
+    @include border-shadow(1px, 1px, 5px, #00000010)
+    @include radial-gradient3(top right, $green, -40%, $lightWhite 20%, $primary 100%)
     .panel-heading
         position: relative
         margin: 0
@@ -28,4 +28,25 @@
                 top: 30px
                 right: 10px
                 color: $green
-                font-size: 1.5rem
+    .panel-body
+        padding: 50px 0
+        .description
+            overflow-y: auto
+            text-align: justify
+            padding: 0 50px
+            max-height: 300px
+            @include scrollbar(5px, $lightWhite, $primary)
+            
+        table 
+            margin: 25px auto
+            margin-bottom: 0
+            @include border-shadow(1px, 1px, 5px, #00000010)
+            @include radial-gradient3(top right, $primary, -100%, $lightWhite 80%, $primary 200%)
+            &:hover
+                @include radial-gradient3(top right, $primary, -100%, $lightWhite 60%, $primary 200%)
+            td 
+                padding: 5px 15px
+            #collapsePlayersList
+                text-align: left
+            .profile-data
+                text-align: center

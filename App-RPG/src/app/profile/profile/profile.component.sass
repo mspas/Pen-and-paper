@@ -9,8 +9,7 @@ $marginInfo: 50px
     .profile-header
         min-height: $photoSize + 100px
         background-color: $lightWhite
-        border-radius: 5px
-        box-shadow: 0px 0px 1px 1px #00000010
+        @include border-shadow(1px, 1px, 5px, #00000010)
         img 
             max-width: $photoSize
             width: 100%

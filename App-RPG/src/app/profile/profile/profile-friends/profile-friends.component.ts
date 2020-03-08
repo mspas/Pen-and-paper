@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { FriendModel, FriendListModel } from "src/app/models/friend.model";
-import { PersonalDataModel } from "src/app/models/personaldata.model";
+import {
+  PersonalDataModel,
+  PersonalDataListModel
+} from "src/app/models/personaldata.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/services/api.service";
 
@@ -13,7 +16,8 @@ export class ProfileFriendsComponent implements OnInit {
   @Input("userFriends") userFriends: FriendModel[] = [];
   @Input("myFriends") myFriends: FriendModel[] = [];
   @Input("isMyProfileFlag") isMyProfileFlag: boolean;
-  friendsAccepted: PersonalDataModel[] = [];
+
+  friendsAccepted: PersonalDataListModel[] = [];
 
   imageToShow: any;
   isImageLoading: boolean;
@@ -24,7 +28,7 @@ export class ProfileFriendsComponent implements OnInit {
   friendsAcceptedNoPhoto: PersonalDataModel[] = [];
   friendsAcceptedPhoto: FriendListModel[] = [];
 
-  invitations: PersonalDataModel[] = [];
+  invitations: PersonalDataListModel[] = [];
   invitationsNoPhoto: PersonalDataModel[] = [];
   invitationsPhoto: FriendListModel[] = [];
 
@@ -38,23 +42,31 @@ export class ProfileFriendsComponent implements OnInit {
     if (this.userFriends != null) {
       this.userFriends.forEach(fr => {
         if (fr.isAccepted) {
-          this.friendsAccepted.push(fr.personalData);
+          this.friendsAccepted.push(
+            new PersonalDataListModel(fr.personalData, null)
+          );
         }
         if (!fr.isAccepted && fr.isReceiver) {
-          this.invitations.push(fr.personalData);
+          this.invitations.push(
+            new PersonalDataListModel(fr.personalData, null)
+          );
         }
       });
     }
 
     this.friendsAccepted.forEach(element => {
-      if (element.photoName != null && element.photoName != "unknown.png") {
-        let friend = new FriendListModel(element, null);
-        this.friendsAcceptedPhoto.push(friend);
-        let id = this.friendsAcceptedPhoto.length - 1;
+      if (
+        element.data.photoName != null &&
+        element.data.photoName != "unknown.png"
+      ) {
         this.isImageLoading = true;
-        this._api.getImage(element.photoName).subscribe(
+        this._api.getImage(element.data.photoName).subscribe(
           data => {
-            this.createImageFromBlob(data, id, true);
+            this.createImageFromBlob(
+              data,
+              this.friendsAccepted.indexOf(element),
+              true
+            );
             this.isImageLoading = false;
           },
           error => {
@@ -62,20 +74,22 @@ export class ProfileFriendsComponent implements OnInit {
             console.log(error);
           }
         );
-      } else {
-        this.friendsAcceptedNoPhoto.push(element);
       }
     });
 
     this.invitations.forEach(element => {
-      if (element.photoName != null && element.photoName != "") {
-        let friend = new FriendListModel(element, null);
-        this.invitationsPhoto.push(friend);
-        let id = this.invitationsPhoto.length - 1;
+      if (
+        element.data.photoName != null &&
+        element.data.photoName != "unknown.png"
+      ) {
         this.isImageLoading = true;
-        this._api.getImage(element.photoName).subscribe(
+        this._api.getImage(element.data.photoName).subscribe(
           data => {
-            this.createImageFromBlob(data, id, false);
+            this.createImageFromBlob(
+              data,
+              this.invitations.indexOf(element),
+              false
+            );
             this.isImageLoading = false;
           },
           error => {
@@ -83,8 +97,6 @@ export class ProfileFriendsComponent implements OnInit {
             console.log(error);
           }
         );
-      } else {
-        this.invitationsNoPhoto.push(element);
       }
     });
   }
@@ -94,8 +106,8 @@ export class ProfileFriendsComponent implements OnInit {
     reader.addEventListener(
       "load",
       () => {
-        if (check) this.friendsAcceptedPhoto[id].photo = reader.result;
-        else this.invitationsPhoto[id].photo = reader.result;
+        if (check) this.friendsAccepted[id].photo = reader.result;
+        else this.invitations[id].photo = reader.result;
       },
       false
     );

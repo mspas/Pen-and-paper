@@ -44,8 +44,7 @@ namespace RPG.Api.Persistence.Repositories.RGame
 
         public async Task<List<GameToPerson>> GetG2PListAsync(int userId)
         {
-            return await _context.GamesToPerson.Include(p => p.game)
-                                    .Include(p => p.player)
+            return await _context.GamesToPerson
                                     .Include(p => p.characterSkills)
                                     .Where(mbox => mbox.playerId == userId)
                                     .ToListAsync();

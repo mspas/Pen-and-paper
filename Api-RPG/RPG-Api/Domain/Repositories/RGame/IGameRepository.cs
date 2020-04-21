@@ -10,6 +10,7 @@ namespace RPG.Api.Domain.Repositories.RGame
     public interface IGameRepository
     {
         Task<Game> GetGameAsync(int gameId);
+        Task<Game> GetGameSnapAsync(int gameId);
         Task<List<Game>> GetGameListAsync();
         Task<GameResponse> AddGameAsync(Game game);
         GameResponse EditGame(Game game);

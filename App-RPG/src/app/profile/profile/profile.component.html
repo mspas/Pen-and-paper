@@ -19,7 +19,7 @@
         {{ userProfileData.firstname }} {{ userProfileData.lastname }}
       </p>
       <div class="btn-wrap">
-        <div *ngIf="isMyProfileFlag == false && mobileView == false">
+        <div *ngIf="isMyProfileFlag == false && mobileViewFlag == false">
           <button
             class="btn-profile"
             id="send_message"
@@ -33,7 +33,7 @@
             </p>
           </button>
           <button
-            *ngIf="isFriend == false && isInvited == false"
+            *ngIf="isFriendFlag == false && isInvitedFlag == false"
             class="btn-profile friend-opt"
             id="send_invite"
             (click)="onSendInvite()"
@@ -44,7 +44,7 @@
             </p>
           </button>
           <button
-            *ngIf="isFriend == false && isInvited == true"
+            *ngIf="isFriendFlag == false && isInvitedFlag == true"
             class="btn-profile friend-opt"
             id="invite_waiting"
           >
@@ -54,7 +54,7 @@
             </p>
           </button>
           <button
-            *ngIf="isFriend == true"
+            *ngIf="isFriendFlag == true"
             class="btn-profile friend-opt"
             id="delete_friend"
             (click)="deleteFriend()"
@@ -103,7 +103,7 @@
         <div
           class="btn-mobile"
           id="my-page"
-          *ngIf="isMyProfileFlag == true && mobileView == true"
+          *ngIf="isMyProfileFlag == true && mobileViewFlag == true"
         >
           <button class="btn-profile" id="settings" (click)="onGoToSettings()">
             <p class="btn-text">Settings</p>
@@ -118,7 +118,7 @@
             <td>Nickname:</td>
             <td class="profile-data">{{ userProfileData.login }}</td>
           </tr>
-          <tr *ngIf="isFriend == true || isMyProfileFlag == true">
+          <tr *ngIf="isFriendFlag == true || isMyProfileFlag == true">
             <td>Email:</td>
             <td class="profile-data">{{ userProfileData.email }}</td>
           </tr>
@@ -134,7 +134,7 @@
             <td>City:</td>
             <td class="profile-data">{{ userProfileData.city }}</td>
           </tr>
-          <tr *ngIf="isFriend == true">
+          <tr *ngIf="isFriendFlag == true">
             <td>Age:</td>
             <td class="profile-data">{{ userProfileData.age }}</td>
           </tr>

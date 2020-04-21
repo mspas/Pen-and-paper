@@ -42,6 +42,11 @@ namespace RPG.Api.Persistence.Repositories.RGame
                                     .FirstAsync(mbox => mbox.Id == gameId);
         }
 
+        public async Task<Game> GetGameSnapAsync(int gameId)
+        {
+            return await _context.Games.Include(p => p.gameMaster).FirstAsync(mbox => mbox.Id == gameId);
+        }
+
         public async Task<List<Game>> GetGameListAsync()
         {
             return await _context.Games.Include(p => p.gameMaster)

@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn = this.auth.isAuthenticated();
+    console.log(this.isLoggedIn);
     //this.refreshData();
     this._data.currentNotificationSet.subscribe(data => {
       this.newNotificationSet = data;

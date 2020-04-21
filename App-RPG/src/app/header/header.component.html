@@ -25,7 +25,18 @@
       <li class="link">
         <a href="search-friends/search">SERACH FRIENDS</a>
       </li>
-      <li class="link" data-toggle="dropdown" (click)="fixDropdown()">
+      <li class="link" *ngIf="!isLoggedIn">
+        <a href="search-friends/search">SIGN IN</a>
+      </li>
+      <li class="link" *ngIf="!isLoggedIn">
+        <a href="search-friends/search">SIGN UP</a>
+      </li>
+      <li
+        class="link"
+        data-toggle="dropdown"
+        (click)="fixDropdown()"
+        *ngIf="isLoggedIn"
+      >
         <div class="dropdown drop" id="workffs">
           <div id="accountDropdown">
             MY ACCOUNT
@@ -59,7 +70,7 @@
           </ul>
         </div>
       </li>
-      <li class="link">
+      <li class="link" *ngIf="isLoggedIn">
         <a href="home" (click)="onLogout()">LOGOUT</a>
       </li>
     </ul>

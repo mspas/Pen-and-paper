@@ -38,27 +38,29 @@ export class ApiService {
     private _data: DataService
   ) {}
 
-  getAllDataProfile(nick: string, login: string): Observable<any> {
-    if (login != null && nick != null) {
+  getAllDataProfile(
+    profileLogin: string,
+    loggedLogin: string
+  ): Observable<any> {
+    if (loggedLogin != null && profileLogin != null) {
       let myProfile = this._http.get<PersonalDataModel[]>(
-        this.url + "pdata/" + login
+        this.url + "pdata/" + loggedLogin
       );
-      //.do(data => console.log("oby id " + JSON.stringify(data)));
       let myFriendsList = this._http.get<FriendModel[]>(
-        this.url + "Friend/" + login
+        this.url + "Friend/" + loggedLogin
       );
       let myGamesList = this._http.get<GameToPersonAppModel[]>(
-        this.url + "GameToPerson/" + login
+        this.url + "GameToPerson/" + loggedLogin
       );
 
       let profile = this._http.get<PersonalDataModel[]>(
-        this.url + "pdata/" + nick
+        this.url + "pdata/" + profileLogin
       );
       let friendsList = this._http.get<FriendModel[]>(
-        this.url + "Friend/" + nick
+        this.url + "Friend/" + profileLogin
       );
       let gamesList = this._http.get<GameToPersonAppModel[]>(
-        this.url + "GameToPerson/" + nick
+        this.url + "GameToPerson/" + profileLogin
       );
 
       return observableForkJoin([
@@ -73,8 +75,11 @@ export class ApiService {
   }
 
   getGameAndForum(gameId: number): Observable<any> {
+    let loggedLogin = localStorage.getItem("nick").toString();
+    let loggedId = localStorage.getItem("id").toString();
+
     let profile = this._http.get<PersonalDataModel[]>(
-      this.url + "pdata/" + localStorage.getItem("nick").toString()
+      this.url + "pdata/" + loggedLogin
     );
     let forum = this._http.get<ForumModel>(
       this.url + "Forum/" + gameId.toString()
@@ -83,11 +88,7 @@ export class ApiService {
       this.url + "Game/" + gameId.toString()
     );
     let t2p = this._http.get<TopicToPersonModel[]>(
-      this.url +
-        "TopicToPerson/" +
-        localStorage.getItem("id").toString() +
-        "/" +
-        gameId.toString()
+      this.url + "TopicToPerson/" + loggedId + "/" + gameId.toString()
     );
     return observableForkJoin([profile, forum, game, t2p]);
   }
@@ -98,7 +99,7 @@ export class ApiService {
     page: number
   ): Observable<any> {
     let profileId = localStorage.getItem("id").toString();
-    let profileName = localStorage.getItem("nick").toString();
+    let profileName = localStorage.getItem("profileLogin").toString();
 
     let profile = this._http.get<PersonalDataModel[]>(
       this.url + "pdata/" + profileName
@@ -231,55 +232,6 @@ export class ApiService {
     });
   }
 
-  getDataProfile(id: number, nick: string): Observable<any> {
-    if (id != null && nick != null) {
-      let profile = this._http
-        .get<PersonalDataModel[]>(this.url + "pdata/" + nick)
-        .pipe(tap(data => console.log("oby id " + JSON.stringify(data))));
-      let friendsList = this._http
-        .get<FriendModel[]>(this.url + "Friend/" + id)
-        .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-      let gamesList = this._http
-        .get<GameToPersonAppModel[]>(this.url + "GameToPerson/" + id)
-        .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-      return observableForkJoin([profile, friendsList, gamesList]);
-    }
-  }
-
-  getFriendsList(id: number): Observable<FriendModel[]> {
-    return this._http
-      .get<FriendModel[]>(this.url + "Friend/" + id.toString())
-      .pipe(tap(data => console.log("from API: " + JSON.stringify(data))));
-  }
-
-  getProfile(nick: string): Observable<PersonalDataModel[]> {
-    return this._http
-      .get<PersonalDataModel[]>(this.url + "pdata/" + nick)
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-  }
-
-  getData_LoggedWithView(nick: string): Observable<any> {
-    let profile = this._http
-      .get<PersonalDataModel[]>(this.url + "pdata/" + nick)
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-    let list = this._http
-      .get<FriendModel[]>(this.url + "Friend/" + localStorage.getItem("id"))
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-    return observableForkJoin([profile, list]);
-  }
-
-  getData_OnlyView(nick: string): Observable<any> {
-    let profile = this._http
-      .get<PersonalDataModel[]>(this.url + "pdata/" + nick)
-      .pipe(tap(data => console.log("oby id " + JSON.stringify(data))));
-    let list = this._http
-      .get<FriendModel[]>(
-        this.url + "Friend/" + localStorage.getItem("profileid")
-      )
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-    return observableForkJoin([profile, list]);
-  }
-
   editRelation(invite: FriendModel) {
     this._http
       .put<FriendModel>(this.url + "Friend/" + invite.id.toString(), invite)
@@ -296,50 +248,16 @@ export class ApiService {
     return this._http.get<GameAppModel[]>(this.url + "Game/" + id.toString());
   }
 
-  getGameAndFriends(gameId: number): Observable<any> {
-    let game = this._http
-      .get<GameAppModel[]>(this.url + "Game/" + gameId.toString())
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-    let list = this._http
-      .get<FriendModel[]>(this.url + "Friend/" + localStorage.getItem("id"))
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-    return observableForkJoin([game, list]);
-  }
-
   getAllGames(): Observable<GameAppModel[]> {
     return this._http
       .get<GameAppModel[]>(this.url + "Game/")
       .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
   }
 
-  getGameView(gameId: number): Observable<any> {
-    let profile = this._http
-      .get<PersonalDataModel[]>(
-        this.url + "pdata/" + localStorage.getItem("nick")
-      )
-      .pipe(tap(data => console.log("profil " + JSON.stringify(data))));
-    let game = this._http
-      .get<GameAppModel[]>(this.url + "Game/" + gameId.toString())
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-    return observableForkJoin([profile, game]);
-  }
-
   getAllGamesToPerson(id: number): Observable<GameToPersonApiModel[]> {
     return this._http
       .get<GameToPersonApiModel[]>(this.url + "GameToPerson/" + id.toString())
       .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-  }
-
-  getGamesWithProfile(nick: string): Observable<any> {
-    let profile = this._http
-      .get<PersonalDataModel[]>(this.url + "pdata/" + nick)
-      .pipe(tap(data => console.log("oby id " + JSON.stringify(data))));
-    let list = this._http
-      .get<GameToPersonAppModel[]>(
-        this.url + "GameToPerson/" + localStorage.getItem("profileid")
-      )
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
-    return observableForkJoin([profile, list]);
   }
 
   joinGame(g2p: GameToPersonCreateModel) {

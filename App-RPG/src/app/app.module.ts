@@ -24,7 +24,7 @@ import { GameModule } from "./game/game.module";
     HomeComponent,
     HeaderComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +33,7 @@ import { GameModule } from "./game/game.module";
     FormsModule,
     ReactiveFormsModule,
     ProfileModule,
-    GameModule
+    GameModule,
   ],
   providers: [
     ApiService,
@@ -41,8 +41,8 @@ import { GameModule } from "./game/game.module";
     AuthGuardService,
     DataService,
     ForumService,
-    CreateGameDataService
+    CreateGameDataService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

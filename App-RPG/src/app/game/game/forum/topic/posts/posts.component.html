@@ -1,0 +1,38 @@
+<div class="posts-holder" id="posts-holder">
+  <div class="media" *ngFor="let post of posts; let i = index">
+    <div class="media-left">
+      <img
+        *ngIf="post.photo == null"
+        src="assets/unknown.png"
+        alt="Profile image"
+        class="media-object"
+      />
+      <img
+        *ngIf="post.photo != null"
+        [src]="post.photo"
+        alt="Profile image"
+        class="media-object"
+      />
+    </div>
+    <div class="media-body">
+      <p class="media-heading default-font">
+        <a class="link" href="/profile/{{ post.user.login }}"
+          >{{ post.user.firstname }} {{ post.user.lastname }} ({{
+            post.user.login
+          }})</a
+        >
+        <small *ngIf="post.message.editDdate == null"
+          ><i>Posted on {{ post.message.sendDdate | date: "long" }}</i></small
+        >
+        <small *ngIf="post.message.editDdate != null"
+          ><i>Edited on {{ post.message.editDdate | date: "long" }}</i></small
+        >
+      </p>
+      <h4 id="message{{ i }}"></h4>
+      <!--<h4>{{post.message.bodyMessage}}</h4>-->
+    </div>
+  </div>
+  <div #divID></div>
+  <br />
+  <div id="divs"></div>
+</div>

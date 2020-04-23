@@ -1,3 +1,100 @@
-<p>
-  topic works!
-</p>
+<div class="content-body-heading">
+  <p>
+    <span class="text-title">TOPIC: </span
+    ><span class="text-outline topic-name">{{ topicData.topicName }}</span>
+  </p>
+  <span *ngIf="!replyPage" class="text-title">PAGES:</span>
+  <div class="row" style="padding: 0px;">
+    <div class="col">
+      <div *ngIf="!replyPage">
+        <ul class="pagination">
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="{{ linkPrevious }}"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li *ngIf="topicData.totalPages == 1" class="page-item">
+            <a
+              class="page-link"
+              href="game/{{ gameData.id }}/topic/{{ topicData.id }}/1"
+              >1</a
+            >
+          </li>
+          <li *ngIf="topicData.totalPages == 2" class="page-item">
+            <a
+              class="page-link"
+              href="game/{{ gameData.id }}/topic/{{ topicData.id }}/2"
+              >2</a
+            >
+          </li>
+          <li *ngIf="topicData.totalPages == 3" class="page-item">
+            <a
+              class="page-link"
+              href="game/{{ gameData.id }}/topic/{{ topicData.id }}/3"
+              >3</a
+            >
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="{{ linkNext }}" aria-label="Previous">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col btn-reply-wrap">
+      <a *ngIf="!replyPage" href="game/{{ gameData.id }}">
+        <button class="btn-forum" id="btn-back" (click)="onClickBack()">
+          <span
+            class="glyphicon glyphicon-arrow-left"
+            style="padding-right: 10px;"
+          ></span>
+          BACK
+        </button>
+      </a>
+      <a
+        *ngIf="replyPage"
+        href="game/{{ gameData.id }}/topic/{{ topicData.id }}/{{
+          topicData.totalPages
+        }}"
+      >
+        <button class="btn-forum" id="btn-back" (click)="onClickBack()">
+          <span
+            class="glyphicon glyphicon-arrow-left"
+            style="padding-right: 10px;"
+          ></span>
+          BACK
+        </button>
+      </a>
+      <a
+        *ngIf="!replyPage"
+        href="game/{{ gameData.id }}/topic/{{ topicData.id }}/reply"
+      >
+        <button class="btn-forum" id="btn-reply">
+          <img class="btn-ico" src="assets/plus.png" />REPLY
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div>
+  <app-posts
+    *ngIf="!replyPage"
+    [topicData]="topicData"
+    [participants]="participants"
+    [iAmGameMaster]="iAmGameMaster"
+  ></app-posts>
+  <app-reply-post
+    *ngIf="replyPage"
+    [topicData]="topicData"
+    [gameId]="gameData.id"
+    [iAmGameMaster]="iAmGameMaster"
+  ></app-reply-post>
+</div>

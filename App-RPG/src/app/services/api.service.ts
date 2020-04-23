@@ -4,7 +4,7 @@ import { MySkillCreateModel } from "../models/myskill.model";
 import {
   GameToPersonApiModel,
   GameToPersonAppModel,
-  GameToPersonCreateModel
+  GameToPersonCreateModel,
 } from "../models/game-to-person.model";
 import { GameCreateModel, GameAppModel } from "../models/game.model";
 import { FriendCreateModel, FriendModel } from "../models/friend.model";
@@ -22,7 +22,7 @@ import {
   TopicCreateModel,
   MessageForumCreateModel,
   NewTopicModel,
-  TopicModel
+  TopicModel,
 } from "../models/forum.model";
 import { TopicToPersonModel } from "../models/topic-to-person.model";
 import { ForumService } from "./forum.service";
@@ -69,7 +69,7 @@ export class ApiService {
         myGamesList,
         profile,
         friendsList,
-        gamesList
+        gamesList,
       ]);
     }
   }
@@ -99,7 +99,7 @@ export class ApiService {
     page: number
   ): Observable<any> {
     let profileId = localStorage.getItem("id").toString();
-    let profileName = localStorage.getItem("profileLogin").toString();
+    let profileName = localStorage.getItem("nick").toString();
 
     let profile = this._http.get<PersonalDataModel[]>(
       this.url + "pdata/" + profileName
@@ -146,27 +146,27 @@ export class ApiService {
     console.log(JSON.stringify(msg));
     this._http
       .post(this.url + "Message/", msg)
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   sendFriendInvite(idS: number, idR: number) {
     let friendInvite = new FriendCreateModel(false, idS, idR);
     this._http
       .post(this.url + "Friend/", friendInvite)
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   acceptFriendInvite(invite: FriendModel) {
     console.log(invite.id);
     this._http
       .put<number>(this.url + "Friend/" + invite.id.toString(), invite)
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   declineFriendInvite(inviteId: number) {
     this._http
       .delete(this.url + "Friend/" + inviteId.toString())
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   getNotificationData(id: number) {
@@ -181,14 +181,14 @@ export class ApiService {
         this.url + "NotificationData/" + data.id.toString(),
         data
       )
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   createTopic(topic: NewTopicModel) {
     console.log(JSON.stringify(topic));
     return this._http
       .post(this.url + "Topic", topic)
-      .subscribe(data => console.log(data));
+      .subscribe((data) => console.log(data));
   }
 
   createForumMessage(msg: MessageForumCreateModel) {
@@ -204,13 +204,13 @@ export class ApiService {
   searchFriend(value: string): Observable<PersonalDataModel[]> {
     return this._http
       .get<PersonalDataModel[]>(this.url + "pdata/" + value)
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
+      .pipe(tap((data) => console.log("All: " + JSON.stringify(data))));
   }
 
   getPostImages(fileName: string): Observable<Blob> {
     console.log(this.url + "Photo/" + fileName);
     return this._http.get(this.url + "Photo/" + fileName, {
-      responseType: "blob"
+      responseType: "blob",
     });
   }
 
@@ -222,20 +222,20 @@ export class ApiService {
         this.url + "Photo/" + profileOrGame + "/" + isBgPhoto + "/" + id,
         formData
       )
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   getImage(fileName: string): Observable<Blob> {
     console.log(this.url + "Photo/" + fileName);
     return this._http.get(this.url + "Photo/" + fileName, {
-      responseType: "blob"
+      responseType: "blob",
     });
   }
 
   editRelation(invite: FriendModel) {
     this._http
       .put<FriendModel>(this.url + "Friend/" + invite.id.toString(), invite)
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   createGameDB(game: GameCreateModel) {
@@ -251,19 +251,19 @@ export class ApiService {
   getAllGames(): Observable<GameAppModel[]> {
     return this._http
       .get<GameAppModel[]>(this.url + "Game/")
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
+      .pipe(tap((data) => console.log("All: " + JSON.stringify(data))));
   }
 
   getAllGamesToPerson(id: number): Observable<GameToPersonApiModel[]> {
     return this._http
       .get<GameToPersonApiModel[]>(this.url + "GameToPerson/" + id.toString())
-      .pipe(tap(data => console.log("All: " + JSON.stringify(data))));
+      .pipe(tap((data) => console.log("All: " + JSON.stringify(data))));
   }
 
   joinGame(g2p: GameToPersonCreateModel) {
     this._http
       .post(this.url + "GameToPerson", g2p)
-      .subscribe(data => console.log(data));
+      .subscribe((data) => console.log(data));
   }
 
   acceptJoinGame(invite: GameToPersonAppModel) {
@@ -281,56 +281,56 @@ export class ApiService {
         this.url + "GameToPerson/" + accept.id.toString(),
         accept
       )
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   declineJoinGame(inviteId: number) {
     this._http
       .delete(this.url + "GameToPerson/" + inviteId.toString())
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   addSkill(skill: SkillCreateModel) {
     this._http
       .post(this.url + "Skill", skill)
-      .subscribe(data => console.log(data));
+      .subscribe((data) => console.log(data));
   }
 
   deleteSkill(skillId: number) {
     this._http
       .delete(this.url + "Skill/" + skillId.toString())
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   addMySkill(mySkill: MySkillCreateModel) {
     this._http
       .post(this.url + "MySkill", mySkill)
-      .subscribe(data => console.log(data));
+      .subscribe((data) => console.log(data));
   }
 
   deleteMySkill(skillId: number) {
     this._http
       .delete(this.url + "MySkill/" + skillId.toString())
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   addSession(session: GameSessionCreateModel) {
     this._http
       .post(this.url + "GameSession", session)
-      .subscribe(data => console.log(data));
+      .subscribe((data) => console.log(data));
   }
 
   deleteSession(sessionId: number) {
     this._http
       .delete(this.url + "GameSession/" + sessionId.toString())
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   editPersonalData(profile: PersonalDataModel) {
     let id = localStorage.getItem("id");
     this._http
       .put<PersonalDataModel>(this.url + "pdata/" + id.toString(), profile)
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 
   editPassword(passwordData: ChangePasswordModel) {
@@ -340,6 +340,6 @@ export class ApiService {
         this.url + "account/" + id.toString(),
         passwordData
       )
-      .subscribe(error => console.log(error));
+      .subscribe((error) => console.log(error));
   }
 }

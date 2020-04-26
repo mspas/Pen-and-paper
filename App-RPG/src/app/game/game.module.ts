@@ -12,6 +12,7 @@ import { TopicComponent } from "./game/forum/topic/topic.component";
 import { CreateTopicComponent } from "./game/forum/create-topic/create-topic.component";
 import { PostsComponent } from "./game/forum/topic/posts/posts.component";
 import { ReplyPostComponent } from "./game/forum/topic/reply-post/reply-post.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,14 @@ import { ReplyPostComponent } from "./game/forum/topic/reply-post/reply-post.com
     PostsComponent,
     ReplyPostComponent,
   ],
-  imports: [CommonModule, RouterModule, SharedModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SharedModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [GameResolve],
 })
 export class GameModule {}

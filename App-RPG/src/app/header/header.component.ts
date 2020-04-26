@@ -11,7 +11,7 @@ import { CheckNotificationModel } from "../models/notification.model";
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.sass"]
+  styleUrls: ["./header.component.sass"],
 })
 export class HeaderComponent implements OnInit {
   private isLoggedIn: boolean;
@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = this.auth.isAuthenticated();
     console.log(this.isLoggedIn);
     //this.refreshData();
-    this._data.currentNotificationSet.subscribe(data => {
+    this._data.currentNotificationSet.subscribe((data) => {
       this.newNotificationSet = data;
       //this.subscribeToData();
     });
@@ -49,12 +49,13 @@ export class HeaderComponent implements OnInit {
   }
 
   fixDropdown() {
-    if (this.dropIsDown == false)
+    if (this.dropIsDown == false) {
       document
         .getElementById("workffs")
         .setAttribute("class", "dropdown drop open drop-focus");
-    else
+    } else {
       document.getElementById("workffs").setAttribute("class", "dropdown drop");
+    }
 
     this.dropIsDown = !this.dropIsDown;
   }
@@ -82,13 +83,13 @@ export class HeaderComponent implements OnInit {
   }
 
   delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   async refreshData() {
     //this._api.getConversation(this.conversationData.relationId).subscribe(data => this.conversation = data);
     //await this.delay(4000);
-    await this._data.currentNotificationSet.subscribe(data => {
+    await this._data.currentNotificationSet.subscribe((data) => {
       this.newNotificationSet = data;
       //this.subscribeToData();
     });

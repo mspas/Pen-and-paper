@@ -15,7 +15,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav ml-auto my-2 my-lg-0">
+    <ul class="navbar-nav ml-auto my-2 my-lg-0 main-nav">
       <li class="link">
         <a href="search-game/search">FIND GAME</a>
       </li>
@@ -32,6 +32,7 @@
         <a href="search-friends/search">SIGN UP</a>
       </li>
       <li
+        id="dropdown-link"
         class="link"
         data-toggle="dropdown"
         (click)="fixDropdown()"
@@ -43,7 +44,7 @@
             <span *ngIf="checkActiveNotifications()">(!)</span>
             <span class="caret"></span>
           </div>
-          <ul class="dropdown-menu drop-opt" id="dropdown-menu">
+          <ul class="dropdown-menu" id="dropdown-menu">
             <li class="opt">
               <a href="#" (click)="goToMyProfile()">My Profile</a>
             </li>

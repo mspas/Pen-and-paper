@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import {
   ForumModel,
   TopicModel,
-  TopicListModel
+  TopicListModel,
 } from "src/app/models/forum.model";
 import { GameAppModel } from "src/app/models/game.model";
 import { TopicToPersonModel } from "src/app/models/topic-to-person.model";
@@ -14,7 +14,7 @@ import { ApiService } from "src/app/services/api.service";
 @Component({
   selector: "app-forum",
   templateUrl: "./forum.component.html",
-  styleUrls: ["./forum.component.sass"]
+  styleUrls: ["./forum.component.sass"],
 })
 export class ForumComponent implements OnInit {
   @Input() forumData: ForumModel;
@@ -63,7 +63,7 @@ export class ForumComponent implements OnInit {
     var subpage = this.route.snapshot.params.subpage;
     if (!this.topicIdParam) this.setChildComponent(subpage);
 
-    this.forumData.topics.forEach(topic => {
+    this.forumData.topics.forEach((topic) => {
       let topicListModel = new TopicListModel(
         topic,
         null,
@@ -71,10 +71,10 @@ export class ForumComponent implements OnInit {
         null,
         topic.messages[this.forumData.topics[0].messagesAmount - 1].sendDdate
       );
-      this.gameData.participantsProfiles.forEach(user => {
+      this.gameData.participantsProfiles.forEach((user) => {
         if (user.id == topic.authorId) topicListModel.author = user;
       });
-      this.topicToPersonData.forEach(t2p => {
+      this.topicToPersonData.forEach((t2p) => {
         if (
           t2p.lastActivitySeen < topic.lastActivityDate ||
           t2p.lastActivitySeen == null
@@ -82,7 +82,7 @@ export class ForumComponent implements OnInit {
           topicListModel.wasSeen = false;
       });
 
-      this.gameData.participantsProfiles.forEach(user => {
+      this.gameData.participantsProfiles.forEach((user) => {
         if (user.id == topic.messages[topic.messagesAmount - 1].senderId)
           topicListModel.lastAuthor = user;
       });
@@ -120,29 +120,39 @@ export class ForumComponent implements OnInit {
 
   async onCreateTopic() {
     this.subpageManager.showCreateTopic();
-    await this.router.navigate(["/game", this.gameData.id, "create-topic"]);
+    //await this.router.navigate(["/game", this.gameData.id, "create-topic/", 0]);
   }
 
   async onUserAccess() {
     this.subpageManager.showUserAccess();
-    await this.router.navigate(["/game", this.gameData.id, "user-access"]);
+    //await this.router.navigate(["/game", this.gameData.id, "user-access/", 0]);
   }
 
   async onGameSettings() {
     this.subpageManager.showGameSettings();
-    await this.router.navigate(["/game", this.gameData.id, "game-settings"]);
+    /*await this.router.navigate([
+      "/game",
+      this.gameData.id,
+      "game-settings/",
+      0,
+    ]);*/
   }
 
   async onManagePlayers() {
     this.subpageManager.showManagePlayers();
-    if (this.iAmGameMaster)
-      await this.router.navigate(["/game", this.gameData.id, "manage-players"]);
-    else await this.router.navigate(["/game", this.gameData.id, "players"]);
+    /*if (this.iAmGameMaster)
+      await this.router.navigate([
+        "/game",
+        this.gameData.id,
+        "manage-players/",
+        0,
+      ]);
+    else await this.router.navigate(["/game", this.gameData.id, "players/", 0]);*/
   }
 
   async onYourCharacter() {
     this.subpageManager.showYourCharacter();
-    await this.router.navigate(["/game", this.gameData.id, "my-character"]);
+    //await this.router.navigate(["/game", this.gameData.id, "my-character"]);
   }
 
   onEndGame() {}
@@ -152,7 +162,7 @@ export class ForumComponent implements OnInit {
   async closeChildComponent(check) {
     if (check == "false") {
       this.subpageManager.showTopicList();
-      var res = await this.router.navigate(["/game", this.gameData.id]);
+      //var res = await this.router.navigate(["/game", this.gameData.id]);
     }
   }
 }

@@ -1,3 +1,78 @@
-<p>
-  create-topic works!
-</p>
+<div>
+  <button class="btn-forum" id="btn-back" (click)="onClickBack()">
+    <span
+      class="glyphicon glyphicon-arrow-left"
+      style="padding-right: 20px;"
+    ></span>
+    BACK
+  </button>
+</div>
+<form #formOptions="ngForm" class="form-create" (ngSubmit)="onCreate(f)">
+  <div class="table-responsive default-font">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Title:</td>
+          <td>
+            <input
+              class="form-control"
+              type="text"
+              name="title"
+              ngControl="title"
+              [(ngModel)]="title"
+              minlength="2"
+              required
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Category:</td>
+          <td>
+            <select
+              class="form-control"
+              name="category"
+              ngControl="category"
+              [(ngModel)]="category"
+              required
+            >
+              <option *ngIf="iAmGameMaster">General</option>
+              <option *ngIf="iAmGameMaster">Game</option>
+              <option>Support</option>
+              <option>Off-topic</option>
+            </select>
+          </td>
+        </tr>
+        <tr *ngIf="iAmGameMaster">
+          <td>Access to this topic:</td>
+          <td style="float: left;">
+            <div class="radio">
+              <label
+                ><input
+                  type="radio"
+                  name="access"
+                  value="public"
+                  ngControl="access"
+                  [(ngModel)]="access"
+                  checked
+                />Public</label
+              >
+            </div>
+            <div class="radio">
+              <label
+                ><input
+                  type="radio"
+                  name="access"
+                  value="limited"
+                  ngControl="access"
+                  [(ngModel)]="access"
+                />Limited</label
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+
+<app-text-editor (getMsgHTML)="getMsgHTML($event)"></app-text-editor>

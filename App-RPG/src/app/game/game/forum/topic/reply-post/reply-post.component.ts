@@ -52,7 +52,7 @@ export class ReplyPostComponent implements OnInit {
     await this.delay(300);
     this._forum.currentApiResponse.subscribe((data) => (this.msgId = data));
     if (this.msgId != null && this.msgId != -1) {
-      var res = await this._router.navigate([
+      let res = await this._router.navigate([
         "/game",
         this.gameId,
         this.topicData.id,

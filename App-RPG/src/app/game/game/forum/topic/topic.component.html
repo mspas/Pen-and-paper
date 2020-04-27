@@ -48,9 +48,9 @@
         </ul>
       </div>
     </div>
-    <div class="col btn-reply-wrap">
+    <div class="col btn-wrap">
       <a *ngIf="!replyPage" href="game/{{ gameData.id }}">
-        <button class="btn-forum" id="btn-back" (click)="onClickBack()">
+        <button class="btn-forum btn-sm btn-yellow" (click)="onClickBack()">
           <span
             class="glyphicon glyphicon-arrow-left"
             style="padding-right: 10px;"
@@ -64,7 +64,7 @@
           topicData.totalPages
         }}"
       >
-        <button class="btn-forum" id="btn-back" (click)="onClickBack()">
+        <button class="btn-forum btn-sm btn-yellow" (click)="onClickBack()">
           <span
             class="glyphicon glyphicon-arrow-left"
             style="padding-right: 10px;"
@@ -76,7 +76,7 @@
         *ngIf="!replyPage"
         href="game/{{ gameData.id }}/topic/{{ topicData.id }}/reply"
       >
-        <button class="btn-forum" id="btn-reply">
+        <button class="btn-forum btn-sm btn-green">
           <img class="btn-ico" src="assets/plus.png" />REPLY
         </button>
       </a>

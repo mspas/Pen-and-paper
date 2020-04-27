@@ -6,6 +6,10 @@ import { AuthGuardService } from "./auth/auth-guard.service";
 import { PersonalDataResolve } from "./profile/profile.resolve.service";
 import { GameComponent } from "./game/game/game.component";
 import { GameResolve } from "./game/game.resolve.service";
+import { SearchGameComponent } from "./search/search-game/search-game.component";
+import { SearchGameResolve } from "./search/search-game/search-game.resolve.service";
+import { SearchProfileComponent } from "./search/search-profile/search-profile.component";
+import { SearchProfileResolve } from "./search/search-profile/search-profile.resolve.service";
 
 const routes: Routes = [];
 
@@ -19,27 +23,41 @@ const routes: Routes = [];
         component: ProfileComponent,
         canActivate: [AuthGuardService],
         resolve: {
-          profiledata: PersonalDataResolve
-        }
+          profiledata: PersonalDataResolve,
+        },
       },
       {
         path: "game/:id",
         component: GameComponent,
         canActivate: [AuthGuardService],
         resolve: {
-          profiledata: GameResolve
-        }
+          profiledata: GameResolve,
+        },
       },
       {
         path: "game/:id/topic/:topicId/:page",
         component: GameComponent,
         canActivate: [AuthGuardService],
         resolve: {
-          profiledata: GameResolve
-        }
-      }
-    ])
+          profiledata: GameResolve,
+        },
+      },
+      {
+        path: "search-game/:value",
+        component: SearchGameComponent,
+        resolve: {
+          profiledata: SearchGameResolve,
+        },
+      },
+      {
+        path: "search-profile/:value",
+        component: SearchProfileComponent,
+        resolve: {
+          profiledata: SearchProfileResolve,
+        },
+      },
+    ]),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

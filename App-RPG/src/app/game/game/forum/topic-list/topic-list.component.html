@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr class="category-title">
       -GENERAL-
     </tr>
     <tr *ngFor="let topic of topicGeneralList; let i = index">
@@ -153,9 +153,9 @@
         {{ topic.topicData.messagesAmount }}
       </td>
     </tr>
-    <div class="forum-category">
-      <div class="forum-cat">- GAME -</div>
-    </div>
+    <tr class="category-title">
+      - GAME -
+    </tr>
     <tr *ngFor="let topic of topicGameList; let i = index">
       <td>
         <div class="media-left">
@@ -293,10 +293,8 @@
         {{ topic.topicData.messagesAmount }}
       </td>
     </tr>
-    <tr>
-      <div class="forum-category">
-        <div class="forum-cat">- SUPPORT -</div>
-      </div>
+    <tr class="category-title">
+      - SUPPORT -
     </tr>
     <tr *ngFor="let topic of topicSupportList; let i = index">
       <td class="media">
@@ -435,9 +433,9 @@
         {{ topic.topicData.messagesAmount }}
       </td>
     </tr>
-    <div class="forum-category">
-      <div class="forum-cat">- OFF-TOPIC -</div>
-    </div>
+    <tr class="category-title">
+      - OFF-TOPIC -
+    </tr>
     <tr *ngFor="let topic of topicOfftopList; let i = index">
       <td class="media">
         <div class="media-left">

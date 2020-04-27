@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProfileModule } from "./profile/profile.module";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { GameModule } from "./game/game.module";
+import { SearchModule } from "./search/search.module";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { GameModule } from "./game/game.module";
     ReactiveFormsModule,
     ProfileModule,
     GameModule,
+    SearchModule,
   ],
   providers: [
     ApiService,

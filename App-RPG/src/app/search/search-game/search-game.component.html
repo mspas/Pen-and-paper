@@ -1,0 +1,120 @@
+<div class="container">
+  <p class="text-default" style="font-size: 20px; text-align: right;">
+    You must gather your party before venturing forth... <br /><span
+      style="font-size: 15px;"
+      >Or just find one!</span
+    >
+  </p>
+  <div class="filters">
+    <form class="form-signin" (ngSubmit)="onSearch(f)" #f="ngForm">
+      <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Title"
+        ngModel
+        class="form-control"
+      />
+      <label for="categories" style="margin-top: 20px;">Categories:</label>
+      <p class="categories">
+        <span
+          *ngFor="let category of gameCategories; let i = index"
+          class="category-name text-default"
+          id="category{{ i }}"
+          (click)="categoryClick(i)"
+          >{{ category.name }}</span
+        >
+      </p>
+      <div class="checkbox">
+        <label class="text-default"
+          ><input
+            id="joinBox"
+            type="checkbox"
+            (click)="onBoxJoin(joinBox.checked)"
+            #joinBox
+            value=""
+          /><span>Only avaliable games</span></label
+        >
+      </div>
+      <div class="checkbox">
+        <label class="text-default"
+          ><input
+            [disabled]="join"
+            [checked]="end"
+            id="endBox"
+            type="checkbox"
+            (click)="onBoxEnd(endBox.checked)"
+            #endBox
+            value=""
+          /><span>Show ended games</span></label
+        >
+      </div>
+      <button
+        class="btn btn-forum btn-sm btn-green"
+        id="btn-search"
+        type="submit"
+      >
+        <img class="btn-ico" src="assets/plus.png" />SEARCH
+      </button>
+    </form>
+  </div>
+
+  <div class="results">
+    <p class="text-default" style="font-size: 20px; text-align: right;">
+      Search results:
+    </p>
+    <div *ngFor="let game of foundGames; let i = index">
+      <div class="media">
+        <div class="media-left">
+          <a href="/game/{{ game.data.id }}">
+            <img
+              *ngIf="game.defaultImage"
+              src="{{ game.photo }}"
+              class="media-object"
+            />
+            <img
+              *ngIf="!game.defaultImage"
+              [src]="game.photo"
+              class="media-object"
+            />
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">
+            <a href="/game/{{ game.data.id }}">{{ game.data.title }}</a>
+            <span style="margin-left: 25px;">- {{ game.data.category }} -</span>
+            <span class="game-players text-default">
+              Players: {{ game.data.nofparticipants }} /
+              {{ game.data.maxplayers }}
+            </span>
+          </h4>
+          <p
+            class="game-master"
+            style="display: flex; align-items: center; margin-top: 20px;"
+          >
+            <a
+              class="profile-link"
+              role="button"
+              [routerLink]="['/profile', game.data.gameMaster.login]"
+            >
+              <img
+                *ngIf="game.photoGM"
+                [src]="game.photoGM"
+                class="media-object"
+              />
+              <img
+                *ngIf="!game.photoGM"
+                src="/assets/unknown.png"
+                class="media-object"
+              />{{ game.data.gameMaster.firstname }}
+              {{ game.data.gameMaster.lastname }} ({{
+                game.data.gameMaster.login
+              }})
+            </a>
+          </p>
+          <p class="game-description">{{ game.data.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

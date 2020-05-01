@@ -10,6 +10,8 @@ import { SearchGameComponent } from "./search/search-game/search-game.component"
 import { SearchGameResolve } from "./search/search-game/search-game.resolve.service";
 import { SearchProfileComponent } from "./search/search-profile/search-profile.component";
 import { SearchProfileResolve } from "./search/search-profile/search-profile.resolve.service";
+import { ActivityComponent } from "./activity/activity/activity.component";
+import { ActivityResolve } from "./activity/activity.resolve.service";
 
 const routes: Routes = [];
 
@@ -54,6 +56,14 @@ const routes: Routes = [];
         component: SearchProfileComponent,
         resolve: {
           profiledata: SearchProfileResolve,
+        },
+      },
+      {
+        path: "my-account/:value",
+        component: ActivityComponent,
+        canActivate: [AuthGuardService],
+        resolve: {
+          profiledata: ActivityResolve,
         },
       },
     ]),

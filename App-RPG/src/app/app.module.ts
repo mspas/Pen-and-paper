@@ -18,6 +18,7 @@ import { ProfileModule } from "./profile/profile.module";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { GameModule } from "./game/game.module";
 import { SearchModule } from "./search/search.module";
+import { ActivityModule } from "./activity/activity.module";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SearchModule } from "./search/search.module";
     ProfileModule,
     GameModule,
     SearchModule,
+    ActivityModule,
   ],
   providers: [
     ApiService,

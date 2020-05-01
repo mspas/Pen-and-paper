@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="content-top">
+    <ul class="nav nav-tabs">
+      <li id="acc-messages" class="active">
+        <a (click)="onNavClick($event)" id="messages">
+          MESSAGES <span *ngIf="notificationSet.message">(!)</span>
+        </a>
+      </li>
+      <li id="acc-games">
+        <a (click)="onNavClick($event)" id="games">
+          MY GAMES <span *ngIf="notificationSet.game">(!)</span>
+        </a>
+      </li>
+      <li id="acc-friends">
+        <a (click)="onNavClick($event)" id="friends">
+          MY FRIENDS <span *ngIf="notificationSet.friend">(!)</span>
+        </a>
+      </li>
+      <li id="acc-settings">
+        <a (click)="onNavClick($event)" id="settings">
+          SETTINGS
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="content-body">
+    <app-my-messages
+      *ngIf="messagesChild == true"
+      [allConversations]="allConversations"
+      [notificationSet]="notificationSet"
+      [myFriends]="myFriends"
+    ></app-my-messages>
+    <app-my-games
+      *ngIf="gamesChild == true"
+      [myGamesAPPList]="myGamesAPPList"
+    ></app-my-games>
+    <app-my-friends
+      *ngIf="friendsChild == true"
+      [myFriends]="myFriends"
+    ></app-my-friends>
+    <app-account-settings
+      *ngIf="settingsChild == true"
+      [myProfileData]="myProfileData"
+    ></app-account-settings>
+  </div>
+</div>

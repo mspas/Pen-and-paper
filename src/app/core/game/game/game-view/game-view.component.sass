@@ -1,0 +1,51 @@
+@import '../../../../../_variables'
+@import '../../../../../_mixins'
+    
+.panel
+    background-color: $lightWhite
+    @include border-shadow(1px, 1px, 5px, #00000010)
+    .panel-heading
+        position: relative
+        margin: 0
+        padding: 20px 50px
+        .panel-title
+            display: flex
+            align-items: center
+            cursor: pointer
+            img 
+                height: 50px
+            .title
+                padding-left: 25px
+                font-size: 2rem
+                color: black
+                &:hover
+                    color: $third !important
+            a 
+                text-decoration: none
+            .title-status
+                position: absolute
+                top: 30px
+                right: 10px
+                color: $green
+    .panel-body
+        padding: 50px 0
+        .description
+            overflow-y: auto
+            text-align: justify
+            padding: 0 50px
+            max-height: 300px
+            @include scrollbar(5px, $lightWhite, $primary)
+            
+        table 
+            margin: 25px auto
+            margin-bottom: 0
+            @include border-shadow(1px, 1px, 5px, #00000010)
+            @include radial-gradient3(top right, $primary, -100%, $lightWhite 80%, $primary 200%)
+            &:hover
+                @include radial-gradient3(top right, $primary, -100%, $lightWhite 60%, $primary 200%)
+            td 
+                padding: 5px 15px
+            #collapsePlayersList
+                text-align: left
+            .profile-data
+                text-align: center

@@ -1,0 +1,17 @@
+@import '../../../../_mixins'
+    
+.container
+    #btn-search
+        width: 100%
+    .results
+        margin-top: 50px 
+        padding: 35px
+        @include primary-container()
+        @include background-opacity($lightWhite, 0.7)
+        ul 
+            list-style-type: none
+            .profile-link 
+                margin-left: auto
+                margin-right: auto
+                font-size: 20px
+                letter-spacing: 4px

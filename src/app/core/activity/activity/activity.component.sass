@@ -1,0 +1,45 @@
+@import '../../../../_mixins'
+@import '../../../../_variables'
+
+.container
+    margin-top: 100px 
+    .content-top
+        .profile-photo
+            position: absolute
+            top: -120px
+            left: 25px
+            max-width: 200px
+            width: 100%
+            height: auto
+            border-radius: 25px
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+        ul
+            height: 47px
+            margin: 0
+            padding: 0
+            list-style-type: none
+            display: flex
+            justify-content: flex-end
+            align-items: center
+            li
+                display: inline
+                padding: 10px 20px
+                margin-top: 2px
+                background-color: $lightWhite
+                border-radius: 5px
+                border: 1px solid #00000011
+                user-select: none
+                cursor: pointer
+                &:nth-child(1)
+                    border-right: none
+                &:hover
+                    color: $third
+                    background-color: #fff
+            .active
+                cursor: default
+                border-bottom: none
+                &:hover
+                    color: black !important
+                    background-color: $lightWhite !important
+    .content-body
+        @include primary-container()

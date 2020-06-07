@@ -1,7 +1,6 @@
 # Pen-and-paper
 
-API:
-https://github.com/mspas/Pen-and-paper-API
+API: https://github.com/mspas/Pen-and-paper-API
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 

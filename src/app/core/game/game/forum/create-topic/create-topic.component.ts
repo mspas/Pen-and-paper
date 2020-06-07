@@ -22,7 +22,7 @@ import { NgForm } from "@angular/forms";
   styleUrls: ["./create-topic.component.sass"],
 })
 export class CreateTopicComponent implements OnInit {
-  @ViewChild("formOptions") formTopicOptions: NgForm;
+  @ViewChild("formOptions", { static: true }) formTopicOptions: NgForm;
 
   @Input() forumData: ForumModel;
   @Input() profileData: PersonalDataModel;

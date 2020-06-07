@@ -3,7 +3,6 @@ import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
-import { element } from "@angular/core/src/render3";
 
 @Component({
   selector: "app-profile-games",

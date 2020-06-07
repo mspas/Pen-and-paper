@@ -15,7 +15,7 @@ import { DataService } from "src/app/core/services/data.service";
   styleUrls: ["./profile.component.sass"],
 })
 export class ProfileComponent implements OnInit {
-  @ViewChild("fileInput") fileInput: ElementRef;
+  @ViewChild("fileInput", { static: false }) fileInput: ElementRef;
 
   imageToShow: any;
   isImageLoading: boolean;

@@ -17,7 +17,7 @@ export class PostsComponent implements OnInit {
   @Input() topicData: TopicModel;
   @Input() participants: PersonalDataModel[];
   @Input() iAmGameMaster: boolean;
-  @ViewChild("divID") divID: ElementRef;
+  @ViewChild("divID", { static: true }) divID: ElementRef;
 
   html: string;
   test: string = "";

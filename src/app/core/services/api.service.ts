@@ -214,14 +214,11 @@ export class ApiService {
     });
   }
 
-  uploadPhoto(profileOrGame: boolean, id: number, isBgPhoto: boolean, file) {
+  uploadPhoto(type: number, id: number, isBgPhoto: boolean, file) {
     var formData = new FormData();
     formData.append("file", file);
     this._http
-      .post(
-        this.url + "Photo/" + profileOrGame + "/" + isBgPhoto + "/" + id,
-        formData
-      )
+      .post(this.url + "Photo/" + type + "/" + isBgPhoto + "/" + id, formData)
       .subscribe((error) => console.log(error));
   }
 

@@ -1,48 +1,35 @@
-<!--<form class="form-signin" (ngSubmit)="onSignIn(f)" #f="ngForm">
+<div class="form-container">
+  <form class="form" (ngSubmit)="onSignIn(f)" #f="ngForm">
+    <div class="heading">Sign In</div>
     <div class="alert alert-danger" *ngIf="loginError == true">
       <strong>Error!</strong> Login or password incorrect!
     </div>
-      <p class="welcome_text" align="center">Fantastic worlds are waiting for an adventurer just like you! All you need is<br>Pen and Paper!</p>
-      <div class="input-group" style="padding-top: 10px; padding-bottom: 10px">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <input type="login" id="login" name="login" placeholder="Login" style="font-size: 19px" ngModel class="form-control">
+    <div class="form-content">
+      <div class="input-group">
+        <label for="input1" class="inp"> Login/Email </label>
+        <input
+          type="login"
+          id="input1"
+          name="login"
+          ngModel
+          class="form-control"
+        />
       </div>
-      <div class="input-group" style="padding-bottom: 20px">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-        <input type="password" id="password" name="password" placeholder="Password" style="font-size: 19px" ngModel class="form-control">
+      <div class="input-group">
+        <label for="input2" class="inp"> Password </label>
+        <input
+          type="password"
+          id="input2"
+          name="password"
+          ngModel
+          class="form-control"
+        />
       </div>
-      <button class="btn btn-lg btn-success btn-block" style="font-size: 20px" type="submit">Sign in</button>
-  </form>-->
-
-<form class="form-signin" (ngSubmit)="onSignIn(f)" #f="ngForm">
-  <div class="alert alert-danger" *ngIf="loginError == true">
-    <strong>Error!</strong> Login or password incorrect!
-  </div>
-  <div class="input-group" style="padding-top: 10px; padding-bottom: 10px">
-    <label for="input1" class="inp">
-      <input
-        type="login"
-        id="input1"
-        name="login"
-        ngModel
-        class="form-control"
-      />
-      <span class="label">Login/Email</span>
-      <span class="border"></span>
-    </label>
-  </div>
-  <div class="input-group">
-    <label for="input2" class="inp">
-      <input
-        type="password"
-        id="input2"
-        name="password"
-        ngModel
-        class="form-control"
-      />
-      <span class="label">Password</span>
-      <span class="border"></span>
-    </label>
-  </div>
-  <button class="btn" type="submit">SIGN IN</button>
-</form>
+      <button class="btn-submit btn btn-yellow" type="submit">SIGN IN</button>
+    </div>
+    <div class="footer">
+      <p><a href="#">Forgot password?</a></p>
+      <p>Don't have an account? <a [routerLink]="['/sign-up']">Sign up</a></p>
+    </div>
+  </form>
+</div>

@@ -150,48 +150,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  uploadPhoto() {
-    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-    this._api.uploadPhoto(
-      true,
-      this.myProfileData.id,
-      false,
-      nativeElement.files[0]
-    );
-  }
-
-  onSaveChanges(form: NgForm) {
-    var profile = this.myProfileData;
-    if (form.value.email.length > 0) profile.email = form.value.email;
-    if (form.value.firstname.length > 0)
-      profile.firstname = form.value.firstname;
-    if (form.value.lastname.length > 0) profile.lastname = form.value.lastname;
-    if (form.value.city.length > 0) profile.city = form.value.city;
-    if (parseInt(form.value.age) > 0) profile.age = parseInt(form.value.age);
-    this._api.editPersonalData(profile);
-  }
-
-  onSavePassword(form: NgForm) {
-    if (form.value.password == form.value.repeatpassword) {
-      let data = new ChangePasswordModel(
-        form.value.password,
-        form.value.oldpassword
-      );
-      this._api.editPassword(data);
-    }
-  }
-
-  onSaveImage(form: NgForm) {
-    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-    this._api.uploadPhoto(
-      true,
-      this.myProfileData.id,
-      false,
-      nativeElement.files[0]
-    );
-    window.location.reload();
-  }
-
   onNavProfile(event) {
     if (event.target.getAttribute("class") !== "active") {
       this.viewChildFlag = !this.viewChildFlag;

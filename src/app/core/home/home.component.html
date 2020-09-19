@@ -1,55 +1,23 @@
 <div class="home-wrap">
-  <div class="row" style="height: 100%; width: 100%;">
-    <div class="col center">
-      <div class="home-p2 home-sign border">
-        <p class="welcome_text font-fofer" align="center">
-          Fantastic worlds are waiting for an adventurer just like you! All you
-          need is <br />
-          <img src="/assets/pnp1.png" />
-        </p>
+  <img class="big-logo" src="/assets/biglogo.png" />
+  <div class="content">
+    <div class="home-btns">
+      <div class="home-btn-column">
+        <button class="home-btn btn btn-yellow" [routerLink]="['/sign-in']">
+          Sign in
+        </button>
+      </div>
+      <div class="home-btn-column">
+        <button class="home-btn btn btn-red" [routerLink]="['/sign-up']">
+          Sign up
+        </button>
       </div>
     </div>
-    <div class="col center">
-      <div id="hp1" class="home-p-wrap">
-        <div
-          id="hp1-front"
-          class="home-p1 home-sign-front border font-fofer"
-          (click)="flipCard($event)"
-        >
-          <div class="front-text center">
-            Sign in to your account!
-          </div>
-          <img src="/assets/flag_t.png" />
-        </div>
-        <div
-          id="hp1-back"
-          class="home-p1 home-sign home-sign-back border center"
-          (click)="flipCard($event)"
-        >
-          <app-sign-in></app-sign-in>
-        </div>
-      </div>
-    </div>
-    <div class="col center">
-      <div id="hp3" class="home-p-wrap">
-        <div
-          id="hp3-front"
-          class="home-p3 home-sign-front border font-fofer"
-          (click)="flipCard($event)"
-        >
-          <div class="front-text center">
-            Don't have an account? Sign up! That's really damn quick!
-          </div>
-          <img src="/assets/flag_t1.png" />
-        </div>
-        <div
-          id="hp3-back"
-          class="home-p3 home-sign home-sign-back border"
-          (click)="flipCard($event)"
-        >
-          <app-sign-up></app-sign-up>
-        </div>
-      </div>
+    <div class="description">
+      Pen&Paper is a simple tool for creating your own party RPG game but as a
+      online version. Write your rules and story, then present your world to
+      other. Gather your crew by inviting friends or opening your game for new
+      adventurers. Let your imaginations do the work!
     </div>
   </div>
 </div>

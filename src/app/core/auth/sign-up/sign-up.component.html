@@ -1,46 +1,54 @@
-<form class="form-signin" (ngSubmit)="onSignUp(f)" ngNativeValidate>
-  <div class="alert alert-success" *ngIf="accMsg == true">
-    <strong>Success!</strong> Account created succesfully!
-  </div>
-  <div class="input-group">
-    <label for="inp1" class="inp">
-      <input type="email" id="inp1" name="email" ngModel class="form-control" />
-      <span class="label">Email</span>
-      <span class="border"></span>
-    </label>
-  </div>
-  <div class="input-group">
-    <label for="inp2" class="inp">
-      <input type="login" id="inp2" name="login" ngModel class="form-control" />
-      <span class="label">Login</span>
-      <span class="border"></span>
-    </label>
-  </div>
-  <div class="input-group">
-    <label for="inp3" class="inp">
-      <input
-        type="password"
-        id="inp3"
-        name="password"
-        ngModel
-        class="form-control"
-      />
-      <span class="label">Password</span>
-      <span class="border"></span>
-    </label>
-  </div>
-  <div class="input-group">
-    <label for="inp4" class="inp">
-      <input
-        type="password"
-        id="inp4"
-        name="password2"
-        ngModel
-        class="form-control"
-      />
-      <span class="label">Confim password</span>
-      <span class="border"></span>
-    </label>
-  </div>
-  <button class="btn" type="submit">SIGN UP</button>
-</form>
+<div class="form-container">
+  <form class="form" (ngSubmit)="onSignUp(f)" ngNativeValidate>
+    <div class="heading">Sign Up</div>
+    <div class="alert alert-success" *ngIf="accMsg == true">
+      <strong>Success!</strong> Account created succesfully!
+    </div>
+    <div class="form-content">
+      <div class="input-group">
+        <label for="inp1" class="inp"> Email </label>
+        <input
+          type="email"
+          id="inp1"
+          name="email"
+          ngModel
+          class="form-control"
+        />
+      </div>
+      <div class="input-group">
+        <label for="inp2" class="inp"> Login </label>
+        <input
+          type="login"
+          id="inp2"
+          name="login"
+          ngModel
+          class="form-control"
+        />
+      </div>
+      <div class="input-group">
+        <label for="inp3" class="inp"> Password </label>
+        <input
+          type="password"
+          id="inp3"
+          name="password"
+          ngModel
+          class="form-control"
+        />
+      </div>
+      <div class="input-group">
+        <label for="inp4" class="inp">Confim password </label>
+        <input
+          type="password"
+          id="inp4"
+          name="password2"
+          ngModel
+          class="form-control"
+        />
+      </div>
+      <button class="btn-submit btn btn-yellow" type="submit">SIGN UP</button>
+    </div>
+    <div class="footer">
+      <p>Already have an account? <a [routerLink]="['/sign-in']">Sign in</a></p>
+    </div>
+  </form>
+</div>

@@ -1,14 +1,19 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.sass"]
+  styleUrls: ["./home.component.sass"],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private _auth: AuthService, private _router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this._auth.isAuthenticated)
+      this._router.navigate([`/profile/${this._auth.getLogin()}`]);
+  }
 
   flipCard(event) {
     if (event.target.id.slice(0, 2) == "hp") {

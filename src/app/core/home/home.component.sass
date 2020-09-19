@@ -1,79 +1,48 @@
 @import '../../../_variables'
 @import '../../../_mixins'
 
-$noteHeight: 479px
-$noteWidth: 521px
-
 .home-wrap
-    height: calc(100vh - 106px)
     width: 100vw
-    padding: 0 20vw
-    @media screen and ( max-width: 1460px )
-        padding: 0 10vw
-    @media screen and ( max-width: 992px )
-        padding: 0 5vw
-    .home-sign, .home-sign-front, .home-sign-back
-        height: 500px
-        width: 100%
-        min-width: 270px
-        max-width: 355px
-        padding: 50px    
-        background-color: $primary
-        backface-visibility: hidden
-        .welcome_text
-            color: black
-            line-height: 35px
-    .home-p-wrap
-        height: 500px
-        width: 100%
-        min-width: 270px
-        max-width: 355px
-        margin: 20px 0
-        transform-style: preserve-3d
-        transform: perspective(1000px) rotate3d(0, 1, 0, 0deg)
-        transition: transform 1s
-        .front-text
-            height: 50%
-        img 
-            height: 150px
-            margin-top: 25px
-            opacity: 0.5 
-        .home-sign-front
-            text-align: center
-            cursor: pointer
-        .home-sign-back
-            position: absolute
-            right: 0
-            top: 0
-            transform: rotate3d(0, 1, 0, 180deg)
-    .home-p1
-        margin-left: auto
-        margin-right: auto
-        @include radial-gradient3(bottom, $primary, $gradientStart, $fourth $gradientSpread, $third 200%)
-        &:hover
-            @include radial-gradient3(top, $primary, $gradientStart, $fourth $gradientSpread, $third 200%)
-    .home-p2
-        padding-top: 125px 
-        @include radial-gradient(bottom right, $primary, $gradientStart, $secondary, 100%)
-        &:hover
-            @include radial-gradient(top left, $primary, $gradientStart, $secondary, 100%)
-        img 
-            width: 120px
-            margin-top: 20px
-    .home-p3
-        margin-left: auto
-        margin-right: auto
-        @include radial-gradient3(bottom left, $primary, $gradientStart, $third $gradientSpread, $fourth 200%)
-        @media screen and ( max-width: 577px )
-            background-color: $third
-        &:hover
-            @include radial-gradient3(top right, $primary, $gradientStart, $third $gradientSpread, $fourth 200%)
-    .border
-        border-radius: 10px
-        border-width: 0px !important
-        box-shadow: 3px 3px 5px -3px black
-        transition: transform 0.3s
-        &:hover
-            box-shadow: 3px 3px 15px -3px black
-    .flip
-        transform: rotate3d(0, 1, 0, 180deg)
+    .big-logo
+        display: block
+        margin: 0 auto
+        @media screen and ( max-width: 1065px )
+            width: 90%
+    .content
+        margin-top: 50px
+        padding: 40px 20px
+        background: #00000015
+        border: solid 1px #00000031
+        border-left: none
+        border-right: none
+        .home-btns
+            display: flex
+            flex-flow: wrap
+            align-items: center
+            justify-content: center
+            padding: 0 20vw
+            @media screen and ( max-width: 1460px )
+                padding: 0 10vw
+            @media screen and ( max-width: 992px )
+                padding: 0 5vw
+            .home-btn-column
+                flex: 1
+                .home-btn
+                    display: block
+                    margin: 10px auto
+                    width: 200px
+                    height: 70px
+                    font-size: 2em
+                    @media screen and ( max-width: 520px )
+                        font-size: 1.6em
+                        height: 50px
+                        width: 150px
+    .description
+        text-align: center
+        margin: 0 20%
+        margin-top: 50px
+        font-size: 1.2em
+        line-height: 1.7em
+        @media screen and ( max-width: 992px )
+            margin: 0
+            margin-top: 50px

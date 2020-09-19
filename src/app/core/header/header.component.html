@@ -6,30 +6,30 @@
     class="navbar-toggler"
     type="button"
     data-toggle="collapse"
-    data-target="#navbarTogglerDemo02"
-    aria-controls="navbarTogglerDemo02"
+    data-target="#navbarToggler"
+    aria-controls="navbarToggler"
     aria-expanded="false"
     aria-label="Toggle navigation"
   >
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+  <div class="collapse navbar-collapse" id="navbarToggler">
     <ul class="navbar-nav ml-auto my-2 my-lg-0 main-nav">
-      <li class="link">
-        <a href="search-game/search">FIND GAME</a>
+      <li class="link" [routerLink]="['/search-game/search']">
+        <span>JOIN GAME</span>
       </li>
-      <li class="link">
-        <a href="create-game">CREATE GAME</a>
+      <li class="link" [routerLink]="['/create-game']">
+        <span>CREATE GAME</span>
       </li>
-      <li class="link">
-        <a href="search-profile/search">FIND FRIENDS</a>
+      <li class="link" [routerLink]="['/search-profile/search']">
+        <span>FIND PLAYERS</span>
       </li>
-      <li class="link" *ngIf="!isLoggedIn">
-        <a href="search-friends/search">SIGN IN</a>
+      <li class="link" [routerLink]="['/sign-in']" *ngIf="!isLoggedIn">
+        <span>SIGN IN</span>
       </li>
-      <li class="link" *ngIf="!isLoggedIn">
-        <a href="search-friends/search">SIGN UP</a>
+      <li class="link" [routerLink]="['/sign-up']" *ngIf="!isLoggedIn">
+        <span>SIGN UP</span>
       </li>
       <li
         id="dropdown-link"
@@ -45,34 +45,32 @@
             <span class="caret"></span>
           </div>
           <ul class="dropdown-menu" id="dropdown-menu">
-            <li class="opt">
-              <a href="#" (click)="goToMyProfile()">My Profile</a>
+            <li class="opt" (click)="goToMyProfile()">
+              <span>My Profile</span>
             </li>
-            <li class="opt">
-              <a href="#" id="messages" (click)="goToMyAccount($event)"
-                >Messages <span *ngIf="notificationSet.message">(!)</span></a
+            <li class="opt" (click)="goToMyAccount($event)">
+              <span id="messages"
+                >Messages <span *ngIf="notificationSet.message">(!)</span></span
               >
             </li>
-            <li class="opt">
-              <a href="#" id="games" (click)="goToMyAccount($event)"
-                >My Games <span *ngIf="notificationSet.games">(!)</span></a
+            <li class="opt" (click)="goToMyAccount($event)">
+              <span id="games"
+                >My Games <span *ngIf="notificationSet.games">(!)</span></span
               >
             </li>
-            <li class="opt">
-              <a href="#" id="friends" (click)="goToMyAccount($event)"
-                >Friends <span *ngIf="notificationSet.friends">(!)</span></a
+            <li class="opt" (click)="goToMyAccount($event)">
+              <span id="friends"
+                >Friends <span *ngIf="notificationSet.friends">(!)</span></span
               >
             </li>
-            <li class="opt">
-              <a href="#" id="settings" (click)="goToMyAccount($event)"
-                >Settings</a
-              >
+            <li class="opt" (click)="goToMyAccount($event)">
+              <span id="settings">Settings</span>
             </li>
           </ul>
         </div>
       </li>
-      <li class="link" *ngIf="isLoggedIn">
-        <a href="home" (click)="onLogout()">LOGOUT</a>
+      <li class="link" (click)="onLogout()" *ngIf="isLoggedIn">
+        <a href="home">LOGOUT</a>
       </li>
     </ul>
   </div>

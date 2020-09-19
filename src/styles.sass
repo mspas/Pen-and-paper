@@ -1,6 +1,10 @@
 @import './_variables'
 @import './_mixins'
 
+@font-face
+    font-family: 'BarkingCat'
+    src: local('BarkingCat'), url(./fonts/BarkingCat.otf) format('opentype')
+
 html, body
     width: 100vw
     height: 100vh
@@ -41,3 +45,87 @@ a
     line-height: 1.42857143
     letter-spacing: 4px
     font-family: Montserrat, sans-serif
+
+.btn
+    font-family: BarkingCat
+    border: none
+    border-radius: 10px
+    box-shadow: 3px 3px 5px -3px black
+    text-transform: uppercase
+    transition: 0.3s
+    font-size: 1.5em
+    &:hover
+        letter-spacing: 2px
+        box-shadow: 3px 3px 10px -3px black
+.btn-yellow
+    @include radial-gradient3(bottom, $primary, $gradientStart, $fourth $gradientSpread, $third 200%)
+    &:hover
+        @include radial-gradient3(top, $primary, $gradientStart, $fourth $gradientSpread, $third 200%)
+.btn-red
+    @include radial-gradient3(bottom left, $primary, $gradientStart, $third $gradientSpread, $fourth 200%)
+    &:hover
+        @include radial-gradient3(top right, $primary, $gradientStart, $third $gradientSpread, $fourth 200%)
+.btn-blue
+    @include radial-gradient(bottom right, $primary, $gradientStart, $secondary, 100%)
+    &:hover
+        @include radial-gradient(top left, $primary, $gradientStart, $secondary, 100%)
+
+
+.btn-forum 
+    min-width: 100px
+    width: 203px
+    padding: 10px
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #b1dafc6c
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19)
+    border-radius: 10px
+    border-style: solid
+    border-color: #daebffd3
+    border-width: 2px
+    font-size: 12px
+    color: #252525
+    cursor: pointer
+    &:hover
+        color: #f4511e
+        background-color: #9ed2fcb4
+        border-color: #e9ebfde0
+    .btn-ico 
+        width: 15px
+        margin-right: 5px
+        margin-top: -5px
+.btn-sm
+    width: 100px
+.btn-green 
+    background-color: #caffca6c
+    border-color: #e2ffdad3
+.btn-green:hover 
+    background-color: #b1fcb1c2
+    border-color: #c0f7b1d3
+.btn-yellow
+    background-color: #fff5bf6c
+    border-color: #fff5dad3
+.btn-yellow:hover 
+    background-color: #fcf1b1c0
+    border-color: #fff5daef
+.btn-blue 
+    background-color: #abd7fa6c
+    border-color: #e9ebfdd3
+.btn-blue:hover 
+    background-color: #9ed2fcc5
+    border-color: #e9ebfde0
+
+    
+.profile-link
+    cursor: pointer
+    font-size: 14px
+    &:hover
+        color: $third
+        img
+            @include border-shadow(2px, 2px, 50%, $third)
+    img
+        height: 50px
+        width: 50px
+        border-radius: 50%
+        margin-right: 10px

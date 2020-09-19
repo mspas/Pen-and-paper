@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     private _data: DataService
   ) {
     this.auth = _auth;
-    this.isLoggedIn = false;
+    this.isLoggedIn = _auth.isAuthenticated();
   }
 
   ngOnInit() {

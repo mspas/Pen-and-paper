@@ -1,0 +1,28 @@
+<div class="modal-dialog modal-md">
+  <div
+    class="modal-content information information-modal"
+    id="modal-change-image"
+  >
+    <form (ngSubmit)="onSaveImage(f)" #formOptions="ngForm">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close modal-btn-close"
+          data-dismiss="modal"
+        >
+          &times;
+        </button>
+        <h4 class="modal-title">Change profile picture</h4>
+      </div>
+      <div class="modal-body">
+        <label for="file">Select image from your drive (200x200 px)</label>
+        <input type="file" id="file" name="file" required #fileInput />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-forum" type="submit">
+          <img class="btn-ico" src="assets/plus.png" />SAVE
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

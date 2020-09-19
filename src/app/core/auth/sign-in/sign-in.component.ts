@@ -5,7 +5,7 @@ import { AuthService } from "../auth.service";
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.component.html",
-  styleUrls: ["./sign-in.component.sass"]
+  styleUrls: ["../form.sass"],
 })
 export class SignInComponent implements OnInit {
   loginError: boolean = false;
@@ -20,7 +20,7 @@ export class SignInComponent implements OnInit {
     const password = form.value.password;
     console.log(login, password);
     this.auth.signInUser(login, password);
-    this.auth.currentLoginError.subscribe(data => (this.loginError = data));
+    this.auth.currentLoginError.subscribe((data) => (this.loginError = data));
   }
 
   onTest() {

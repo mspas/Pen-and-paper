@@ -12,6 +12,8 @@ import { SearchProfileComponent } from "./core/search/search-profile/search-prof
 import { SearchProfileResolve } from "./core/search/search-profile/search-profile.resolve.service";
 import { ActivityComponent } from "./core/activity/activity/activity.component";
 import { ActivityResolve } from "./core/activity/activity.resolve.service";
+import { SignInComponent } from "./core/auth/sign-in/sign-in.component";
+import { SignUpComponent } from "./core/auth/sign-up/sign-up.component";
 
 const routes: Routes = [];
 
@@ -20,6 +22,8 @@ const routes: Routes = [];
     RouterModule.forRoot([
       { path: "", redirectTo: "home", pathMatch: "full" },
       { path: "home", component: HomeComponent },
+      { path: "sign-in", component: SignInComponent },
+      { path: "sign-up", component: SignUpComponent },
       {
         path: "profile/:login",
         component: ProfileComponent,

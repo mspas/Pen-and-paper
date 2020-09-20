@@ -3,7 +3,7 @@ import { timer as observableTimer, Observable } from "rxjs";
 import { first } from "rxjs/operators";
 import { AuthGuardService } from "../auth/auth-guard.service";
 import { AuthService } from "../auth/auth.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { DataService } from "../services/data.service";
 import { CheckNotificationModel } from "../models/notification.model";
@@ -24,6 +24,9 @@ export class HeaderComponent implements OnInit {
     false,
     false
   );
+
+  @ViewChild("dropdownMenu", { static: false }) dropdownMenu: ElementRef;
+  @ViewChild("accountDropdown", { static: false }) accountDropdown: ElementRef;
 
   constructor(
     private _auth: AuthService,
@@ -47,13 +50,14 @@ export class HeaderComponent implements OnInit {
     this.auth.logout();
   }
 
-  fixDropdown() {
-    if (this.dropIsDown == false) {
-      document
-        .getElementById("workffs")
-        .setAttribute("class", "dropdown drop open drop-focus");
+  handleDropdown() {
+    if (!this.dropIsDown) {
+      this.dropdownMenu.nativeElement.className =
+        "dropdown drop open drop-focus";
+      this.accountDropdown.nativeElement.className = "link link-focus";
     } else {
-      document.getElementById("workffs").setAttribute("class", "dropdown drop");
+      this.dropdownMenu.nativeElement.className = "dropdown drop";
+      this.accountDropdown.nativeElement.className = "link";
     }
 
     this.dropIsDown = !this.dropIsDown;
@@ -128,13 +132,13 @@ export class HeaderComponent implements OnInit {
         .setAttribute("class", "notification-active");
       document
         .getElementById("dropdown-menu")
-        .setAttribute("class", "dropdown-menu drop-opt drop-opt-ext");
+        .setAttribute("class", "dropdown-list drop-opt drop-opt-ext");
       return true;
     }
     document.getElementById("accountDropdown").setAttribute("class", "");
     document
       .getElementById("dropdown-menu")
-      .setAttribute("class", "dropdown-menu drop-opt");
+      .setAttribute("class", "dropdown-list drop-opt");
     return false;
   }
 }

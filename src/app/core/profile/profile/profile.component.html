@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="profile-header row">
-    <div class="col-md-3 image-wrap center">
+  <div class="profile-header">
+    <div class="image-wrap center">
       <img
         src="assets/unknown.png"
         alt="Profile image"
@@ -14,7 +14,7 @@
         *ngIf="defaultImage == false"
       />
     </div>
-    <div class="col profile-control">
+    <div class="profile-control">
       <p class="profile-name">
         {{ userProfileData.firstname }} {{ userProfileData.lastname }}
       </p>
@@ -67,7 +67,7 @@
         </div>
         <div class="btn-big" id="my-page" *ngIf="isMyProfileFlag == true">
           <button
-            class="btn-profile"
+            class="btn-profile btn-green"
             id="change_personal_data"
             data-toggle="modal"
             data-target="#modalChangeData"
@@ -78,7 +78,7 @@
             </p>
           </button>
           <button
-            class="btn-profile"
+            class="btn-profile btn-green"
             id="change_passwrod"
             data-toggle="modal"
             data-target="#modalChangePassword"
@@ -89,7 +89,7 @@
             </p>
           </button>
           <button
-            class="btn-profile"
+            class="btn-profile btn-green"
             id="change_image"
             data-toggle="modal"
             data-target="#modalChangeImage"
@@ -111,7 +111,7 @@
         </div>
       </div>
     </div>
-    <div class="col profile-info center">
+    <div class="profile-info center">
       <table>
         <tbody>
           <tr>
@@ -148,9 +148,7 @@
       <li id="nav-profile-games" class="active" (click)="onNavProfile($event)">
         GAMES
       </li>
-      <li id="nav-profile-friends" (click)="onNavProfile($event)">
-        FRIENDS
-      </li>
+      <li id="nav-profile-friends" (click)="onNavProfile($event)">FRIENDS</li>
     </ul>
     <div class="profile-children">
       <app-profile-friends
@@ -172,7 +170,7 @@
   id="modalChangeData"
   class="modal fade"
   role="dialog"
-  style="margin-top: 50px;"
+  style="margin-top: 50px"
 >
   <app-modal-change-details
     [myProfileData]="myProfileData"
@@ -182,7 +180,7 @@
   id="modalChangePassword"
   class="modal fade"
   role="dialog"
-  style="margin-top: 50px;"
+  style="margin-top: 50px"
 >
   <app-modal-change-password
     [myProfileData]="myProfileData"
@@ -192,7 +190,7 @@
   id="modalChangeImage"
   class="modal fade"
   role="dialog"
-  style="margin-top: 50px;"
+  style="margin-top: 50px"
 >
   <app-modal-change-image
     [myProfileData]="myProfileData"

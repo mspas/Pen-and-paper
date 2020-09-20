@@ -1,5 +1,6 @@
 @import '../../../_variables'
 @import '../../../_mixins'
+@import '../../../_animations'
 
 nav
     position: fixed
@@ -7,7 +8,9 @@ nav
     width: 100vw
     height: 56px
     padding: 0 10vw
-    //background-color: $primary
+    @include radial-gradient(center, #fff, -70%, $primary, 80%)
+    @media screen and ( max-width: 992px )
+        height: auto
     .navbar-collapse
         height: 100%
         .main-nav 
@@ -21,21 +24,50 @@ nav
                 justify-content: center
                 cursor: pointer
                 border-bottom: 1px solid #00000071
+                @media screen and ( max-width: 992px )
+                    line-height: 4em
+                    border: none
                 &:hover
                     color: $third
                     background-color: #fff
                 &:focus
                     color: $secondary
                     background-color: #fff
-    .dropdown-menu
-        margin-left: -11px
-        margin-top: 15px
-        padding: 0
-        min-width: 146px !important
-        background: $primary
-        border-top: 0px
-        .opt
-            max-width: 100%
-            padding: 5px 0 !important
-            font-size: 0.7em
-            background: $lightWhite
+            .link-focus
+                color: $third !important
+                background-color: #fff
+            .dropdown-link
+                position: relative
+                &:hover
+                    .dropdown-list
+                        animation: fadeInDown 0.5s ease-in-out forwards
+                @media screen and ( max-width: 992px )
+                    &:hover
+                        .dropdown-list
+                            display: block
+                            animation: fadeInDown 0.5s ease-in-out forwards
+                .dropdown-list
+                    position: absolute
+                    width: 162px
+                    left: 0
+                    top: 100%
+                    padding: 0
+                    border: 1px solid #00000071
+                    border-bottom: none
+                    border-top: none
+                    opacity: 0
+                    @media screen and ( max-width: 992px )
+                        position: relative
+                        display: none
+                        width: 100%
+                        opacity: 0
+                        border: none
+                    .opt
+                        width: 160px
+                        padding: 5px 0 !important
+                        font-size: 0.9em
+                        background: $lightWhite
+                        @media screen and ( max-width: 992px )
+                            background: #fff
+                            width: 100%
+                            line-height: 3em

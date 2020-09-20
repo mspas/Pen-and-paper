@@ -8,12 +8,12 @@ import { AuthService } from "../auth/auth.service";
   styleUrls: ["./home.component.sass"],
 })
 export class HomeComponent implements OnInit {
-  constructor(private _auth: AuthService, private _router: Router) {}
-
-  ngOnInit() {
+  constructor(private _auth: AuthService, private _router: Router) {
     if (this._auth.isAuthenticated)
       this._router.navigate([`/profile/${this._auth.getLogin()}`]);
   }
+
+  ngOnInit() {}
 
   flipCard(event) {
     if (event.target.id.slice(0, 2) == "hp") {

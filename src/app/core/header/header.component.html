@@ -31,20 +31,13 @@
       <li class="link" [routerLink]="['/sign-up']" *ngIf="!isLoggedIn">
         <span>SIGN UP</span>
       </li>
-      <li
-        id="dropdown-link"
-        class="link"
-        data-toggle="dropdown"
-        (click)="fixDropdown()"
-        *ngIf="isLoggedIn"
-      >
-        <div class="dropdown drop" id="workffs">
+      <li #accountDropdown class="link dropdown-link" *ngIf="isLoggedIn">
+        <div class="dropdown-container" #dropdownMenu>
           <div id="accountDropdown">
-            MY ACCOUNT
+            MY ACCOUNT ▼
             <span *ngIf="checkActiveNotifications()">(!)</span>
-            <span class="caret"></span>
           </div>
-          <ul class="dropdown-menu" id="dropdown-menu">
+          <ul class="dropdown-list" id="dropdown-menu">
             <li class="opt" (click)="goToMyProfile()">
               <span>My Profile</span>
             </li>

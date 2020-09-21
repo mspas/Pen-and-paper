@@ -10,8 +10,9 @@ import { ApiService } from "src/app/core/services/api.service";
   styleUrls: ["./profile-games.component.sass"],
 })
 export class ProfileGamesComponent implements OnInit {
-  @Input("userGamesAPPList") userGamesAPPList: GameToPersonAppModel[];
+  @Input("userGamesList") userGamesAPPList: GameToPersonAppModel[];
   @Input("isMyProfileFlag") isMyProfileFlag: boolean;
+  @Input("isLoading") isLoading: boolean;
 
   data: any;
   profileData: PersonalDataModel;
@@ -21,15 +22,14 @@ export class ProfileGamesComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private _api: ApiService) {}
 
-  ngOnInit() {
-    /*this.route.data.subscribe((profiledata: { profiledata: any }) => {
-      this.data = profiledata.profiledata;
-    });
+  ngOnInit() {}
 
-    let profile = this.data[0];
-    this.profileData = profile.pop();
-    this.gamesAPPList = this.data[1];*/
+  ngOnChanges() {
+    if (!this.isLoading) this.sortGames();
+  }
 
+  sortGames() {
+    this.gamesAccepted = [];
     this.userGamesAPPList.forEach((element) => {
       if (element.isAccepted) this.gamesAccepted.push(element);
       if (!element.isAccepted && !element.isMadeByPlayer)

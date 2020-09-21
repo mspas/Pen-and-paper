@@ -1,4 +1,4 @@
-<div class="friends-list-wrap">
+<div *ngIf="isLoading === false" class="friends-list-wrap">
   <p>Friends list:</p>
   <div class="table-responsive">
     <table class="table">
@@ -66,3 +66,4 @@
     </table>
   </div>
 </div>
+<div *ngIf="isLoading" class="loading">Loading...</div>

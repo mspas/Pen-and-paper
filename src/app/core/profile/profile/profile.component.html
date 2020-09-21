@@ -4,13 +4,11 @@
       <img
         src="assets/unknown.png"
         alt="Profile image"
-        class="profile-photo"
         *ngIf="defaultImage == true"
       />
       <img
         [src]="imageToShow"
         alt="Profile image"
-        class="profile-photo"
         *ngIf="defaultImage == false"
       />
     </div>
@@ -19,7 +17,10 @@
         {{ userProfileData.firstname }} {{ userProfileData.lastname }}
       </p>
       <div class="btn-wrap">
-        <div *ngIf="isMyProfileFlag == false && mobileViewFlag == false">
+        <div
+          class="btn-container"
+          *ngIf="isMyProfileFlag == false && mobileViewFlag == false"
+        >
           <button
             class="btn-profile"
             id="send_message"
@@ -65,7 +66,7 @@
             </p>
           </button>
         </div>
-        <div class="btn-big" id="my-page" *ngIf="isMyProfileFlag == true">
+        <div class="btn-container" id="my-page" *ngIf="isMyProfileFlag == true">
           <button
             class="btn-profile btn-green"
             id="change_personal_data"
@@ -101,7 +102,7 @@
           </button>
         </div>
         <div
-          class="btn-mobile"
+          class="btn-container"
           id="my-page"
           *ngIf="isMyProfileFlag == true && mobileViewFlag == true"
         >
@@ -153,13 +154,15 @@
     <div class="profile-children">
       <app-profile-friends
         *ngIf="viewChildFlag == false"
-        [userFriends]="userFriends"
+        [isLoading]="isLoadingFriends"
+        [userFriends]="userFriendsList"
         [myFriends]="myFriends"
         [isMyProfileFlag]="isMyProfileFlag"
       ></app-profile-friends>
       <app-profile-games
         *ngIf="viewChildFlag == true"
-        [userGamesAPPList]="userGamesAPPList"
+        [isLoading]="isLoadingGames"
+        [userGamesList]="userGamesList"
         [isMyProfileFlag]="isMyProfileFlag"
       ></app-profile-games>
     </div>
@@ -173,7 +176,7 @@
   style="margin-top: 50px"
 >
   <app-modal-change-details
-    [myProfileData]="myProfileData"
+    [myProfileData]="userProfileData"
   ></app-modal-change-details>
 </div>
 <div
@@ -183,7 +186,7 @@
   style="margin-top: 50px"
 >
   <app-modal-change-password
-    [myProfileData]="myProfileData"
+    [myProfileData]="userProfileData"
   ></app-modal-change-password>
 </div>
 <div
@@ -193,6 +196,6 @@
   style="margin-top: 50px"
 >
   <app-modal-change-image
-    [myProfileData]="myProfileData"
+    [myProfileData]="userProfileData"
   ></app-modal-change-image>
 </div>

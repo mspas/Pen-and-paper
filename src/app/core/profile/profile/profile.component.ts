@@ -5,8 +5,6 @@ import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
 import { FriendModel } from "src/app/core/models/friend.model";
 import { ApiService } from "src/app/core/services/api.service";
 import { ConversationDataModel } from "src/app/core/models/message.model";
-import { NgForm } from "@angular/forms";
-import { ChangePasswordModel } from "src/app/core/models/changepassword.model";
 import { DataService } from "src/app/core/services/data.service";
 
 @Component({
@@ -21,6 +19,8 @@ export class ProfileComponent implements OnInit {
   isImageLoading: boolean;
   defaultImage: boolean = true;
 
+  isLoadingFriends = true;
+  isLoadingGames = true;
   isFriendFlag = false;
   isInvitedFlag = false;
   mobileViewFlag = false;
@@ -33,8 +33,8 @@ export class ProfileComponent implements OnInit {
   myFriends: FriendModel[] = [];
 
   userProfileData: PersonalDataModel;
-  userGamesAPPList: GameToPersonAppModel[] = [];
-  userFriends: FriendModel[] = [];
+  userGamesList: GameToPersonAppModel[] = [];
+  userFriendsList: FriendModel[] = [];
 
   ourRelation: FriendModel = null;
 
@@ -45,58 +45,73 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((profiledata: { profiledata: any }) => {
-      this.data = profiledata.profiledata;
+    this.route.data.subscribe((profileData: any) => {
+      this.userProfileData = profileData.profileData;
     });
 
-    let profile = this.data[0];
-    this.myProfileData = profile.pop();
-    this.myFriends = this.data[1];
-    this.myGamesAPPList = this.data[2];
+    this.route.params.subscribe((params) => {
+      let userNick = params["login"];
+      this._api.getProfileData(userNick).subscribe((data) => {
+        this.userProfileData = data;
+        let nick = localStorage.getItem("nick");
 
-    profile = this.data[3];
-    this.userProfileData = profile.pop();
-    //localStorage.setItem("profileid", this.userProfileData.id.toString());
-    this.userFriends = this.data[4];
-    this.userGamesAPPList = this.data[5];
+        if (
+          this.userProfileData.id !== parseInt(localStorage.getItem("id")) &&
+          nick
+        ) {
+          this.isMyProfileFlag = false;
+          this._api.getProfileData(nick).subscribe((data) => {
+            this.myProfileData = data;
+          });
+        } else this.isMyProfileFlag = true;
 
-    if (
-      this.userProfileData.photoName != null &&
-      this.userProfileData.photoName != ""
-    ) {
-      this.defaultImage = false;
+        if (
+          this.userProfileData.photoName != null &&
+          this.userProfileData.photoName != ""
+        ) {
+          this.defaultImage = false;
 
-      this.isImageLoading = true;
-      this._api.getImage(this.userProfileData.photoName).subscribe(
-        (data) => {
-          this.createImageFromBlob(data);
-          this.isImageLoading = false;
-        },
-        (error) => {
-          this.isImageLoading = false;
-          console.log(error);
-        }
-      );
-    }
-
-    if (this.myProfileData.id == this.userProfileData.id) {
-      this.isMyProfileFlag = true;
-    } else {
-      if (this.myFriends != null) {
-        this.myFriends.forEach((fr) => {
-          if (fr.personalData.id == this.userProfileData.id) {
-            if (fr.isAccepted) {
-              this.isFriendFlag = true;
-              this.isInvitedFlag = false;
-            } else {
-              this.isFriendFlag = false;
-              this.isInvitedFlag = true;
+          this.isImageLoading = true;
+          this._api.getImage(this.userProfileData.photoName).subscribe(
+            (data) => {
+              this.createImageFromBlob(data);
+              this.isImageLoading = false;
+            },
+            (error) => {
+              this.isImageLoading = false;
+              console.log(error);
             }
-            this.ourRelation = fr;
-          }
-        });
-      }
-    }
+          );
+        }
+      });
+
+      this.isLoadingFriends = true;
+      this.isLoadingGames = true;
+
+      this._api.getFriendsList(userNick).subscribe((data) => {
+        this.userFriendsList = data;
+        this.isLoadingFriends = false;
+        if (this.myFriends != null) {
+          this.myFriends.forEach((fr) => {
+            if (fr.personalData.id == this.userProfileData.id) {
+              if (fr.isAccepted) {
+                this.isFriendFlag = true;
+                this.isInvitedFlag = false;
+              } else {
+                this.isFriendFlag = false;
+                this.isInvitedFlag = true;
+              }
+              this.ourRelation = fr;
+            }
+          });
+        }
+      });
+
+      this._api.getPlayersGames(userNick).subscribe((data) => {
+        this.userGamesList = data;
+        this.isLoadingGames = false;
+      });
+    });
   }
 
   createImageFromBlob(image: Blob) {

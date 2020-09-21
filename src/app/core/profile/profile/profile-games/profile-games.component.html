@@ -1,4 +1,4 @@
-<div class="games-list-wrap">
+<div *ngIf="isLoading === false" class="games-list-wrap">
   <p>Game history:</p>
   <div class="table-responsive">
     <table class="table">
@@ -78,3 +78,4 @@
     </table>
   </div>
 </div>
+<div *ngIf="isLoading" class="loading">Loading...</div>

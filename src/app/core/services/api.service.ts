@@ -38,13 +38,27 @@ export class ApiService {
     private _data: DataService
   ) {}
 
+  getProfileData(user: string): Observable<PersonalDataModel> {
+    return this._http.get<PersonalDataModel>(this.url + "pdata/" + user);
+  }
+
+  getFriendsList(user: string): Observable<FriendModel[]> {
+    return this._http.get<FriendModel[]>(this.url + "Friend/" + user);
+  }
+
+  getPlayersGames(user: string): Observable<GameToPersonAppModel[]> {
+    return this._http.get<GameToPersonAppModel[]>(
+      this.url + "GameToPerson/" + user
+    );
+  }
+
   getAllDataProfile(
     profileLogin: string,
     loggedLogin: string
   ): Observable<any> {
     if (loggedLogin != null && profileLogin != null) {
       let myProfile = this._http.get<PersonalDataModel[]>(
-        this.url + "pdata/" + loggedLogin
+        this.url + "pdata/search/" + loggedLogin
       );
       let myFriendsList = this._http.get<FriendModel[]>(
         this.url + "Friend/" + loggedLogin
@@ -54,7 +68,7 @@ export class ApiService {
       );
 
       let profile = this._http.get<PersonalDataModel[]>(
-        this.url + "pdata/" + profileLogin
+        this.url + "pdata/search/" + profileLogin
       );
       let friendsList = this._http.get<FriendModel[]>(
         this.url + "Friend/" + profileLogin
@@ -79,7 +93,7 @@ export class ApiService {
     let loggedId = localStorage.getItem("id").toString();
 
     let profile = this._http.get<PersonalDataModel[]>(
-      this.url + "pdata/" + loggedLogin
+      this.url + "pdata/search/" + loggedLogin
     );
     let forum = this._http.get<ForumModel>(
       this.url + "Forum/" + gameId.toString()
@@ -102,7 +116,7 @@ export class ApiService {
     let profileName = localStorage.getItem("nick").toString();
 
     let profile = this._http.get<PersonalDataModel[]>(
-      this.url + "pdata/" + profileName
+      this.url + "pdata/search/" + profileName
     );
     let forum = this._http.get<ForumModel>(
       this.url + "Forum/" + gameId.toString()
@@ -203,7 +217,7 @@ export class ApiService {
 
   searchFriend(value: string): Observable<PersonalDataModel[]> {
     return this._http
-      .get<PersonalDataModel[]>(this.url + "pdata/" + value)
+      .get<PersonalDataModel[]>(this.url + "pdata/search/" + value)
       .pipe(tap((data) => console.log("All: " + JSON.stringify(data))));
   }
 
@@ -223,7 +237,6 @@ export class ApiService {
   }
 
   getImage(fileName: string): Observable<Blob> {
-    console.log(this.url + "Photo/" + fileName);
     return this._http.get(this.url + "Photo/" + fileName, {
       responseType: "blob",
     });
@@ -326,7 +339,10 @@ export class ApiService {
   editPersonalData(profile: PersonalDataModel) {
     let id = localStorage.getItem("id");
     this._http
-      .put<PersonalDataModel>(this.url + "pdata/" + id.toString(), profile)
+      .put<PersonalDataModel>(
+        this.url + "pdata/search/" + id.toString(),
+        profile
+      )
       .subscribe((error) => console.log(error));
   }
 

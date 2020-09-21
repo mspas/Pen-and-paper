@@ -29,7 +29,7 @@ const routes: Routes = [];
         component: ProfileComponent,
         canActivate: [AuthGuardService],
         resolve: {
-          profiledata: PersonalDataResolve,
+          profileData: PersonalDataResolve,
         },
       },
       {

@@ -16,8 +16,7 @@ export class ProfileFriendsComponent implements OnInit {
   @Input("userFriends") userFriends: FriendModel[] = [];
   @Input("myFriends") myFriends: FriendModel[] = [];
   @Input("isMyProfileFlag") isMyProfileFlag: boolean;
-
-  friendsAccepted: PersonalDataListModel[] = [];
+  @Input("isLoading") isLoading: boolean;
 
   imageToShow: any;
   isImageLoading: boolean;
@@ -25,12 +24,9 @@ export class ProfileFriendsComponent implements OnInit {
   userID: number;
   profileData: PersonalDataModel;
   data: any;
-  friendsAcceptedNoPhoto: PersonalDataModel[] = [];
-  friendsAcceptedPhoto: FriendListModel[] = [];
 
+  friendsAccepted: PersonalDataListModel[] = [];
   invitations: PersonalDataListModel[] = [];
-  invitationsNoPhoto: PersonalDataModel[] = [];
-  invitationsPhoto: FriendListModel[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +34,15 @@ export class ProfileFriendsComponent implements OnInit {
     private _api: ApiService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngOnChanges() {
+    if (!this.isLoading) this.sortFriends();
+  }
+
+  sortFriends() {
+    this.friendsAccepted = [];
+    this.invitations = [];
     if (this.userFriends != null) {
       this.userFriends.forEach((fr) => {
         if (fr.isAccepted) {

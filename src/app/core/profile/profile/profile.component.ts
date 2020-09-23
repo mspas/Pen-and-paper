@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   isImageLoading: boolean;
   defaultImage: boolean = true;
 
+  isLoading = true;
   isLoadingFriends = true;
   isLoadingGames = true;
   isFriendFlag = false;
@@ -45,14 +46,12 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((profileData: any) => {
-      this.userProfileData = profileData.profileData;
-    });
-
     this.route.params.subscribe((params) => {
+      this.isLoading = true;
       let userNick = params["login"];
       this._api.getProfileData(userNick).subscribe((data) => {
         this.userProfileData = data;
+        this.isLoading = false;
         let nick = localStorage.getItem("nick");
 
         if (

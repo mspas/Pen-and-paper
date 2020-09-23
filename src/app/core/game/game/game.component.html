@@ -1,11 +1,15 @@
 <div class="container">
+  <div class="loading" *ngIf="isLoadingGame && isLoadingForum">Loading...</div>
   <app-game-view
+    *ngIf="!isLoadingGame"
+    [iAmGameMaster]="iAmGameMaster"
     [profileData]="profileData"
     [gameData]="gameData"
     [gameMaster]="gameMaster"
   ></app-game-view>
   <app-forum
-    *ngIf="iAmGameParticipant || iAmGameMaster"
+    *ngIf="iAmGameParticipant && !isLoadingForum"
+    [iAmGameMaster]="iAmGameMaster"
     [profileData]="profileData"
     [gameData]="gameData"
     [forumData]="forumData"

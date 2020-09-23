@@ -1,15 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: 'transformYesNoBoolean'
+  name: "transformYesNoBoolean",
 })
 export class TransformYesNoBooleanPipe implements PipeTransform {
-
   transform(value: boolean, args?: any): any {
-    if (value)
-      return "Yes";
-    else
-      return "No";
+    if (value) return "Yes";
+    else return "No";
   }
-
 }

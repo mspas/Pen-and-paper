@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="profile-header">
+  <div class="profile-header" *ngIf="isLoading">Lodaing</div>
+  <div class="profile-header" *ngIf="!isLoading">
     <div class="image-wrap center">
       <img
         src="assets/unknown.png"
@@ -174,6 +175,7 @@
   class="modal fade"
   role="dialog"
   style="margin-top: 50px"
+  *ngIf="!isLoading"
 >
   <app-modal-change-details
     [myProfileData]="userProfileData"
@@ -184,6 +186,7 @@
   class="modal fade"
   role="dialog"
   style="margin-top: 50px"
+  *ngIf="!isLoading"
 >
   <app-modal-change-password
     [myProfileData]="userProfileData"
@@ -194,6 +197,7 @@
   class="modal fade"
   role="dialog"
   style="margin-top: 50px"
+  *ngIf="!isLoading"
 >
   <app-modal-change-image
     [myProfileData]="userProfileData"

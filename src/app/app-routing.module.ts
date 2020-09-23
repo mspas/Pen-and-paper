@@ -28,25 +28,16 @@ const routes: Routes = [];
         path: "profile/:login",
         component: ProfileComponent,
         canActivate: [AuthGuardService],
-        resolve: {
-          profileData: PersonalDataResolve,
-        },
       },
       {
         path: "game/:id",
         component: GameComponent,
         canActivate: [AuthGuardService],
-        resolve: {
-          profiledata: GameResolve,
-        },
       },
       {
         path: "game/:id/topic/:topicId/:page",
         component: GameComponent,
         canActivate: [AuthGuardService],
-        resolve: {
-          profiledata: GameResolve,
-        },
       },
       {
         path: "search-game/:value",

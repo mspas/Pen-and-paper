@@ -22,6 +22,7 @@ export class ForumComponent implements OnInit {
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
   @Input() topicData: TopicModel;
+  @Input() iAmGameMaster: boolean;
 
   topicIdParam: number = null;
 
@@ -29,7 +30,6 @@ export class ForumComponent implements OnInit {
   topicGameList: TopicListModel[] = [];
   topicSupportList: TopicListModel[] = [];
   topicOfftopList: TopicListModel[] = [];
-  iAmGameMaster: boolean = false;
 
   showCreateTopic: boolean = false;
   showTopicList: boolean = false;
@@ -38,6 +38,8 @@ export class ForumComponent implements OnInit {
   showGameSettings: boolean = false;
   showYourCharacter: boolean = false;
   showEndGame: boolean = false;
+
+  myCardId: number = -1;
 
   subpageManager: ButtonManager;
 
@@ -48,14 +50,7 @@ export class ForumComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.subpageManager = new ButtonManager(
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    );
+    this.subpageManager = new ButtonManager();
 
     var topicId = this.route.snapshot.params.topicId;
     if (topicId) this.topicIdParam = parseInt(topicId);
@@ -73,6 +68,8 @@ export class ForumComponent implements OnInit {
       );
       this.gameData.participantsProfiles.forEach((user) => {
         if (user.id == topic.authorId) topicListModel.author = user;
+        if (user.id == topic.messages[topic.messagesAmount - 1].senderId)
+          topicListModel.lastAuthor = user;
       });
       this.topicToPersonData.forEach((t2p) => {
         if (
@@ -82,40 +79,46 @@ export class ForumComponent implements OnInit {
           topicListModel.wasSeen = false;
       });
 
-      this.gameData.participantsProfiles.forEach((user) => {
-        if (user.id == topic.messages[topic.messagesAmount - 1].senderId)
-          topicListModel.lastAuthor = user;
+      this.gameData.participants.forEach((card) => {
+        if (this.profileData.id == card.playerId) this.myCardId = card.id;
       });
 
       this.detectTopicCategory(topicListModel);
     });
-
-    console.log(this.subpageManager.topicList);
-    if (this.gameData.masterId == this.profileData.id)
-      this.iAmGameMaster = true;
   }
 
   setChildComponent(subpage: string) {
-    if (subpage == "user-access" && this.iAmGameMaster)
-      this.subpageManager.showUserAccess();
-    else if (subpage == "game-settings" && this.iAmGameMaster)
-      this.subpageManager.showGameSettings();
-    else if (subpage == "create-topic") this.subpageManager.showCreateTopic();
-    else if (subpage == "manage-players" || subpage == "players")
-      this.subpageManager.showManagePlayers();
-    else if (subpage == "my-character") this.subpageManager.showYourCharacter();
-    else this.subpageManager.showTopicList();
+    switch (subpage) {
+      case "user-access":
+        if (this.iAmGameMaster) this.subpageManager.showUserAccess();
+      case "game-settings":
+        if (this.iAmGameMaster) this.subpageManager.showGameSettings();
+      case "create-topic":
+        this.subpageManager.showCreateTopic();
+      case "manage-players":
+        this.subpageManager.showManagePlayers();
+      case "players":
+        this.subpageManager.showManagePlayers();
+      case "my-character":
+        this.subpageManager.showYourCharacter();
+      default:
+        this.subpageManager.showTopicList();
+    }
   }
 
   detectTopicCategory(topicListModel: TopicListModel) {
-    if (topicListModel.topicData.category == "general")
-      this.topicGeneralList.push(topicListModel);
-    if (topicListModel.topicData.category == "game")
-      this.topicGameList.push(topicListModel);
-    if (topicListModel.topicData.category == "support")
-      this.topicSupportList.push(topicListModel);
-    if (topicListModel.topicData.category == "offtop")
-      this.topicOfftopList.push(topicListModel);
+    switch (topicListModel.topicData.category) {
+      case "general":
+        this.topicGeneralList.push(topicListModel);
+      case "game":
+        this.topicGameList.push(topicListModel);
+      case "support":
+        this.topicSupportList.push(topicListModel);
+      case "offtop":
+        this.topicOfftopList.push(topicListModel);
+      default:
+        return;
+    }
   }
 
   async onCreateTopic() {
@@ -157,7 +160,11 @@ export class ForumComponent implements OnInit {
 
   onEndGame() {}
 
-  onLeaveGame() {}
+  onLeaveGame() {
+    this._api.declineJoinGame(this.myCardId);
+    console.log("chuj");
+    window.location.reload();
+  }
 
   async closeChildComponent(check) {
     if (check == "false") {

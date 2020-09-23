@@ -40,25 +40,15 @@ export class TopicComponent implements OnInit {
 
     this.participants = this.gameData.participantsProfiles;
 
-    this.linkPrevious =
-      "game/" +
-      this.gameData.id.toString() +
-      "/" +
-      this.topicData.id.toString() +
-      "/";
+    let link = `game/${this.gameData.id}/${this.topicData.id}/`;
+
     let numPage = this.pageParam - 1;
     if (numPage < 1) numPage = 1;
-    this.linkPrevious += numPage.toString() + "/view";
+    this.linkPrevious = `${link}/${numPage}/view`;
 
-    this.linkNext =
-      "game/" +
-      this.gameData.id.toString() +
-      "/" +
-      this.topicData.id.toString() +
-      "/";
     numPage = this.pageParam + 1;
     if (numPage > this.topicData.totalPages)
       numPage = this.topicData.totalPages;
-    this.linkNext += numPage.toString() + "/view";
+    this.linkNext = `${link}/${numPage}/view`;
   }
 }

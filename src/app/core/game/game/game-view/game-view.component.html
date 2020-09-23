@@ -16,6 +16,25 @@
   </div>
   <div id="collapseGame" class="panel-collapse collapse">
     <div class="container panel-body">
+      <div class="btns center" *ngIf="!iAmParticipant">
+        <button
+          class="btn btn-forum btn-green"
+          *ngIf="!isNewRequest && !isNewInvited"
+          (click)="onJoin()"
+        >
+          <img class="btn-ico" src="assets/plus.png" />JOIN GAME
+        </button>
+        <button class="btn btn-forum btn-yellow" *ngIf="isNewRequest">
+          <img class="btn-ico" src="assets/gogame.png" />REQUEST WAITING
+        </button>
+        <button
+          class="btn btn-forum btn-green"
+          *ngIf="isNewInvited"
+          (click)="onAcceptRequest()"
+        >
+          <img class="btn-ico" src="assets/plus.png" />ACCEPT INVITATION
+        </button>
+      </div>
       <div class="description">{{ gameData.description }}</div>
       <table>
         <tbody class="font-montserrat">
@@ -48,7 +67,7 @@
                   class="profile-link"
                   role="button"
                   [routerLink]="['/profile', player.data.login]"
-                  style="display: block;"
+                  style="display: block"
                 >
                   <img
                     *ngIf="player.photo"
@@ -72,13 +91,13 @@
             <td class="profile-data">{{ gameData.status }}</td>
           </tr>
           <tr>
-            <td>CAN I JOIN WITHOUT INVITATION?</td>
+            <td>IS INVITATION NEEDED?</td>
             <td class="profile-data">
               {{ gameData.needInvite | transformYesNoBoolean }}
             </td>
           </tr>
           <tr>
-            <td>CAN I JOIN AFTER THE GAME STARTED?</td>
+            <td>IS IT POSSIBLE TO JOIN AFTER THE GAME STARTED?</td>
             <td class="profile-data">
               {{ gameData.hotJoin | transformYesNoBoolean }}
             </td>

@@ -21,6 +21,7 @@ export class GameViewComponent implements OnInit {
   @Input() profileData: PersonalDataModel;
   @Input() gameData: GameAppModel;
   @Input() gameMaster: PersonalDataModel;
+  @Input() iAmGameMaster: boolean;
 
   urlMafia: string = "assets/mafia1.png";
   urlFantasy: string = "assets/fantasy1.png";
@@ -34,7 +35,6 @@ export class GameViewComponent implements OnInit {
   needInviteString: string = "No";
   info: string = "Join game";
   modalTitle: string = "";
-  iAmMaster: boolean = false;
   iAmParticipant: boolean = false;
   isNewRequest: boolean = false;
   numberOfRequests: number = 0;
@@ -55,27 +55,25 @@ export class GameViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.buttonManager = new ButtonManager(
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    );
-
-    if (this.gameData.masterId == this.profileData.id) this.iAmMaster = true;
-
-    if (this.gameData.category == "Mafia") this.imageUrl = this.urlMafia;
-    if (this.gameData.category == "Fantasy") this.imageUrl = this.urlFantasy;
-    if (this.gameData.category == "SciFi") this.imageUrl = this.urlSciFi;
+    this.buttonManager = new ButtonManager();
+    console.log();
+    switch (this.gameData.category) {
+      case "Mafia":
+        this.imageUrl = this.urlMafia;
+      case "Fantasy":
+        this.imageUrl = this.urlFantasy;
+      case "support":
+        this.imageUrl = this.urlSciFi;
+      default:
+        this.imageUrl = this.urlFantasy;
+    }
 
     if (this.gameData.hotJoin) this.hotJoinString = "Yes";
     if (this.gameData.needInvite) this.needInviteString = "Yes";
 
     this.gameData.participantsProfiles.forEach((player) => {
       if (this.gameData.masterId == player.id) this.gameMaster = player;
-      if (this.profileData.id == player.id && !this.iAmMaster) {
+      if (this.profileData.id == player.id && !this.iAmGameMaster) {
         this.gameData.participants.forEach((card) => {
           if (this.profileData.id == card.playerId) {
             if (card.isAccepted) {
@@ -88,6 +86,7 @@ export class GameViewComponent implements OnInit {
           }
         });
       }
+
       this.gameData.participants.forEach((card) => {
         //if (card.playerId == player.id && card.id != this.gameMaster.id) {
         if (
@@ -113,7 +112,7 @@ export class GameViewComponent implements OnInit {
     }
 
     if (this.subpage == "view") {
-      if (this.iAmParticipant || this.iAmMaster) {
+      if (this.iAmParticipant || this.iAmGameMaster) {
         this.goToGameOverview();
       }
     }
@@ -140,6 +139,7 @@ export class GameViewComponent implements OnInit {
         }
       );
     }
+
     let i = 0;
     this.acceptedPlayers.forEach((element) => {
       if (
@@ -183,41 +183,28 @@ export class GameViewComponent implements OnInit {
 
   async goToGameOverview() {
     var res = await this._router.navigate([
-      "/game",
-      this.gameData.id,
-      "overview",
-      "forum",
+      `/game/${this.gameData.id}/overview/forum`,
     ]);
     var snapshot = this.route.snapshot;
     //window.location.reload();         MOGLO SIE ZEPSUC TUTAJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   }
 
-  toggleClick() {
-    var elem = document.getElementById("panel1");
-    if (elem.getAttribute("class") == "panel border")
-      elem.setAttribute("class", "panel");
-    else elem.setAttribute("class", "panel border");
-  }
-
   onJoin() {
-    let invite = false;
-    if (this.gameData.needInvite == false) invite = true;
-
     let newConnection = new GameToPersonCreateModel(
       this.gameData.id,
       this.profileData.id,
       false,
-      invite,
+      !this.gameData.needInvite,
       true,
       10
     );
     this._api.joinGame(newConnection);
-    this._router.navigate(["/profile/games-list/", this.profileData.login]);
+    window.location.reload();
   }
 
   onLeave() {
     this._api.declineJoinGame(this.myCardId);
-    this._router.navigate(["/profile/games-list/", this.profileData.login]);
+    window.location.reload();
   }
 
   onAcceptRequest(playerId: number) {
@@ -243,13 +230,14 @@ export class GameViewComponent implements OnInit {
   }
 
   onRemoveSkill(id: number, index: number) {
-    console.log("id " + id + " indx " + index);
     let elemId = "skill" + index.toString();
     document.getElementById(elemId).removeAttribute("class");
     document.getElementById(elemId).setAttribute("class", "sr-only");
+
     let cross = "cross" + index.toString();
     document.getElementById(cross).removeAttribute("class");
     document.getElementById(cross).setAttribute("class", "sr-only");
+
     this._api.deleteSkill(id);
   }
 
@@ -273,9 +261,11 @@ export class GameViewComponent implements OnInit {
     let elemId = "ses" + index.toString();
     document.getElementById(elemId).removeAttribute("class");
     document.getElementById(elemId).setAttribute("class", "sr-only");
+
     let cross = "cros" + index.toString();
     document.getElementById(cross).removeAttribute("class");
     document.getElementById(cross).setAttribute("class", "sr-only");
+
     this._api.deleteSession(id);
   }
 

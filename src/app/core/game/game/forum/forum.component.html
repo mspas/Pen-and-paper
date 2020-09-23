@@ -2,30 +2,30 @@
   <div class="btn-wrap">
     <div *ngIf="iAmGameMaster" class="row">
       <div class="col">
-        <button class="btn-forum btn-yellow" (click)="onUserAccess()">
+        <button class="btn btn-forum btn-yellow" (click)="onUserAccess()">
           <img class="btn-ico" src="assets/baner.png" />USER'S ACCESS
         </button>
       </div>
       <div class="col">
-        <button class="btn-forum btn-blue" (click)="onGameSettings()">
+        <button class="btn btn-forum btn-blue" (click)="onGameSettings()">
           <img class="btn-ico" src="assets/fix.png" />GAME SETTINGS
         </button>
       </div>
       <div class="col">
-        <button class="btn-forum btn-blue" (click)="onManagePlayers()">
+        <button class="btn btn-forum btn-blue" (click)="onManagePlayers()">
           <img class="btn-ico" src="assets/pencil.png" />MANAGE PLAYERS
         </button>
       </div>
     </div>
     <div *ngIf="iAmGameMaster" class="row">
       <div class="col">
-        <button class="btn-forum btn-green" (click)="onCreateTopic()">
+        <button class="btn btn-forum btn-green" (click)="onCreateTopic()">
           <img class="btn-ico" src="assets/plus.png" />CREATE TOPIC
         </button>
       </div>
       <div class="col">
         <button
-          class="btn-forum"
+          class="btn btn-forum"
           id="btn-your-character"
           (click)="onYourCharacter()"
         >
@@ -33,29 +33,29 @@
         </button>
       </div>
       <div class="col">
-        <button class="btn-forum btn-yellow" (click)="onEndGame()">
+        <button class="btn btn-forum btn-yellow" (click)="onEndGame()">
           <img class="btn-ico" src="assets/gogame.png" />END GAME
         </button>
       </div>
     </div>
     <div *ngIf="!iAmGameMaster" class="row">
       <div class="col">
-        <button class="btn-forum btn-green" (click)="onCreateTopic()">
+        <button class="btn btn-forum btn-green" (click)="onCreateTopic()">
           <img class="btn-ico" src="assets/plus.png" />CREATE TOPIC
         </button>
       </div>
       <div class="col">
-        <button class="btn-forum btn-blue" (click)="onYourCharacter()">
+        <button class="btn btn-forum btn-blue" (click)="onYourCharacter()">
           <img class="btn-ico" src="assets/character.png" />YOUR CHARACTER
         </button>
       </div>
       <div class="col">
-        <button class="btn-forum btn-blue" (click)="onManagePlayers()">
+        <button class="btn btn-forum btn-blue" (click)="onManagePlayers()">
           <img class="btn-ico" src="assets/character.png" />PLAYERS
         </button>
       </div>
       <div class="col">
-        <button class="btn-forum btn-yellow" (click)="onLeaveGame()">
+        <button class="btn btn-forum btn-yellow" (click)="onLeaveGame()">
           <img class="btn-ico" src="assets/gogame.png" />LEAVE GAME
         </button>
       </div>

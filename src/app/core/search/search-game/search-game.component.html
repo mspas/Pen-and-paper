@@ -1,7 +1,7 @@
 <div class="container">
-  <p class="text-default" style="font-size: 20px; text-align: right;">
+  <p class="text-default" style="font-size: 20px; text-align: right">
     You must gather your party before venturing forth... <br /><span
-      style="font-size: 15px;"
+      style="font-size: 15px"
       >Or just find one!</span
     >
   </p>
@@ -15,11 +15,11 @@
         ngModel
         class="form-control"
       />
-      <label for="categories" style="margin-top: 20px;">Categories:</label>
+      <label for="categories" style="margin-top: 20px">Categories:</label>
       <p class="categories">
         <span
           *ngFor="let category of gameCategories; let i = index"
-          class="category-name text-default"
+          class="{{ category.className }}"
           id="category{{ i }}"
           (click)="categoryClick(i)"
           >{{ category.name }}</span
@@ -60,7 +60,7 @@
   </div>
 
   <div class="results">
-    <p class="text-default" style="font-size: 20px; text-align: right;">
+    <p class="text-default" style="font-size: 20px; text-align: right">
       Search results:
     </p>
     <div *ngFor="let game of foundGames; let i = index">
@@ -82,7 +82,7 @@
         <div class="media-body">
           <h4 class="media-heading">
             <a href="/game/{{ game.data.id }}">{{ game.data.title }}</a>
-            <span style="margin-left: 25px;">- {{ game.data.category }} -</span>
+            <span style="margin-left: 25px">- {{ game.data.category }} -</span>
             <span class="game-players text-default">
               Players: {{ game.data.nofparticipants }} /
               {{ game.data.maxplayers }}
@@ -90,7 +90,7 @@
           </h4>
           <p
             class="game-master"
-            style="display: flex; align-items: center; margin-top: 20px;"
+            style="display: flex; align-items: center; margin-top: 20px"
           >
             <a
               class="profile-link"

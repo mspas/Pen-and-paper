@@ -1,23 +1,13 @@
-<table>
-  <thead>
-    <tr>
-      <th>
-        TOPICS
-      </th>
-      <th>
-        AUTHOR
-      </th>
-      <th>
-        POSTS
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="category-title">
-      -GENERAL-
-    </tr>
-    <tr *ngFor="let topic of topicGeneralList; let i = index">
-      <td class="media">
+<div class="topic-list">
+  <p class="list-title">
+    <span>Topics</span>
+    <span>Author</span>
+    <span>Posts</span>
+  </p>
+  <div class="category-group" *ngFor="let category of topicsList">
+    <p>{{ category.name }}</p>
+    <div class="topic" *ngFor="let topic of category.topics; let i = index">
+      <div class="media">
         <div class="media-left">
           <img
             *ngIf="topic.wasSeen"
@@ -37,84 +27,34 @@
             <span class="topic-title font-montserrat clickable"
               ><a
                 class="clickable"
-                href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                  topic.topicData.totalPages
-                }}"
+                (click)="
+                  navigate(topic.topicData.id, topic.topicData.totalPages)
+                "
                 >{{ topic.topicData.topicName }}</a
               ></span
             >
-            <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
+            <ul *ngIf="topic.topicData.totalPages > 1" class="pagination">
+              <li class="page-item" *ngIf="topic.topicData.totalPages > 2">
+                <a class="page-link" (click)="navigate(topic.topicData.id, 1)"
                   >1</a
                 >
               </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
+              <li class="dots" *ngIf="topic.topicData.totalPages > 3">...</li>
               <li class="page-item">
                 <a
                   class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/3"
-                  >3</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              ...
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages - 1
-                  }}"
+                  (click)="
+                    navigate(topic.topicData.id, topic.topicData.totalPages - 1)
+                  "
                   >{{ topic.topicData.totalPages - 1 }}</a
                 >
               </li>
               <li class="page-item">
                 <a
                   class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages
-                  }}"
+                  (click)="
+                    navigate(topic.topicData.id, topic.topicData.totalPages)
+                  "
                   >{{ topic.topicData.totalPages }}</a
                 >
               </li>
@@ -134,444 +74,16 @@
             </div>
           </h4>
         </div>
-      </td>
-      <td>
-        <div>
-          <div
-            class="clickable"
-            [routerLink]="['/profile', topic.author.login]"
-          >
-            {{ topic.author.firstname }} {{ topic.author.lastname }} ({{
-              topic.author.login
-            }})
-          </div>
-          <br />
-          {{ topic.topicData.createDate | date: "h:mm:ss dd-MM-yyy" }}
-        </div>
-      </td>
-      <td>
+      </div>
+      <div class="clickable" [routerLink]="['/profile', topic.author.login]">
+        {{ topic.author.firstname }} {{ topic.author.lastname }} ({{
+          topic.author.login
+        }})
+      </div>
+      {{ topic.topicData.createDate | date: "h:mm:ss dd-MM-yyy" }}
+      <div>
         {{ topic.topicData.messagesAmount }}
-      </td>
-    </tr>
-    <tr class="category-title">
-      - GAME -
-    </tr>
-    <tr *ngFor="let topic of topicGameList; let i = index">
-      <td>
-        <div class="media-left">
-          <img
-            *ngIf="topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic-new.png"
-            alt="New message!"
-          />
-          <img
-            *ngIf="!topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic.png"
-            alt="Seen"
-          />
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <span class="topic-title font-montserrat clickable"
-              ><a
-                class="clickable"
-                href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                  topic.topicData.totalPages
-                }}"
-                >{{ topic.topicData.topicName }}</a
-              ></span
-            >
-            <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/3"
-                  >3</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              ...
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages - 1
-                  }}"
-                  >{{ topic.topicData.totalPages - 1 }}</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages
-                  }}"
-                  >{{ topic.topicData.totalPages }}</a
-                >
-              </li>
-            </ul>
-          </h4>
-          <h4 class="media-bottom">
-            <div class="font-montserrat topic-info">
-              <span
-                class="clickable"
-                [routerLink]="['/profile', topic.author.login]"
-                >{{ topic.lastAuthor.firstname }}
-                {{ topic.lastAuthor.lastname }} ({{
-                  topic.lastAuthor.login
-                }})</span
-              >
-              - {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST
-            </div>
-          </h4>
-        </div>
-      </td>
-      <td>
-        <div>
-          <div
-            class="clickable"
-            [routerLink]="['/profile', topic.author.login]"
-          >
-            {{ topic.author.firstname }} {{ topic.author.lastname }} ({{
-              topic.author.login
-            }})
-          </div>
-          <br />
-          {{ topic.topicData.createDate | date: "h:mm:ss dd-MM-yyy" }}
-        </div>
-      </td>
-      <td>
-        {{ topic.topicData.messagesAmount }}
-      </td>
-    </tr>
-    <tr class="category-title">
-      - SUPPORT -
-    </tr>
-    <tr *ngFor="let topic of topicSupportList; let i = index">
-      <td class="media">
-        <div class="media-left">
-          <img
-            *ngIf="topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic-new.png"
-            alt="New message!"
-          />
-          <img
-            *ngIf="!topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic.png"
-            alt="Seen"
-          />
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <span class="topic-title font-montserrat clickable"
-              ><a
-                class="clickable"
-                href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                  topic.topicData.totalPages
-                }}"
-                >{{ topic.topicData.topicName }}</a
-              ></span
-            >
-            <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/3"
-                  >3</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              ...
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages - 1
-                  }}"
-                  >{{ topic.topicData.totalPages - 1 }}</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages
-                  }}"
-                  >{{ topic.topicData.totalPages }}</a
-                >
-              </li>
-            </ul>
-          </h4>
-          <h4 class="media-bottom">
-            <div class="font-montserrat topic-info">
-              <span
-                class="clickable"
-                [routerLink]="['/profile', topic.author.login]"
-                >{{ topic.lastAuthor.firstname }}
-                {{ topic.lastAuthor.lastname }} ({{
-                  topic.lastAuthor.login
-                }})</span
-              >
-              - {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST
-            </div>
-          </h4>
-        </div>
-      </td>
-      <td>
-        <div>
-          <div
-            class="clickable"
-            [routerLink]="['/profile', topic.author.login]"
-          >
-            {{ topic.author.firstname }} {{ topic.author.lastname }} ({{
-              topic.author.login
-            }})
-          </div>
-          <br />
-          {{ topic.topicData.createDate | date: "h:mm:ss dd-MM-yyy" }}
-        </div>
-      </td>
-      <td>
-        {{ topic.topicData.messagesAmount }}
-      </td>
-    </tr>
-    <tr class="category-title">
-      - OFF-TOPIC -
-    </tr>
-    <tr *ngFor="let topic of topicOfftopList; let i = index">
-      <td class="media">
-        <div class="media-left">
-          <img
-            *ngIf="topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic-new.png"
-            alt="New message!"
-          />
-          <img
-            *ngIf="!topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic.png"
-            alt="Seen"
-          />
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <span class="topic-title font-montserrat clickable"
-              ><a
-                class="clickable"
-                href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                  topic.topicData.totalPages
-                }}"
-                >{{ topic.topicData.topicName }}</a
-              ></span
-            >
-            <ul *ngIf="topic.topicData.totalPages == 1" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 2" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages == 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/2"
-                  >2</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/3"
-                  >3</a
-                >
-              </li>
-            </ul>
-            <ul *ngIf="topic.topicData.totalPages > 3" class="pagination">
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/1"
-                  >1</a
-                >
-              </li>
-              ...
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages - 1
-                  }}"
-                  >{{ topic.topicData.totalPages - 1 }}</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="game/{{ gameData.id }}/topic/{{ topic.topicData.id }}/{{
-                    topic.topicData.totalPages
-                  }}"
-                  >{{ topic.topicData.totalPages }}</a
-                >
-              </li>
-            </ul>
-          </h4>
-          <h4 class="media-bottom">
-            <div class="font-montserrat topic-info">
-              <span
-                class="clickable"
-                [routerLink]="['/profile', topic.author.login]"
-                >{{ topic.lastAuthor.firstname }}
-                {{ topic.lastAuthor.lastname }} ({{
-                  topic.lastAuthor.login
-                }})</span
-              >
-              - {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST
-            </div>
-          </h4>
-        </div>
-      </td>
-      <td>
-        <div>
-          <div
-            class="clickable"
-            [routerLink]="['/profile', topic.author.login]"
-          >
-            {{ topic.author.firstname }} {{ topic.author.lastname }} ({{
-              topic.author.login
-            }})
-          </div>
-          <br />
-          {{ topic.topicData.createDate | date: "h:mm:ss dd-MM-yyy" }}
-        </div>
-      </td>
-      <td>
-        {{ topic.topicData.messagesAmount }}
-      </td>
-    </tr>
-  </tbody>
-</table>
+      </div>
+    </div>
+  </div>
+</div>

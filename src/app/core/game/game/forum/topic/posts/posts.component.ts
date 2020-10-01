@@ -33,13 +33,42 @@ export class PostsComponent implements OnInit {
     this.gameId = this.route.snapshot.params.id;
     this.page = parseInt(this.route.snapshot.params.page);
 
-    let i = 0;
+    for (let i = 0; i < this.topicData.messages.length; i++) {
+      const message = this.topicData.messages[i];
+      let author;
+      this.participants.forEach((user) => {
+        if (message.senderId == user.id) author = user;
+      });
+
+      let post = new PostModel(message, author, null);
+
+      if (post.user.photoName != null && post.user.photoName != "") {
+        this.posts.push(post);
+        this.isImageLoading = true;
+
+        this._api.getImage(post.user.photoName).subscribe(
+          (data) => {
+            //authors image
+            this.createImageFromBlob(data, i, false);
+            this.isImageLoading = false;
+          },
+          (error) => {
+            this.isImageLoading = false;
+            console.log(error);
+          }
+        );
+      } else {
+        this.posts.push(post);
+      }
+    }
+
+    /*let i = 0;
     let length = this.page * 10;
-    if (length > this.topicData.messages.length)
-      length = this.topicData.messages.length;
+    if (length > this.topicData.messages.messagesResult.length)
+      length = this.topicData.messages.messagesResult.length;
 
     for (let index = this.page * 10 - 10; index < length; index++) {
-      const message = this.topicData.messages[index];
+      const message = this.topicData.messages.messagesResult[index];
 
       let post = new PostModel(message, null, null);
 
@@ -67,8 +96,10 @@ export class PostsComponent implements OnInit {
       } else {
         this.posts.push(post);
       }
-      //this.getPostImages(post.message.bodyMessage, i);
-      /*let isImage = this.getFileNames(post.message.bodyMessage, i);
+      i++;*/
+
+    //this.getPostImages(post.message.bodyMessage, i);
+    /*let isImage = this.getFileNames(post.message.bodyMessage, i);
       if (isImage){
         let index = 0;
         this.postImages.forEach(post => {
@@ -83,8 +114,6 @@ export class PostsComponent implements OnInit {
       else {
         document.getElementById("message" + i.toString()).innerHTML = post.message.bodyMessage;
       }*/
-      i++;
-    }
   }
 
   ngAfterViewInit() {

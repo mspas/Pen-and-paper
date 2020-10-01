@@ -10,7 +10,7 @@ import { GameCreateModel, GameAppModel } from "../models/game.model";
 import { FriendCreateModel, FriendModel } from "../models/friend.model";
 import { PersonalDataModel } from "../models/personaldata.model";
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 
 import { SkillCreateModel } from "../models/skill.model";
 import { GameSessionCreateModel } from "../models/gamesession.model";
@@ -23,6 +23,7 @@ import {
   MessageForumCreateModel,
   NewTopicModel,
   TopicModel,
+  MessageForumModel,
 } from "../models/forum.model";
 import { TopicToPersonModel } from "../models/topic-to-person.model";
 import { ForumService } from "./forum.service";
@@ -31,6 +32,7 @@ import { DataService } from "./data.service";
 @Injectable()
 export class ApiService {
   url = "http://localhost:50168/api";
+  pageSize = 10;
 
   constructor(
     private _http: HttpClient,
@@ -112,14 +114,12 @@ export class ApiService {
   }
 
   getForumData(gameId: number): Observable<ForumModel> {
-    return this._http.get<ForumModel>(`${this.url}/Forum/${gameId}`);
+    return this._http.get<ForumModel>(
+      `${this.url}/Forum/${gameId}/${this.pageSize}`
+    );
   }
 
-  getTopic(
-    profileId: number,
-    topicId: number,
-    page: number
-  ): Observable<TopicModel> {
+  getTopic(profileId: number, topicId: number): Observable<TopicModel> {
     return this._http.get<TopicModel>(
       `${this.url}/Topic/${profileId}/${topicId}`
     );
@@ -132,6 +132,21 @@ export class ApiService {
     return this._http.get<TopicToPersonModel[]>(
       `${this.url}/TopicToPerson/${profileId}/${gameId}`
     );
+  }
+
+  getTopicMessages(
+    topicId: number,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("topicId", topicId.toString());
+    params = params.append("pageNumber", pageNumber.toString());
+    params = params.append("pageSize", pageSize.toString());
+
+    return this._http.get<any>(`${this.url}/MessageForum`, {
+      params: params,
+    });
   }
 
   getGameForumTopic(
@@ -240,6 +255,10 @@ export class ApiService {
   }
 
   searchGames(value: string): Observable<GameAppModel[]> {
+    return this._http.get<GameAppModel[]>(this.url + "/Game/search/" + value);
+  }
+
+  searchForGames(value: string): Observable<GameAppModel[]> {
     return this._http.get<GameAppModel[]>(this.url + "/Game/search/" + value);
   }
 

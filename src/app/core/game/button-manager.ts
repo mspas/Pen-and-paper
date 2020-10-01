@@ -1,4 +1,5 @@
 export class ButtonManager {
+  public topic: boolean;
   public topicList: boolean;
   public managePlayers: boolean;
   public gameSettings: boolean;
@@ -13,6 +14,11 @@ export class ButtonManager {
     this.userAccess = false;
     this.createTopic = false;
     this.yourCharacter = false;
+  }
+
+  showTopic() {
+    this.setFalse();
+    this.topic = true;
   }
 
   showTopicList() {

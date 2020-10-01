@@ -13,7 +13,7 @@ export class SearchGameResolve implements Resolve<GameAppModel[]> {
   constructor(private _api: ApiService, private router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot) {
-    let value = route.params["value"];
+    let value = route.params["searchValue"];
     if (value == this.default) value = "...";
     return this._api.searchGames(value);
   }

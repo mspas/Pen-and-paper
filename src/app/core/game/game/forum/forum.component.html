@@ -62,7 +62,7 @@
     </div>
   </div>
   <app-topic
-    *ngIf="topicIdParam != null"
+    *ngIf="subpageManager.topic && !isLoading"
     [forumData]="forumData"
     [gameData]="gameData"
     [topicToPersonData]="topicToPersonData"
@@ -70,11 +70,12 @@
     [topicData]="topicData"
   ></app-topic>
   <app-topic-list
-    *ngIf="subpageManager.topicList"
+    *ngIf="subpageManager.topicList && !isLoadingTopics"
     [forumData]="forumData"
     [gameData]="gameData"
     [topicToPersonData]="topicToPersonData"
     [profileData]="profileData"
+    [topicsList]="topicsList"
   ></app-topic-list>
   <app-create-topic
     *ngIf="subpageManager.createTopic"

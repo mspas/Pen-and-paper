@@ -3,6 +3,7 @@ import { ForumModel, TopicListModel } from "src/app/core/models/forum.model";
 import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-topic-list",
@@ -14,43 +15,22 @@ export class TopicListComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
+  @Input() topicsList: [{ name: string; topics: TopicListModel[] }];
 
-  topicGeneralList: TopicListModel[] = [];
-  topicGameList: TopicListModel[] = [];
-  topicSupportList: TopicListModel[] = [];
-  topicOfftopList: TopicListModel[] = [];
+  pageSize: number = 10;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {
-    this.forumData.topics.forEach((topic) => {
-      let topicListModel = new TopicListModel(
-        topic,
-        null,
-        true,
-        null,
-        topic.messages[this.forumData.topics[0].messagesAmount - 1].sendDdate
-      );
-      this.gameData.participantsProfiles.forEach((user) => {
-        if (user.id == topic.authorId) topicListModel.author = user;
-      });
-      this.topicToPersonData.forEach((t2p) => {
-        if (t2p.lastActivitySeen <= topic.lastActivityDate)
-          topicListModel.wasSeen = false;
-      });
+  ngOnInit() {}
 
-      this.gameData.participantsProfiles.forEach((user) => {
-        if (user.id == topic.messages[topic.messagesAmount - 1].senderId)
-          topicListModel.lastAuthor = user;
-      });
-
-      if (topic.category == "General")
-        this.topicGeneralList.push(topicListModel);
-      if (topic.category == "Game") this.topicGameList.push(topicListModel);
-      if (topic.category == "Support")
-        this.topicSupportList.push(topicListModel);
-      if (topic.category == "Off-topic")
-        this.topicOfftopList.push(topicListModel);
+  navigate(topicId: number, pageNumber: number) {
+    let query = `/?topicId=${topicId}&pageNumber=${pageNumber}&pageSize=${this.pageSize}`;
+    this.router.navigate(["game", this.gameData.id, "forum"], {
+      queryParams: {
+        topicId: topicId,
+        pageNumber: pageNumber,
+        pageSize: this.pageSize,
+      },
     });
   }
 }

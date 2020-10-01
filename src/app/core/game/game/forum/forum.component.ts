@@ -8,7 +8,7 @@ import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ButtonManager } from "../../button-manager";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 
 @Component({
@@ -21,35 +21,29 @@ export class ForumComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
-  @Input() topicData: TopicModel;
   @Input() iAmGameMaster: boolean;
 
   topicIdParam: number = null;
 
-  topicGeneralList: TopicListModel[] = [];
-  topicGameList: TopicListModel[] = [];
-  topicSupportList: TopicListModel[] = [];
-  topicOfftopList: TopicListModel[] = [];
+  topicsList = [
+    { name: "General", topics: [] },
+    { name: "Game", topics: [] },
+    { name: "Support", topics: [] },
+    { name: "Offtop", topics: [] },
+  ];
 
-  showCreateTopic: boolean = false;
-  showTopicList: boolean = false;
-  showManagePlayers: boolean = false;
-  showUserAccess: boolean = false;
-  showGameSettings: boolean = false;
-  showYourCharacter: boolean = false;
-  showEndGame: boolean = false;
+  isLoadingTopics: boolean = true;
+  isLoading: boolean = false;
+  topicData: TopicModel;
 
   myCardId: number = -1;
 
   subpageManager: ButtonManager;
 
-  constructor(
-    private route: ActivatedRoute,
-    private _api: ApiService,
-    private router: Router
-  ) {}
+  constructor(private route: ActivatedRoute, private _api: ApiService) {}
 
   ngOnInit() {
+    this.isLoadingTopics = true;
     this.subpageManager = new ButtonManager();
 
     var topicId = this.route.snapshot.params.topicId;
@@ -58,32 +52,72 @@ export class ForumComponent implements OnInit {
     var subpage = this.route.snapshot.params.subpage;
     if (!this.topicIdParam) this.setChildComponent(subpage);
 
+    let i = 0;
     this.forumData.topics.forEach((topic) => {
-      let topicListModel = new TopicListModel(
-        topic,
-        null,
-        true,
-        null,
-        topic.messages[this.forumData.topics[0].messagesAmount - 1].sendDdate
-      );
+      let author: PersonalDataModel = null;
+      let lastPostAuthor: PersonalDataModel = null;
+      let topicWasSeen = true;
+
       this.gameData.participantsProfiles.forEach((user) => {
-        if (user.id == topic.authorId) topicListModel.author = user;
-        if (user.id == topic.messages[topic.messagesAmount - 1].senderId)
-          topicListModel.lastAuthor = user;
+        if (user.id == topic.authorId) author = user;
+        if (user.id == topic.lastActivityUserId) lastPostAuthor = user;
       });
+
       this.topicToPersonData.forEach((t2p) => {
         if (
           t2p.lastActivitySeen < topic.lastActivityDate ||
           t2p.lastActivitySeen == null
         )
-          topicListModel.wasSeen = false;
+          topicWasSeen = false;
       });
 
       this.gameData.participants.forEach((card) => {
         if (this.profileData.id == card.playerId) this.myCardId = card.id;
       });
 
-      this.detectTopicCategory(topicListModel);
+      let topicListModel = new TopicListModel(
+        topic,
+        author,
+        topicWasSeen,
+        lastPostAuthor,
+        topic.lastActivityDate
+      );
+
+      this.topicsList.forEach((category) => {
+        if (category.name === topicListModel.topicData.category)
+          category.topics.push(topicListModel);
+      });
+
+      this.isLoadingTopics = false;
+      //this.detectTopicCategory(topicListModel);
+      i++;
+    });
+
+    this.route.queryParams.subscribe((params) => {
+      let query = { ...params.keys, ...params };
+
+      if (query.topicId) {
+        this.isLoading = true;
+        this.subpageManager.showTopic();
+
+        this._api
+          .getTopic(this.profileData.id, query.topicId)
+          .subscribe((data) => {
+            this.topicData = data;
+
+            if (query)
+              this._api
+                .getTopicMessages(
+                  query.topicId,
+                  query.pageNumber,
+                  query.pageSize
+                )
+                .subscribe((data) => {
+                  this.topicData.messages = data.messagesResult;
+                  this.isLoading = false;
+                });
+          });
+      }
     });
   }
 
@@ -103,21 +137,6 @@ export class ForumComponent implements OnInit {
         this.subpageManager.showYourCharacter();
       default:
         this.subpageManager.showTopicList();
-    }
-  }
-
-  detectTopicCategory(topicListModel: TopicListModel) {
-    switch (topicListModel.topicData.category) {
-      case "general":
-        this.topicGeneralList.push(topicListModel);
-      case "game":
-        this.topicGameList.push(topicListModel);
-      case "support":
-        this.topicSupportList.push(topicListModel);
-      case "offtop":
-        this.topicOfftopList.push(topicListModel);
-      default:
-        return;
     }
   }
 
@@ -162,7 +181,6 @@ export class ForumComponent implements OnInit {
 
   onLeaveGame() {
     this._api.declineJoinGame(this.myCardId);
-    console.log("chuj");
     window.location.reload();
   }
 

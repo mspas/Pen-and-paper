@@ -35,12 +35,19 @@ const routes: Routes = [];
         canActivate: [AuthGuardService],
       },
       {
-        path: "game/:id/topic/:topicId/:page",
+        path: "game/:id/forum",
         component: GameComponent,
         canActivate: [AuthGuardService],
       },
       {
-        path: "search-game/:value",
+        path: "search-game",
+        component: SearchGameComponent,
+        resolve: {
+          profiledata: SearchGameResolve,
+        },
+      },
+      {
+        path: "search-game/:searchValue",
         component: SearchGameComponent,
         resolve: {
           profiledata: SearchGameResolve,

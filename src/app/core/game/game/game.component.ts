@@ -16,14 +16,12 @@ import { ApiService } from "../../services/api.service";
   styleUrls: ["./game.component.sass"],
 })
 export class GameComponent implements OnInit {
-  data: any[];
   forumData: ForumModel;
   gameData: GameAppModel;
   topicToPersonData: TopicToPersonModel[];
   profileData: PersonalDataModel;
   gameMaster: PersonalDataModel;
   topicData: TopicModel;
-  game: { data: GameAppModel; photo: any };
 
   isLoadingGame: boolean = true;
   isLoadingForum: boolean = true;
@@ -56,49 +54,16 @@ export class GameComponent implements OnInit {
         this.iAmGameMaster = true;
       if (this.iAmGameParticipant || this.iAmGameMaster) {
         this._api.getForumData(gameId).subscribe((data) => {
+          console.log(data);
           this.forumData = data;
 
           this._api
             .getUserTopicsAccessList(profileId, gameId)
             .subscribe((data) => {
               this.topicToPersonData = data;
-              this.forumData.topics.forEach((topic) => {
-                let topicListModel = new TopicListModel(
-                  topic,
-                  null,
-                  true,
-                  null,
-                  topic.messages[
-                    this.forumData.topics[0].messagesAmount - 1
-                  ].sendDdate
-                );
-                this.gameData.participantsProfiles.forEach((user) => {
-                  if (user.id == topic.authorId) topicListModel.author = user;
-                });
-                this.topicToPersonData.forEach((t2p) => {
-                  if (
-                    t2p.lastActivitySeen < topic.lastActivityDate ||
-                    t2p.lastActivitySeen == null
-                  )
-                    topicListModel.wasSeen = false;
-                });
-
-                this.gameData.participantsProfiles.forEach((user) => {
-                  if (
-                    user.id == topic.messages[topic.messagesAmount - 1].senderId
-                  )
-                    topicListModel.lastAuthor = user;
-                });
-
-                this.isLoadingForum = false;
-              });
+              this.isLoadingForum = false;
             });
         });
-
-        if (topicId)
-          this._api.getTopic(profileId, topicId, 1).subscribe((data) => {
-            this.topicData = data;
-          });
       }
     });
   }

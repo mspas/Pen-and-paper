@@ -30,10 +30,9 @@ export class TopicComponent implements OnInit {
 
   ngOnInit() {
     var page = this.route.snapshot.params.page;
+
     if (page) this.pageParam = parseInt(page);
     if (page == "reply") this.replyPage = true;
-
-    console.log(this.replyPage);
 
     if (this.gameData.masterId == this.profileData.id)
       this.iAmGameMaster = true;

@@ -3,6 +3,7 @@ import { GameAppModel, GameListModel } from "src/app/core/models/game.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 import { NgForm } from "@angular/forms";
+import { DataService } from "../../services/data.service";
 
 @Component({
   selector: "app-search-game",
@@ -10,17 +11,7 @@ import { NgForm } from "@angular/forms";
   styleUrls: ["./search-game.component.sass"],
 })
 export class SearchGameComponent implements OnInit {
-  gameCategories: any[] = [
-    { name: "Fantasy", checked: false, urlImage: "assets/fantasy1.png" },
-    { name: "SciFi", checked: false, urlImage: "assets/scifi.png" },
-    { name: "Mafia", checked: false, urlImage: "assets/mafia1.png" },
-    { name: "Cyberpunk", checked: false, urlImage: "assets/fantasy1.png" },
-    { name: "Steampunk", checked: false, urlImage: "assets/fantasy1.png" },
-    { name: "PostApo", checked: false, urlImage: "assets/fantasy1.png" },
-    { name: "Zombie", checked: false, urlImage: "assets/fantasy1.png" },
-    { name: "AltHistory", checked: false, urlImage: "assets/fantasy1.png" },
-    { name: "Other", checked: false, urlImage: "assets/fantasy1.png" },
-  ];
+  gameCategories: any[] = [];
   statusOfGame: string[] = ["Active", "Ongoing", "Ended"];
 
   urlMafia: string = "assets/mafia1.png";
@@ -28,6 +19,7 @@ export class SearchGameComponent implements OnInit {
   urlSciFi: string = "assets/scifi.png";
   imageUrl: string = "";
 
+  isLoading = true;
   foundData: GameAppModel[] = [];
   foundGames: GameListModel[] = [];
   wasSearched: boolean = false;
@@ -38,14 +30,27 @@ export class SearchGameComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _api: ApiService,
+    private _data: DataService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.gameCategories = this._data.getGameCategories();
     this.route.data.subscribe((profiledata: { profiledata: any }) => {
       this.foundData = profiledata.profiledata;
     });
     this.prepareData(this.foundData);
+
+    /*this.gameCategories = this._data.getGameCategories();
+    this.route.params.subscribe((params) => {
+      this.isLoading = true;
+      let searchValue = params["searchValue"] ? params["searchValue"] : "...";
+      if (searchValue) {
+        this._api.searchGames(searchValue).subscribe((date) => {
+          
+        })
+      }
+    });*/
   }
 
   prepareData(data) {

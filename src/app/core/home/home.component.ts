@@ -11,9 +11,7 @@ export class HomeComponent implements OnInit {
   constructor(private _auth: AuthService, private _router: Router) {}
 
   ngOnInit() {
-    console.log(this._auth.isAuthenticated());
     if (this._auth.isAuthenticated()) {
-      console.log("dupa");
       this._router.navigate([`/profile/${this._auth.getLogin()}`]);
     }
   }

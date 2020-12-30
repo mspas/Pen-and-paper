@@ -8,6 +8,7 @@ export class ButtonManager {
   public yourCharacter: boolean;
 
   constructor() {
+    this.topic = false;
     this.topicList = false;
     this.managePlayers = false;
     this.gameSettings = false;
@@ -52,6 +53,7 @@ export class ButtonManager {
   }
 
   private setFalse() {
+    this.topic = false;
     this.topicList = false;
     this.managePlayers = false;
     this.gameSettings = false;

@@ -68,6 +68,8 @@
     [topicToPersonData]="topicToPersonData"
     [profileData]="profileData"
     [topicData]="topicData"
+    [navigate]="navigate"
+    [goBack]="goBack"
   ></app-topic>
   <app-topic-list
     *ngIf="subpageManager.topicList && !isLoadingTopics"
@@ -76,6 +78,7 @@
     [topicToPersonData]="topicToPersonData"
     [profileData]="profileData"
     [topicsList]="topicsList"
+    [navigate]="navigate"
   ></app-topic-list>
   <app-create-topic
     *ngIf="subpageManager.createTopic"

@@ -1,88 +1,72 @@
 <div class="topic-list">
-  <p class="list-title">
-    <span>Topics</span>
-    <span>Author</span>
-    <span>Posts</span>
-  </p>
   <div class="category-group" *ngFor="let category of topicsList">
-    <p>{{ category.name }}</p>
-    <div class="topic" *ngFor="let topic of category.topics; let i = index">
-      <div class="media">
-        <div class="media-left">
-          <img
-            *ngIf="topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic-new.png"
-            alt="New message!"
-          />
-          <img
-            *ngIf="!topic.wasSeen"
-            class="media-object topic-img"
-            src="assets/topic.png"
-            alt="Seen"
-          />
+    <div *ngIf="category.topics.length > 0">
+      <p>{{ category.name }}</p>
+      <div class="topic" *ngFor="let topic of category.topics; let i = index">
+        <div class="media">
+          <div class="media-left">
+            <img
+              *ngIf="topic.wasSeen"
+              class="media-object topic-img"
+              src="assets/topic-new.png"
+              alt="New message!"
+            />
+            <img
+              *ngIf="!topic.wasSeen"
+              class="media-object topic-img"
+              src="assets/topic.png"
+              alt="Seen"
+            />
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <a class="topic-title font-montserrat clickable"
+                  [routerLink]=""
+                  [queryParams]="{gameId: gameData.id, topicId: topic.topicData.id, pageNumber: topic.topicData.totalPages, pageSize: pageSize}"
+                  >{{ topic.topicData.topicName }}
+              </a>
+              <ul *ngIf="topic.topicData.totalPages > 1" class="pagination">
+                <li class="page-item" *ngIf="topic.topicData.totalPages > 2">
+                  <a class="page-link"
+                    [routerLink]=""
+                    [queryParams]="{gameId: gameData.id, topicId: topic.topicData.id, pageNumber: 1, pageSize: pageSize}"
+                    >1</a
+                  >
+                </li>
+                <li class="dots" *ngIf="topic.topicData.totalPages > 3">...</li>
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    [routerLink]=""
+                    [queryParams]="{gameId: gameData.id, topicId: topic.topicData.id, pageNumber: topic.topicData.totalPages - 1, pageSize: pageSize}"
+                    >{{ topic.topicData.totalPages - 1 }}</a
+                  >
+                </li>
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    [routerLink]=""
+                    [queryParams]="{gameId: gameData.id, topicId: topic.topicData.id, pageNumber: topic.topicData.totalPages, pageSize: pageSize}"
+                    >{{ topic.topicData.totalPages }}</a
+                  >
+                </li>
+              </ul>
+            </h4>
+            <h4 class="media-bottom">
+              <div class="font-montserrat topic-info">
+                <span
+                  class="clickable"
+                  [routerLink]="['/profile', topic.author.login]"
+                  >{{ topic.lastAuthor.firstname }}
+                  {{ topic.lastAuthor.lastname }} ({{
+                    topic.lastAuthor.login
+                  }})</span
+                >
+                - {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST
+              </div>
+            </h4>
+          </div>
         </div>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <span class="topic-title font-montserrat clickable"
-              ><a
-                class="clickable"
-                (click)="
-                  navigate(topic.topicData.id, topic.topicData.totalPages)
-                "
-                >{{ topic.topicData.topicName }}</a
-              ></span
-            >
-            <ul *ngIf="topic.topicData.totalPages > 1" class="pagination">
-              <li class="page-item" *ngIf="topic.topicData.totalPages > 2">
-                <a class="page-link" (click)="navigate(topic.topicData.id, 1)"
-                  >1</a
-                >
-              </li>
-              <li class="dots" *ngIf="topic.topicData.totalPages > 3">...</li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  (click)="
-                    navigate(topic.topicData.id, topic.topicData.totalPages - 1)
-                  "
-                  >{{ topic.topicData.totalPages - 1 }}</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  (click)="
-                    navigate(topic.topicData.id, topic.topicData.totalPages)
-                  "
-                  >{{ topic.topicData.totalPages }}</a
-                >
-              </li>
-            </ul>
-          </h4>
-          <h4 class="media-bottom">
-            <div class="font-montserrat topic-info">
-              <span
-                class="clickable"
-                [routerLink]="['/profile', topic.author.login]"
-                >{{ topic.lastAuthor.firstname }}
-                {{ topic.lastAuthor.lastname }} ({{
-                  topic.lastAuthor.login
-                }})</span
-              >
-              - {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST
-            </div>
-          </h4>
-        </div>
-      </div>
-      <div class="clickable" [routerLink]="['/profile', topic.author.login]">
-        {{ topic.author.firstname }} {{ topic.author.lastname }} ({{
-          topic.author.login
-        }})
-      </div>
-      {{ topic.topicData.createDate | date: "h:mm:ss dd-MM-yyy" }}
-      <div>
-        {{ topic.topicData.messagesAmount }}
       </div>
     </div>
   </div>

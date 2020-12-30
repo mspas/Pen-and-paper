@@ -14,35 +14,54 @@
               href="{{ linkPrevious }}"
               aria-label="Previous"
             >
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
+              <span aria-hidden="true">|&lt;</span>
             </a>
           </li>
-          <li *ngIf="topicData.totalPages == 1" class="page-item">
+          <li class="page-item">
             <a
               class="page-link"
-              href="game/{{ gameData.id }}/topic/{{ topicData.id }}/1"
+              href="{{ linkPrevious }}"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link"
+              [routerLink]=""
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: 1, pageSize: pageSize}"
               >1</a
             >
           </li>
-          <li *ngIf="topicData.totalPages == 2" class="page-item">
+          <li class="dots" *ngIf="topicData.totalPages - pageNumber > 0">...</li>
+          <li class="page-item" *ngIf="pageNumber > 0">
             <a
               class="page-link"
-              href="game/{{ gameData.id }}/topic/{{ topicData.id }}/2"
-              >2</a
-            >
-          </li>
-          <li *ngIf="topicData.totalPages == 3" class="page-item">
-            <a
-              class="page-link"
-              href="game/{{ gameData.id }}/topic/{{ topicData.id }}/3"
-              >3</a
+              [routerLink]=""
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: topicData.totalPages - 1, pageSize: pageSize}"
+              >{{ topicData.totalPages - 1 }}</a
             >
           </li>
           <li class="page-item">
-            <a class="page-link" href="{{ linkNext }}" aria-label="Previous">
+            <a
+              class="page-link"
+              [routerLink]=""
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: topicData.totalPages, pageSize: pageSize}"
+              >{{ topicData.totalPages }}</a
+            >
+          </li>
+          <li class="page-item">
+            <a class="page-link" [routerLink]="" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="{{ linkPrevious }}"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&gt;|</span>
             </a>
           </li>
         </ul>
@@ -50,7 +69,7 @@
     </div>
     <div class="col btn-wrap">
       <a *ngIf="!replyPage" href="game/{{ gameData.id }}">
-        <button class="btn-forum btn-sm btn-yellow" (click)="onClickBack()">
+        <button class="btn-forum btn-sm btn-yellow" (click)="goBack()">
           <span
             class="glyphicon glyphicon-arrow-left"
             style="padding-right: 10px"
@@ -64,7 +83,7 @@
           topicData.totalPages
         }}"
       >
-        <button class="btn-forum btn-sm btn-yellow" (click)="onClickBack()">
+        <button class="btn-forum btn-sm btn-yellow" (click)="goBack()">
           <span
             class="glyphicon glyphicon-arrow-left"
             style="padding-right: 10px"
@@ -87,7 +106,7 @@
 <div>
   <app-posts
     [topicData]="topicData"
-    [participants]="participants"
+    [participants]="gameData.participantsProfiles"
     [iAmGameMaster]="iAmGameMaster"
   ></app-posts>
   <app-reply-post

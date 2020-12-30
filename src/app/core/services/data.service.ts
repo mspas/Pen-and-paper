@@ -32,6 +32,8 @@ export class DataService {
   });
   private notificationData = new BehaviorSubject<NotificationAppModel>(null);
 
+  private pageSizeForum = 2;
+
   private gameCategories: any[] = [
     {
       name: "Fantasy",
@@ -100,6 +102,10 @@ export class DataService {
   currentNotificationData = this.notificationData.asObservable();
 
   constructor() {}
+
+  getPageSizeForum() {
+    return this.pageSizeForum;
+  }
 
   getGameCategories() {
     return this.gameCategories;

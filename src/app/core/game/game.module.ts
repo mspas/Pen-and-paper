@@ -3,7 +3,6 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { CommonModule } from "@angular/common";
 import { GameComponent } from "./game/game.component";
 import { RouterModule } from "@angular/router";
-import { GameResolve } from "./game.resolve.service";
 import { GameViewComponent } from "./game/game-view/game-view.component";
 import { SharedModule } from "../../shared/shared.module";
 import { ForumComponent } from "./game/forum/forum.component";
@@ -33,6 +32,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [GameResolve],
+  providers: [],
 })
 export class GameModule {}

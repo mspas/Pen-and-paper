@@ -32,7 +32,6 @@ import { DataService } from "./data.service";
 @Injectable()
 export class ApiService {
   url = "http://localhost:50168/api";
-  pageSize = 10;
 
   constructor(
     private _http: HttpClient,
@@ -90,32 +89,13 @@ export class ApiService {
     }
   }
 
-  getGameAndForum(gameId: number): Observable<any> {
-    let loggedLogin = localStorage.getItem("nick").toString();
-    let loggedId = localStorage.getItem("id").toString();
-
-    let profile = this._http.get<PersonalDataModel[]>(
-      this.url + "pdata/search/" + loggedLogin
-    );
-    let forum = this._http.get<ForumModel>(
-      this.url + "Forum/" + gameId.toString()
-    );
-    let game = this._http.get<GameAppModel[]>(
-      this.url + "Game/search/" + gameId.toString()
-    );
-    let t2p = this._http.get<TopicToPersonModel[]>(
-      this.url + "TopicToPerson/" + loggedId + "/" + gameId.toString()
-    );
-    return observableForkJoin([profile, forum, game, t2p]);
-  }
-
   getGame(gameId: number): Observable<GameAppModel> {
     return this._http.get<GameAppModel>(`${this.url}/Game/${gameId}`);
   }
 
-  getForumData(gameId: number): Observable<ForumModel> {
+  getForumData(gameId: number, pageSize: number): Observable<ForumModel> {
     return this._http.get<ForumModel>(
-      `${this.url}/Forum/${gameId}/${this.pageSize}`
+      `${this.url}/Forum/${gameId}/${pageSize}`
     );
   }
 
@@ -135,11 +115,13 @@ export class ApiService {
   }
 
   getTopicMessages(
+    gameId: number,
     topicId: number,
     pageNumber: number,
     pageSize: number
   ): Observable<any> {
     let params = new HttpParams();
+    params = params.append("gameId", gameId.toString());
     params = params.append("topicId", topicId.toString());
     params = params.append("pageNumber", pageNumber.toString());
     params = params.append("pageSize", pageSize.toString());
@@ -147,32 +129,6 @@ export class ApiService {
     return this._http.get<any>(`${this.url}/MessageForum`, {
       params: params,
     });
-  }
-
-  getGameForumTopic(
-    gameId: number,
-    topicId: number,
-    page: number
-  ): Observable<any> {
-    let profileId = localStorage.getItem("id").toString();
-    let profileName = localStorage.getItem("nick").toString();
-
-    let profile = this._http.get<PersonalDataModel[]>(
-      this.url + "pdata/search/" + profileName
-    );
-    let forum = this._http.get<ForumModel>(
-      this.url + "Forum/" + gameId.toString()
-    );
-    let topic = this._http.get<TopicModel>(
-      this.url + "Topic/" + profileId + "/" + topicId.toString()
-    );
-    let t2p = this._http.get<TopicToPersonModel[]>(
-      this.url + "TopicToPerson/" + profileId + "/" + gameId.toString()
-    );
-    let game = this._http.get<GameAppModel[]>(
-      this.url + "Game/search/" + gameId.toString()
-    );
-    return observableForkJoin([profile, forum, game, t2p, topic]);
   }
 
   getTopicData(topicId: number) {

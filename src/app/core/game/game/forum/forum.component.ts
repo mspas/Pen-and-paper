@@ -8,7 +8,7 @@ import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ButtonManager } from "../../button-manager";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 
 @Component({
@@ -40,17 +40,11 @@ export class ForumComponent implements OnInit {
 
   subpageManager: ButtonManager;
 
-  constructor(private route: ActivatedRoute, private _api: ApiService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private _api: ApiService) {}
 
   ngOnInit() {
     this.isLoadingTopics = true;
     this.subpageManager = new ButtonManager();
-
-    var topicId = this.route.snapshot.params.topicId;
-    if (topicId) this.topicIdParam = parseInt(topicId);
-
-    var subpage = this.route.snapshot.params.subpage;
-    if (!this.topicIdParam) this.setChildComponent(subpage);
 
     let i = 0;
     this.forumData.topics.forEach((topic) => {
@@ -108,15 +102,21 @@ export class ForumComponent implements OnInit {
             if (query)
               this._api
                 .getTopicMessages(
+                  query.gameId,
                   query.topicId,
                   query.pageNumber,
                   query.pageSize
                 )
                 .subscribe((data) => {
+                  console.log(data)
                   this.topicData.messages = data.messagesResult;
                   this.isLoading = false;
                 });
           });
+      }
+      else {
+        if (query.sub) this.setChildComponent(query.sub);
+        else this.subpageManager.showTopicList();
       }
     });
   }
@@ -140,41 +140,34 @@ export class ForumComponent implements OnInit {
     }
   }
 
-  async onCreateTopic() {
+  navigate(params) {
+    console.log(params)
+    this.router.navigate(["game"], params);
+  }
+
+  onCreateTopic() {
     this.subpageManager.showCreateTopic();
-    //await this.router.navigate(["/game", this.gameData.id, "create-topic/", 0]);
+    this.navigate("create-topic");
   }
 
-  async onUserAccess() {
+  onUserAccess() {
     this.subpageManager.showUserAccess();
-    //await this.router.navigate(["/game", this.gameData.id, "user-access/", 0]);
+    this.navigate("user-access");
   }
 
-  async onGameSettings() {
+  onGameSettings() {
     this.subpageManager.showGameSettings();
-    /*await this.router.navigate([
-      "/game",
-      this.gameData.id,
-      "game-settings/",
-      0,
-    ]);*/
+    this.navigate("game-settings");
   }
 
-  async onManagePlayers() {
+  onManagePlayers() {
     this.subpageManager.showManagePlayers();
-    /*if (this.iAmGameMaster)
-      await this.router.navigate([
-        "/game",
-        this.gameData.id,
-        "manage-players/",
-        0,
-      ]);
-    else await this.router.navigate(["/game", this.gameData.id, "players/", 0]);*/
+    this.navigate("players");
   }
 
-  async onYourCharacter() {
+  onYourCharacter() {
     this.subpageManager.showYourCharacter();
-    //await this.router.navigate(["/game", this.gameData.id, "my-character"]);
+    this.navigate("my-character");
   }
 
   onEndGame() {}
@@ -184,10 +177,8 @@ export class ForumComponent implements OnInit {
     window.location.reload();
   }
 
-  async closeChildComponent(check) {
-    if (check == "false") {
-      this.subpageManager.showTopicList();
-      //var res = await this.router.navigate(["/game", this.gameData.id]);
-    }
+  goBack() {
+    console.log("sram")
+    this.subpageManager.showTopicList();
   }
 }

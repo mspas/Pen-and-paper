@@ -16,8 +16,10 @@ export class TopicComponent implements OnInit {
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
   @Input() topicData: TopicModel;
+  @Input() goBack: () => void;
+  @Input() navigate: (params) => void;
 
-  pageParam: number;
+  pageNumber: number;
   replyParam: string;
   replyPage: boolean = false;
 
@@ -29,25 +31,6 @@ export class TopicComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    var page = this.route.snapshot.params.page;
-
-    if (page) this.pageParam = parseInt(page);
-    if (page == "reply") this.replyPage = true;
-
-    if (this.gameData.masterId == this.profileData.id)
-      this.iAmGameMaster = true;
-
-    this.participants = this.gameData.participantsProfiles;
-
-    let link = `game/${this.gameData.id}/${this.topicData.id}/`;
-
-    let numPage = this.pageParam - 1;
-    if (numPage < 1) numPage = 1;
-    this.linkPrevious = `${link}/${numPage}/view`;
-
-    numPage = this.pageParam + 1;
-    if (numPage > this.topicData.totalPages)
-      numPage = this.topicData.totalPages;
-    this.linkNext = `${link}/${numPage}/view`;
+    this.pageNumber = this.route.snapshot.queryParams.pageNumber;
   }
 }

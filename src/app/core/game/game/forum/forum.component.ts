@@ -24,6 +24,7 @@ export class ForumComponent implements OnInit {
   @Input() iAmGameMaster: boolean;
 
   topicIdParam: number = null;
+  totalPages: number = -1;
 
   topicsList = [
     { name: "General", topics: [] },
@@ -109,6 +110,7 @@ export class ForumComponent implements OnInit {
                 )
                 .subscribe((data) => {
                   console.log(data)
+                  this.totalPages = data.maxPages;
                   this.topicData.messages = data.messagesResult;
                   this.isLoading = false;
                 });

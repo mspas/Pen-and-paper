@@ -4,6 +4,7 @@ import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ActivatedRoute } from "@angular/router";
+import { DataService } from "src/app/core/services/data.service";
 
 @Component({
   selector: "app-topic",
@@ -16,10 +17,12 @@ export class TopicComponent implements OnInit {
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
   @Input() topicData: TopicModel;
+  @Input() totalPages: number;
   @Input() goBack: () => void;
   @Input() navigate: (params) => void;
 
   pageNumber: number;
+  pageSize: number;
   replyParam: string;
   replyPage: boolean = false;
 
@@ -28,9 +31,14 @@ export class TopicComponent implements OnInit {
   linkPrevious: string;
   linkNext: string;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private _data: DataService) {}
 
   ngOnInit() {
-    this.pageNumber = this.route.snapshot.queryParams.pageNumber;
+    this.pageNumber = parseInt(this.route.snapshot.queryParams.pageNumber);
+    this.pageSize = this._data.getPageSizeForum();
+  }
+
+  nextPage(x) {
+    console.log(this.topicData, this.pageNumber, x, this.pageNumber + x, this.topicData.totalPages)
   }
 }

@@ -11,55 +11,73 @@
           <li class="page-item">
             <a
               class="page-link"
-              href="{{ linkPrevious }}"
-              aria-label="Previous"
+              [routerLink]=""
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: 1, pageSize: pageSize}"
+              aria-label="First"
             >
               <span aria-hidden="true">|&lt;</span>
             </a>
           </li>
-          <li class="page-item">
+          <li class="page-item" *ngIf="pageNumber - 1 > 0">
             <a
               class="page-link"
-              href="{{ linkPrevious }}"
+              [routerLink]=""
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 1, pageSize: pageSize}"
               aria-label="Previous"
             >
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item">
+          <li class="page-item" *ngIf="pageNumber - 2 > 0">
             <a class="page-link"
               [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: 1, pageSize: pageSize}"
-              >1</a
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 2, pageSize: pageSize}"
+              >{{ pageNumber - 2 }}</a
             >
           </li>
-          <li class="dots" *ngIf="topicData.totalPages - pageNumber > 0">...</li>
-          <li class="page-item" *ngIf="pageNumber > 0">
+          <li class="page-item" *ngIf="pageNumber - 1 > 0">
             <a
               class="page-link"
               [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: topicData.totalPages - 1, pageSize: pageSize}"
-              >{{ topicData.totalPages - 1 }}</a
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 1, pageSize: pageSize}"
+              >{{ pageNumber - 1 }}</a
             >
           </li>
           <li class="page-item">
+            <span
+              class="page-link active"
+              >{{ pageNumber }}
+            </span>
+          </li>
+          <li class="page-item" *ngIf="pageNumber + 1 <= totalPages">
+            <a class="page-link"
+              [routerLink]=""
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 1, pageSize: pageSize}"
+              >{{ pageNumber + 1 }}</a
+            >
+          </li>
+          <li class="page-item" *ngIf="pageNumber + 2 <=  totalPages">
             <a
               class="page-link"
               [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: topicData.totalPages, pageSize: pageSize}"
-              >{{ topicData.totalPages }}</a
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 2, pageSize: pageSize}"
+              >{{ pageNumber + 2 }}</a
             >
           </li>
-          <li class="page-item">
-            <a class="page-link" [routerLink]="" aria-label="Next">
+          <li class="page-item" *ngIf="pageNumber + 1 <= totalPages">
+            <a class="page-link"
+            [routerLink]=""
+            [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 1, pageSize: pageSize}"
+            aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
           <li class="page-item">
             <a
               class="page-link"
-              href="{{ linkPrevious }}"
-              aria-label="Previous"
+              [routerLink]=""
+              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize}"
+              aria-label="Last"
             >
               <span aria-hidden="true">&gt;|</span>
             </a>
@@ -86,7 +104,6 @@
         <button class="btn-forum btn-sm btn-yellow" (click)="goBack()">
           <span
             class="glyphicon glyphicon-arrow-left"
-            style="padding-right: 10px"
           ></span>
           BACK
         </button>

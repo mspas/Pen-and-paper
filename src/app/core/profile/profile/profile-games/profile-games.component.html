@@ -15,7 +15,7 @@
         <tr *ngFor="let game of gamesAccepted">
           <td>{{ game.game.id }}</td>
           <td type="button" class="button-name">
-            <a [routerLink]="['/game', game.game.id]">{{ game.game.title }}</a>
+            <a [routerLink]="['/game']" [queryParams]="{gameId: game.game.id}">{{ game.game.title }}</a>
           </td>
           <td>
             <span

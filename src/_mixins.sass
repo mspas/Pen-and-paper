@@ -1,15 +1,15 @@
 @import './_variables'
-    
-@mixin linear-gradient($direction, $color-list) 
-    background: linear-gradient($direction, $color-list) 
 
-@mixin radial-gradient($position, $color1, $percentage1, $color2, $percentage2) 
+@mixin linear-gradient($direction, $color-list)
+    background: linear-gradient($direction, $color-list)
+
+@mixin radial-gradient($position, $color1, $percentage1, $color2, $percentage2)
     background: radial-gradient(circle at $position, $color1 $percentage1, $color2 $percentage2)
 
-@mixin radial-gradient3($position, $color1, $percentage1, $color2_prctg, $color3_prctg) 
+@mixin radial-gradient3($position, $color1, $percentage1, $color2_prctg, $color3_prctg)
     background: radial-gradient(circle at $position, $color1 $percentage1, $color2_prctg, $color3_prctg)
 
-@mixin linear-gradient($position, $color1, $percentage1, $color2, $percentage2) 
+@mixin linear-gradient($position, $color1, $percentage1, $color2, $percentage2)
     background: linear-gradient(to $position, $color1 $percentage1, $color2 $percentage2)
 
 @mixin border-shadow($x, $y, $radius, $color)
@@ -26,12 +26,12 @@
         //border: 3px solid $primary
 
 @mixin border-shadow-default()
-    box-shadow: 0 1px 1px 0 #00000070
-    
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.315)
+
 @mixin primary-container()
     background-color: $lightWhite
     border-radius: 5px
-    box-shadow: 0px 0px 1px 1px #00000010
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.063)
 
 @mixin background-opacity($color, $opacity)
     background: rgba($color, $opacity)

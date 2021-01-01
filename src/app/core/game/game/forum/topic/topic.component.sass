@@ -1,8 +1,9 @@
 @import '../../../../../../_mixins'
+@import '../../../../../../_variables'
 
-.content-body 
+.content-body
     padding-top: 0
-.content-body-heading 
+.content-body-heading
     position: relative
     padding: 20px 50px 0 50px
     min-height: 77px
@@ -16,10 +17,16 @@
             float: right
             display: inline-block
             margin: 0 10px
-    .text-title     
+    .text-title
         position: relative
         font-size: 12px !important
         line-height: 1.42857143 !important
         letter-spacing: 4px
         border-radius: 0
         font-family: Montserrat, sans-serif
+    .pagination
+        .active
+            cursor: default
+            color: $third
+            &:hover
+                background-color: #fff

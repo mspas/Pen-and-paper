@@ -86,8 +86,10 @@
       </div>
     </div>
     <div class="col btn-wrap">
-      <a *ngIf="!replyPage" href="game/{{ gameData.id }}">
-        <button class="btn-forum btn-sm btn-yellow" (click)="goBack()">
+      <a *ngIf="!replyPage"
+      [routerLink]=""
+      [queryParams]="{gameId: gameData.id}">
+        <button class="btn-forum btn-sm btn-yellow">
           <span
             class="glyphicon glyphicon-arrow-left"
             style="padding-right: 10px"
@@ -97,11 +99,10 @@
       </a>
       <a
         *ngIf="replyPage"
-        href="game/{{ gameData.id }}/topic/{{ topicData.id }}/{{
-          topicData.totalPages
-        }}"
+        [routerLink]=""
+        [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize}"
       >
-        <button class="btn-forum btn-sm btn-yellow" (click)="goBack()">
+        <button class="btn-forum btn-sm btn-yellow">
           <span
             class="glyphicon glyphicon-arrow-left"
           ></span>
@@ -110,7 +111,8 @@
       </a>
       <a
         *ngIf="!replyPage"
-        href="game/{{ gameData.id }}/topic/{{ topicData.id }}/reply"
+        [routerLink]=""
+        [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize, reply: true}"
       >
         <button class="btn-forum btn-sm btn-green">
           <img class="btn-ico" src="assets/plus.png" />REPLY
@@ -122,6 +124,7 @@
 
 <div>
   <app-posts
+    *ngIf="!replyPage"
     [topicData]="topicData"
     [participants]="gameData.participantsProfiles"
     [iAmGameMaster]="iAmGameMaster"
@@ -131,5 +134,8 @@
     [topicData]="topicData"
     [gameId]="gameData.id"
     [iAmGameMaster]="iAmGameMaster"
+    [totalPages]="totalPages"
+    [pageSize]="pageSize"
+    [navigate]="navigate"
   ></app-reply-post>
 </div>

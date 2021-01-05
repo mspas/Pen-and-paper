@@ -198,16 +198,14 @@ export class ApiService {
   }
 
   createTopic(topic: NewTopicModel) {
-    console.log(JSON.stringify(topic));
     return this._http
       .post(this.url + "/Topic", topic)
       .subscribe((data) => console.log(data));
   }
 
-  createForumMessage(msg: MessageForumCreateModel) {
-    this._http
-      .post(this.url + "/MessageForum", msg)
-      .subscribe((data: number) => this._forum.changeIdResponse(data));
+  sendForumMessage(msg: MessageForumCreateModel) {
+    return this._http
+      .post<any>(this.url + "/MessageForum", msg);
   }
 
   searchGames(value: string): Observable<GameAppModel[]> {

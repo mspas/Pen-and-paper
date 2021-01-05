@@ -18,7 +18,6 @@ export class TopicComponent implements OnInit {
   @Input() profileData: PersonalDataModel;
   @Input() topicData: TopicModel;
   @Input() totalPages: number;
-  @Input() goBack: () => void;
   @Input() navigate: (params) => void;
 
   pageNumber: number;
@@ -35,10 +34,8 @@ export class TopicComponent implements OnInit {
 
   ngOnInit() {
     this.pageNumber = parseInt(this.route.snapshot.queryParams.pageNumber);
+    this.replyPage = this.route.snapshot.queryParams.reply === "true" ? true : false;
     this.pageSize = this._data.getPageSizeForum();
   }
 
-  nextPage(x) {
-    console.log(this.topicData, this.pageNumber, x, this.pageNumber + x, this.topicData.totalPages)
-  }
 }

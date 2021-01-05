@@ -17,35 +17,56 @@ export class ReplyPostComponent implements OnInit {
   @Input() topicData: TopicModel;
   @Input() iAmGameMaster: boolean;
   @Input() gameId: number;
+  @Input() totalPages: number;
+  @Input() pageSize: number;
+  @Input() navigate: (params) => void;
 
   msgId: number = -1;
   error: boolean = false;
   editorContent: any;
+  isLoading: boolean = false;
+  showAlert: boolean = false;
+  alertMessage: string = "";
 
-  constructor(
-    private _api: ApiService,
-    private _forum: ForumService,
-    private _router: Router
-  ) {}
+
+  constructor(private _api: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.editorContent = document.querySelector(".editor");
   }
 
-  async getMsgHTML(s) {
+  async getMsgHTML(body) {
+    if (body.length < 1) return false;
+
     let date = new Date();
-    let page = Math.floor(this.topicData.messages.length / 10);
     let msg = new MessageForumCreateModel(
       date,
       null,
-      s,
+      body,
       parseInt(localStorage.getItem("id")),
       this.topicData.id,
-      page,
       false
     );
-    this._api.createForumMessage(msg);
-    await this.delay(500);
+
+    this.isLoading = true;
+    this._api.sendForumMessage(msg).subscribe(data => {
+      this.isLoading = false;
+      if (data.success) {
+        let params = {
+          gameId: this.gameId,
+          topicId: this.topicData.id,
+          pageNumber: this.totalPages,
+          pageSize: this.pageSize
+        }
+        this.navigate(params);
+      }
+      else {
+        this.alertMessage = data.message
+        this.showAlert = true;
+      }
+    });
+
+    /*await this.delay(500);
     this._api
       .getTopicData(this.topicData.id)
       .subscribe((data) => (this.topicData = data));
@@ -60,7 +81,7 @@ export class ReplyPostComponent implements OnInit {
         "view",
       ]);
       window.location.reload();
-    } else this.error = true;
+    } else this.error = true;*/
   }
 
   delay(ms: number) {

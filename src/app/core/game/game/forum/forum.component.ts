@@ -143,8 +143,7 @@ export class ForumComponent implements OnInit {
   }
 
   navigate(params) {
-    console.log(params)
-    this.router.navigate(["game"], params);
+    this.router.navigate(["game"], { queryParams: params });
   }
 
   onCreateTopic() {

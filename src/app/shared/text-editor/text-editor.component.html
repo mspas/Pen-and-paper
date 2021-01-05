@@ -1,57 +1,60 @@
-<div class="toolbar">
-  <button
-    class="tool-items"
-    onclick="document.execCommand('underline', false, '');"
-  >
-    <fa-icon [icon]="faUnderline"></fa-icon>
-  </button>
-  <button
-    class="tool-items"
-    onclick="document.execCommand('italic', false, '');"
-  >
-    <fa-icon [icon]="faItalic"></fa-icon>
-  </button>
-  <button class="tool-items" onclick="document.execCommand('bold', false, '');">
-    <fa-icon [icon]="faBold"></fa-icon>
-  </button>
-  <input
-    class="tool-items"
-    type="file"
-    accept="image/*"
-    id="file"
-    style="display: none;"
-    (change)="getImage()"
-  />
-  <label for="file" class="tool-items">
-    <fa-icon [icon]="faImage"></fa-icon
-  ></label>
+<div class="text-editor">
+  <div class="toolbar">
+    <button
+      class="tool-items"
+      onclick="document.execCommand('underline', false, '');"
+    >
+      <fa-icon [icon]="faUnderline"></fa-icon>
+    </button>
+    <button
+      class="tool-items"
+      onclick="document.execCommand('italic', false, '');"
+    >
+      <fa-icon [icon]="faItalic"></fa-icon>
+    </button>
+    <button class="tool-items" onclick="document.execCommand('bold', false, '');">
+      <fa-icon [icon]="faBold"></fa-icon>
+    </button>
+    <button class="tool-items">
+      <input
+      type="file"
+      accept="image/*"
+      id="file"
+      style="display: none;"
+      (change)="getImage()"
+      />
+      <label for="file">
+        <fa-icon [icon]="faImage"></fa-icon
+      ></label>
+    </button>
 
-  <button
-    class="tool-items"
-    onclick="document.execCommand('justifyCenter',false,'')"
-  >
-    <fa-icon [icon]="faAlignCenter"></fa-icon>
-  </button>
-  <button
-    class="tool-items"
-    onclick="document.execCommand('justifyLeft',false,'')"
-  >
-    <fa-icon [icon]="faAlignLeft"></fa-icon>
-  </button>
-  <button
-    class="tool-items"
-    onclick="document.execCommand('justifyRight',false,'')"
-  >
-    <fa-icon [icon]="faAlignRight"></fa-icon>
-  </button>
-</div>
+    <button
+      class="tool-items"
+      onclick="document.execCommand('justifyCenter',false,'')"
+    >
+      <fa-icon [icon]="faAlignCenter"></fa-icon>
+    </button>
+    <button
+      class="tool-items"
+      onclick="document.execCommand('justifyLeft',false,'')"
+    >
+      <fa-icon [icon]="faAlignLeft"></fa-icon>
+    </button>
+    <button
+      class="tool-items"
+      onclick="document.execCommand('justifyRight',false,'')"
+    >
+      <fa-icon [icon]="faAlignRight"></fa-icon>
+    </button>
+  </div>
 
-<div class="center">
-  <div class="editor" contenteditable></div>
-</div>
+  <div class="center">
+    <div class="editor" contenteditable></div>
+  </div>
 
-<div class="center">
-  <button class="btn-forum" id="btn-send" (click)="getHTML()">
-    <img class="btn-ico" src="assets/plus.png" />SEND
-  </button>
+  <div class="center">
+    <button class="btn-forum btn-sm btn-green" (click)="getHTML()">
+      <img class="btn-ico" src="assets/plus.png" />SEND
+    </button>
+  </div>
 </div>

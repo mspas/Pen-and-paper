@@ -1,1 +1,3 @@
 <app-text-editor (getMsgHTML)="getMsgHTML($event)"></app-text-editor>
+<div *ngIf="isLoading">Loading...</div>
+<div *ngIf="showAlert" class="alert">{{ alertMessage }}</div>

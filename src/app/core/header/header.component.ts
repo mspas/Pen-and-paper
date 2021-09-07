@@ -3,7 +3,8 @@ import { timer as observableTimer, Observable } from "rxjs";
 import { first } from "rxjs/operators";
 import { AuthGuardService } from "../auth/auth-guard.service";
 import { AuthService } from "../auth/auth.service";
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Router } from "@angular/router";
 import { DataService } from "../services/data.service";
 import { CheckNotificationModel } from "../models/notification.model";
@@ -27,11 +28,14 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild("dropdownMenu", { static: false }) dropdownMenu: ElementRef;
   @ViewChild("accountDropdown", { static: false }) accountDropdown: ElementRef;
+  faBars = faBars;
+  faTimes = faTimes;
 
   constructor(
     private _auth: AuthService,
     private router: Router,
-    private _data: DataService
+    private _data: DataService,
+    private renderer: Renderer2
   ) {
     this.auth = _auth;
     this.isLoggedIn = _auth.isAuthenticated();
@@ -46,21 +50,12 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  onLogout() {
-    this.auth.logout();
+  showNavbarMobile() {
+    this.dropIsDown = !this.dropIsDown;
   }
 
-  handleDropdown() {
-    if (!this.dropIsDown) {
-      this.dropdownMenu.nativeElement.className =
-        "dropdown drop open drop-focus";
-      this.accountDropdown.nativeElement.className = "link link-focus";
-    } else {
-      this.dropdownMenu.nativeElement.className = "dropdown drop";
-      this.accountDropdown.nativeElement.className = "link";
-    }
-
-    this.dropIsDown = !this.dropIsDown;
+  onLogout() {
+    this.auth.logout();
   }
 
   goToMyProfile() {

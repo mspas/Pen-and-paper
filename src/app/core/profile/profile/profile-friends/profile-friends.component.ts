@@ -121,11 +121,11 @@ export class ProfileFriendsComponent implements OnInit {
     }
   }
 
-  async onClickFriend(friend: string) {
+  /*async onClickFriend(friend: string) {
     var res = await this.router.navigate(["/profile", friend]);
     var snapshot = this.route.snapshot;
     window.location.reload();
-  }
+  }*/
 
   async onAcceptFriend(id: number) {
     this.userFriends.forEach((element) => {

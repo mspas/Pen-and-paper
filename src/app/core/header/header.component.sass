@@ -2,72 +2,115 @@
 @import '../../../_mixins'
 @import '../../../_animations'
 
-nav
+.navbar-desktop
+    @media screen and ( max-width: 992px )
+        display: none
+.navbar
     position: fixed
+    height: 50px
+    width: 90%
+    max-width: 100vw
+    padding: 0 5%
     z-index: 111
-    width: 100vw
-    height: 56px
-    padding: 0 10vw
     @include radial-gradient(center, #fff, -70%, $primary, 80%)
     @media screen and ( max-width: 992px )
         height: auto
+    .navbar-logo
+        display: inline-block
+        width: auto
+        height: auto
+        margin: 5px 0 0 0
+    .navbar-toggler
+        @media screen and ( min-width: 400px )
+            display: none
     .navbar-collapse
+        display: inline-block
         height: 100%
-        .main-nav 
+        float: right
+        margin: 0
+        padding: 0
+        @media screen and ( max-width: 992px )
+            display: block
+            width: 163px
+            margin: 0 auto
+            float: none
+        .link
+            display: inline-block
+            padding: 0 10px
+            color: black
             height: 100%
-            li
-                padding: 0 10px
-                color: black
-                height: 100%
-                display: flex
-                align-items: center
-                justify-content: center
-                cursor: pointer
-                border-bottom: 1px solid #00000071
-                @media screen and ( max-width: 992px )
-                    line-height: 4em
-                    border: none
-                &:hover
-                    color: $third
-                    background-color: #fff
-                &:focus
-                    color: $secondary
-                    background-color: #fff
-            .link-focus
-                color: $third !important
+            line-height: 50px
+            cursor: pointer
+            border-bottom: 1px solid #00000071
+            @media screen and ( max-width: 992px )
+                display: block
+                border: none
+                text-align: center
+            &:hover
+                color: $third
                 background-color: #fff
-            .dropdown-link
-                position: relative
+            &:focus
+                color: $secondary
+                background-color: #fff
+        .dropdown-link
+            position: relative
+            &:hover
+                .dropdown-list
+                    visibility: visible
+                    animation: fadeInDown 0.5s ease-in-out forwards
+            @media screen and ( max-width: 992px )
                 &:hover
                     .dropdown-list
+                        display: block
+                        background: transparent
                         animation: fadeInDown 0.5s ease-in-out forwards
+            .dropdown-list
+                position: absolute
+                width: 100%
+                left: 0
+                top: 100%
+                padding: 0
+                border: 1px solid #00000071
+                border-top: none
+                opacity: 0
+                list-style: none
+                visibility: hidden
+                @include radial-gradient(top, #fff, -20%, $primary, 80%)
                 @media screen and ( max-width: 992px )
-                    &:hover
-                        .dropdown-list
-                            display: block
-                            animation: fadeInDown 0.5s ease-in-out forwards
-                .dropdown-list
-                    position: absolute
-                    width: calc( 100% + 4px )
-                    left: -2px
-                    top: 100%
-                    padding: 0
-                    border: 1px solid #00000071
-                    border-bottom: none
-                    border-top: none
+                    position: relative
+                    display: none
+                    width: 100%
                     opacity: 0
+                    border: none
+                .dropdown-link
+                    width: 100%
+                    padding: 5px 0
+                    margin: 0
+                    color: black
+                    font-size: 0.9em
+                    text-align: center
+                    line-height: 20px
+                    &:hover
+                        color: $third
+                        background-color: #fff
+                    &:focus
+                        color: $secondary
+                        background-color: #fff
                     @media screen and ( max-width: 992px )
-                        position: relative
-                        display: none
                         width: 100%
-                        opacity: 0
-                        border: none
-                    .opt
-                        width: 100%
-                        padding: 5px 0 !important
-                        font-size: 0.9em
-                        background: $lightWhite
-                        @media screen and ( max-width: 992px )
-                            background: #fff
-                            width: 100%
-                            line-height: 3em
+                        line-height: 3em
+
+.navbar-mobile
+    .navbar-toggle
+        position: absolute
+        top: 10px
+        right: 15px
+        border: none
+        background: transparent
+        .toggle-icon
+            font-size: 1.6em
+            animation: fadeInDown 0.5s ease-in-out forwards
+    .navbar-collapse
+        animation: fadeInDown 0.5s ease-in-out forwards
+    @media screen and ( min-width: 992px )
+        display: none

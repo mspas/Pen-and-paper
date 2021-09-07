@@ -1,21 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light font-montserrat">
-  <a class="navbar-brand" href="home"
+<nav class="navbar navbar-desktop font-montserrat">
+  <a class="navbar-logo" href="home"
     ><img src="assets/logo.png" alt="Logo"
   /></a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarToggler"
-    aria-controls="navbarToggler"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarToggler">
-    <ul class="navbar-nav ml-auto my-2 my-lg-0 main-nav">
+    <ul class="navbar-collapse">
       <li class="link" [routerLink]="['/search-game/search']">
         <span>JOIN GAME</span>
       </li>
@@ -32,39 +19,96 @@
         <span>SIGN UP</span>
       </li>
       <li #accountDropdown class="link dropdown-link" *ngIf="isLoggedIn">
-        <div class="dropdown-container" #dropdownMenu>
           <div id="accountDropdown">
             MY ACCOUNT ▼
             <span *ngIf="checkActiveNotifications()">(!)</span>
           </div>
-          <ul class="dropdown-list" id="dropdown-menu">
-            <li class="opt" (click)="goToMyProfile()">
+          <ul class="dropdown-list" id="dropdown-menu" #dropdownMenu>
+            <li class="dropdown-link" (click)="goToMyProfile()">
               <span>My Profile</span>
             </li>
-            <li class="opt" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
               <span id="messages"
                 >Messages <span *ngIf="notificationSet.message">(!)</span></span
               >
             </li>
-            <li class="opt" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
               <span id="games"
                 >My Games <span *ngIf="notificationSet.games">(!)</span></span
               >
             </li>
-            <li class="opt" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
               <span id="friends"
                 >Friends <span *ngIf="notificationSet.friends">(!)</span></span
               >
             </li>
-            <li class="opt" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
               <span id="settings">Settings</span>
             </li>
           </ul>
-        </div>
-      </li>
+        </li>
       <li class="link" (click)="onLogout()" *ngIf="isLoggedIn">
         <a href="home">LOGOUT</a>
       </li>
     </ul>
-  </div>
+</nav>
+
+
+<nav class="navbar navbar-mobile font-montserrat">
+    <a class="navbar-logo" href="home"
+      ><img src="assets/logo.png" alt="Logo"
+    /></a>
+    <button class="navbar-toggle" (click)="showNavbarMobile()" >
+      <fa-icon class="toggle-icon" *ngIf="!dropIsDown" [icon]="faBars"></fa-icon>
+      <fa-icon class="toggle-icon" *ngIf="dropIsDown" [icon]="faTimes"></fa-icon>
+    </button>
+    <ul *ngIf="dropIsDown" class="navbar-collapse">
+      <li class="link" [routerLink]="['/search-game/search']">
+        <span>JOIN GAME</span>
+      </li>
+      <li class="link" [routerLink]="['/create-game']">
+        <span>CREATE GAME</span>
+      </li>
+      <li class="link" [routerLink]="['/search-profile/search']">
+        <span>FIND PLAYERS</span>
+      </li>
+      <li class="link" [routerLink]="['/sign-in']" *ngIf="!isLoggedIn">
+        <span>SIGN IN</span>
+      </li>
+      <li class="link" [routerLink]="['/sign-up']" *ngIf="!isLoggedIn">
+        <span>SIGN UP</span>
+      </li>
+      <li #accountDropdown class="link dropdown-link" *ngIf="isLoggedIn">
+          <div id="accountDropdown">
+            MY ACCOUNT ▼
+            <span *ngIf="checkActiveNotifications()">(!)</span>
+          </div>
+          <ul class="dropdown-list" id="dropdown-menu" #dropdownMenu>
+            <li class="dropdown-link" (click)="goToMyProfile()">
+              <span>My Profile</span>
+            </li>
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
+              <span id="messages"
+                >Messages <span *ngIf="notificationSet.message">(!)</span></span
+              >
+            </li>
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
+              <span id="games"
+                >My Games <span *ngIf="notificationSet.games">(!)</span></span
+              >
+            </li>
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
+              <span id="friends"
+                >Friends <span *ngIf="notificationSet.friends">(!)</span></span
+              >
+            </li>
+            <li class="dropdown-link" (click)="goToMyAccount($event)">
+              <span id="settings">Settings</span>
+            </li>
+          </ul>
+        </li>
+      <li class="link" (click)="onLogout()" *ngIf="isLoggedIn">
+        <a href="home">LOGOUT</a>
+      </li>
+    </ul>
 </nav>

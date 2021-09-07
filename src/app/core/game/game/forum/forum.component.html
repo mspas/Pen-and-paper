@@ -82,7 +82,7 @@
   ></app-topic-list>
   <app-create-topic
     *ngIf="subpageManager.createTopic"
-    (valueChange)="closeChildComponent($event)"
+    [gameData]="gameData"
     [forumData]="forumData"
     [profileData]="profileData"
     [iAmGameMaster]="iAmGameMaster"

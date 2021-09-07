@@ -1,11 +1,15 @@
 <div>
-  <button class="btn-forum" id="btn-back" (click)="onClickBack()">
-    <span
-      class="glyphicon glyphicon-arrow-left"
-      style="padding-right: 20px;"
-    ></span>
-    BACK
-  </button>
+  <a
+    [routerLink]=""
+    [queryParams]="{gameId: gameData.id}"
+  >
+    <button class="btn-forum btn-sm btn-yellow">
+      <span
+        class="glyphicon glyphicon-arrow-left"
+      ></span>
+      BACK
+    </button>
+  </a>
 </div>
 <form #formOptions="ngForm" class="form-create" (ngSubmit)="onCreate(f)">
   <div class="table-responsive default-font">

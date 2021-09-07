@@ -15,6 +15,7 @@ import {
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ApiService } from "src/app/core/services/api.service";
 import { NgForm } from "@angular/forms";
+import { GameAppModel } from "src/app/core/models/game.model";
 
 @Component({
   selector: "app-create-topic",
@@ -24,6 +25,7 @@ import { NgForm } from "@angular/forms";
 export class CreateTopicComponent implements OnInit {
   @ViewChild("formOptions", { static: true }) formTopicOptions: NgForm;
 
+  @Input() gameData: GameAppModel;
   @Input() forumData: ForumModel;
   @Input() profileData: PersonalDataModel;
   @Input() iAmGameMaster: boolean;
@@ -32,7 +34,9 @@ export class CreateTopicComponent implements OnInit {
 
   constructor(private _api: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.forumData)
+  }
 
   onClickBack() {
     this.valueChange.emit("false");

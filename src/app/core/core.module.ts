@@ -18,6 +18,7 @@ import { AuthGuardService } from "./auth/auth-guard.service";
 import { DataService } from "./services/data.service";
 import { ForumService } from "./services/forum.service";
 import { CreateGameDataService } from "./services/create-game.service";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CreateGameDataService } from "./services/create-game.service";
     GameModule,
     SearchModule,
     ActivityModule,
+    FontAwesomeModule
   ],
   providers: [
     ApiService,

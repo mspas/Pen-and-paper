@@ -143,32 +143,33 @@ export class ForumComponent implements OnInit {
   }
 
   navigate(params) {
+    console.log(params)
     this.router.navigate(["game"], { queryParams: params });
   }
 
   onCreateTopic() {
+    this.navigate({gameId: this.gameData.id, page: "create-topic"});
     this.subpageManager.showCreateTopic();
-    this.navigate("create-topic");
   }
 
   onUserAccess() {
     this.subpageManager.showUserAccess();
-    this.navigate("user-access");
+    this.navigate({gameId: this.gameData.id, page: "user-access"});
   }
 
   onGameSettings() {
     this.subpageManager.showGameSettings();
-    this.navigate("game-settings");
+    this.navigate({gameId: this.gameData.id, page: "game-settings"});
   }
 
   onManagePlayers() {
     this.subpageManager.showManagePlayers();
-    this.navigate("players");
+    this.navigate({gameId: this.gameData.id, page: "players"});
   }
 
   onYourCharacter() {
     this.subpageManager.showYourCharacter();
-    this.navigate("my-character");
+    this.navigate({gameId: this.gameData.id, page: "my-character"});
   }
 
   onEndGame() {}
@@ -179,7 +180,6 @@ export class ForumComponent implements OnInit {
   }
 
   goBack() {
-    console.log("sram")
     this.subpageManager.showTopicList();
   }
 }

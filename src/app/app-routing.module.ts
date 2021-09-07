@@ -61,7 +61,9 @@ const routes: Routes = [];
           profiledata: ActivityResolve,
         },
       },
-    ]),
+    ], {
+      onSameUrlNavigation: 'reload'
+    }),
   ],
   exports: [RouterModule],
 })

@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
 import { FriendModel } from "src/app/core/models/friend.model";
-import { ApiService } from "src/app/core/services/api.service";
 import { ConversationDataModel } from "src/app/core/models/message.model";
+
+import { ApiService } from "src/app/core/services/api.service";
 import { DataService } from "src/app/core/services/data.service";
 
 @Component({
@@ -18,6 +20,7 @@ export class ProfileComponent implements OnInit {
   imageToShow: any;
   isImageLoading: boolean;
   defaultImage: boolean = true;
+  modalTitle = "Change password";
 
   isLoading = true;
   isLoadingFriends = true;
@@ -28,6 +31,8 @@ export class ProfileComponent implements OnInit {
   viewChildFlag = true;
   isMyProfileFlag = false;
   data: any;
+  showModalFlag = false;
+  showModalIndex = -1;
 
   myProfileData: PersonalDataModel;
   myGamesAPPList: GameToPersonAppModel[] = [];
@@ -174,4 +179,16 @@ export class ProfileComponent implements OnInit {
       event.target.setAttribute("class", "active");
     }
   }
+
+  showModal(title, index) {
+    this.modalTitle = title;
+    this.showModalFlag = true;
+    this.showModalIndex = index;
+  }
+
+  closeModal(value) {
+    this.showModalFlag = value;
+    this.showModalIndex = -1;
+  }
+
 }

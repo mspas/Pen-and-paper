@@ -19,7 +19,7 @@ $marginInfo: 50px
             @media screen and ( max-width: 430px )
                 padding: 20px
                 max-width: 100%
-            img 
+            img
                 max-width: $photoSize
                 border-radius: 20px
         .profile-control
@@ -52,6 +52,7 @@ $marginInfo: 50px
                         color: white
                         border-radius: 2px
                         border: none
+                        cursor: pointer
                         background-color: $green
                         transition: all 0.1s ease-in-out
                         @media screen and ( max-width: 992px )
@@ -59,11 +60,14 @@ $marginInfo: 50px
                         &:hover
                             transform: scale(0.9)
                             box-shadow: 0px 0px 1px 1px $green
-                        .btn-text 
+                        .btn-text
                             text-align: center
                             line-height: 1.15
                             font-size: 0.8em
                             margin: 0
+                    #btn-settings
+                        @media screen and ( min-width: 400px )
+                            display: none
         .profile-info
             flex: 1
             padding: 0
@@ -82,7 +86,7 @@ $marginInfo: 50px
                             padding: 5px
     .profile-content
         margin-top: 20px
-        ul 
+        ul
             height: 40px
             margin: 0
             padding: 0
@@ -90,7 +94,7 @@ $marginInfo: 50px
             display: flex
             justify-content: flex-end
             align-items: center
-            li 
+            li
                 display: inline
                 padding: 10px 20px
                 margin-top: 2px

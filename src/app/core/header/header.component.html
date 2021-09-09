@@ -78,7 +78,7 @@
       <li class="link" [routerLink]="['/sign-up']" *ngIf="!isLoggedIn">
         <span>SIGN UP</span>
       </li>
-      <li #accountDropdown class="link dropdown-link" *ngIf="isLoggedIn">
+      <li class="link dropdown-link" *ngIf="isLoggedIn">
           <div id="accountDropdown">
             MY ACCOUNT ▼
             <span *ngIf="checkActiveNotifications()">(!)</span>
@@ -112,3 +112,5 @@
       </li>
     </ul>
 </nav>
+
+<div class="blur-overlay" *ngIf="dropIsDown"></div>

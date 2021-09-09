@@ -47,6 +47,17 @@ a
     letter-spacing: 4px
     font-family: Montserrat, sans-serif
 
+.blur-overlay
+    position: absolute
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    z-index: 1
+    backdrop-filter: blur(4px)
+    opacity: 0
+    animation: fadeIn 0.5s ease-in-out forwards
+
 .btn
     font-family: BarkingCat
     border: none
@@ -81,7 +92,6 @@ a
 
 .btn-forum
     min-width: 100px
-    width: 203px
     margin-top: 5px
     padding: 10px
     display: flex

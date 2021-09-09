@@ -71,8 +71,7 @@
           <button
             class="btn-profile btn-green"
             id="change_personal_data"
-            data-toggle="modal"
-            data-target="#modalChangeData"
+            (click)="showModal('Change profile details', 0)"
           >
             <p class="btn-text">
               Change<br />
@@ -82,8 +81,7 @@
           <button
             class="btn-profile btn-green"
             id="change_passwrod"
-            data-toggle="modal"
-            data-target="#modalChangePassword"
+            (click)="showModal('Change password', 1)"
           >
             <p class="btn-text">
               Change<br />
@@ -93,21 +91,14 @@
           <button
             class="btn-profile btn-green"
             id="change_image"
-            data-toggle="modal"
-            data-target="#modalChangeImage"
+            (click)="showModal('Change profile picture', 2)"
           >
             <p class="btn-text">
               Change<br />
               profile picture
             </p>
           </button>
-        </div>
-        <div
-          class="btn-container"
-          id="my-page"
-          *ngIf="isMyProfileFlag == true && mobileViewFlag == true"
-        >
-          <button class="btn-profile" id="settings" (click)="onGoToSettings()">
+          <button class="btn-profile btn-green" id="btn-settings" (click)="onGoToSettings()">
             <p class="btn-text">Settings</p>
           </button>
         </div>
@@ -170,36 +161,10 @@
   </div>
 </div>
 
-<div
-  id="modalChangeData"
-  class="modal fade"
-  role="dialog"
-  style="margin-top: 50px"
-  *ngIf="!isLoading"
->
-  <app-modal-change-details
-    [myProfileData]="userProfileData"
-  ></app-modal-change-details>
-</div>
-<div
-  id="modalChangePassword"
-  class="modal fade"
-  role="dialog"
-  style="margin-top: 50px"
-  *ngIf="!isLoading"
->
-  <app-modal-change-password
-    [myProfileData]="userProfileData"
-  ></app-modal-change-password>
-</div>
-<div
-  id="modalChangeImage"
-  class="modal fade"
-  role="dialog"
-  style="margin-top: 50px"
-  *ngIf="!isLoading"
->
-  <app-modal-change-image
-    [myProfileData]="userProfileData"
-  ></app-modal-change-image>
+<div *ngIf="showModalIndex > -1">
+  <app-modal [modalTitle]="modalTitle" [showModalFlag]="showModalFlag" (closeModalEvent)="closeModal($event)">  
+    <app-modal-change-details *ngIf="showModalIndex === 0" [myProfileData]="userProfileData"></app-modal-change-details>
+    <app-modal-change-password *ngIf="showModalIndex === 1" [myProfileData]="userProfileData"></app-modal-change-password>
+    <app-modal-change-image *ngIf="showModalIndex === 2" [myProfileData]="userProfileData"></app-modal-change-image>
+  </app-modal>
 </div>

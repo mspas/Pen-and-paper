@@ -11,7 +11,7 @@
     width: 90%
     max-width: 100vw
     padding: 0 5%
-    z-index: 111
+    z-index: 1
     @include radial-gradient(center, #fff, -70%, $primary, 80%)
     @media screen and ( max-width: 992px )
         height: auto
@@ -101,6 +101,7 @@
                         line-height: 3em
 
 .navbar-mobile
+    transition: 0.5s
     .navbar-toggle
         position: absolute
         top: 10px
@@ -110,7 +111,5 @@
         .toggle-icon
             font-size: 1.6em
             animation: fadeInDown 0.5s ease-in-out forwards
-    .navbar-collapse
-        animation: fadeInDown 0.5s ease-in-out forwards
     @media screen and ( min-width: 992px )
         display: none

@@ -8,6 +8,7 @@ import { ModalChangeDetailsComponent } from "./change-data/modal-change-details/
 import { ModalChangePasswordComponent } from "./change-data/modal-change-password/modal-change-password.component";
 import { ModalChangeImageComponent } from "./change-data/modal-change-image/modal-change-image.component";
 import { FormsModule } from "@angular/forms";
+import { SharedModule } from "src/app/shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { FormsModule } from "@angular/forms";
     ModalChangePasswordComponent,
     ModalChangeImageComponent,
   ],
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, SharedModule],
   providers: [],
 })
 export class ProfileModule {}

@@ -25,7 +25,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HomeComponent,
     HeaderComponent,
     SignInComponent,
-    SignUpComponent,
+    SignUpComponent
   ],
   imports: [
     CommonModule,

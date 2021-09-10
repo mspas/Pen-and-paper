@@ -133,8 +133,15 @@ a
     border-color: #e9ebfde0
 
 .profile-link
+    display: inline-grid
+    grid-template-columns: 1fr 3fr
     cursor: pointer
-    font-size: 14px
+    font-size: 1em
+    @media screen and ( max-width: 430px )
+        display: table-cell
+        text-align: center
+        vertical-align: middle
+        font-size: 0.9em
     &:hover
         color: $third
         img
@@ -144,3 +151,12 @@ a
         width: 50px
         border-radius: 50%
         margin-right: 10px
+        @media screen and ( max-width: 430px )
+            height: 40px
+            width: 40px
+            vertical-align: middle
+    .name
+        line-height: 50px
+        @media screen and ( max-width: 430px )
+            line-height: 1em
+            vertical-align: middle

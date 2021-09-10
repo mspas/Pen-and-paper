@@ -1,16 +1,10 @@
-@import '../../../../../_mixins'
-.friends-list-wrap
-    padding: 5vw
-    tr 
-        @include border-shadow(1px, 1px, 5px, #00000010)
-        td
-            img 
-                height: 20vw
-                max-height: 100px
-                border-radius: 20px
-        .profile-data
-            padding: 50px 10px
-            font-size: 1rem
-            @media screen and ( max-width: 575px )
-                padding: 10px
-                
+@import '../profile-lists'
+
+.list-wrap
+    text-align: center
+    width: 80%
+    padding: 20px 10%
+    .friend-wrap
+        display: inline-block
+        margin: 0 auto
+        padding: 0 10px

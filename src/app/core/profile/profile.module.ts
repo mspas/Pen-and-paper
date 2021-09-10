@@ -9,6 +9,7 @@ import { ModalChangePasswordComponent } from "./change-data/modal-change-passwor
 import { ModalChangeImageComponent } from "./change-data/modal-change-image/modal-change-image.component";
 import { FormsModule } from "@angular/forms";
 import { SharedModule } from "src/app/shared/shared.module";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { SharedModule } from "src/app/shared/shared.module";
     ModalChangePasswordComponent,
     ModalChangeImageComponent,
   ],
-  imports: [CommonModule, RouterModule, FormsModule, SharedModule],
+  imports: [CommonModule, RouterModule, FormsModule, SharedModule, FontAwesomeModule],
   providers: [],
 })
 export class ProfileModule {}

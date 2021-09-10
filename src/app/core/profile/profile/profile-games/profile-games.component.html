@@ -1,81 +1,79 @@
-<div *ngIf="isLoading === false" class="games-list-wrap">
-  <p>Game history:</p>
-  <div class="table-responsive">
-    <table class="table">
+<div class="list-wrap">
+  <div *ngIf="isLoading === false">
+    <table>
+      <colgroup>
+         <col span="1" style="width: 60%;">
+         <col span="1" style="width: 20%;">
+         <col span="1" style="width: 20%;">
+      </colgroup>
       <thead>
         <tr>
-          <th>#</th>
           <th>Title</th>
-          <th></th>
           <th>Players</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let game of gamesAccepted">
-          <td>{{ game.game.id }}</td>
           <td type="button" class="button-name">
             <a [routerLink]="['/game']" [queryParams]="{gameId: game.game.id}">{{ game.game.title }}</a>
+            <fa-icon *ngIf="game.isGameMaster == true" class="star-icon" title="Game Master" [icon]="faStar"></fa-icon>
           </td>
-          <td>
-            <span
-              *ngIf="game.isGameMaster == true"
-              title="Game Master"
-              class="glyphicon glyphicon-star"
-            ></span>
-          </td>
-          <td>{{ game.game.nofparticipants }} / {{ game.game.maxplayers }}</td>
-          <td>
+          <td class="details">{{ game.game.nofparticipants }} / {{ game.game.maxplayers }}</td>
+          <td class="details">
             {{ game.game.status }}
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
 
-  <div *ngIf="isMyProfileFlag == true" class="table-responsive">
-    <p>Avaliable invitations:</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Players</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let game of invitations">
-          <td>{{ game.game.id }}</td>
-          <td type="button" class="button-name">
-            <a [routerLink]="['/game', game.game.id]">{{ game.game.title }}</a>
-          </td>
-          <td>{{ game.game.nofparticipants }} / {{ game.game.nofplayers }}</td>
-          <td>
-            <span *ngIf="game.game.isActive == true">Active</span>
-            <span *ngIf="game.game.isActive == false">Ended</span>
-          </td>
-          <td>
-            <h2 class="decision">
-              <button
-                type="button"
-                class="btn btn-success"
-                (click)="onAcceptRequest(game.id)"
-              >
-                <span class="glyphicon glyphicon-ok"></span> Accept
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                (click)="onDeclineRequest(game.id)"
-              >
-                <span class="glyphicon glyphicon-remove"></span> Decline
-              </button>
-            </h2>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="isMyProfileFlag == true && invitations.length > 0">
+      <p style="text-align: center;">Invitations:</p>
+      <table>
+        <colgroup>
+           <col span="1" style="width: 40%;">
+           <col span="1" style="width: 20%;">
+           <col span="1" style="width: 20%;">
+           <col span="1" style="width: 15%;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Players</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let game of invitations">
+            <td type="button" class="button-name">
+              <a [routerLink]="['/game']" [queryParams]="{gameId: game.game.id}">{{ game.game.title }}</a>
+            </td>
+            <td class="details">{{ game.game.nofparticipants }} / {{ game.game.maxplayers }}</td>
+            <td class="details">
+              {{ game.game.status }}
+            </td>
+            <td class="details">
+                <button
+                  type="button"
+                  class="btn-accept"
+                  (click)="onAcceptRequest(game.id)"
+                >
+                  <fa-icon class="star-icon" title="Accept" [icon]="faCheck"></fa-icon>
+                </button>
+                <button
+                  type="button"
+                  class="btn-decline"
+                  (click)="onDeclineRequest(game.id)"
+                >
+                  <fa-icon class="star-icon" title="Decline" [icon]="faTimes"></fa-icon>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+  <div *ngIf="isLoading" class="loading">Loading...</div>
 </div>
-<div *ngIf="isLoading" class="loading">Loading...</div>

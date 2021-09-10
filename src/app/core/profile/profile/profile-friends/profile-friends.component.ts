@@ -4,6 +4,7 @@ import {
   PersonalDataModel,
   PersonalDataListModel,
 } from "src/app/core/models/personaldata.model";
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 
@@ -18,6 +19,9 @@ export class ProfileFriendsComponent implements OnInit {
   @Input("isMyProfileFlag") isMyProfileFlag: boolean;
   @Input("isLoading") isLoading: boolean;
 
+  faCheck = faCheck;
+  faTimes = faTimes;
+  
   imageToShow: any;
   isImageLoading: boolean;
   defaultImage: boolean = true;

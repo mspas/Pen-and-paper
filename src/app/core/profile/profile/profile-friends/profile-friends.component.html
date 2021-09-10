@@ -1,67 +1,75 @@
-<div *ngIf="isLoading === false" class="friends-list-wrap">
-  <p>Friends list:</p>
-  <div class="table-responsive">
-    <table class="table">
-      <tbody>
-        <tr *ngFor="let friend of friendsAccepted">
-          <td class="center">
-            <img
-              *ngIf="friend.photo != null"
-              [src]="friend.photo"
-              alt="Profile image"
-            />
-            <img
-              *ngIf="friend.photo == null"
-              src="assets/unknown.png"
-              alt="Profile image"
-            />
-          </td>
-          <td class="profile-data font-montserrat">
-            <a role="button" [routerLink]="['/profile', friend.data.login]">
-              {{ friend.data.firstname }}
-              {{ friend.data.lastname }} ({{ friend.data.login }})
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div *ngIf="isLoading === false" class="list-wrap">
+  <div class="friend-wrap" *ngFor="let player of friendsAccepted; index as i">
+    <a
+      class="profile-link"
+      role="button"
+      [routerLink]="['/profile', player.data.login]"
+    >
+      <img
+        *ngIf="player.photo"
+        [src]="player.photo"
+        alt="Profile image"
+      />
+      <img
+        *ngIf="player.photo == null"
+        src="assets/unknown-no-bg.png"
+        alt="Profile image"
+      />
+      <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
+        player.data.login
+      }})</span>
+    </a>
   </div>
+</div>
 
-  <div *ngIf="isMyProfileFlag == true" class="table-responsive">
-    <table class="table">
-      <tbody>
-        <tr *ngFor="let friend of invitations">
-          <td>
+<div *ngIf="isMyProfileFlag == true && invitations.length > 0" class="list-wrap">
+  <p>Invitations:</p>
+  <table>
+    <colgroup>
+       <col span="1" style="width: 80%;">
+       <col span="1" style="width: 20%;">
+    </colgroup>
+    <tbody>
+      <tr *ngFor="let player of invitations">
+        <td>
+          <a
+            class="profile-link"
+            role="button"
+            [routerLink]="['/profile', player.data.login]"
+          >
             <img
-              *ngIf="friend.photo != null"
-              [src]="friend.photo"
+              *ngIf="player.photo"
+              [src]="player.photo"
               alt="Profile image"
             />
             <img
-              *ngIf="friend.photo == null"
-              src="assets/unknown.png"
+              *ngIf="player.photo == null"
+              src="assets/unknown-no-bg.png"
               alt="Profile image"
             />
-          </td>
-          <td>
-            <a role="button" [routerLink]="['/profile', friend.data.login]">
-              {{ friend.data.firstname }}
-              {{ friend.data.lastname }} ({{ friend.data.login }})
-            </a>
-          </td>
-          <td>
-            <h2 role="button" (click)="onAcceptFriend(friend.data.id)">
-              Accept
-            </h2>
-          </td>
-          <td>
-            <h2 role="button" (click)="onRemoveFriend(friend.data.id)">
-              Decline
-            </h2>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
+              player.data.login
+            }})</span>
+          </a>
+        </td>
+        <td class="details">
+            <button
+              type="button"
+              class="btn-accept"
+              (click)="onAcceptFriend(game.id)"
+            >
+              <fa-icon class="star-icon" title="Accept" [icon]="faCheck"></fa-icon>
+            </button>
+            <button
+              type="button"
+              class="btn-decline"
+              (click)="onRemoveFriend(game.id)"
+            >
+              <fa-icon class="star-icon" title="Decline" [icon]="faTimes"></fa-icon>
+            </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div *ngIf="isLoading" class="loading">Loading...</div>

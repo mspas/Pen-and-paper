@@ -34,6 +34,9 @@ $marginInfo: 50px
                 @media screen and ( max-width: 992px )
                     padding-top: 20px
                     text-align: center
+                @media screen and ( max-width: 430px )
+                    padding-top: 0
+                    font-size: 1.2em
             .btn-wrap
                 padding: $marginInfo/2 0
                 .btn-container
@@ -76,9 +79,11 @@ $marginInfo: 50px
             @media screen and ( max-width: 992px )
                 margin-top: 0
             table
+                min-width: 250px
                 @media screen and ( max-width: 992px )
-                    max-width: 100%
                     overflow-x: auto
+                @media screen and ( max-width: 430px )
+                    font-size: 0.9em
                 tr
                     td
                         padding: 5px 20px

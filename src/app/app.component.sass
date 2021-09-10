@@ -1,4 +1,7 @@
 @import '../_variables'
 .router
-    padding: $headerHeight+50px 10%
-    min-height: 100vh
+    padding: $headerHeight+50px 10% 50px 10%
+    min-height: calc( 100vh - 156px )
+    @media screen and ( max-width: 430px )
+        padding-left: 10px
+        padding-right: 10px

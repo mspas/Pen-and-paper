@@ -22,31 +22,34 @@ export class GameViewComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() gameMaster: PersonalDataModel;
   @Input() iAmGameMaster: boolean;
+  @Input() acceptedPlayers: PersonalDataListModel[];
+  @Input() waitingSelfRequested: PersonalDataListModel[];
+  @Input() waitingInvited: PersonalDataListModel[];
 
   urlMafia: string = "assets/mafia1.png";
   urlFantasy: string = "assets/fantasy1.png";
   urlSciFi: string = "assets/scifi.png";
   imageUrl: string = "";
-  imageToShow: any;
 
+  imageToShow: any;
+  isImageLoading: boolean;
   data: any;
+
   buttonManager: ButtonManager;
   hotJoinString: string = "No";
   needInviteString: string = "No";
   info: string = "Join game";
-  modalTitle: string = "";
   iAmParticipant: boolean = false;
   isNewRequest: boolean = false;
   numberOfRequests: number = 0;
   myCardId: number;
-  acceptedPlayers: PersonalDataListModel[] = [];
-  waitingSelfRequested: PersonalDataModel[] = [];
-  waitingInvited: PersonalDataModel[] = [];
   newSkillsNames: string[] = [];
   newGameSessions: GameSessionCreateModel[] = [];
   isNewInvited: boolean = false;
-  isImageLoading: boolean;
   subpage: string;
+
+  showModalFlag: boolean = false;
+  modalTitle: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,7 +59,7 @@ export class GameViewComponent implements OnInit {
 
   ngOnInit() {
     this.buttonManager = new ButtonManager();
-    console.log();
+    
     switch (this.gameData.category) {
       case "Mafia":
         this.imageUrl = this.urlMafia;
@@ -86,30 +89,7 @@ export class GameViewComponent implements OnInit {
           }
         });
       }
-
-      this.gameData.participants.forEach((card) => {
-        //if (card.playerId == player.id && card.id != this.gameMaster.id) {
-        if (
-          card.playerId == player.id &&
-          this.gameData.masterId !== player.id
-        ) {
-          if (card.isAccepted) {
-            let playerListModel = new PersonalDataListModel(player, null);
-            this.acceptedPlayers.push(playerListModel);
-          } else {
-            if (card.isMadeByPlayer) this.waitingSelfRequested.push(player);
-            else this.waitingInvited.push(player);
-          }
-        }
-      });
     });
-
-    if (!this.iAmParticipant) {
-      document.getElementById("panel-collapser").removeAttribute("data-toggle");
-      document
-        .getElementById("collapseGame")
-        .setAttribute("class", "panel-collapse");
-    }
 
     if (this.subpage == "view") {
       if (this.iAmParticipant || this.iAmGameMaster) {
@@ -139,7 +119,7 @@ export class GameViewComponent implements OnInit {
         }
       );
     }
-
+    
     let i = 0;
     this.acceptedPlayers.forEach((element) => {
       if (
@@ -185,8 +165,16 @@ export class GameViewComponent implements OnInit {
     var res = await this._router.navigate([
       `/game/${this.gameData.id}/overview/forum`,
     ]);
-    var snapshot = this.route.snapshot;
-    //window.location.reload();         MOGLO SIE ZEPSUC TUTAJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  }
+
+  
+  showModal(value: boolean, title: string) {
+    this.showModalFlag = value;
+    this.modalTitle = title;
+  }
+
+  closeModal(value: boolean) {
+    this.showModal(value, "");
   }
 
   onJoin() {

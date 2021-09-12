@@ -6,7 +6,7 @@ import {
 } from "src/app/core/models/forum.model";
 import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
-import { PersonalDataModel } from "src/app/core/models/personaldata.model";
+import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ButtonManager } from "../../button-manager";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
@@ -21,6 +21,10 @@ export class ForumComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
+  @Input() gameMaster: PersonalDataModel;
+  @Input() acceptedPlayers: PersonalDataListModel[];
+  @Input() waitingSelfRequested: PersonalDataListModel[];
+  @Input() waitingInvited: PersonalDataListModel[];
   @Input() iAmGameMaster: boolean;
 
   topicIdParam: number = null;
@@ -37,9 +41,15 @@ export class ForumComponent implements OnInit {
   isLoading: boolean = false;
   topicData: TopicModel;
 
+  imageToShow: any;
+  isImageLoading: boolean;
+  
   myCardId: number = -1;
 
   subpageManager: ButtonManager;
+  showModalFlag: boolean = false;
+  modalTitle: string;
+  modalOption: number = -1;
 
   constructor(private router: Router, private route: ActivatedRoute, private _api: ApiService) {}
 
@@ -47,7 +57,6 @@ export class ForumComponent implements OnInit {
     this.isLoadingTopics = true;
     this.subpageManager = new ButtonManager();
 
-    let i = 0;
     this.forumData.topics.forEach((topic) => {
       let author: PersonalDataModel = null;
       let lastPostAuthor: PersonalDataModel = null;
@@ -85,7 +94,6 @@ export class ForumComponent implements OnInit {
 
       this.isLoadingTopics = false;
       //this.detectTopicCategory(topicListModel);
-      i++;
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -121,6 +129,46 @@ export class ForumComponent implements OnInit {
         else this.subpageManager.showTopicList();
       }
     });
+    
+    let i = 0;
+    this.acceptedPlayers.forEach((element) => {
+      if (
+        element.data.photoName != null &&
+        element.data.photoName != "" &&
+        element.data.photoName != "unknown.png"
+      ) {
+        this._api.getImage(element.data.photoName).subscribe(
+          (data) => {
+            this.createImageFromBlob(
+              data,
+              this.acceptedPlayers.indexOf(element)
+            );
+            this.isImageLoading = false;
+          },
+          (error) => {
+            this.isImageLoading = false;
+            console.log(error);
+          }
+        );
+      }
+      i++;
+    });
+  }
+
+  createImageFromBlob(image: Blob, i: number) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      "load",
+      () => {
+        if (i != -1) this.acceptedPlayers[i].photo = reader.result;
+        else this.imageToShow = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
   }
 
   setChildComponent(subpage: string) {
@@ -181,5 +229,15 @@ export class ForumComponent implements OnInit {
 
   goBack() {
     this.subpageManager.showTopicList();
+  }
+
+  showModal(index: number, value: boolean, title: string) {
+    this.modalOption = index;
+    this.showModalFlag = value;
+    this.modalTitle = title;
+  }
+
+  closeModal(value: boolean) {
+    this.showModal(-1 , value, "");
   }
 }

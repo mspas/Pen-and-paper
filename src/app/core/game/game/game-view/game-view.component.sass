@@ -1,6 +1,6 @@
 @import '../../../../../_variables'
 @import '../../../../../_mixins'
-    
+
 .panel
     background-color: $lightWhite
     @include border-shadow(1px, 1px, 5px, #00000010)
@@ -12,7 +12,7 @@
             display: flex
             align-items: center
             cursor: pointer
-            img 
+            img
                 height: 50px
             .title
                 padding-left: 25px
@@ -20,7 +20,7 @@
                 color: black
                 &:hover
                     color: $third !important
-            a 
+            a
                 text-decoration: none
             .title-status
                 position: absolute
@@ -37,17 +37,21 @@
             padding: 0 50px
             max-height: 300px
             @include scrollbar(5px, $lightWhite, $primary)
-            
-        table 
+
+        table
             margin: 25px auto
             margin-bottom: 0
             @include border-shadow(1px, 1px, 5px, #00000010)
             @include radial-gradient3(top right, $primary, -100%, $lightWhite 80%, $primary 200%)
             &:hover
                 @include radial-gradient3(top right, $primary, -100%, $lightWhite 60%, $primary 200%)
-            td 
+            td
                 padding: 5px 15px
-            #collapsePlayersList
-                text-align: left
             .profile-data
                 text-align: center
+                .clickable
+                    color: $third
+                    font-weight: bold
+                    &:hover
+                        color: black
+                        font-weight: normal

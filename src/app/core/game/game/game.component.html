@@ -6,6 +6,9 @@
     [profileData]="profileData"
     [gameData]="gameData"
     [gameMaster]="gameMaster"
+    [acceptedPlayers]="acceptedPlayers"
+    [waitingSelfRequested]="waitingSelfRequested"
+    [waitingInvited]="waitingInvited"
   ></app-game-view>
   <app-forum
     *ngIf="iAmGameParticipant && !isLoadingForum"
@@ -14,5 +17,9 @@
     [gameData]="gameData"
     [forumData]="forumData"
     [topicToPersonData]="topicToPersonData"
+    [gameMaster]="gameMaster"
+    [acceptedPlayers]="acceptedPlayers"
+    [waitingSelfRequested]="waitingSelfRequested"
+    [waitingInvited]="waitingInvited"
   ></app-forum>
 </div>

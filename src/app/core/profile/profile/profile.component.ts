@@ -180,15 +180,14 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  showModal(title, index) {
+  showModal(value: boolean, title: string, index: number) {
     this.modalTitle = title;
-    this.showModalFlag = true;
+    this.showModalFlag = value;
     this.showModalIndex = index;
   }
 
-  closeModal(value) {
-    this.showModalFlag = value;
-    this.showModalIndex = -1;
+  closeModal(value: boolean) {
+    this.showModal(value, "", -1);
   }
 
 }

@@ -11,7 +11,7 @@ import { NotificationModel } from "../../models/notification.model";
 @Component({
   selector: "app-sign-up",
   templateUrl: "./sign-up.component.html",
-  styleUrls: ["../form.sass"],
+  styleUrls: ["./sign-up.component.sass"],
 })
 export class SignUpComponent implements OnInit {
   accMsg: boolean = false;

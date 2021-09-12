@@ -2,19 +2,17 @@
 @import '../../../_mixins'
 
 .home-wrap
-    width: 100vw
+    width: 100%
     .big-logo
         display: block
         margin: 0 auto
-        @media screen and ( max-width: 1065px )
-            width: 90%
+        width: 60%
+        @media screen and ( max-width: 500px )
+            width: 100%
     .content
+        padding: 50px
         margin-top: 50px
-        padding: 40px 20px
-        background: #00000015
-        border: solid 1px #00000031
-        border-left: none
-        border-right: none
+        @include primary-container()
         .home-btns
             display: flex
             flex-flow: wrap
@@ -31,8 +29,11 @@
                     display: block
                     margin: 10px auto
                     width: 200px
+                    max-width: 200px
                     height: 70px
+                    border-radius: 15px
                     font-size: 2em
+                    text-transform: uppercase
                     @media screen and ( max-width: 520px )
                         font-size: 1.6em
                         height: 50px

@@ -5,7 +5,7 @@ import { AuthService } from "../auth.service";
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.component.html",
-  styleUrls: ["../form.sass"],
+  styleUrls: ["./sign-in.component.sass"],
 })
 export class SignInComponent implements OnInit {
   loginError: boolean = false;

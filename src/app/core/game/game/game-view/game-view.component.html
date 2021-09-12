@@ -18,21 +18,28 @@
     <div class="container panel-body">
       <div class="btns center" *ngIf="!iAmParticipant">
         <button
-          class="btn btn-forum btn-green"
+          class="btn-forum btn-green"
           *ngIf="!isNewRequest && !isNewInvited"
           (click)="onJoin()"
         >
-          <img class="btn-ico" src="assets/plus.png" />JOIN GAME
+          <img class="btn-ico" src="assets/plus.png" />Join Game
         </button>
-        <button class="btn btn-forum btn-yellow" *ngIf="isNewRequest">
-          <img class="btn-ico" src="assets/gogame.png" />REQUEST WAITING
+        <button class="btn-forum btn-yellow" *ngIf="isNewRequest">
+          <img class="btn-ico" src="assets/gogame.png" />Request waiting
         </button>
         <button
-          class="btn btn-forum btn-green"
+          class="btn-forum btn-green"
           *ngIf="isNewInvited"
-          (click)="onAcceptRequest()"
+          (click)="onAcceptRequest(profileData.id)"
         >
-          <img class="btn-ico" src="assets/plus.png" />ACCEPT INVITATION
+          Accept Invitation
+        </button>
+        <button
+          class="btn-forum btn-red"
+          *ngIf="isNewInvited"
+          (click)="onDeclineRequest(profileData.id)"
+        >
+          Decline Invitation
         </button>
       </div>
       <div class="description">{{ gameData.description }}</div>
@@ -48,42 +55,12 @@
               {{ gameData.date | date: "dd-MM-yyy" }}
             </td>
           </tr>
-          <tr
-            class="toggle"
-            data-toggle="collapse"
-            href="#collapsePlayersList"
-            role="button"
-            aria-expanded="false"
-            aria-controls="collapsePlayersList"
-          >
-            <td class="clickable">NUMBER OF PLAYERS:</td>
+          <tr>
+            <td>NUMBER OF PLAYERS:</td>
             <td class="profile-data">
-              <span class="clickable"
+              <span class="clickable" (click)="showModal(true, 'Players')"
                 >{{ gameData.nofparticipants }}/{{ gameData.maxplayers }}</span
               >
-              <div id="collapsePlayersList" class="collapse">
-                <a
-                  *ngFor="let player of acceptedPlayers; index as i"
-                  class="profile-link"
-                  role="button"
-                  [routerLink]="['/profile', player.data.login]"
-                  style="display: block"
-                >
-                  <img
-                    *ngIf="player.photo"
-                    [src]="player.photo"
-                    alt="Profile image"
-                  />
-                  <img
-                    *ngIf="player.photo == null"
-                    src="assets/unknown-no-bg.png"
-                    alt="Profile image"
-                  />
-                  {{ player.data.firstname }} {{ player.data.lastname }} ({{
-                    player.data.login
-                  }})
-                </a>
-              </div>
             </td>
           </tr>
           <tr>
@@ -114,9 +91,10 @@
                   [src]="imageToShow"
                   class="profile-photo"
                   alt="Profile image"
-                />{{ gameMaster.firstname }} {{ gameMaster.lastname }} ({{
+                />
+                <span class="name">{{ gameMaster.firstname }} {{ gameMaster.lastname }} ({{
                   gameMaster.login
-                }})
+                }})</span>
               </a>
             </td>
           </tr>
@@ -124,4 +102,32 @@
       </table>
     </div>
   </div>
+</div>
+
+<div *ngIf="showModalFlag">
+  <app-modal [modalTitle]="modalTitle" [showModalFlag]="showModalFlag" (closeModalEvent)="closeModal($event)">  
+    <div *ngIf="acceptedPlayers.length > 0" class="list">
+      <a
+        *ngFor="let player of acceptedPlayers; index as i"
+        class="profile-link"
+        role="button"
+        [routerLink]="['/profile', player.data.login]"
+      >
+        <img
+          *ngIf="player.photo"
+          [src]="player.photo"
+          alt="Profile image"
+        />
+        <img
+          *ngIf="player.photo == null"
+          src="assets/unknown-no-bg.png"
+          alt="Profile image"
+        />
+        <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
+          player.data.login
+        }})</span>
+      </a>
+    </div>
+    <p style="text-align: center; margin: 30px 0" *ngIf="acceptedPlayers.length < 1">There are no players yet!</p>
+  </app-modal>
 </div>

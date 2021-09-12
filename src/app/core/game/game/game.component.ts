@@ -6,7 +6,7 @@ import {
 } from "src/app/core/models/forum.model";
 import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
-import { PersonalDataModel } from "src/app/core/models/personaldata.model";
+import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "../../services/api.service";
 import { DataService } from "../../services/data.service";
@@ -19,10 +19,14 @@ import { DataService } from "../../services/data.service";
 export class GameComponent implements OnInit {
   forumData: ForumModel;
   gameData: GameAppModel;
-  topicToPersonData: TopicToPersonModel[];
   profileData: PersonalDataModel;
   gameMaster: PersonalDataModel;
   topicData: TopicModel;
+  
+  topicToPersonData: TopicToPersonModel[];
+  acceptedPlayers: PersonalDataListModel[] = [];
+  waitingSelfRequested: PersonalDataModel[] = [];
+  waitingInvited: PersonalDataModel[] = [];
 
   isLoadingGame: boolean = true;
   isLoadingForum: boolean = true;
@@ -49,17 +53,35 @@ export class GameComponent implements OnInit {
       this._api.getGame(query.gameId).subscribe((data) => {
         this.gameData = data;
         this.isLoadingGame = false;
-  
         this.gameData.participantsProfiles.forEach((user) => {
-          if (user.id == this.profileData.id) this.iAmGameParticipant = true;
+          if (user.id == this.profileData.id) {
+            this.gameData.participants.forEach(g2p => {
+              if (g2p.playerId === this.profileData.id) this.iAmGameParticipant = g2p.isAccepted;
+            });
+          }
           if (user.id == this.gameData.gameMaster.id) this.gameMaster = user;
+          
+          this.gameData.participants.forEach((card) => {
+            //if (card.playerId == player.id && card.id != this.gameMaster.id) {
+            if (
+              card.playerId == user.id &&
+              this.gameData.masterId !== user.id
+            ) {
+              if (card.isAccepted) {
+                let playerListModel = new PersonalDataListModel(user, null);
+                this.acceptedPlayers.push(playerListModel);
+              } else {
+                if (card.isMadeByPlayer) this.waitingSelfRequested.push(user);
+                else this.waitingInvited.push(user);
+              }
+            }
+          });
         });
   
         if (this.gameData.masterId == this.profileData.id)
           this.iAmGameMaster = true;
         if (this.iAmGameParticipant || this.iAmGameMaster) {
           this._api.getForumData(query.gameId, this.pageSize).subscribe((data) => {
-            console.log(data);
             this.forumData = data;
   
             this._api

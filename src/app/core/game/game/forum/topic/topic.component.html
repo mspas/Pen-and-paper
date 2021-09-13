@@ -1,124 +1,115 @@
-<div class="content-body-heading">
-  <p>
-    <span class="text-title">TOPIC: </span
-    ><span class="text-outline topic-name">{{ topicData.topicName }}</span>
-  </p>
-  <span *ngIf="!replyPage" class="text-title">PAGES:</span>
-  <div class="row" style="padding: 0px">
-    <div class="col">
-      <div *ngIf="!replyPage">
-        <ul class="pagination">
-          <li class="page-item">
-            <a
-              class="page-link"
-              [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: 1, pageSize: pageSize}"
-              aria-label="First"
-            >
-              <span aria-hidden="true">|&lt;</span>
-            </a>
-          </li>
-          <li class="page-item" *ngIf="pageNumber - 1 > 0">
-            <a
-              class="page-link"
-              [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 1, pageSize: pageSize}"
-              aria-label="Previous"
-            >
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item" *ngIf="pageNumber - 2 > 0">
-            <a class="page-link"
-              [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 2, pageSize: pageSize}"
-              >{{ pageNumber - 2 }}</a
-            >
-          </li>
-          <li class="page-item" *ngIf="pageNumber - 1 > 0">
-            <a
-              class="page-link"
-              [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 1, pageSize: pageSize}"
-              >{{ pageNumber - 1 }}</a
-            >
-          </li>
-          <li class="page-item">
-            <span
-              class="page-link active"
-              >{{ pageNumber }}
-            </span>
-          </li>
-          <li class="page-item" *ngIf="pageNumber + 1 <= totalPages">
-            <a class="page-link"
-              [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 1, pageSize: pageSize}"
-              >{{ pageNumber + 1 }}</a
-            >
-          </li>
-          <li class="page-item" *ngIf="pageNumber + 2 <=  totalPages">
-            <a
-              class="page-link"
-              [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 2, pageSize: pageSize}"
-              >{{ pageNumber + 2 }}</a
-            >
-          </li>
-          <li class="page-item" *ngIf="pageNumber + 1 <= totalPages">
-            <a class="page-link"
+<div class="topic-nav">
+  <div class="nav-left">
+    <p>
+      <span class="text-title">TOPIC: </span
+      ><span class="text-outline topic-name">{{ topicData.topicName }}</span>
+    </p>
+    <p *ngIf="!replyPage" class="text-title">PAGES:</p>
+    <div *ngIf="!replyPage">
+      <ul class="pagination">
+        <li class="page-item">
+          <a
+            class="page-link"
+            [routerLink]=""
+            [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: 1, pageSize: pageSize}"
+            aria-label="First"
+          >
+            <span aria-hidden="true">|&lt;</span>
+          </a>
+        </li>
+        <li class="page-item" *ngIf="pageNumber - 1 > 0">
+          <a
+            class="page-link"
+            [routerLink]=""
+            [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 1, pageSize: pageSize}"
+            aria-label="Previous"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" *ngIf="pageNumber - 2 > 0">
+          <a class="page-link"
+            [routerLink]=""
+            [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 2, pageSize: pageSize}"
+            >{{ pageNumber - 2 }}</a
+          >
+        </li>
+        <li class="page-item" *ngIf="pageNumber - 1 > 0">
+          <a
+            class="page-link"
+            [routerLink]=""
+            [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber - 1, pageSize: pageSize}"
+            >{{ pageNumber - 1 }}</a
+          >
+        </li>
+        <li class="page-item">
+          <span
+            class="page-link active"
+            >{{ pageNumber }}
+          </span>
+        </li>
+        <li class="page-item" *ngIf="pageNumber + 1 <= totalPages">
+          <a class="page-link"
             [routerLink]=""
             [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 1, pageSize: pageSize}"
-            aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a
-              class="page-link"
-              [routerLink]=""
-              [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize}"
-              aria-label="Last"
-            >
-              <span aria-hidden="true">&gt;|</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+            >{{ pageNumber + 1 }}</a
+          >
+        </li>
+        <li class="page-item" *ngIf="pageNumber + 2 <=  totalPages">
+          <a
+            class="page-link"
+            [routerLink]=""
+            [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 2, pageSize: pageSize}"
+            >{{ pageNumber + 2 }}</a
+          >
+        </li>
+        <li class="page-item" *ngIf="pageNumber + 1 <= totalPages">
+          <a class="page-link"
+          [routerLink]=""
+          [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: pageNumber + 1, pageSize: pageSize}"
+          aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a
+            class="page-link"
+            [routerLink]=""
+            [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize}"
+            aria-label="Last"
+          >
+            <span aria-hidden="true">&gt;|</span>
+          </a>
+        </li>
+      </ul>
     </div>
-    <div class="col btn-wrap">
-      <a *ngIf="!replyPage"
+  </div>
+  <div class="nav-right">
+    <a *ngIf="!replyPage"
+    [routerLink]=""
+    [queryParams]="{gameId: gameData.id}">
+      <button class="btn-forum btn-sm btn-yellow">
+        BACK
+      </button>
+    </a>
+    <a
+      *ngIf="replyPage"
       [routerLink]=""
-      [queryParams]="{gameId: gameData.id}">
-        <button class="btn-forum btn-sm btn-yellow">
-          <span
-            class="glyphicon glyphicon-arrow-left"
-            style="padding-right: 10px"
-          ></span>
-          BACK
-        </button>
-      </a>
-      <a
-        *ngIf="replyPage"
-        [routerLink]=""
-        [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize}"
-      >
-        <button class="btn-forum btn-sm btn-yellow">
-          <span
-            class="glyphicon glyphicon-arrow-left"
-          ></span>
-          BACK
-        </button>
-      </a>
-      <a
-        *ngIf="!replyPage"
-        [routerLink]=""
-        [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize, reply: true}"
-      >
-        <button class="btn-forum btn-sm btn-green">
-          <img class="btn-ico" src="assets/plus.png" />REPLY
-        </button>
-      </a>
-    </div>
+      [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize}"
+    >
+      <button class="btn-forum btn-sm btn-yellow">
+        BACK
+      </button>
+    </a>
+    <a
+      *ngIf="!replyPage"
+      [routerLink]=""
+      [queryParams]="{gameId: gameData.id, topicId: topicData.id, pageNumber: totalPages, pageSize: pageSize, reply: true}"
+    >
+      <button class="btn-forum btn-sm btn-green">
+        REPLY
+      </button>
+    </a>
   </div>
 </div>
 

@@ -1,17 +1,27 @@
 @import '../../../../../../../_mixins'
 
 .media
+    display: grid
+    grid-template-columns: 1fr 10fr
     padding: 10px
+    padding-left: 0
     margin: 20px
     background-color: #ffffff8c
     border-radius: 10px
     @include border-shadow-default()
-    .media-object
-        border-radius: 5px
-        width: 45px
-        margin-right: 10px
-    .media-heading
-        border-bottom-style: solid
-        border-color: #e4e3e39a
-        .link
-            letter-spacing: 2px
+    .media-left
+        .media-object
+            display: block
+            border-radius: 5px
+            width: 45px
+            margin: 0 auto
+    .media-body
+        .media-heading
+            border-bottom-style: solid
+            border-color: #e4e3e39a
+            .link
+                letter-spacing: 2px
+        .message-body
+            margin-top: 10px
+            font-size: 0.9em
+            line-height: 1.5em

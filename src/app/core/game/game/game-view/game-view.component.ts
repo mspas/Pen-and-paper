@@ -22,6 +22,7 @@ export class GameViewComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() gameMaster: PersonalDataModel;
   @Input() iAmGameMaster: boolean;
+  @Input() hideGameViewContent: boolean;
   @Input() acceptedPlayers: PersonalDataListModel[];
   @Input() waitingSelfRequested: PersonalDataListModel[];
   @Input() waitingInvited: PersonalDataListModel[];

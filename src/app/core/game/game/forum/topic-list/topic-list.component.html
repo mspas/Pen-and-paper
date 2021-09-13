@@ -1,7 +1,7 @@
 <div class="topic-list">
   <div class="category-group" *ngFor="let category of topicsList">
     <div *ngIf="category.topics.length > 0">
-      <p>{{ category.name }}</p>
+      <p class="category-name">{{ category.name }}</p>
       <div class="topic" *ngFor="let topic of category.topics; let i = index">
         <div class="media">
           <div class="media-left">
@@ -19,12 +19,14 @@
             />
           </div>
           <div class="media-body">
-            <h4 class="media-heading">
-              <a class="topic-title font-montserrat clickable"
+            <div class="media-heading">
+              <p>
+                <a class="topic-title clickable"
                   [routerLink]=""
                   [queryParams]="{gameId: gameData.id, topicId: topic.topicData.id, pageNumber: topic.topicData.totalPages, pageSize: pageSize}"
                   >{{ topic.topicData.topicName }}
-              </a>
+                </a>
+              </p>
               <ul *ngIf="topic.topicData.totalPages > 1" class="pagination">
                 <li class="page-item" *ngIf="topic.topicData.totalPages > 2">
                   <a class="page-link"
@@ -33,7 +35,7 @@
                     >1</a
                   >
                 </li>
-                <li class="dots" *ngIf="topic.topicData.totalPages > 3">...</li>
+                <li class="dots page-item" *ngIf="topic.topicData.totalPages > 3">...</li>
                 <li class="page-item">
                   <a
                     class="page-link"
@@ -51,20 +53,18 @@
                   >
                 </li>
               </ul>
-            </h4>
-            <h4 class="media-bottom">
-              <div class="font-montserrat topic-info">
+            </div>
+            <p class="media-bottom">
                 <span
-                  class="clickable"
+                  class="font-montserrat topic-info clickable"
                   [routerLink]="['/profile', topic.author.login]"
                   >{{ topic.lastAuthor.firstname }}
                   {{ topic.lastAuthor.lastname }} ({{
                     topic.lastAuthor.login
                   }})</span
                 >
-                - {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST
-              </div>
-            </h4>
+                <span class="font-montserrat msg-info">- {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST</span>
+            </p>
           </div>
         </div>
       </div>

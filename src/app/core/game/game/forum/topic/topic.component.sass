@@ -3,30 +3,37 @@
 
 .content-body
     padding-top: 0
-.content-body-heading
-    position: relative
-    padding: 20px 50px 0 50px
+.topic-nav
+    display: grid
+    grid-template-columns: 7fr 3fr
+    padding-top: 20px
     min-height: 77px
     border-width: 3px 0 0 0
     border-style: solid
     border-color: #ffffff
-    .topic-name
-        font-size: 28px
-    .btn-wrap
+    .nav-left
+        .topic-name
+            font-size: 1.5em
+        .text-title
+            position: relative
+            font-size: 12px !important
+            line-height: 1.42857143 !important
+            letter-spacing: 4px
+            border-radius: 0
+            font-family: Montserrat, sans-serif
+        .pagination
+            list-style-type: none
+            .page-item
+                display: inline-block
+                margin: 0 10px
+            .active
+                cursor: default
+                color: $third
+                &:hover
+                    background-color: #fff
+    .nav-right
         button
-            float: right
             display: inline-block
+            float: right
             margin: 0 10px
-    .text-title
-        position: relative
-        font-size: 12px !important
-        line-height: 1.42857143 !important
-        letter-spacing: 4px
-        border-radius: 0
-        font-family: Montserrat, sans-serif
-    .pagination
-        .active
-            cursor: default
-            color: $third
-            &:hover
-                background-color: #fff
+            height: 40px

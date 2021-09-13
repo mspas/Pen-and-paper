@@ -1,37 +1,63 @@
+@import '../../../../../../_mixins'
+@import '../../../../../../_variables'
+
 .topic-list
     padding: 0 20px
     .category-group
         padding: 15px 0
+        .category-name
+            margin-bottom: 10px
         .media
-            padding: 5px 10px 0px 10px
+            display: grid
+            grid-template-columns: 1fr 10fr
+            padding: 5px 10px
             border-radius: 10px 10px 10px 10px
-            .topic-title
-                font-size: 19px
+            background: #eeeeee
+            @include border-shadow-default()
             .topic-info
                 letter-spacing: 1px
                 border-radius: 0
             .media-left
+                display: flex
                 padding: 10px 0px
+                align-items: center
+                justify-content: center
             .media-body
                 text-align: left
                 padding-left: 15px
                 .media-heading
                     margin: 0
+                    .topic-title
+                        font-size: 1.1em
             .media-bottom
                 border-top-style: solid
                 border-color: #e4e3e39a
-                margin: 0px
+                margin: 0
+                margin-top: 10px
+                .msg-info
+                    @media screen and ( max-width: 800px )
+                        font-size: 0.7em
             img
                 width: 40px
             .pagination
-                margin: 0px 0px
-                margin-left: 30px
+                list-style-type: none
+                margin: 10px 30px 0 0
+                padding: 0
                 .dots
+                    cursor: default !important
                     margin: 0 5px
+                    box-shadow: none !important
                 .page-item
+                    display: inline-block
                     cursor: pointer
+                    margin: 0 5px
+                    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.171)
+                    &:hover
+                        background: #ffffff57
                     a, span
                         float: none
-                        color: #f4511e
+                        color: $third
                         font-size: 12px !important
                         padding: 4px 8px
+                        &:hover
+                            color: #ffb1b1

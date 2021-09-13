@@ -33,8 +33,10 @@ export class GameComponent implements OnInit {
 
   iAmGameParticipant: boolean = false;
   iAmGameMaster: boolean = false;
+  
+  hideGameViewContent: boolean = false;
 
-  pageSize: number = 0;
+  pageSize: number = 10;
 
   constructor(private route: ActivatedRoute, private _api: ApiService, private _data: DataService) {}
 
@@ -45,10 +47,20 @@ export class GameComponent implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       let query = { ...params.keys, ...params };
+      
+      if (query.hasOwnProperty("topicId") || query.hasOwnProperty("topicId"))
+        this.hideGameViewContent = true;
+      else
+        this.hideGameViewContent = false;
 
       this._api.getProfileData(profileName).subscribe((data) => {
         this.profileData = data;
       });
+
+      
+    this.acceptedPlayers = [];
+    this.waitingSelfRequested = [];
+    this.waitingInvited = [];
   
       this._api.getGame(query.gameId).subscribe((data) => {
         this.gameData = data;

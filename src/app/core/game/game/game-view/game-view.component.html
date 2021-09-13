@@ -1,20 +1,16 @@
 <div class="panel" id="panel1">
   <div class="panel-heading">
-    <p
-      id="panel-collapser"
-      class="panel-title toggle"
-      data-toggle="collapse"
-      href="#collapseGame"
-      role="button"
-      aria-expanded="false"
-      aria-controls="collapseGame"
-    >
+    <div class="logo-wrap center">
       <img src="{{ imageUrl }}" alt="Game image" />
+    </div>
+    <div class="title-wrap center">
       <span class="title">{{ gameData.title }} </span>
-      <span class="title-status"> - {{ gameData.status }} -</span>
-    </p>
+    </div>
+    <div class="status-wrap center">
+      <span class="status"> - {{ gameData.status }} -</span>
+    </div>
   </div>
-  <div id="collapseGame" class="panel-collapse collapse">
+  <div *ngIf="!hideGameViewContent" id="collapseGame" class="panel-collapse collapse">
     <div class="container panel-body">
       <div class="btns center" *ngIf="!iAmParticipant">
         <button
@@ -22,10 +18,10 @@
           *ngIf="!isNewRequest && !isNewInvited"
           (click)="onJoin()"
         >
-          <img class="btn-ico" src="assets/plus.png" />Join Game
+          Join Game
         </button>
         <button class="btn-forum btn-yellow" *ngIf="isNewRequest">
-          <img class="btn-ico" src="assets/gogame.png" />Request waiting
+          Request waiting
         </button>
         <button
           class="btn-forum btn-green"

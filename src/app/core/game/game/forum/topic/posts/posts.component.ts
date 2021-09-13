@@ -203,12 +203,12 @@ export class PostsComponent implements OnInit {
   loadHtml() {
     this.html = this.posts[this.posts.length - 1].message.bodyMessage;
 
-    //sa dwa sposoby, albo przechowywac 20k znakow w stringu jako foto not smart, albo z servera pobierac
+    // przechowywac 20k znakow w stringu jako foto not smart, z servera pobierac, tylko potem trzeba posklejac html posta
 
     this.html +=
       "<img src='" + this.test + "' alt='Profile image' style='width:45px'>";
     //this.divID.nativeElement.innerHTML = this.html;
-    document.getElementById("divs").innerHTML = this.html;
+    document.getElementById("divTemp").innerHTML = this.html;
   }
 
   createImageFromBlob(image: Blob, id: number, isPost: boolean) {

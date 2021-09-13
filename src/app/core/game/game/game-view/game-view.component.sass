@@ -5,27 +5,23 @@
     background-color: $lightWhite
     @include border-shadow(1px, 1px, 5px, #00000010)
     .panel-heading
-        position: relative
+        display: grid
+        grid-template-columns: 1fr 8fr 1fr
         margin: 0
         padding: 20px 50px
-        .panel-title
-            display: flex
-            align-items: center
-            cursor: pointer
+        text-align: center
+        .logo-wrap
             img
                 height: 50px
+        .title-wrap
             .title
-                padding-left: 25px
                 font-size: 2rem
                 color: black
+                cursor: default
                 &:hover
                     color: $third !important
-            a
-                text-decoration: none
-            .title-status
-                position: absolute
-                top: 30px
-                right: 10px
+        .status-wrap
+            .status
                 color: $green
     .panel-body
         padding-bottom: 50px

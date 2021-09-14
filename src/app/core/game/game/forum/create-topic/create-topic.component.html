@@ -1,82 +1,70 @@
-<div>
-  <a
-    [routerLink]=""
-    [queryParams]="{gameId: gameData.id}"
-  >
-    <button class="btn-forum btn-sm btn-yellow">
-      <span
-        class="glyphicon glyphicon-arrow-left"
-      ></span>
-      BACK
-    </button>
-  </a>
-</div>
-<form #formOptions="ngForm" class="form-create" (ngSubmit)="onCreate(f)">
-  <div class="table-responsive default-font">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td>Title:</td>
-          <td>
-            <input
-              class="form-control"
-              type="text"
-              name="title"
-              ngControl="title"
-              [(ngModel)]="title"
-              minlength="2"
-              required
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Category:</td>
-          <td>
-            <select
-              class="form-control"
-              name="category"
-              ngControl="category"
-              [(ngModel)]="category"
-              required
-            >
-              <option *ngIf="iAmGameMaster">General</option>
-              <option *ngIf="iAmGameMaster">Game</option>
-              <option>Support</option>
-              <option>Off-topic</option>
-            </select>
-          </td>
-        </tr>
-        <tr *ngIf="iAmGameMaster">
-          <td>Access to this topic:</td>
-          <td style="float: left;">
-            <div class="radio">
-              <label
-                ><input
-                  type="radio"
-                  name="access"
-                  value="public"
-                  ngControl="access"
-                  [(ngModel)]="access"
-                  checked
-                />Public</label
-              >
-            </div>
-            <div class="radio">
-              <label
-                ><input
-                  type="radio"
-                  name="access"
-                  value="limited"
-                  ngControl="access"
-                  [(ngModel)]="access"
-                />Limited</label
-              >
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="create-header">
+  <div class="header-left default-font">
+    <form #formOptions="ngForm" class="create-form" (ngSubmit)="onCreate(f)">
+      <div class="input-group">
+        <label class="option-name">Title:</label>
+        <input
+          class="form-control"
+          type="text"
+          name="title"
+          ngControl="title"
+          [(ngModel)]="title"
+          minlength="2"
+          required
+        />
+      </div>
+      <div class="input-group">
+        <label class="option-name">Category:</label>
+        <select
+          class="form-control"
+          name="category"
+          ngControl="category"
+          [(ngModel)]="category"
+          required
+        >
+          <option *ngIf="iAmGameMaster">General</option>
+          <option *ngIf="iAmGameMaster">Game</option>
+          <option>Support</option>
+          <option>Off-topic</option>
+        </select>
+      </div>
+      <div *ngIf="iAmGameMaster" class="input-group">
+        <label class="option-name">Access to this topic:</label>
+        <div class="radio-group">
+          <label
+            ><input
+              type="radio"
+              name="access"
+              value="public"
+              ngControl="access"
+              [(ngModel)]="access"
+              checked
+            />Public</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="access"
+              value="limited"
+              ngControl="access"
+              [(ngModel)]="access"
+            />Limited</label
+          >
+        </div>
+      </div>
+    </form>
   </div>
-</form>
+  <div class="header-right">
+    <a [routerLink]="" [queryParams]="{gameId: gameData.id}">
+      <button class="btn-forum btn-yellow">
+        BACK
+      </button>
+    </a>
+  </div>
+</div>
 
-<app-text-editor (getMsgHTML)="getMsgHTML($event)"></app-text-editor>
+<app-text-editor (getMsgHTML)="onCreate($event)"></app-text-editor>
+
+<div *ngIf="showAlert" class="alert-wrap">
+  <div ngClass [ngClass]="isLoading ? 'alert btn-yellow' : 'alert btn-red'">{{ alertMessage }}</div>
+</div>

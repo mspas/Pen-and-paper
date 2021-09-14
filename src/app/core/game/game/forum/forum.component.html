@@ -1,6 +1,11 @@
 <div class="forum-content">
   <div class="btn-container">
     <div class="btn-wrap">
+      <button class="btn-forum btn-green" (click)="onCreateTopic()">
+        Create topic
+      </button>
+    </div>
+    <div class="btn-wrap">
       <button *ngIf="iAmGameMaster" class="btn-forum btn-yellow" (click)="onUserAccess()">
         Users access
       </button>
@@ -16,13 +21,8 @@
       </button>
     </div>
     <div class="btn-wrap">
-      <button *ngIf="iAmGameMaster" class="btn btn-forum btn-red" (click)="onEndGame()">
+      <button *ngIf="iAmGameMaster" class="btn-forum btn-red" (click)="onEndGame()">
         End Game
-      </button>
-    </div>
-    <div class="btn-wrap">
-      <button class="btn-forum btn-green" (click)="onCreateTopic()">
-        Create topic
       </button>
     </div>
     <div class="btn-wrap">
@@ -67,6 +67,7 @@
     [forumData]="forumData"
     [profileData]="profileData"
     [iAmGameMaster]="iAmGameMaster"
+    (goBackOnSuccessEvent)="goBack($event)"
   ></app-create-topic>
 </div>
 

@@ -17,6 +17,32 @@ export class ButtonManager {
     this.yourCharacter = false;
   }
 
+  showChildComponent(subpage: string) {
+    switch (subpage) {
+      case "user-access":
+        this.showUserAccess();
+        break;
+      case "game-settings":
+        this.showGameSettings();
+        break;
+      case "create-topic":
+        this.showCreateTopic();
+        break;
+      case "manage-players":
+        this.showManagePlayers();
+        break;
+      case "players":
+        this.showManagePlayers();
+        break;
+      case "my-character":
+        this.showYourCharacter();
+        break;
+      default:
+        this.showTopicList();
+        break;
+    }
+  }
+
   showTopic() {
     this.setFalse();
     this.topic = true;
@@ -27,27 +53,27 @@ export class ButtonManager {
     this.topicList = true;
   }
 
-  showManagePlayers() {
+  private showManagePlayers() {
     this.setFalse();
     this.managePlayers = true;
   }
 
-  showGameSettings() {
+  private showGameSettings() {
     this.setFalse();
     this.gameSettings = true;
   }
 
-  showUserAccess() {
+  private showUserAccess() {
     this.setFalse();
     this.userAccess = true;
   }
 
-  showCreateTopic() {
+  private showCreateTopic() {
     this.setFalse();
     this.createTopic = true;
   }
 
-  showYourCharacter() {
+  private showYourCharacter() {
     this.setFalse();
     this.yourCharacter = true;
   }

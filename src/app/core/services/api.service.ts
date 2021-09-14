@@ -197,11 +197,17 @@ export class ApiService {
       .subscribe((error) => console.log(error));
   }
 
-  createTopic(topic: NewTopicModel) {
+  createTopic(topic: NewTopicModel): Observable<TopicModel>  {
+    console.log(topic)
+    return this._http
+      .post<TopicModel>(this.url + "/Topic", topic);
+  }
+
+  /*createTopic(topic: NewTopicModel) {
     return this._http
       .post(this.url + "/Topic", topic)
       .subscribe((data) => console.log(data));
-  }
+  }*/
 
   sendForumMessage(msg: MessageForumCreateModel) {
     return this._http

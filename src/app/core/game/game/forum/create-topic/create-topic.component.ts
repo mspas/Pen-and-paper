@@ -2,9 +2,9 @@ import {
   Component,
   OnInit,
   Input,
+  ViewChild,
   Output,
   EventEmitter,
-  ViewChild,
 } from "@angular/core";
 import {
   ForumModel,
@@ -29,55 +29,37 @@ export class CreateTopicComponent implements OnInit {
   @Input() forumData: ForumModel;
   @Input() profileData: PersonalDataModel;
   @Input() iAmGameMaster: boolean;
+  
+  @Output() goBackOnSuccessEvent = new EventEmitter<boolean>();
 
-  @Output() valueChange = new EventEmitter();
+  isLoading: boolean = false;
+  showAlert: boolean = false;
+  alertMessage: string;
 
   constructor(private _api: ApiService) {}
 
   ngOnInit() {
-    console.log(this.forumData)
   }
 
-  onClickBack() {
-    this.valueChange.emit("false");
+  validateInput(form: NgForm, msg: string) {
+    if (!form.value.title || !form.controls["access"].value || msg.length < 1) return false;
+    return true;
   }
 
-  onCreate(form: NgForm) {
+  onCreate(s) {
+    let validateInput = this.validateInput(this.formTopicOptions, s);
+    if (!validateInput) {
+      this.showAlert = true;
+      this.alertMessage = "Fill all of the input fields!"
+      return validateInput;
+    }
+    else {
+      this.showAlert = false;
+      this.alertMessage = ""
+    }
+
     let date = new Date();
-    let access = true;
-
-    if (form.controls["optradio"].value == "limited") access = false;
-
-    const topic: TopicCreateModel = new TopicCreateModel(
-      this.forumData.id,
-      form.value.title,
-      form.value.category,
-      this.profileData.id,
-      access,
-      1,
-      date,
-      date,
-      this.profileData.id,
-      1
-    );
-    const newtopic: NewTopicModel = new NewTopicModel(
-      topic,
-      form.value.message
-    );
-    this._api.createTopic(newtopic);
-
-    this.valueChange.emit("false");
-  }
-
-  getMsgHTML(s) {
-    let date = new Date();
-    let access = true;
-
-    if (
-      this.iAmGameMaster &&
-      this.formTopicOptions.controls["access"].value == "limited"
-    )
-      access = false;
+    let access = false ? this.iAmGameMaster && this.formTopicOptions.controls["access"].value == "limited" : true;
 
     const topic: TopicCreateModel = new TopicCreateModel(
       this.forumData.id,
@@ -92,8 +74,18 @@ export class CreateTopicComponent implements OnInit {
       1
     );
     const newtopic: NewTopicModel = new NewTopicModel(topic, s);
-    this._api.createTopic(newtopic);
 
-    this.valueChange.emit("false");
+    this.isLoading = true;
+    this.alertMessage = "Loading...";
+    this.showAlert = true;
+
+    this._api.createTopic(newtopic).subscribe(data => {
+      if (data.id) {
+        this.isLoading = false;
+        this.alertMessage = "";
+        this.showAlert = false;
+        this.goBackOnSuccessEvent.emit(true);
+      }
+    });
   }
 }

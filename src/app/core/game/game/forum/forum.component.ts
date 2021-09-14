@@ -11,6 +11,8 @@ import { ButtonManager } from "../../button-manager";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 
+const categoriesDefault = ["General", "Game", "Support", "Off-topic"];
+
 @Component({
   selector: "app-forum",
   templateUrl: "./forum.component.html",
@@ -30,12 +32,7 @@ export class ForumComponent implements OnInit {
   topicIdParam: number = null;
   totalPages: number = -1;
 
-  topicsList = [
-    { name: "General", topics: [] },
-    { name: "Game", topics: [] },
-    { name: "Support", topics: [] },
-    { name: "Offtop", topics: [] },
-  ];
+  topicsList: any = [];
 
   isLoadingTopics: boolean = true;
   isLoading: boolean = false;
@@ -56,6 +53,70 @@ export class ForumComponent implements OnInit {
   ngOnInit() {
     this.isLoadingTopics = true;
     this.subpageManager = new ButtonManager();
+
+    this.prepareTopicList();
+
+    this.route.queryParams.subscribe((params) => {
+      let query = { ...params.keys, ...params };
+      if (query.hasOwnProperty("topicId")) {
+        this.isLoading = true;
+        this.subpageManager.showTopic();
+
+        this._api
+          .getTopic(this.profileData.id, query.topicId)
+          .subscribe((data) => {
+            this.topicData = data;
+
+            if (query)
+              this._api
+                .getTopicMessages(
+                  query.gameId,
+                  query.topicId,
+                  query.pageNumber,
+                  query.pageSize
+                )
+                .subscribe((data) => {
+                  this.totalPages = data.maxPages;
+                  this.topicData.messages = data.messagesResult;
+                  this.isLoading = false;
+                });
+          });
+      }
+      else {
+        if (query.hasOwnProperty("page")) this.subpageManager.showChildComponent(query.page);
+        else this.subpageManager.showTopicList();
+      }
+    });
+    
+    this.acceptedPlayers.forEach((element) => {
+      if (
+        element.data.photoName != null &&
+        element.data.photoName != "" &&
+        element.data.photoName != "unknown.png"
+      ) {
+        this._api.getImage(element.data.photoName).subscribe(
+          (data) => {
+            this.createImageFromBlob(
+              data,
+              this.acceptedPlayers.indexOf(element)
+            );
+            this.isImageLoading = false;
+          },
+          (error) => {
+            this.isImageLoading = false;
+            console.log(error);
+          }
+        );
+      }
+    });
+  }
+
+  ngOnChanges() {
+    this.prepareTopicList();
+  }
+
+  prepareTopicList() {
+    this.topicsList = this.createEmptyTopicList();
 
     this.forumData.topics.forEach((topic) => {
       let author: PersonalDataModel = null;
@@ -95,64 +156,15 @@ export class ForumComponent implements OnInit {
       this.isLoadingTopics = false;
       //this.detectTopicCategory(topicListModel);
     });
+  }
 
-    this.route.queryParams.subscribe((params) => {
-      let query = { ...params.keys, ...params };
-
-      if (query.topicId) {
-        this.isLoading = true;
-        this.subpageManager.showTopic();
-
-        this._api
-          .getTopic(this.profileData.id, query.topicId)
-          .subscribe((data) => {
-            this.topicData = data;
-
-            if (query)
-              this._api
-                .getTopicMessages(
-                  query.gameId,
-                  query.topicId,
-                  query.pageNumber,
-                  query.pageSize
-                )
-                .subscribe((data) => {
-                  console.log(data)
-                  this.totalPages = data.maxPages;
-                  this.topicData.messages = data.messagesResult;
-                  this.isLoading = false;
-                });
-          });
-      }
-      else {
-        if (query.sub) this.setChildComponent(query.sub);
-        else this.subpageManager.showTopicList();
-      }
-    });
-    
-    let i = 0;
-    this.acceptedPlayers.forEach((element) => {
-      if (
-        element.data.photoName != null &&
-        element.data.photoName != "" &&
-        element.data.photoName != "unknown.png"
-      ) {
-        this._api.getImage(element.data.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(
-              data,
-              this.acceptedPlayers.indexOf(element)
-            );
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
-      }
-      i++;
-    });
+  createEmptyTopicList() {
+    let list = [];
+    for (let i = 0; i < categoriesDefault.length; i++) {
+      const item = {name: categoriesDefault[i], topics: []};
+      list.push(item);
+    }
+    return list;
   }
 
   createImageFromBlob(image: Blob, i: number) {
@@ -171,53 +183,31 @@ export class ForumComponent implements OnInit {
     }
   }
 
-  setChildComponent(subpage: string) {
-    switch (subpage) {
-      case "user-access":
-        if (this.iAmGameMaster) this.subpageManager.showUserAccess();
-      case "game-settings":
-        if (this.iAmGameMaster) this.subpageManager.showGameSettings();
-      case "create-topic":
-        this.subpageManager.showCreateTopic();
-      case "manage-players":
-        this.subpageManager.showManagePlayers();
-      case "players":
-        this.subpageManager.showManagePlayers();
-      case "my-character":
-        this.subpageManager.showYourCharacter();
-      default:
-        this.subpageManager.showTopicList();
-    }
-  }
+  navigate(params: any) {
+    if (params.hasOwnProperty("page")) 
+      this.subpageManager.showChildComponent(params.page);
+    else if (!params.hasOwnProperty("topicId"))
+      this.subpageManager.showTopicList();
+    else if (params.hasOwnProperty("topicId"))
+      this.subpageManager.showTopic();
 
-  navigate(params) {
-    console.log(params)
     this.router.navigate(["game"], { queryParams: params });
   }
 
   onCreateTopic() {
     this.navigate({gameId: this.gameData.id, page: "create-topic"});
-    this.subpageManager.showCreateTopic();
   }
 
   onUserAccess() {
-    this.subpageManager.showUserAccess();
     this.navigate({gameId: this.gameData.id, page: "user-access"});
   }
 
   onGameSettings() {
-    this.subpageManager.showGameSettings();
     this.navigate({gameId: this.gameData.id, page: "game-settings"});
   }
 
   onManagePlayers() {
-    this.subpageManager.showManagePlayers();
     this.navigate({gameId: this.gameData.id, page: "players"});
-  }
-
-  onYourCharacter() {
-    this.subpageManager.showYourCharacter();
-    this.navigate({gameId: this.gameData.id, page: "my-character"});
   }
 
   onEndGame() {}
@@ -227,8 +217,8 @@ export class ForumComponent implements OnInit {
     window.location.reload();
   }
 
-  goBack() {
-    this.subpageManager.showTopicList();
+  goBack(value: boolean) {
+    this.navigate({gameId: this.gameData.id})
   }
 
   showModal(index: number, value: boolean, title: string) {

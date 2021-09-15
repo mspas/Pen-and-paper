@@ -2,7 +2,7 @@
   <div class="loading" *ngIf="isLoadingGame && isLoadingForum">Loading...</div>
   <app-game-view
     *ngIf="!isLoadingGame"
-    [hideGameViewContent]="hideGameViewContent"
+    [showGameViewContent]="showGameViewContent"
     [iAmGameMaster]="iAmGameMaster"
     [profileData]="profileData"
     [gameData]="gameData"

@@ -10,7 +10,7 @@
       <span class="status"> - {{ gameData.status }} -</span>
     </div>
   </div>
-  <div *ngIf="!hideGameViewContent" id="collapseGame" class="panel-collapse collapse">
+  <div *ngIf="showGameViewContent" id="collapseGame" class="panel-collapse collapse">
     <div class="container panel-body">
       <div class="btns center" *ngIf="!iAmParticipant && !iAmGameMaster">
         <button

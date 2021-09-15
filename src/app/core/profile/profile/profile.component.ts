@@ -55,38 +55,7 @@ export class ProfileComponent implements OnInit {
       this.isLoading = true;
       let userNick = params["login"];
       this._api.getProfileData(userNick).subscribe((data) => {
-        this.userProfileData = data;
-        this.isLoading = false;
-        let nick = localStorage.getItem("nick");
-
-        if (
-          this.userProfileData.id !== parseInt(localStorage.getItem("id")) &&
-          nick
-        ) {
-          this.isMyProfileFlag = false;
-          this._api.getProfileData(nick).subscribe((data) => {
-            this.myProfileData = data;
-          });
-        } else this.isMyProfileFlag = true;
-
-        if (
-          this.userProfileData.photoName != null &&
-          this.userProfileData.photoName != ""
-        ) {
-          this.defaultImage = false;
-
-          this.isImageLoading = true;
-          this._api.getImage(this.userProfileData.photoName).subscribe(
-            (data) => {
-              this.createImageFromBlob(data);
-              this.isImageLoading = false;
-            },
-            (error) => {
-              this.isImageLoading = false;
-              console.log(error);
-            }
-          );
-        }
+        this.setProfileData(data);
       });
 
       this.isLoadingFriends = true;
@@ -130,6 +99,41 @@ export class ProfileComponent implements OnInit {
 
     if (image) {
       reader.readAsDataURL(image);
+    }
+  }
+
+  setProfileData(data) {
+    this.userProfileData = data;
+    this.isLoading = false;
+    let nick = localStorage.getItem("nick");
+
+    if (
+      this.userProfileData.id !== parseInt(localStorage.getItem("id")) &&
+      nick
+    ) {
+      this.isMyProfileFlag = false;
+      this._api.getProfileData(nick).subscribe((data) => {
+        this.myProfileData = data;
+      });
+    } else this.isMyProfileFlag = true;
+
+    if (
+      this.userProfileData.photoName != null &&
+      this.userProfileData.photoName != ""
+    ) {
+      this.defaultImage = false;
+
+      this.isImageLoading = true;
+      this._api.getImage(this.userProfileData.photoName).subscribe(
+        (data) => {
+          this.createImageFromBlob(data);
+          this.isImageLoading = false;
+        },
+        (error) => {
+          this.isImageLoading = false;
+          console.log(error);
+        }
+      );
     }
   }
 

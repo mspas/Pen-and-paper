@@ -5,7 +5,6 @@ import {
 } from "src/app/core/models/personaldata.model";
 import { GameAppModel } from "src/app/core/models/game.model";
 import { GameSessionCreateModel } from "src/app/core/models/gamesession.model";
-import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 import { GameToPersonCreateModel } from "src/app/core/models/game-to-person.model";
 import { NgForm } from "@angular/forms";
@@ -22,14 +21,16 @@ export class GameViewComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() gameMaster: PersonalDataModel;
   @Input() iAmGameMaster: boolean;
-  @Input() hideGameViewContent: boolean;
+  @Input() showGameViewContent: boolean;
   @Input() acceptedPlayers: PersonalDataListModel[];
   @Input() waitingSelfRequested: PersonalDataListModel[];
   @Input() waitingInvited: PersonalDataListModel[];
 
-  urlMafia: string = "assets/mafia1.png";
-  urlFantasy: string = "assets/fantasy1.png";
-  urlSciFi: string = "assets/scifi.png";
+  gameImageAssets = new Map([
+    ["Mafia", "assets/mafia1.png"],
+    ["Fantasy", "assets/fantasy1.png"],
+    ["SciFi", "assets/scifi.png"]
+  ])
   imageUrl: string = "";
 
   imageToShow: any;
@@ -42,7 +43,6 @@ export class GameViewComponent implements OnInit {
   info: string = "Join game";
   iAmParticipant: boolean = false;
   isNewRequest: boolean = false;
-  numberOfRequests: number = 0;
   myCardId: number;
   newSkillsNames: string[] = [];
   newGameSessions: GameSessionCreateModel[] = [];
@@ -53,27 +53,13 @@ export class GameViewComponent implements OnInit {
   modalTitle: string;
 
   constructor(
-    private route: ActivatedRoute,
     private _api: ApiService,
-    private _router: Router
   ) {}
 
   ngOnInit() {
     this.buttonManager = new ButtonManager();
     
-    switch (this.gameData.category) {
-      case "Mafia":
-        this.imageUrl = this.urlMafia;
-      case "Fantasy":
-        this.imageUrl = this.urlFantasy;
-      case "support":
-        this.imageUrl = this.urlSciFi;
-      default:
-        this.imageUrl = this.urlFantasy;
-    }
-
-    if (this.gameData.hotJoin) this.hotJoinString = "Yes";
-    if (this.gameData.needInvite) this.needInviteString = "Yes";
+    this.prepareGameConstantDetails(this.gameData);
 
     this.gameData.participantsProfiles.forEach((player) => {
       if (this.gameData.masterId == player.id) this.gameMaster = player;
@@ -92,18 +78,15 @@ export class GameViewComponent implements OnInit {
       }
     });
 
-    if (this.subpage == "view") {
-      if (this.iAmParticipant || this.iAmGameMaster) {
-        this.goToGameOverview();
-      }
-    }
+    this.setNotificationFlags();
+  }
 
-    if (this.waitingSelfRequested.length >= 1)
-      this.numberOfRequests = this.waitingSelfRequested.length;
+  ngOnChanges() {
+    this.setNotificationFlags();
+    this.getProfileImages();
+  }
 
-    if (this.waitingSelfRequested.length > 0) this.isNewRequest = true;
-    if (this.waitingInvited.length > 0) this.isNewInvited = true;
-
+  getProfileImages() {
     if (
       this.gameMaster.photoName != null &&
       this.gameMaster.photoName != "" &&
@@ -121,7 +104,6 @@ export class GameViewComponent implements OnInit {
       );
     }
     
-    let i = 0;
     this.acceptedPlayers.forEach((element) => {
       if (
         element.data.photoName != null &&
@@ -142,7 +124,6 @@ export class GameViewComponent implements OnInit {
           }
         );
       }
-      i++;
     });
   }
 
@@ -162,10 +143,20 @@ export class GameViewComponent implements OnInit {
     }
   }
 
-  async goToGameOverview() {
-    var res = await this._router.navigate([
-      `/game/${this.gameData.id}/overview/forum`,
-    ]);
+  setGamePicture(category) {
+    this.imageUrl = this.gameImageAssets[category] ? this.gameImageAssets[category] : this.gameImageAssets.get("Fantasy");
+  }
+
+  setNotificationFlags() {
+    if (this.waitingSelfRequested.length > 0) this.isNewRequest = true;
+    if (this.waitingInvited.length > 0) this.isNewInvited = true;
+  }
+
+  prepareGameConstantDetails(gameData) {
+    this.setGamePicture(gameData.category);
+
+    if (gameData.hotJoin) this.hotJoinString = "Yes";
+    if (gameData.needInvite) this.needInviteString = "Yes";
   }
 
   

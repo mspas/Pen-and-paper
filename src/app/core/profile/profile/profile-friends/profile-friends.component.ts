@@ -5,7 +5,6 @@ import {
   PersonalDataListModel,
 } from "src/app/core/models/personaldata.model";
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 
 @Component({
@@ -33,8 +32,6 @@ export class ProfileFriendsComponent implements OnInit {
   invitations: PersonalDataListModel[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private _api: ApiService
   ) {}
 

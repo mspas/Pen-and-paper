@@ -5,7 +5,6 @@ import { MyFriendsComponent } from "./activity/my-friends/my-friends.component";
 import { MyGamesComponent } from "./activity/my-games/my-games.component";
 import { MyMessagesComponent } from "./activity/my-messages/my-messages.component";
 import { AccountSettingsComponent } from "./activity/account-settings/account-settings.component";
-import { ActivityResolve } from "./activity.resolve.service";
 
 @NgModule({
   declarations: [
@@ -16,6 +15,6 @@ import { ActivityResolve } from "./activity.resolve.service";
     AccountSettingsComponent,
   ],
   imports: [CommonModule],
-  providers: [ActivityResolve],
+  providers: [],
 })
 export class ActivityModule {}

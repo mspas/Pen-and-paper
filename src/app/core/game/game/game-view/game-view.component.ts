@@ -10,6 +10,7 @@ import { GameToPersonCreateModel } from "src/app/core/models/game-to-person.mode
 import { NgForm } from "@angular/forms";
 import { SkillCreateModel } from "src/app/core/models/skill.model";
 import { ButtonManager } from "../../button-manager";
+import { DataService } from "src/app/core/services/data.service";
 
 @Component({
   selector: "app-game-view",
@@ -26,12 +27,9 @@ export class GameViewComponent implements OnInit {
   @Input() waitingSelfRequested: PersonalDataListModel[];
   @Input() waitingInvited: PersonalDataListModel[];
 
-  gameImageAssets = new Map([
-    ["Mafia", "assets/mafia1.png"],
-    ["Fantasy", "assets/fantasy1.png"],
-    ["SciFi", "assets/scifi.png"]
-  ])
+  gameImageAssets = new Map()
   imageUrl: string = "";
+  gameCategories: any[] = [];
 
   imageToShow: any;
   isImageLoading: boolean;
@@ -54,9 +52,15 @@ export class GameViewComponent implements OnInit {
 
   constructor(
     private _api: ApiService,
+    private _data: DataService
   ) {}
 
   ngOnInit() {
+    let categories = this._data.getGameCategories();
+    categories.forEach(category => {
+      this.gameImageAssets.set(category.name, category.urlImage);
+    });
+
     this.buttonManager = new ButtonManager();
     
     this.prepareGameConstantDetails(this.gameData);

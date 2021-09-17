@@ -3,20 +3,20 @@
     ><img src="assets/logo.png" alt="Logo"
   /></a>
     <ul class="navbar-collapse">
-      <li class="link" [routerLink]="['/search-game/search']">
-        <span>JOIN GAME</span>
+      <li class="link">
+        <a role="button" [routerLink]="['/search-game']">JOIN GAME</a>
       </li>
-      <li class="link" [routerLink]="['/create-game']">
-        <span>CREATE GAME</span>
+      <li class="link">
+        <a role="button" [routerLink]="['/create-game']" >CREATE GAME</a>
       </li>
-      <li class="link" [routerLink]="['/search-profile/search']">
-        <span>FIND PLAYERS</span>
+      <li class="link">
+        <a role="button" [routerLink]="['/search-profile']" [queryParams]="{value: '..'}">FIND PLAYERS</a>
       </li>
-      <li class="link" [routerLink]="['/sign-in']" *ngIf="!isLoggedIn">
-        <span>SIGN IN</span>
+      <li class="link" *ngIf="!isLoggedIn">
+        <a role="button" [routerLink]="['/sign-in']">SIGN IN</a>
       </li>
-      <li class="link" [routerLink]="['/sign-up']" *ngIf="!isLoggedIn">
-        <span>SIGN UP</span>
+      <li class="link" *ngIf="!isLoggedIn">
+        <a role="button" [routerLink]="['/sign-up']">SIGN UP</a>
       </li>
       <li #accountDropdown class="link dropdown-link" *ngIf="isLoggedIn">
           <div id="accountDropdown">
@@ -63,8 +63,8 @@
       <fa-icon class="toggle-icon" *ngIf="dropIsDown" [icon]="faTimes"></fa-icon>
     </button>
     <ul *ngIf="dropIsDown" class="navbar-collapse">
-      <li class="link" [routerLink]="['/search-game/search']">
-        <span>JOIN GAME</span>
+      <li class="link">
+        <a role="button" [routerLink]="['/search-game']" [queryParams]="{value: '...'}">JOIN GAME</a>
       </li>
       <li class="link" [routerLink]="['/create-game']">
         <span>CREATE GAME</span>

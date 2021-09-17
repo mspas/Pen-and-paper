@@ -53,42 +53,6 @@ export class ApiService {
     );
   }
 
-  getAllDataProfile(
-    profileLogin: string,
-    loggedLogin: string
-  ): Observable<any> {
-    if (loggedLogin != null && profileLogin != null) {
-      let myProfile = this._http.get<PersonalDataModel[]>(
-        this.url + "pdata/search/" + loggedLogin
-      );
-      let myFriendsList = this._http.get<FriendModel[]>(
-        this.url + "Friend/" + loggedLogin
-      );
-      let myGamesList = this._http.get<GameToPersonAppModel[]>(
-        this.url + "GameToPerson/" + loggedLogin
-      );
-
-      let profile = this._http.get<PersonalDataModel[]>(
-        this.url + "pdata/search/" + profileLogin
-      );
-      let friendsList = this._http.get<FriendModel[]>(
-        this.url + "Friend/" + profileLogin
-      );
-      let gamesList = this._http.get<GameToPersonAppModel[]>(
-        this.url + "GameToPerson/" + profileLogin
-      );
-
-      return observableForkJoin([
-        myProfile,
-        myFriendsList,
-        myGamesList,
-        profile,
-        friendsList,
-        gamesList,
-      ]);
-    }
-  }
-
   getGame(gameId: number): Observable<GameAppModel> {
     return this._http.get<GameAppModel>(`${this.url}/Game/${gameId}`);
   }
@@ -129,16 +93,6 @@ export class ApiService {
     return this._http.get<any>(`${this.url}/MessageForum`, {
       params: params,
     });
-  }
-
-  getTopicData(topicId: number) {
-    return this._http.get<TopicModel>(
-      this.url +
-        "/Topic/" +
-        localStorage.getItem("id").toString() +
-        "/" +
-        topicId.toString()
-    );
   }
 
   getConversation(relationId: number) {
@@ -198,7 +152,6 @@ export class ApiService {
   }
 
   createTopic(topic: NewTopicModel): Observable<TopicModel>  {
-    console.log(topic)
     return this._http
       .post<TopicModel>(this.url + "/Topic", topic);
   }
@@ -214,12 +167,8 @@ export class ApiService {
       .post<any>(this.url + "/MessageForum", msg);
   }
 
-  searchGames(value: string): Observable<GameAppModel[]> {
-    return this._http.get<GameAppModel[]>(this.url + "/Game/search/" + value);
-  }
-
-  searchForGames(value: string): Observable<GameAppModel[]> {
-    return this._http.get<GameAppModel[]>(this.url + "/Game/search/" + value);
+  searchGames(params: any): Observable<any> {
+    return this._http.get<any>(`${this.url}/Game/search`, {params: params});
   }
 
   searchFriend(value: string): Observable<PersonalDataModel[]> {

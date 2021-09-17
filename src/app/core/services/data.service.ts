@@ -32,64 +32,48 @@ export class DataService {
   });
   private notificationData = new BehaviorSubject<NotificationAppModel>(null);
 
-  private pageSizeForum = 2;
+  private pageSizeForum = 10;
 
   private gameCategories: any[] = [
     {
       name: "Fantasy",
-      checked: false,
       urlImage: "assets/fantasy1.png",
-      className: "category-name text-default",
     },
     {
       name: "SciFi",
-      checked: false,
       urlImage: "assets/scifi.png",
-      className: "category-name text-default",
     },
     {
       name: "Mafia",
-      checked: false,
       urlImage: "assets/mafia1.png",
-      className: "category-name text-default",
     },
     {
       name: "Cyberpunk",
-      checked: false,
       urlImage: "assets/fantasy1.png",
-      className: "category-name text-default",
     },
     {
       name: "Steampunk",
-      checked: false,
       urlImage: "assets/fantasy1.png",
-      className: "category-name text-default",
     },
     {
       name: "PostApo",
-      checked: false,
       urlImage: "assets/fantasy1.png",
-      className: "category-name text-default",
     },
     {
       name: "Zombie",
-      checked: false,
       urlImage: "assets/fantasy1.png",
-      className: "category-name text-default",
     },
     {
       name: "AltHistory",
-      checked: false,
       urlImage: "assets/fantasy1.png",
-      className: "category-name text-default",
     },
     {
       name: "Other",
-      checked: false,
       urlImage: "assets/fantasy1.png",
-      className: "category-name text-default",
     },
   ];
+
+  private forumCategories: any[] = ["General", "Game", "Support", "Off-topic"];
 
   currentFriends = this.friendsSource.asObservable();
   currentBPhoto = this.bPhotoSource.asObservable();
@@ -109,6 +93,10 @@ export class DataService {
 
   getGameCategories() {
     return this.gameCategories;
+  }
+
+  getForumCategories() {
+    return this.forumCategories;
   }
 
   changeFriends(friends: FriendModel[]) {

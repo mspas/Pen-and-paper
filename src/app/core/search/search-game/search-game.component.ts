@@ -14,18 +14,16 @@ export class SearchGameComponent implements OnInit {
   gameCategories: any[] = [];
   statusOfGame: string[] = ["Active", "Ongoing", "Ended"];
 
-  urlMafia: string = "assets/mafia1.png";
-  urlFantasy: string = "assets/fantasy1.png";
-  urlSciFi: string = "assets/scifi.png";
   imageUrl: string = "";
 
   isLoading = true;
   foundData: GameAppModel[] = [];
   foundGames: GameListModel[] = [];
+  allCategoriesChecked: boolean = true;
   wasSearched: boolean = false;
-  join: boolean;
-  end: boolean;
+  availableFlag: boolean = false;
   isImageLoading: boolean;
+  pageSize: number = 50;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,12 +33,26 @@ export class SearchGameComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.gameCategories = this._data.getGameCategories();
-    this.route.data.subscribe((profiledata: { profiledata: any }) => {
-      this.foundData = profiledata.profiledata;
+    this.pageSize = this._data.getPageSizeForum();
+    let categories = this._data.getGameCategories();
+    categories.forEach(category => {
+      this.gameCategories.push({
+        name: category.name,
+        urlImage: category.urlImage,
+        checked: false
+      });
     });
-    this.prepareData(this.foundData);
 
+    this.route.queryParams.subscribe((params) => {
+      let query = { ...params.keys, ...params };
+      console.log(query)
+
+      if (Object.keys(query).length > 0)
+        this._api.searchGames(query).subscribe((data) => {
+          this.foundData = data.gamesResult;
+          this.prepareData(data.gamesResult);
+        });
+    });
     /*this.gameCategories = this._data.getGameCategories();
     this.route.params.subscribe((params) => {
       this.isLoading = true;
@@ -53,12 +65,11 @@ export class SearchGameComponent implements OnInit {
     });*/
   }
 
-  prepareData(data) {
-    this.foundData = data;
+  prepareData(responseGames) {
     this.foundGames = [];
     let i = 0;
     let j = 0;
-    this.foundData.forEach((game) => {
+    responseGames.forEach((game) => {
       const foundGame = new GameListModel(game, false, null, null);
       this.foundGames.push(foundGame);
       if (game.photoName != null && game.photoName != "unknown.png") {
@@ -79,7 +90,7 @@ export class SearchGameComponent implements OnInit {
     });
 
     let index2 = 0;
-    this.foundData.forEach((game) => {
+    responseGames.forEach((game) => {
       if (
         game.gameMaster.photoName != null &&
         game.photoName != "unknown.png"
@@ -127,48 +138,40 @@ export class SearchGameComponent implements OnInit {
     });
   }
 
-  onBoxJoin(value: boolean) {
-    this.join = value;
-    this.end = false;
-  }
-  onBoxEnd(value: boolean) {
-    this.end = value;
+  onBoxAvaliable(value: boolean) {
+    this.availableFlag = value;
   }
 
   categoryClick(index: number) {
-    const checked = !this.gameCategories[index].checked;
-    this.gameCategories[index].checked = checked;
-    if (checked)
-      document
-        .getElementById("category" + index.toString())
-        .setAttribute("class", "category-name text-default focus");
-    else
-      document
-        .getElementById("category" + index.toString())
-        .setAttribute("class", "category-name text-default");
+    if (index === -1) {
+      this.uncheckAllCategories();
+      this.allCategoriesChecked = true;
+      return true;
+    }
+    this.allCategoriesChecked = false;
+    this.gameCategories[index].checked = !this.gameCategories[index].checked;
+  }
+
+  uncheckAllCategories() {
+    this.gameCategories.forEach(category => {
+      category.checked = false;
+    });
   }
 
   async onSearch(form: NgForm) {
-    let searchValue = "";
-
-    let title = form.value.title;
-    if (title.length > 0) searchValue += title;
-    searchValue += ".";
-    console.log(searchValue);
-
+    let selectedCategories = [];
     this.gameCategories.forEach((category) => {
-      if (category.checked) searchValue += category.name + "&";
+      if (category.checked) selectedCategories.push(category.name);
     });
-    if (searchValue.length > 1) searchValue = searchValue.slice(0, -1);
-    searchValue += ".";
 
-    if (this.join) searchValue += "Yes.";
-    else searchValue += "No.";
-
-    if (this.end) searchValue += "Yes";
-    else searchValue += "No";
-
-    var res = await this.router.navigate(["search-game/" + searchValue]);
-    window.location.reload();
+    let params = {
+      title: form.value.title,
+      categories: JSON.stringify(selectedCategories),
+      showOnlyAvailable: this.availableFlag,
+      pageSize: this.pageSize,
+      pageNumber: 1,
+    }
+    
+    this.router.navigate(["search-game"], { queryParams: params });
   }
 }

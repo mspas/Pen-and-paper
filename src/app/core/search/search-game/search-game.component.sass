@@ -4,61 +4,80 @@
 .container
     .filters
         position: relative
-        width: 100%
         padding: 25px 25px 15px 25px
         background-color: rgba(255, 255, 255, 0.274)
         border-radius: 25px
-        .categories
-            text-align: center
-            margin-bottom: 20px
-            .category-name
-                display: inline-block !important
-                margin-right: 20px
-                cursor: pointer
-            .category-name:hover
-                color: tomato
-            .focus
-                color: tomato
-        .checkbox
-            position: relative
-            label
-                font-size: 15px
-                input
-                    position: absolute
-                    left: 0
-                    bottom: 10px
-                    width: 18px
-                    height: 18px
-                span
-                    position: absolute
-                    left: 25px
-                    bottom: 8px
-        #btn-search
-            position: absolute
-            bottom: 20px
-            right: 25px
+        .input-group
+            margin-top: 20px
+            .categories
+                text-align: center
+                margin: 10px 0
+                .category-name
+                    display: inline-block !important
+                    margin-right: 20px
+                    cursor: pointer
+                .category-name:hover
+                    color: tomato
+                .focus
+                    color: tomato
+                label
+                    font-size: 15px
+                    input
+                        position: absolute
+                        left: 0
+                        bottom: 10px
+                        width: 18px
+                        height: 18px
+                    span
+                        position: absolute
+                        left: 25px
+                        bottom: 8px
+        .two-sided
+            display: grid
+            grid-template-columns: 1fr 1fr
+            @media screen and ( max-width: 430px )
+                display: block
+            .right-side
+                @media screen and ( max-width: 430px )
+                    display: block
+                button
+                    float: right
+                    @media screen and ( max-width: 430px )
+                        float: none
+            .left-side
+                @media screen and ( max-width: 430px )
+                    display: block
     .results
-        margin-top: 50px 
+        margin-top: 50px
         padding: 35px
         @include primary-container()
         @include background-opacity($lightWhite, 0.7)
         .media
-            background-color: rgba(255, 255, 255, 0.274)
+            display: grid
+            grid-template-columns: 1fr 10fr
             border-radius: 20px
             margin-top: 30px
             padding: 15px 5% 15px 10px
+            @include background-opacity($lightWhite, 0.8)
             .media-left
-                padding-right: 20px
-                img 
+                display: flex
+                padding: 10px 0px
+                align-items: center
+                justify-content: center
+                img
                     width: 60px
             .media-body
                 .media-heading
+                    display: grid
+                    grid-template-columns: 4fr 1fr
+                    font-weight: bold
+                    .game-name
+                        text-align: center
                     .game-players
-                        float: right
+                        text-align: right
                 .game-master
                     display: flex
+                    justify-content: flex-end
                     align-items: center
-                    margin-top: 20px
-                    margin-bottom: 10px
                 .game-description
                     text-align: justify

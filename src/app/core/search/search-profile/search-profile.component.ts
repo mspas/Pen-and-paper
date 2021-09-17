@@ -25,39 +25,43 @@ export class SearchProfileComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.route.data.subscribe((profiledata: { profiledata: any }) => {
-      this.foundData = profiledata.profiledata;
-    });
+  ngOnInit() {  
+    this.route.queryParams.subscribe((params) => {
+      let query = { ...params.keys, ...params };
 
-    if (this.foundData != null) {
-      this.wasSearched = true;
-      this.foundData.forEach((element) => {
-        this.profilePhotoList.push(new PersonalDataListModel(element, null));
-      });
+      this._api.searchFriend(query.value).subscribe((data) => {
+        this.foundData = data;
+        
+        if (this.foundData != null) {
+          this.wasSearched = true;
+          this.foundData.forEach((element) => {
+            this.profilePhotoList.push(new PersonalDataListModel(element, null));
+          });
 
-      this.profilePhotoList.forEach((element) => {
-        if (
-          element.data.photoName != null &&
-          element.data.photoName != "unknown.png"
-        ) {
-          this.isImageLoading = true;
-          this._api.getImage(element.data.photoName).subscribe(
-            (data) => {
-              this.createImageFromBlob(
-                data,
-                this.profilePhotoList.indexOf(element)
+          this.profilePhotoList.forEach((element) => {
+            if (
+              element.data.photoName != null &&
+              element.data.photoName != "unknown.png"
+            ) {
+              this.isImageLoading = true;
+              this._api.getImage(element.data.photoName).subscribe(
+                (data) => {
+                  this.createImageFromBlob(
+                    data,
+                    this.profilePhotoList.indexOf(element)
+                  );
+                  this.isImageLoading = false;
+                },
+                (error) => {
+                  this.isImageLoading = false;
+                  console.log(error);
+                }
               );
-              this.isImageLoading = false;
-            },
-            (error) => {
-              this.isImageLoading = false;
-              console.log(error);
             }
-          );
+          });
         }
       });
-    }
+    });
   }
 
   createImageFromBlob(image: Blob, id: number) {

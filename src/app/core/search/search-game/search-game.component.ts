@@ -16,7 +16,7 @@ export class SearchGameComponent implements OnInit {
 
   imageUrl: string = "";
 
-  isLoading = true;
+  isLoading = false;
   foundData: GameAppModel[] = [];
   foundGames: GameListModel[] = [];
   allCategoriesChecked: boolean = true;
@@ -49,27 +49,17 @@ export class SearchGameComponent implements OnInit {
 
       if (Object.keys(query).length > 0)
         this._api.searchGames(query).subscribe((data) => {
+          this.isLoading = true;
           this.foundData = data.gamesResult;
           this.prepareData(data.gamesResult);
         });
     });
-    /*this.gameCategories = this._data.getGameCategories();
-    this.route.params.subscribe((params) => {
-      this.isLoading = true;
-      let searchValue = params["searchValue"] ? params["searchValue"] : "...";
-      if (searchValue) {
-        this._api.searchGames(searchValue).subscribe((date) => {
-          
-        })
-      }
-    });*/
   }
 
   prepareData(responseGames) {
     this.foundGames = [];
-    let i = 0;
-    let j = 0;
-    responseGames.forEach((game) => {
+    for (let i = 0; i < responseGames.length; i++) {
+      const game = responseGames[i];
       const foundGame = new GameListModel(game, false, null, null);
       this.foundGames.push(foundGame);
       if (game.photoName != null && game.photoName != "unknown.png") {
@@ -78,19 +68,14 @@ export class SearchGameComponent implements OnInit {
           (data) => {
             this.createImageFromBlob(data, i, false);
             this.isImageLoading = false;
-            i++;
           },
           (error) => {
             this.isImageLoading = false;
             console.log(error);
           }
         );
-      } else this.setDefaultImage(j);
-      j++;
-    });
-
-    let index2 = 0;
-    responseGames.forEach((game) => {
+      } else this.setDefaultImage(i);
+      
       if (
         game.gameMaster.photoName != null &&
         game.photoName != "unknown.png"
@@ -98,9 +83,8 @@ export class SearchGameComponent implements OnInit {
         this.isImageLoading = true;
         this._api.getImage(game.gameMaster.photoName).subscribe(
           (data) => {
-            this.createImageFromBlob(data, index2, true);
+            this.createImageFromBlob(data, i, true);
             this.isImageLoading = false;
-            index2++;
           },
           (error) => {
             this.isImageLoading = false;
@@ -108,7 +92,9 @@ export class SearchGameComponent implements OnInit {
           }
         );
       }
-    });
+
+      if (i === responseGames.length - 1) this.isLoading = false;
+    }
   }
 
   createImageFromBlob(image: Blob, index: number, photoGM: boolean) {
@@ -117,9 +103,7 @@ export class SearchGameComponent implements OnInit {
       "load",
       () => {
         if (!photoGM) this.foundGames[index].photo = reader.result;
-        else {
-          this.foundGames[index].photoGM = reader.result;
-        }
+        else this.foundGames[index].photoGM = reader.result;
       },
       false
     );

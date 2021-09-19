@@ -1,0 +1,36 @@
+@import '../../../../_mixins'
+
+.results
+    margin-top: 50px
+    padding: 35px
+    @include primary-container()
+    @include background-opacity($lightWhite, 0.7)
+    .media
+        display: grid
+        grid-template-columns: 1fr 10fr
+        border-radius: 20px
+        margin-top: 30px
+        padding: 15px 5% 15px 10px
+        @include background-opacity($lightWhite, 0.8)
+        .media-left
+            display: flex
+            padding: 10px 0px
+            align-items: center
+            justify-content: center
+            img
+                width: 60px
+        .media-body
+            .media-heading
+                display: grid
+                grid-template-columns: 4fr 1fr
+                font-weight: bold
+                .game-name
+                    text-align: center
+                .game-players
+                    text-align: right
+            .game-master
+                display: flex
+                justify-content: flex-end
+                align-items: center
+            .game-description
+                text-align: justify

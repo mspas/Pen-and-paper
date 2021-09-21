@@ -10,7 +10,7 @@
         <a role="button" [routerLink]="['/create-game']" >CREATE GAME</a>
       </li>
       <li class="link">
-        <a role="button" [routerLink]="['/search-profile']" [queryParams]="{value: '..'}">FIND PLAYERS</a>
+        <a role="button" [routerLink]="['/search-profile']">FIND PLAYERS</a>
       </li>
       <li class="link" *ngIf="!isLoggedIn">
         <a role="button" [routerLink]="['/sign-in']">SIGN IN</a>
@@ -64,26 +64,26 @@
     </button>
     <ul *ngIf="dropIsDown" class="navbar-collapse">
       <li class="link">
-        <a role="button" [routerLink]="['/search-game']" [queryParams]="{value: '...'}">JOIN GAME</a>
+        <a role="button" [routerLink]="['/search-game']" (click)="showNavbarMobile()">JOIN GAME</a>
       </li>
-      <li class="link" [routerLink]="['/create-game']">
+      <li class="link" [routerLink]="['/create-game']" (click)="showNavbarMobile()">
         <span>CREATE GAME</span>
       </li>
-      <li class="link" [routerLink]="['/search-profile/search']">
+      <li class="link" [routerLink]="['/search-profile']" (click)="showNavbarMobile()">
         <span>FIND PLAYERS</span>
       </li>
-      <li class="link" [routerLink]="['/sign-in']" *ngIf="!isLoggedIn">
+      <li class="link" [routerLink]="['/sign-in']" *ngIf="!isLoggedIn" (click)="showNavbarMobile()">
         <span>SIGN IN</span>
       </li>
-      <li class="link" [routerLink]="['/sign-up']" *ngIf="!isLoggedIn">
+      <li class="link" [routerLink]="['/sign-up']" *ngIf="!isLoggedIn" (click)="showNavbarMobile()">
         <span>SIGN UP</span>
       </li>
       <li class="link dropdown-link" *ngIf="isLoggedIn">
-          <div id="accountDropdown">
+          <div id="accountDropdown" (click)="collapseMyAccountDropdown()">
             MY ACCOUNT ▼
             <span *ngIf="checkActiveNotifications()">(!)</span>
           </div>
-          <ul class="dropdown-list" id="dropdown-menu" #dropdownMenu>
+          <ul *ngIf="collapsedMyAccount" class="dropdown-list" id="dropdown-menu" #dropdownMenu>
             <li class="dropdown-link" (click)="goToMyProfile()">
               <span>My Profile</span>
             </li>

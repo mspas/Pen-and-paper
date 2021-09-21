@@ -1,61 +1,64 @@
-<div *ngIf="!isLoading" class="results">
-    <p class="text-default" style="font-size: 20px; text-align: right">
+<div class="results">
+    <p class="text-default" style="font-size: 20px; text-align: right;">
         Search results:
     </p>
-    <div *ngFor="let game of foundGames; let i = index">
-        <div class="media">
-            <div class="media-left">
-                <a href="/game/{{ game.data.id }}">
-                <img
-                    *ngIf="game.defaultImage"
-                    src="{{ game.photo }}"
-                    class="media-object"
-                />
-                <img
-                    *ngIf="!game.defaultImage"
-                    [src]="game.photo"
-                    class="media-object"
-                />
-                </a>
-            </div>
-            <div class="media-body">
-                <div class="media-heading">
-                    <div class="game-name">
-                        <a [routerLink]="['/game']" [queryParams]="{gameId: game.data.id}">{{ game.data.title }}</a>
-                        <span style="margin-left: 25px">- {{ game.data.category }} -</span>
-                    </div>
-                    <div class="game-players">
-                        <span class="text-default">
-                        Players: {{ game.data.nofparticipants }} /
-                        {{ game.data.maxplayers }}
-                        </span>
-                    </div>
-                </div>
-                <div class="game-master">
-                    <a
-                        class="profile-link"
-                        role="button"
-                        [routerLink]="['/profile', game.data.gameMaster.login]"
-                    >
-                        <img
-                            *ngIf="game.photoGM"
-                            [src]="game.photoGM"
-                            class="media-object"
-                        />
-                        <img
-                            *ngIf="!game.photoGM"
-                            src="/assets/unknown.png"
-                            class="media-object"
-                        />
-                        <span class="name">{{ game.data.gameMaster.firstname }}
-                        {{ game.data.gameMaster.lastname }} ({{
-                        game.data.gameMaster.login
-                        }})</span>
+    <div *ngIf="!isLoading">
+        <div *ngFor="let game of foundGames; let i = index">
+            <div class="media">
+                <div class="media-left">
+                    <a href="/game/{{ game.data.id }}">
+                    <img
+                        *ngIf="game.defaultImage"
+                        src="{{ game.photo }}"
+                        class="media-object"
+                    />
+                    <img
+                        *ngIf="!game.defaultImage"
+                        [src]="game.photo"
+                        class="media-object"
+                    />
                     </a>
                 </div>
-                <p class="game-description">{{ game.data.description }}</p>
+                <div class="media-body">
+                    <div class="media-heading">
+                        <div class="game-name">
+                            <a [routerLink]="['/game']" [queryParams]="{gameId: game.data.id}">{{ game.data.title }}</a>
+                            <span style="margin-left: 25px">- {{ game.data.category }} -</span>
+                        </div>
+                        <div class="game-players">
+                            <span class="text-default">
+                            Players: {{ game.data.nofparticipants }} /
+                            {{ game.data.maxplayers }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="game-master">
+                        <a
+                            class="profile-link"
+                            role="button"
+                            [routerLink]="['/profile', game.data.gameMaster.login]"
+                        >
+                            <img
+                                *ngIf="game.photoGM"
+                                [src]="game.photoGM"
+                                class="media-object"
+                            />
+                            <img
+                                *ngIf="!game.photoGM"
+                                src="/assets/unknown.png"
+                                class="media-object"
+                            />
+                            <span class="name">{{ game.data.gameMaster.firstname }}
+                            {{ game.data.gameMaster.lastname }} ({{
+                            game.data.gameMaster.login
+                            }})</span>
+                        </a>
+                    </div>
+                    <p class="game-description">{{ game.data.description }}</p>
+                </div>
             </div>
         </div>
     </div>
+    <p *ngIf="isLoading" style="text-align: center;">Loading...</p>
+    <p *ngIf="!isLoading && foundGames.length < 1" style="text-align: center;">No results!</p>
 </div>
-<div *ngIf="isLoading" class="results">Loading...</div>

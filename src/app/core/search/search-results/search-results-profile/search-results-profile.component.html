@@ -1,1 +1,46 @@
-<p>search-results-profile works!</p>
+<div class="results">
+    <p class="text-default" style="font-size: 20px; text-align: right;">
+        Search results:
+    </p>
+    <table *ngIf="!isLoading">
+        <colgroup>
+            <col span="1" style="width: 40%;">
+            <col span="1" style="width: 60%;">
+        </colgroup>
+        <tbody>
+            <tr *ngFor="let player of foundProfiles">
+                <td>
+                    <a
+                        class="profile-link"
+                        role="button"
+                        [routerLink]="['/profile', player.data.login]"
+                    >
+                        <img
+                            *ngIf="player.photo"
+                            [src]="player.photo"
+                            alt="Profile image"
+                        />
+                        <img
+                            *ngIf="player.photo == null"
+                            src="assets/unknown.png"
+                            alt="Profile image"
+                        />
+                    </a>
+                </td>
+                <td class="profile-name">
+                    <a
+                        class="profile-link"
+                        role="button"
+                        [routerLink]="['/profile', player.data.login]"
+                    >
+                        <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
+                            player.data.login
+                        }})</span>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p *ngIf="isLoading" style="text-align: center;">Loading...</p>
+    <p *ngIf="!isLoading && foundProfiles.length < 1" style="text-align: center;">No results!</p>
+</div>

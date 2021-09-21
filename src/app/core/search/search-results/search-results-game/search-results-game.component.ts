@@ -8,7 +8,7 @@ import { GameListModel } from 'src/app/core/models/game.model';
 })
 export class SearchResultsGameComponent implements OnInit {
   @Input() foundGames: GameListModel[];
-  @Input() isLoading: GameListModel[];
+  @Input() isLoading: boolean;
 
   constructor() { }
 

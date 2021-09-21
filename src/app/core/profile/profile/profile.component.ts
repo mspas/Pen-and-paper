@@ -74,6 +74,7 @@ export class ProfileComponent implements OnInit {
                 this.isFriendFlag = false;
                 this.isInvitedFlag = true;
               }
+              console.log(this.isFriendFlag, this.isInvitedFlag)
               this.ourRelation = fr;
             }
           });

@@ -1,1 +1,29 @@
 @import '../search-results'
+
+.results
+    table
+        width: 60%
+        margin: 10px auto 30px auto
+        text-align: center
+        border-collapse: collapse
+        overflow-x: auto
+        thead
+            font-size: 0.8em
+        tbody
+            tr
+                line-height: 2em
+                border-bottom: 1px solid #d8d8d8
+                &:last-child
+                    border: none
+                td
+                    padding-top: 10px
+                    img
+                        width: 100px
+                        height: 100px
+                        @media screen and (max-width: 300px)
+                            width: 50px
+                            height: 50px
+                    .profile-name
+                        text-align: left
+            .profile-link
+                display: inline-block

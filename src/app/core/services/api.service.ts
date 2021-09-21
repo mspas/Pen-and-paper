@@ -171,10 +171,8 @@ export class ApiService {
     return this._http.get<any>(`${this.url}/Game/search`, {params: params});
   }
 
-  searchFriend(value: string): Observable<PersonalDataModel[]> {
-    return this._http.get<PersonalDataModel[]>(
-      this.url + "/pdata/search/" + value
-    );
+  searchProfiles(params: any): Observable<any> {
+    return this._http.get<any>(`${this.url}/pdata/search`, {params: params});
   }
 
   getPostImages(fileName: string): Observable<Blob> {

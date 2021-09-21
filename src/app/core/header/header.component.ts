@@ -17,6 +17,7 @@ import { CheckNotificationModel } from "../models/notification.model";
 export class HeaderComponent implements OnInit {
   private isLoggedIn: boolean;
   private dropIsDown: boolean = false;
+  private collapsedMyAccount: boolean = false;
   private auth: AuthService;
   private timerSubscription: any;
   private newNotificationSet: CheckNotificationModel;
@@ -52,6 +53,11 @@ export class HeaderComponent implements OnInit {
 
   showNavbarMobile() {
     this.dropIsDown = !this.dropIsDown;
+    this.collapsedMyAccount = false;
+  }
+
+  collapseMyAccountDropdown() {
+    this.collapsedMyAccount = !this.collapsedMyAccount;
   }
 
   onLogout() {
@@ -59,6 +65,8 @@ export class HeaderComponent implements OnInit {
   }
 
   goToMyProfile() {
+    this.dropIsDown = false;
+    this.collapsedMyAccount = false;
     this.router.navigate(["/profile", localStorage.getItem("nick")]);
   }
 

@@ -45,12 +45,13 @@ export class SearchGameComponent implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       let query = { ...params.keys, ...params };
-      console.log(query)
 
       if (Object.keys(query).length > 0)
         this._api.searchGames(query).subscribe((data) => {
           this.isLoading = true;
           this.foundData = data.gamesResult;
+          if (this.foundData.length < 1) this.isLoading = false;
+          
           this.prepareData(data.gamesResult);
         });
     });
@@ -60,8 +61,8 @@ export class SearchGameComponent implements OnInit {
     this.foundGames = [];
     for (let i = 0; i < responseGames.length; i++) {
       const game = responseGames[i];
-      const foundGame = new GameListModel(game, false, null, null);
-      this.foundGames.push(foundGame);
+      this.foundGames.push(new GameListModel(game, false, null, null));
+      
       if (game.photoName != null && game.photoName != "unknown.png") {
         this.isImageLoading = true;
         this._api.getImage(game.photoName).subscribe(
@@ -150,7 +151,7 @@ export class SearchGameComponent implements OnInit {
 
     let params = {
       title: form.value.title,
-      categories: JSON.stringify(selectedCategories),
+      selectedCategories: JSON.stringify(selectedCategories),
       showOnlyAvailable: this.availableFlag,
       pageSize: this.pageSize,
       pageNumber: 1,

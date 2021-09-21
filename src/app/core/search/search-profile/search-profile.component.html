@@ -1,81 +1,46 @@
-<div class="container">
-  <h1 style="font-size: 26px;">
-    Who are you looking for? (use at least one input below)
-  </h1>
-  <div class="form-group">
-    <form class="row" (ngSubmit)="onSearch(f)" #f="ngForm">
-      <div class="col">
+<div class="container">  
+  <p class="text-default" style="font-size: 20px; text-align: right">
+    Who are you looking for?
+  </p>
+  <div class="filters">
+    <form (ngSubmit)="onSearch(f)" #f="ngForm">
+      <div class="input-group">
         <label for="firstname">First name</label>
         <input
           type="text"
+          class="form-control"
           id="firstname"
           name="firstname"
-          placeholder="First name"
-          style="font-size: 19px;"
           ngModel
-          class="form-control input-lg"
         />
       </div>
-
-      <div class="col">
+      <div class="input-group">
         <label for="lastname">Last name</label>
         <input
           type="lastname"
+          class="form-control"
           id="lastname"
           name="lastname"
-          placeholder="Last name"
-          style="font-size: 19px;"
           ngModel
-          class="form-control input-lg"
         />
       </div>
-
-      <div class="col">
+      <div class="input-group">
         <label for="login">Nickname</label>
         <input
           type="login"
+          class="form-control"
           id="login"
           name="login"
-          placeholder="Nickname"
-          style="font-size: 19px;"
           ngModel
-          class="form-control input-lg"
         />
       </div>
-      <div class="col" style="padding-top: 6px;">
-        <label for="login"></label>
-        <button class="btn btn-forum btn-green" id="btn-search" type="submit">
-          <img class="btn-ico" src="assets/plus.png" />SEARCH
+      <div class="input-group btn-wrap">
+        <button class="btn-forum btn-green" id="btn-search" type="submit">
+          SEARCH
         </button>
       </div>
     </form>
   </div>
-  <div class="results">
-    <p class="text-default" style="font-size: 20px; text-align: right;">
-      Search results:
-    </p>
-    <ul>
-      <li *ngFor="let profile of profilePhotoList; let i = index">
-        <p style="display: flex; align-items: center; margin-top: 20px;">
-          <a
-            class="profile-link"
-            role="button"
-            [routerLink]="['/profile', profile.data.login]"
-          >
-            <img
-              *ngIf="profile.photo"
-              [src]="profile.photo"
-              class="media-object"
-            />
-            <img
-              *ngIf="!profile.photo"
-              src="/assets/unknown.png"
-              class="media-object"
-            />
-            <span class="name">{{ profile.data.firstname }} {{ profile.data.lastname }} ({{ profile.data.login }})</span>
-          </a>
-        </p>
-      </li>
-    </ul>
-  </div>
 </div>
+
+<app-search-results-profile [isLoading]="isLoading" [foundProfiles]="foundProfiles"></app-search-results-profile>

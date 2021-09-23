@@ -20,7 +20,6 @@ export class SearchGameComponent implements OnInit {
   foundData: GameAppModel[] = [];
   foundGames: GameListModel[] = [];
   allCategoriesChecked: boolean = true;
-  wasSearched: boolean = false;
   availableFlag: boolean = false;
   isImageLoading: boolean;
   pageSize: number = 50;

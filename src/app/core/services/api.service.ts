@@ -201,10 +201,8 @@ export class ApiService {
       .subscribe((error) => console.log(error));
   }
 
-  createGameDB(game: GameCreateModel) {
-    this._http
-      .post(this.url + "/Game", game)
-      .subscribe((data: number) => this._data.changeNewGameId(data));
+  createGame(game: GameCreateModel): Observable<any> {
+    return this._http.post(`${this.url}/Game`, game);
   }
 
   getAllGames(): Observable<GameAppModel[]> {

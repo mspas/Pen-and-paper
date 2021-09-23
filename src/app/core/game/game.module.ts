@@ -12,6 +12,7 @@ import { CreateTopicComponent } from "./game/forum/create-topic/create-topic.com
 import { PostsComponent } from "./game/forum/topic/posts/posts.component";
 import { ReplyPostComponent } from "./game/forum/topic/reply-post/reply-post.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CreateGameComponent } from './create-game/create-game.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     CreateTopicComponent,
     PostsComponent,
     ReplyPostComponent,
+    CreateGameComponent,
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,7 @@ import { SearchProfileComponent } from "./core/search/search-profile/search-prof
 import { ActivityComponent } from "./core/activity/activity/activity.component";
 import { SignInComponent } from "./core/auth/sign-in/sign-in.component";
 import { SignUpComponent } from "./core/auth/sign-up/sign-up.component";
+import { CreateGameComponent } from "./core/game/create-game/create-game.component";
 
 const routes: Routes = [];
 
@@ -36,6 +37,10 @@ const routes: Routes = [];
       {
         path: "search-profile",
         component: SearchProfileComponent,
+      },
+      {
+        path: "create-game",
+        component: CreateGameComponent,
       },
       {
         path: "my-account/:value",

@@ -38,8 +38,7 @@ export class CreateTopicComponent implements OnInit {
 
   constructor(private _api: ApiService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   validateInput(form: NgForm, msg: string) {
     if (!form.value.title || !form.controls["access"].value || msg.length < 1) return false;

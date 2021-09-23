@@ -116,24 +116,20 @@ export class ApiService {
       .subscribe((error) => console.log(error));
   }
 
-  sendFriendInvite(idS: number, idR: number) {
-    let friendInvite = new FriendCreateModel(false, idS, idR);
-    this._http
-      .post(this.url + "/Friend/", friendInvite)
-      .subscribe((error) => console.log(error));
+  sendFriendInvite(friendInvite: FriendCreateModel): Observable<any> {
+    return this._http.post(`${this.url}/Friend/`, friendInvite);
   }
 
-  acceptFriendInvite(invite: FriendModel) {
-    console.log(invite.id);
-    this._http
-      .put<number>(this.url + "/Friend/" + invite.id.toString(), invite)
-      .subscribe((error) => console.log(error));
+  editRelation(invite: FriendModel): Observable<any> {
+    return this._http.put<FriendModel>(`${this.url}/Friend/${invite.id}`, invite);
   }
 
-  declineFriendInvite(inviteId: number) {
-    this._http
-      .delete(this.url + "/Friend/" + inviteId.toString())
-      .subscribe((error) => console.log(error));
+  acceptFriendInvite(friendRelation: FriendModel): Observable<any> {
+    return this._http.put<any>(`${this.url}/Friend/${friendRelation.id}`, friendRelation);
+  }
+
+  declineFriendInvite(relationId: number): Observable<any> {
+    return this._http.delete(`${this.url}/Friend/${relationId}`);
   }
 
   getNotificationData(id: number) {
@@ -195,35 +191,15 @@ export class ApiService {
     });
   }
 
-  editRelation(invite: FriendModel) {
-    this._http
-      .put<FriendModel>(this.url + "/Friend/" + invite.id.toString(), invite)
-      .subscribe((error) => console.log(error));
-  }
-
   createGame(game: GameCreateModel): Observable<any> {
     return this._http.post(`${this.url}/Game`, game);
   }
 
-  getAllGames(): Observable<GameAppModel[]> {
-    return this._http
-      .get<GameAppModel[]>(this.url + "/Game/search/")
-      .pipe(tap((data) => console.log("All: " + JSON.stringify(data))));
+  joinGame(g2p: GameToPersonCreateModel): Observable<any> {
+    return this._http.post(`${this.url}/GameToPerson`, g2p);
   }
 
-  getAllGamesToPerson(id: number): Observable<GameToPersonApiModel[]> {
-    return this._http
-      .get<GameToPersonApiModel[]>(this.url + "/GameToPerson/" + id.toString())
-      .pipe(tap((data) => console.log("All: " + JSON.stringify(data))));
-  }
-
-  joinGame(g2p: GameToPersonCreateModel) {
-    this._http
-      .post(this.url + "/GameToPerson", g2p)
-      .subscribe((data) => console.log(data));
-  }
-
-  acceptJoinGame(invite: GameToPersonAppModel) {
+  acceptJoinGame(invite: GameToPersonAppModel): Observable<any> {
     let accept = new GameToPersonApiModel(
       invite.id,
       invite.gameId,
@@ -233,18 +209,11 @@ export class ApiService {
       invite.isMadeByPlayer,
       invite.characterHealth
     );
-    this._http
-      .put<GameToPersonApiModel>(
-        this.url + "/GameToPerson/" + accept.id.toString(),
-        accept
-      )
-      .subscribe((error) => console.log(error));
+    return this._http.put<GameToPersonApiModel>(`${this.url}/GameToPerson/${accept.id}`, accept);
   }
 
-  declineJoinGame(inviteId: number) {
-    this._http
-      .delete(this.url + "/GameToPerson/" + inviteId.toString())
-      .subscribe((error) => console.log(error));
+  declineJoinGame(inviteId: number): Observable<any> {
+    return this._http.delete(`${this.url}/GameToPerson/${inviteId}`);
   }
 
   addSkill(skill: SkillCreateModel) {
@@ -291,6 +260,10 @@ export class ApiService {
         profile
       )
       .subscribe((error) => console.log(error));
+  }
+
+  editGameData(gameId: number, game: GameAppModel): Observable<any> {
+    return this._http.put<any>(`${this.url}/Game/${gameId}`, game);
   }
 
   editPassword(passwordData: ChangePasswordModel) {

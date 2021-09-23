@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
-import { FriendModel } from "src/app/core/models/friend.model";
+import { FriendCreateModel, FriendModel } from "src/app/core/models/friend.model";
 import { ConversationDataModel } from "src/app/core/models/message.model";
 
 import { ApiService } from "src/app/core/services/api.service";
@@ -35,12 +35,11 @@ export class ProfileComponent implements OnInit {
   showModalIndex = -1;
 
   myProfileData: PersonalDataModel;
-  myGamesAPPList: GameToPersonAppModel[] = [];
-  myFriends: FriendModel[] = [];
+  myRelationsList: FriendModel[] = [];
 
   userProfileData: PersonalDataModel;
+  userRelationsList: FriendModel[] = [];
   userGamesList: GameToPersonAppModel[] = [];
-  userFriendsList: FriendModel[] = [];
 
   ourRelation: FriendModel = null;
 
@@ -53,6 +52,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.isLoading = true;
+      let myNickname = localStorage.getItem("nick");
       let userNick = params["login"];
       this._api.getProfileData(userNick).subscribe((data) => {
         this.setProfileData(data);
@@ -62,10 +62,14 @@ export class ProfileComponent implements OnInit {
       this.isLoadingGames = true;
 
       this._api.getFriendsList(userNick).subscribe((data) => {
-        this.userFriendsList = data;
+        this.userRelationsList = data;
         this.isLoadingFriends = false;
-        if (this.myFriends != null) {
-          this.myFriends.forEach((fr) => {
+      });
+
+      this._api.getFriendsList(myNickname).subscribe((data) => {
+        this.myRelationsList = data;
+        if (this.myRelationsList != null) {
+          this.myRelationsList.forEach((fr) => {
             if (fr.personalData.id == this.userProfileData.id) {
               if (fr.isAccepted) {
                 this.isFriendFlag = true;
@@ -74,7 +78,6 @@ export class ProfileComponent implements OnInit {
                 this.isFriendFlag = false;
                 this.isInvitedFlag = true;
               }
-              console.log(this.isFriendFlag, this.isInvitedFlag)
               this.ourRelation = fr;
             }
           });
@@ -139,9 +142,12 @@ export class ProfileComponent implements OnInit {
   }
 
   onSendInvite() {
-    let loggedID = parseInt(localStorage.getItem("id"));
+    let myId = parseInt(localStorage.getItem("id"));
+    let friendInvite = new FriendCreateModel(false, myId, this.userProfileData.id);
     if (this.ourRelation == null)
-      this._api.sendFriendInvite(loggedID, this.userProfileData.id);
+      this._api.sendFriendInvite(friendInvite).subscribe(data => {
+        if (data.success) window.location.reload();
+      });
     if (
       this.ourRelation != null &&
       this.isInvitedFlag == false &&
@@ -149,11 +155,17 @@ export class ProfileComponent implements OnInit {
     ) {
       let relation = this.ourRelation;
       relation.isFriendRequest = true;
-      this._api.editRelation(relation);
+      this._api.editRelation(relation).subscribe(data => {
+        if (data.success) window.location.reload();
+      });
     }
   }
 
-  deleteFriend() {}
+  deleteFriend() {
+    this._api.declineFriendInvite(this.ourRelation.id).subscribe(data => {
+      if (data.success) window.location.reload();
+    });
+  }
 
   onSendMessage() {
     if (this.ourRelation != null) {

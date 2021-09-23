@@ -37,16 +37,19 @@ const routes: Routes = [];
       {
         path: "search-profile",
         component: SearchProfileComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: "create-game",
         component: CreateGameComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: "my-account/:value",
         component: ActivityComponent,
         canActivate: [AuthGuardService]
       },
+      { path: '**', redirectTo: 'home' }
     ], {
       onSameUrlNavigation: 'reload'
     }),

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { timer } from "rxjs";
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
-import { FriendModel } from "src/app/core/models/friend.model";
+import { FriendCreateModel, FriendModel } from "src/app/core/models/friend.model";
 import {
   MessageModel,
   ConversationModel,
@@ -252,8 +252,9 @@ export class ActivityComponent implements OnInit {
   }
 
   onSendInvite() {
-    let loggedID = parseInt(localStorage.getItem("id"));
-    this._api.sendFriendInvite(loggedID, this.myProfileData.id);
+    let myId = parseInt(localStorage.getItem("id"));
+    let friendInvite = new FriendCreateModel(false, myId, this.userProfileData.id);
+    this._api.sendFriendInvite(friendInvite);
   }
 
   deleteFriend() {}

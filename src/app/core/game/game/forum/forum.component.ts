@@ -210,11 +210,17 @@ export class ForumComponent implements OnInit {
     this.navigate({gameId: this.gameData.id, page: "players"});
   }
 
-  onEndGame() {}
+  onEndGame() {
+    this.gameData.status = "Ended";
+    this._api.editGameData(this.gameData.id, this.gameData).subscribe(data => {
+      if (data.success) window.location.reload();
+    });
+  }
 
   onLeaveGame() {
-    this._api.declineJoinGame(this.myCardId);
-    window.location.reload();
+    this._api.declineJoinGame(this.myCardId).subscribe(data => {
+      if (data.success) window.location.reload();
+    });
   }
 
   goBack(value: boolean) {

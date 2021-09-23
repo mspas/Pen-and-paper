@@ -50,7 +50,6 @@ export class SearchProfileComponent implements OnInit {
     for (let i = 0; i < responseProfiles.length; i++) {
       const profile = responseProfiles[i];
       this.foundProfiles.push(new PersonalDataListModel(profile, null));
-      console.log(profile)
       if (
         profile.photoName != null &&
         profile.photoName != "unknown.png"

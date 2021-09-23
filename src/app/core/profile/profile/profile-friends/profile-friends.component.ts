@@ -13,8 +13,8 @@ import { ApiService } from "src/app/core/services/api.service";
   styleUrls: ["./profile-friends.component.sass"],
 })
 export class ProfileFriendsComponent implements OnInit {
-  @Input("userFriends") userFriends: FriendModel[] = [];
-  @Input("myFriends") myFriends: FriendModel[] = [];
+  @Input("userRelationsList") userRelationsList: FriendModel[] = [];
+  @Input("myRelationsList") myRelationsList: FriendModel[] = [];
   @Input("isMyProfileFlag") isMyProfileFlag: boolean;
   @Input("isLoading") isLoading: boolean;
 
@@ -24,12 +24,10 @@ export class ProfileFriendsComponent implements OnInit {
   imageToShow: any;
   isImageLoading: boolean;
   defaultImage: boolean = true;
-  userID: number;
-  profileData: PersonalDataModel;
   data: any;
 
   friendsAccepted: PersonalDataListModel[] = [];
-  invitations: PersonalDataListModel[] = [];
+  invitations: FriendListModel[] = [];
 
   constructor(
     private _api: ApiService
@@ -44,8 +42,8 @@ export class ProfileFriendsComponent implements OnInit {
   sortFriends() {
     this.friendsAccepted = [];
     this.invitations = [];
-    if (this.userFriends != null) {
-      this.userFriends.forEach((fr) => {
+    if (this.userRelationsList != null) {
+      this.userRelationsList.forEach((fr) => {
         if (fr.isAccepted) {
           this.friendsAccepted.push(
             new PersonalDataListModel(fr.personalData, null)
@@ -53,7 +51,7 @@ export class ProfileFriendsComponent implements OnInit {
         }
         if (!fr.isAccepted && fr.isReceiver) {
           this.invitations.push(
-            new PersonalDataListModel(fr.personalData, null)
+            new FriendListModel(fr, fr.personalData, null)
           );
         }
       });
@@ -84,11 +82,11 @@ export class ProfileFriendsComponent implements OnInit {
 
     this.invitations.forEach((element) => {
       if (
-        element.data.photoName != null &&
-        element.data.photoName != "unknown.png"
+        element.personalData.photoName != null &&
+        element.personalData.photoName != "unknown.png"
       ) {
         this.isImageLoading = true;
-        this._api.getImage(element.data.photoName).subscribe(
+        this._api.getImage(element.personalData.photoName).subscribe(
           (data) => {
             this.createImageFromBlob(
               data,
@@ -111,8 +109,9 @@ export class ProfileFriendsComponent implements OnInit {
     reader.addEventListener(
       "load",
       () => {
-        if (check) this.friendsAccepted[id].photo = reader.result;
-        else this.invitations[id].photo = reader.result;
+        if (id > -1)
+          if (check) this.friendsAccepted[id].photo = reader.result;
+          else this.invitations[id].photo = reader.result;
       },
       false
     );
@@ -122,27 +121,23 @@ export class ProfileFriendsComponent implements OnInit {
     }
   }
 
-  /*async onClickFriend(friend: string) {
-    var res = await this.router.navigate(["/profile", friend]);
-    var snapshot = this.route.snapshot;
-    window.location.reload();
-  }*/
-
-  async onAcceptFriend(id: number) {
-    this.userFriends.forEach((element) => {
-      if (element.personalData.id == id) {
-        element.isAccepted = true;
-        this._api.acceptFriendInvite(element);
-        window.location.reload();
+  onAcceptFriend(id: number) {
+    this.userRelationsList.forEach((relation) => {
+      if (relation.id == id) {
+        relation.isAccepted = true;
+        this._api.acceptFriendInvite(relation).subscribe(data => {
+          if (data.success) window.location.reload();
+        });
       }
     });
   }
 
   onRemoveFriend(id: number) {
-    this.userFriends.forEach((element) => {
-      if (element.personalData.id == id)
-        this._api.declineFriendInvite(element.id);
-      window.location.reload();
+    this.userRelationsList.forEach((relation) => {
+      if (relation.id == id)
+        this._api.declineFriendInvite(id).subscribe(data => {
+          if (data.success) window.location.reload();
+        });
     });
   }
 }

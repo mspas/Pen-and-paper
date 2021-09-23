@@ -62,7 +62,6 @@ export class AuthService {
   }
 
   signInUser(email: string, password: string) {
-    console.log(email, password);
     const user: AuthModel = new AuthModel(email, password);
     this._http.post<AccessToken>(this.url + "login", user).subscribe(
       (token: AccessToken) => {

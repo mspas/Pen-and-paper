@@ -47,7 +47,7 @@
           </button>
           <button
             *ngIf="isFriendFlag == false && isInvitedFlag == true"
-            class="btn-profile friend-opt"
+            class="btn-profile btn-yellow friend-opt"
             id="invite_waiting"
           >
             <p class="btn-text">
@@ -57,7 +57,7 @@
           </button>
           <button
             *ngIf="isFriendFlag == true"
-            class="btn-profile friend-opt"
+            class="btn-profile btn-red friend-opt"
             id="delete_friend"
             (click)="deleteFriend()"
           >
@@ -147,8 +147,8 @@
       <app-profile-friends
         *ngIf="viewChildFlag == false"
         [isLoading]="isLoadingFriends"
-        [userFriends]="userFriendsList"
-        [myFriends]="myFriends"
+        [userRelationsList]="userRelationsList"
+        [myRelationsList]="myRelationsList"
         [isMyProfileFlag]="isMyProfileFlag"
       ></app-profile-friends>
       <app-profile-games

@@ -182,24 +182,26 @@ export class GameViewComponent implements OnInit {
       true,
       10
     );
-    this._api.joinGame(newConnection);
-    window.location.reload();
-  }
-
-  onLeave() {
-    this._api.declineJoinGame(this.myCardId);
-    window.location.reload();
+    this._api.joinGame(newConnection).subscribe(data => {
+      if (data.success) window.location.reload();
+    });
   }
 
   onAcceptRequest(playerId: number) {
     this.gameData.participants.forEach((card) => {
-      if (card.playerId == playerId) this._api.acceptJoinGame(card);
+      if (card.playerId == playerId) 
+        this._api.acceptJoinGame(card).subscribe(data => {
+          if (data.success) window.location.reload();
+        });
     });
   }
 
   onDeclineRequest(playerId: number) {
     this.gameData.participants.forEach((card) => {
-      if (card.playerId == playerId) this._api.declineJoinGame(card.id);
+      if (card.playerId == playerId) 
+        this._api.declineJoinGame(card.id).subscribe(data => {
+          if (data.success) window.location.reload();
+        });
     });
   }
 

@@ -44,13 +44,19 @@ export class ProfileGamesComponent implements OnInit {
 
   onAcceptRequest(inviteId: number) {
     this.invitations.forEach((invite) => {
-      if (invite.id == inviteId) this._api.acceptJoinGame(invite);
+      if (invite.id == inviteId) 
+        this._api.acceptJoinGame(invite).subscribe(data => {
+          if (data.success) window.location.reload();
+        });
     });
   }
 
   onDeclineRequest(inviteId: number) {
     this.invitations.forEach((invite) => {
-      if (invite.id == inviteId) this._api.declineJoinGame(invite.id);
+      if (invite.id == inviteId) 
+        this._api.declineJoinGame(invite.id).subscribe(data => {
+          if (data.success) window.location.reload();
+        });
     });
   }
 }

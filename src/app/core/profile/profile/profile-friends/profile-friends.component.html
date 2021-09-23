@@ -30,25 +30,25 @@
        <col span="1" style="width: 20%;">
     </colgroup>
     <tbody>
-      <tr *ngFor="let player of invitations">
+      <tr *ngFor="let invite of invitations">
         <td>
           <a
             class="profile-link"
             role="button"
-            [routerLink]="['/profile', player.data.login]"
+            [routerLink]="['/profile', invite.personalData.login]"
           >
             <img
-              *ngIf="player.photo"
-              [src]="player.photo"
+              *ngIf="invite.photo"
+              [src]="invite.photo"
               alt="Profile image"
             />
             <img
-              *ngIf="player.photo == null"
+              *ngIf="invite.photo == null"
               src="assets/unknown.png"
               alt="Profile image"
             />
-            <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
-              player.data.login
+            <span class="name">{{ invite.personalData.firstname }} {{ invite.personalData.lastname }} ({{
+              invite.personalData.login
             }})</span>
           </a>
         </td>
@@ -56,14 +56,14 @@
             <button
               type="button"
               class="btn-accept"
-              (click)="onAcceptFriend(game.id)"
+              (click)="onAcceptFriend(invite.relationData.id)"
             >
               <fa-icon class="star-icon" title="Accept" [icon]="faCheck"></fa-icon>
             </button>
             <button
               type="button"
               class="btn-decline"
-              (click)="onRemoveFriend(game.id)"
+              (click)="onRemoveFriend(invite.relationData.id)"
             >
               <fa-icon class="star-icon" title="Decline" [icon]="faTimes"></fa-icon>
             </button>

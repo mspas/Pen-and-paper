@@ -75,11 +75,11 @@ export class CreateGameComponent implements OnInit {
     this.alertMessage = "Loading...";
     this.showAlert = true;
 
-    this._api.createGame(newGame).subscribe(id => {
+    this._api.createGame(newGame).subscribe(data => {
       this.isLoading = false;
       this.alertMessage = "";
       this.showAlert = false;
-      if (id) this.router.navigate(["game"], { queryParams: { gameId: id } });
+      if (data.success) this.router.navigate(["game"], { queryParams: { gameId: data.game.id } });
       else {
         this.alertMessage = "Error!";
         this.showAlert = true;

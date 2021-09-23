@@ -20,6 +20,7 @@ export class FriendModel {
 
   export class FriendListModel {
     constructor(
+        public relationData: FriendModel,
         public personalData: PersonalDataModel,
         public photo: any
     ) {}

@@ -41,7 +41,7 @@ export class MyMessagesComponent implements OnInit {
     // TUTEJ JEST COS ZE LISTA MA 1 DLUGOSC A ROBI NA 2
 
     this.myFriends.forEach((element) => {
-      let friend = new FriendListModel(element.personalData, null);
+      let friend = new FriendListModel(element, element.personalData, null);
       this.friendsAcceptedPhoto.push(friend);
       let id = this.friendsAcceptedPhoto.length - 1;
       this.isImageLoading = true;

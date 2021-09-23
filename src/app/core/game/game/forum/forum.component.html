@@ -1,5 +1,5 @@
 <div class="forum-content">
-  <div class="btn-container">
+  <div *ngIf="gameData.status !== 'Ended'" class="btn-container">
     <div class="btn-wrap">
       <button class="btn-forum btn-green" (click)="onCreateTopic()">
         Create topic

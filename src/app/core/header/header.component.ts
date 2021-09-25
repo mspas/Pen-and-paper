@@ -70,6 +70,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(["/profile", localStorage.getItem("nick")]);
   }
 
+  goToActivity(subpage: string) {
+    this.dropIsDown = false;
+    this.collapsedMyAccount = false;
+    this.router.navigate(["my-account"], { queryParams: { page: subpage } });
+  }
+
   ngAfterContentChecked(): void {
     //Called after every check of the component's or directive's content.
     //Add 'implements AfterContentChecked' to the class.

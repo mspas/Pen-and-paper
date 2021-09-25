@@ -25,21 +25,21 @@
   </div>
   <div class="content-body">
     <app-my-messages
-      *ngIf="messagesChild == true"
-      [allConversations]="allConversations"
-      [notificationSet]="notificationSet"
-      [myFriends]="myFriends"
+      *ngIf="myMessagesFlag"
+      [conversationsList]="conversationsList"
+      [notificationData]="notificationData"
+      [myRelationsList]="myRelationsList"
     ></app-my-messages>
     <app-my-games
-      *ngIf="gamesChild == true"
-      [myGamesAPPList]="myGamesAPPList"
+      *ngIf="myGamesFlag"
+      [myGamesList]="myGamesList"
     ></app-my-games>
     <app-my-friends
-      *ngIf="friendsChild == true"
-      [myFriends]="myFriends"
+      *ngIf="myFriendsFlag"
+      [myRelationsList]="myRelationsList"
     ></app-my-friends>
     <app-account-settings
-      *ngIf="settingsChild == true"
+      *ngIf="settingsFlag"
       [myProfileData]="myProfileData"
     ></app-account-settings>
   </div>

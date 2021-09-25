@@ -132,10 +132,8 @@ export class ApiService {
     return this._http.delete(`${this.url}/Friend/${relationId}`);
   }
 
-  getNotificationData(id: number) {
-    return this._http.get<NotificationAppModel>(
-      this.url + "/NotificationData/" + id
-    );
+  getNotificationData(userId: number): Observable<NotificationAppModel> {
+    return this._http.get<NotificationAppModel>(`${this.url}/NotificationData/${userId}`);
   }
 
   editNotificationData(data: NotificationAppModel) {

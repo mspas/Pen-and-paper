@@ -4,7 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
 import { FriendCreateModel, FriendModel } from "src/app/core/models/friend.model";
-import { ConversationDataModel } from "src/app/core/models/message.model";
+import { ConversationDataModel, MessageModel } from "src/app/core/models/message.model";
 
 import { ApiService } from "src/app/core/services/api.service";
 import { DataService } from "src/app/core/services/data.service";
@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   isLoading = true;
   isLoadingFriends = true;
   isLoadingGames = true;
+  isLoadingMessages = true;
   isFriendFlag = false;
   isInvitedFlag = false;
   mobileViewFlag = false;
@@ -33,6 +34,7 @@ export class ProfileComponent implements OnInit {
   data: any;
   showModalFlag = false;
   showModalIndex = -1;
+  showChatFlag = false;
 
   myProfileData: PersonalDataModel;
   myRelationsList: FriendModel[] = [];
@@ -43,6 +45,9 @@ export class ProfileComponent implements OnInit {
 
   ourRelation: FriendModel = null;
 
+  conversationData: ConversationDataModel = new ConversationDataModel(null, null, null);
+  messageList: MessageModel[] = [];
+  
   constructor(
     private route: ActivatedRoute,
     private _api: ApiService,
@@ -69,7 +74,8 @@ export class ProfileComponent implements OnInit {
       this._api.getFriendsList(myNickname).subscribe((data) => {
         this.myRelationsList = data;
         if (this.myRelationsList != null) {
-          this.myRelationsList.forEach((fr) => {
+          for (let i = 0; i < this.myRelationsList.length; i++) {
+            const fr = this.myRelationsList[i];
             if (fr.personalData.id == this.userProfileData.id) {
               if (fr.isAccepted) {
                 this.isFriendFlag = true;
@@ -80,7 +86,8 @@ export class ProfileComponent implements OnInit {
               }
               this.ourRelation = fr;
             }
-          });
+          }
+          this.conversationData.relation = this.ourRelation;
         }
       });
 
@@ -111,13 +118,12 @@ export class ProfileComponent implements OnInit {
     this.isLoading = false;
     let nick = localStorage.getItem("nick");
 
-    if (
-      this.userProfileData.id !== parseInt(localStorage.getItem("id")) &&
-      nick
-    ) {
+    if (this.userProfileData.id !== parseInt(localStorage.getItem("id")) && nick) {
       this.isMyProfileFlag = false;
+      this.conversationData.userProfile = this.userProfileData;
       this._api.getProfileData(nick).subscribe((data) => {
         this.myProfileData = data;
+        this.conversationData.myProfile = data;
       });
     } else this.isMyProfileFlag = true;
 
@@ -168,22 +174,14 @@ export class ProfileComponent implements OnInit {
   }
 
   onSendMessage() {
-    if (this.ourRelation != null) {
-      //await this._api.getConversation(this.ourRelation.id).subscribe(data => this.conversation = data); //wyjebac to do app comp i viewchildem do chatu elo ide spac
-      this._data.changeConversationData(
-        new ConversationDataModel(
-          this.ourRelation,
-          this.myProfileData,
-          this.userProfileData
-        )
-      );
-      this._data.changeChatControl(true);
-    } else {
-      this._data.changeConversationData(
-        new ConversationDataModel(null, null, this.userProfileData)
-      );
-      this._data.changeChatControl(true);
-    }
+    this.isLoadingMessages = true;
+    this.showChatFlag = true;
+    this._api
+      .getConversation(this.conversationData.relation.id)
+      .subscribe(data => {
+        this.messageList = data;
+        this.isLoadingMessages = false;
+      });
   }
 
   onNavProfile(event) {
@@ -205,6 +203,10 @@ export class ProfileComponent implements OnInit {
 
   closeModal(value: boolean) {
     this.showModal(value, "", -1);
+  }
+
+  closeChat(value: boolean) {
+    this.showChatFlag = value;
   }
 
 }

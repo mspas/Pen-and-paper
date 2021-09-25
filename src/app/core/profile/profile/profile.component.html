@@ -161,6 +161,10 @@
   </div>
 </div>
 
+<div *ngIf="showChatFlag">
+  <app-chat [isLoading]="isLoadingMessages" [conversationData]="conversationData" [messageList]="messageList" (closeChatEvent)="closeChat($event)"></app-chat>
+</div>
+
 <div *ngIf="showModalIndex > -1">
   <app-modal [modalTitle]="modalTitle" [showModalFlag]="showModalFlag" (closeModalEvent)="closeModal($event)">  
     <app-modal-change-details *ngIf="showModalIndex === 0" [myProfileData]="userProfileData"></app-modal-change-details>

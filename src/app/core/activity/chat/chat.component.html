@@ -1,0 +1,24 @@
+<div class="chat-window">
+    <div class="chat-nav">
+        <div class="chat-nav-item">{{conversationData.userProfile.firstname}} {{conversationData.userProfile.lastname}} ({{conversationData.userProfile.login}})</div>
+        <div class="chat-nav-item center">
+            <span class="close-icon" (click)="onCloseClick()"><fa-icon [icon]="faTimes"></fa-icon></span>
+        </div>
+    </div>
+    <div class="chat-body" #chatBody>
+        <div *ngIf="messageList.length < 1">
+            Seems that you've never chat together. <br>Say hello and be polite! :)
+        </div>
+        <div *ngFor="let message of messageList" [ngClass]="message.senderId == conversationData.myProfile.id ? 'message-box my-message-box' : 'message-box'">
+            <p [ngClass]="message.senderId == conversationData.myProfile.id ? 'message my-message' : 'message'">{{message.bodyMessage}}</p>
+        </div>
+    </div>
+    <form class="chat-footer" (ngSubmit)="onSendMessage(f)" #f="ngForm">
+        <div class="chat-input">
+            <textarea name="message" class="message-area" rows="2" cols="30" [(ngModel)]="defaultTextValue"></textarea>
+        </div>
+        <div class="chat-input center">
+            <button class="send-icon" type="submit"><fa-icon [icon]="faArrowCircleUp"></fa-icon></button>
+        </div>
+    </form>
+</div>

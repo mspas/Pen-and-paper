@@ -27,22 +27,22 @@
             <li class="dropdown-link" (click)="goToMyProfile()">
               <span>My Profile</span>
             </li>
-            <li class="dropdown-link" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToActivity('my-messages')">
               <span id="messages"
                 >Messages <span *ngIf="notificationSet.message">(!)</span></span
               >
             </li>
-            <li class="dropdown-link" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToActivity('my-games')">
               <span id="games"
                 >My Games <span *ngIf="notificationSet.games">(!)</span></span
               >
             </li>
-            <li class="dropdown-link" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToActivity('my-friends')">
               <span id="friends"
                 >Friends <span *ngIf="notificationSet.friends">(!)</span></span
               >
             </li>
-            <li class="dropdown-link" (click)="goToMyAccount($event)">
+            <li class="dropdown-link" (click)="goToActivity('settings')">
               <span id="settings">Settings</span>
             </li>
           </ul>

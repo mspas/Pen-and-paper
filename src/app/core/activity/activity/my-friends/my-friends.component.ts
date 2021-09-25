@@ -8,7 +8,7 @@ import { PersonalDataModel } from "src/app/core/models/personaldata.model";
   styleUrls: ["./my-friends.component.sass"],
 })
 export class MyFriendsComponent implements OnInit {
-  @Input("myFriends") myFriends: FriendModel[] = [];
+  @Input("myRelationsList") myRelationsList: FriendModel[] = [];
   isImageLoading: boolean;
   friendsAccepted: PersonalDataModel[] = [];
   friendsAcceptedNoPhoto: PersonalDataModel[] = [];

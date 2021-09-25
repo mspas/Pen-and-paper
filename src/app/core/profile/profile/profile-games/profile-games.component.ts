@@ -11,7 +11,7 @@ import { ApiService } from "src/app/core/services/api.service";
   styleUrls: ["./profile-games.component.sass"],
 })
 export class ProfileGamesComponent implements OnInit {
-  @Input("userGamesList") userGamesAPPList: GameToPersonAppModel[];
+  @Input("userGamesList") userGamesList: GameToPersonAppModel[];
   @Input("isMyProfileFlag") isMyProfileFlag: boolean;
   @Input("isLoading") isLoading: boolean;
 
@@ -35,11 +35,22 @@ export class ProfileGamesComponent implements OnInit {
 
   sortGames() {
     this.gamesAccepted = [];
-    this.userGamesAPPList.forEach((element) => {
-      if (element.isAccepted) this.gamesAccepted.push(element);
-      if (!element.isAccepted && !element.isMadeByPlayer)
-        this.invitations.push(element);
+    this.userGamesList.forEach((element) => {
+      let g2p = this.filterPlayers(element);
+
+      if (g2p.isAccepted) this.gamesAccepted.push(g2p);
+      if (!g2p.isAccepted && !g2p.isMadeByPlayer)
+        this.invitations.push(g2p);
     });
+  }
+
+  filterPlayers(g2p: GameToPersonAppModel) {
+    for (let i = 0; i < g2p.game.participants.length; i++) {
+      const element = g2p.game.participants[i];
+      if (!element.isAccepted)
+        g2p.game.participants.splice(i, 1);
+    }
+    return g2p;
   }
 
   onAcceptRequest(inviteId: number) {

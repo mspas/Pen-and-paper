@@ -7,7 +7,7 @@ import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
   styleUrls: ["./my-games.component.sass"],
 })
 export class MyGamesComponent implements OnInit {
-  @Input("myGamesAPPList") myGamesAPPList: GameToPersonAppModel[] = [];
+  @Input("myGamesList") myGamesList: GameToPersonAppModel[] = [];
 
   constructor() {}
 

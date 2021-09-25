@@ -4,7 +4,7 @@ import { FriendModel } from "./friend.model";
 export class MessageModel {
     constructor(
         public id: number,
-        public sendDdate: Date,
+        public sendDate: Date,
         public wasSeen: boolean,
         public bodyMessage: string,
         public relationId: number,

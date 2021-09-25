@@ -45,7 +45,7 @@ const routes: Routes = [];
         canActivate: [AuthGuardService],
       },
       {
-        path: "my-account/:value",
+        path: "my-account",
         component: ActivityComponent,
         canActivate: [AuthGuardService]
       },

@@ -19,9 +19,9 @@ import { Observable, timer } from "rxjs";
   styleUrls: ["./my-messages.component.sass"],
 })
 export class MyMessagesComponent implements OnInit {
-  @Input("allConversations") allConversations: ConversationModel[] = null;
-  @Input("notificationSet") notificationSet: CheckNotificationModel;
-  @Input("myFriends") myFriends: FriendModel[] = [];
+  @Input("conversationsList") conversationsList: ConversationModel[] = null;
+  @Input("notificationData") notificationData: CheckNotificationModel;
+  @Input("myRelationsList") myRelationsList: FriendModel[] = [];
   friendsAcceptedPhoto: FriendListModel[] = [];
   isImageLoading: boolean;
   defaultValue: string = "";
@@ -29,18 +29,10 @@ export class MyMessagesComponent implements OnInit {
 
   constructor(private _api: ApiService, private _data: DataService) {}
 
-  ngOnInit() {
-    /* await this.myFriends.forEach(relation => {
-      if (relation.lastMessageDate != null) {
-        this.getConversation(relation);
-      }
-    });
+  ngOnInit() {}
 
-    console.log("allConv KURWA " + JSON.stringify(this.allConversations));*/
-
-    // TUTEJ JEST COS ZE LISTA MA 1 DLUGOSC A ROBI NA 2
-
-    this.myFriends.forEach((element) => {
+  ngOnChanges() {
+    this.myRelationsList.forEach((element) => {
       let friend = new FriendListModel(element, element.personalData, null);
       this.friendsAcceptedPhoto.push(friend);
       let id = this.friendsAcceptedPhoto.length - 1;
@@ -61,8 +53,6 @@ export class MyMessagesComponent implements OnInit {
         );
       }
     });
-
-    this.refreshData();
   }
 
   createImageFromBlob(image: Blob, id: number) {
@@ -80,32 +70,11 @@ export class MyMessagesComponent implements OnInit {
     }
   }
 
-  ngAfterViewChecked() {
-    var i = 0;
-    this.allConversations.forEach((chat) => {
-      chat.messages.forEach((msg) => {
-        if (msg.senderId == chat.conversationData.myProfile.id) {
-          document
-            .getElementById("msg" + msg.id.toString())
-            .setAttribute("class", "my-message");
-        }
-      });
-      chat.photo = this.friendsAcceptedPhoto[i].photo;
-      i++;
-    });
-  }
-
-  delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   async scrollChatDown(index: number) {
-    await this.delay(300);
-
     var msgList = document.getElementById("msg-list" + index.toString());
     msgList.scrollTop = msgList.scrollHeight;
 
-    if (this.notificationSet.message) {
+    if (this.notificationData.message) {
       var notificationData: NotificationAppModel;
       this._data.currentNotificationData.subscribe((data) => {
         notificationData = data;
@@ -113,40 +82,6 @@ export class MyMessagesComponent implements OnInit {
         this._api.editNotificationData(notificationData);
       });
     }
-  }
-
-  refreshData() {
-    //this._api.getConversation(this.conversationData.relationId).subscribe(data => this.conversation = data);
-    //await this.delay(4000);
-    let i = 0;
-    this.allConversations.forEach((conversation) => {
-      this._api
-        .getRelationData(conversation.conversationData.relation.id)
-        .subscribe((data) => {
-          conversation.conversationData.relation = data[0];
-          //this.subscribeToData();
-          //await this.delay(4000);
-          let lastDate = conversation.conversationData.relation.lastMessageDate;
-          let length = conversation.messages.length;
-          if (
-            lastDate > conversation.messages[length - 1].sendDdate ||
-            conversation.messages[length - 1].sendDdate == null
-          ) {
-            //nowsza rzecz jest wieksza
-            this._api
-              .getConversation(conversation.conversationData.relation.id)
-              .subscribe((data) => (conversation.messages = data));
-          }
-          i++;
-          if (i === this.allConversations.length) this.subscribeToData();
-        });
-    });
-    //await this.delay(4000);
-    //this.subscribeToData();
-  }
-
-  private subscribeToData(): void {
-    this.timerSubscription = timer(4000).subscribe(() => this.refreshData());
   }
 
   onSendMessage(index: number) {
@@ -157,20 +92,20 @@ export class MyMessagesComponent implements OnInit {
       myDate,
       false,
       body,
-      this.allConversations[index].conversationData.relation.id,
-      this.allConversations[index].conversationData.myProfile.id,
+      this.conversationsList[index].conversationData.relation.id,
+      this.conversationsList[index].conversationData.myProfile.id,
       false
     );
     this._api.sendMessage(msg);
-    this.allConversations[
+    this.conversationsList[
       index
     ].conversationData.relation.lastMessageDate = myDate;
-    //this._api.editRelation(this.allConversations[index].conversationData.relation);
+    //this._api.editRelation(this.conversationsList[index].conversationData.relation);
     this.addMsgTemporary(msg, index);
   }
 
   addMsgTemporary(msg: MessageCreateModel, index: number) {
-    this.allConversations[index].messages.push(
+    this.conversationsList[index].messages.push(
       new MessageModel(
         -1,
         null,

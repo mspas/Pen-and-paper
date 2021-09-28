@@ -58,7 +58,11 @@ export class AuthService {
   createAccountDB(account: AccountCreateModel) {
     this._http
       .post(this.url + "account", account)
-      .subscribe((error) => this.accMsg.next(true));
+      .subscribe(
+        (data) => {
+          this.router.navigate(["/sign-in"]);
+        },
+        (error) => this.accMsg.next(true));
   }
 
   signInUser(email: string, password: string) {
@@ -68,7 +72,6 @@ export class AuthService {
         let login = this.decodeToken(token);
         this.router.navigate(["/profile", login]);
       },
-      //error => console.log(error)
       (error) => this.loginError.next(true)
     );
   }

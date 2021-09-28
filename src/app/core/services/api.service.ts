@@ -32,6 +32,7 @@ import { DataService } from "./data.service";
 @Injectable()
 export class ApiService {
   url = "http://localhost:50168/api";
+  //url = "/api";
 
   constructor(
     private _http: HttpClient,
@@ -175,12 +176,10 @@ export class ApiService {
     });
   }
 
-  uploadPhoto(type: number, id: number, isBgPhoto: boolean, file) {
+  uploadPhoto(type: number, id: number, isBgPhoto: boolean, file): Observable<any> {
     var formData = new FormData();
     formData.append("file", file);
-    this._http
-      .post(this.url + "/Photo/" + type + "/" + isBgPhoto + "/" + id, formData)
-      .subscribe((error) => console.log(error));
+    return this._http.post(`${this.url}/Photo/${type}/${isBgPhoto}/${id}`, formData);
   }
 
   getImage(fileName: string): Observable<Blob> {
@@ -250,27 +249,18 @@ export class ApiService {
       .subscribe((error) => console.log(error));
   }
 
-  editPersonalData(profile: PersonalDataModel) {
+  editPersonalData(profile: PersonalDataModel): Observable<any> {
     let id = localStorage.getItem("id");
-    this._http
-      .put<PersonalDataModel>(
-        this.url + "/pdata/search/" + id.toString(),
-        profile
-      )
-      .subscribe((error) => console.log(error));
+    return this._http.put<PersonalDataModel>(`${this.url}/pdata/${id}`, profile);
   }
 
   editGameData(gameId: number, game: GameAppModel): Observable<any> {
     return this._http.put<any>(`${this.url}/Game/${gameId}`, game);
   }
 
-  editPassword(passwordData: ChangePasswordModel) {
+  editPassword(passwordData: ChangePasswordModel): Observable<any> {
     let id = localStorage.getItem("id");
-    this._http
-      .put<ChangePasswordModel>(
-        this.url + "/account/" + id.toString(),
-        passwordData
-      )
-      .subscribe((error) => console.log(error));
+    console.log(passwordData)
+    return this._http.put<ChangePasswordModel>(`${this.url}/account/${id}`, passwordData);
   }
 }

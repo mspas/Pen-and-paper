@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="false" class="container">
   <div class="content-top">
     <ul class="nav nav-tabs">
       <li id="acc-messages" class="active">
@@ -43,4 +43,11 @@
       [myProfileData]="myProfileData"
     ></app-account-settings>
   </div>
+</div>
+<div *ngIf="true" class="container">
+  <p>
+    This page used to include manu for checking up notifications, like game invitations and new private messages. 
+    However, that implementation was neither satisfying, nor polished, thus I decided to not work on it. Instead, 
+    when I will come back to work on this app, then I would surely start from implementing SignalR on backend and utilizing it here. 
+  </p>
 </div>

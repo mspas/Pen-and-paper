@@ -1,6 +1,6 @@
 <div class="create-header">
   <div class="header-left default-font">
-    <form #formOptions="ngForm" class="create-form" (ngSubmit)="onCreate(f)">
+    <form #f="ngForm" class="create-form" (ngSubmit)="onCreate(f)">
       <div class="input-group">
         <label class="option-name">Title:</label>
         <input
@@ -8,7 +8,7 @@
           type="text"
           name="title"
           ngControl="title"
-          [(ngModel)]="title"
+          ngModel
           minlength="2"
           required
         />
@@ -19,7 +19,7 @@
           class="form-control"
           name="category"
           ngControl="category"
-          [(ngModel)]="category"
+          ngModel
           required
         >
           <option *ngIf="iAmGameMaster">General</option>
@@ -37,7 +37,7 @@
               name="access"
               value="public"
               ngControl="access"
-              [(ngModel)]="access"
+              ngModel
               checked
             />Public</label
           >
@@ -47,7 +47,7 @@
               name="access"
               value="limited"
               ngControl="access"
-              [(ngModel)]="access"
+              ngModel
             />Limited</label
           >
         </div>

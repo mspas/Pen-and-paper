@@ -15,8 +15,8 @@ import { CheckNotificationModel } from "../models/notification.model";
   styleUrls: ["./header.component.sass"],
 })
 export class HeaderComponent implements OnInit {
-  private isLoggedIn: boolean;
-  private dropIsDown: boolean = false;
+  isLoggedIn: boolean;
+  dropIsDown: boolean = false;
   private collapsedMyAccount: boolean = false;
   private auth: AuthService;
   private timerSubscription: any;

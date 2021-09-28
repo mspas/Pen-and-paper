@@ -14,14 +14,29 @@ import { NotificationModel } from "../../models/notification.model";
   styleUrls: ["./sign-up.component.sass"],
 })
 export class SignUpComponent implements OnInit {
-  accMsg: boolean = false;
+  showAlert: boolean = false;
+  alertMessage: string = "";
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {}
 
+  validateInput(login, email, firstname, lastname, city, age, password, password2) {
+    let check = login.length < 1 || email.length < 1 || firstname.length < 1 || lastname.length < 1 || city.length < 1 || age.length < 1 || password.length < 1 ? false : true;
+
+    if (password !== password2) { 
+      this.alertMessage = "Error! Inputted passwords are different!";
+      return false;
+    }
+
+    if (!check) this.alertMessage = "Error! Fill all the inputs to sign up!";
+    return check;
+  }
+
   onSignUp(form: NgForm) {
-    //const notif: NotificationModel = new NotificationModel(null, null, null, null, null, null);
+    this.showAlert = !this.validateInput(form.value.login, form.value.email, form.value.firstname, form.value.lastname, form.value.city, form.value.age, form.value.password, form.value.password2);
+    if (this.showAlert) return false;
+
     const pd: PersonalDataCreateModel = new PersonalDataCreateModel(
       form.value.login,
       form.value.email,
@@ -39,6 +54,9 @@ export class SignUpComponent implements OnInit {
       pd
     );
     this.authService.createAccountDB(account);
-    this.authService.currentAccMsg.subscribe((data) => (this.accMsg = data));
+    this.authService.currentAccMsg.subscribe((data) => {
+      this.showAlert = data;
+      if (!data) this.alertMessage = "Sorry! An error occured! Account was not created!";
+    });
   }
 }

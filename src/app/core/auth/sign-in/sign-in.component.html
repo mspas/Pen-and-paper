@@ -1,8 +1,8 @@
 <div class="form-container">
   <form class="form" (ngSubmit)="onSignIn(f)" #f="ngForm">
     <div class="heading">Sign In</div>
-    <div class="alert alert-danger" *ngIf="loginError == true">
-      <strong>Error!</strong> Login or password incorrect!
+    <div class="alert btn-red" *ngIf="showAlert">
+      <p>{{ alertMessage }}</p>
     </div>
     <div class="form-content">
       <div class="input-group">

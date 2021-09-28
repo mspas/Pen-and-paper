@@ -20,7 +20,7 @@
                         <label for="genre">Game category / genre*</label>
                     </td>
                     <td>
-                        <select required class="form-control input-sm" id="genre" [(ngModel)]="genre" name="genre">
+                        <select required class="form-control input-sm" id="genre" ngModel name="genre">
                             <option *ngFor="let option of gameCategories">
                             {{option.name}}
                             </option>

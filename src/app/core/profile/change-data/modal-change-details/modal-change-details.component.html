@@ -1,4 +1,8 @@
-<form class="modal-form" #formOptions="ngForm" (ngSubmit)="onSaveChanges(f)">
+<form class="modal-form" #f="ngForm" (ngSubmit)="onSaveChanges(f)">
+  <div *ngIf="showAlert" class="alert-wrap">
+    <div ngClass class="alert btn-red">{{ alertMessage }}</div>
+  </div>
+
   <label for="login">Email</label>
   <input
     type="email"

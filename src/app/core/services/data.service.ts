@@ -34,6 +34,8 @@ export class DataService {
 
   private pageSizeForum = 10;
 
+  private acceptedImageExtensions = ['gif', 'jpg', 'png'];
+
   private gameCategories: any[] = [
     {
       name: "Fantasy",
@@ -97,6 +99,10 @@ export class DataService {
 
   getForumCategories() {
     return this.forumCategories;
+  }
+
+  getAcceptedImageExtensions() {
+    return this.acceptedImageExtensions;
   }
 
   changeFriends(friends: FriendModel[]) {

@@ -23,7 +23,7 @@ import { GameAppModel } from "src/app/core/models/game.model";
   styleUrls: ["./create-topic.component.sass"],
 })
 export class CreateTopicComponent implements OnInit {
-  @ViewChild("formOptions", { static: true }) formTopicOptions: NgForm;
+  @ViewChild("f", { static: true }) form: NgForm;
 
   @Input() gameData: GameAppModel;
   @Input() forumData: ForumModel;
@@ -32,6 +32,7 @@ export class CreateTopicComponent implements OnInit {
   
   @Output() goBackOnSuccessEvent = new EventEmitter<boolean>();
 
+  f: NgForm;
   isLoading: boolean = false;
   showAlert: boolean = false;
   alertMessage: string;
@@ -41,12 +42,13 @@ export class CreateTopicComponent implements OnInit {
   ngOnInit() {}
 
   validateInput(form: NgForm, msg: string) {
-    if (!form.value.title || !form.controls["access"].value || msg.length < 1) return false;
+    if (this.iAmGameMaster && !form.controls["access"].value) return false;
+    if (!form.value.title || msg.length < 1) return false;
     return true;
   }
 
   onCreate(s) {
-    let validateInput = this.validateInput(this.formTopicOptions, s);
+    let validateInput = this.validateInput(this.form, s);
     if (!validateInput) {
       this.showAlert = true;
       this.alertMessage = "Fill all of the input fields!"
@@ -58,12 +60,12 @@ export class CreateTopicComponent implements OnInit {
     }
 
     let date = new Date();
-    let access = false ? this.iAmGameMaster && this.formTopicOptions.controls["access"].value == "limited" : true;
+    let access = this.iAmGameMaster && this.form.controls["access"].value === "limited" ? false : true;
 
     const topic: TopicCreateModel = new TopicCreateModel(
       this.forumData.id,
-      this.formTopicOptions.value.title,
-      this.formTopicOptions.value.category,
+      this.form.value.title,
+      this.form.value.category,
       this.profileData.id,
       access,
       1,

@@ -8,22 +8,27 @@ import { AuthService } from "../auth.service";
   styleUrls: ["./sign-in.component.sass"],
 })
 export class SignInComponent implements OnInit {
-  loginError: boolean = false;
+  showAlert: boolean = false;
+  alertMessage: string = "";
 
   constructor(private auth: AuthService) {}
 
   ngOnInit() {}
 
-  onSignIn(form: NgForm) {
-    this.loginError = false;
-    const login = form.value.login;
-    const password = form.value.password;
-    
-    this.auth.signInUser(login, password);
-    this.auth.currentLoginError.subscribe((data) => (this.loginError = data));
+  validateInput(login, password) {
+    let check = login.length < 1 || password.length < 1 ? false : true;
+    if (!check) this.alertMessage = "Error! Fill both inputs to sign in!";
+    return check;
   }
 
-  onTest() {
-    this.auth.getAccounts();
+  onSignIn(form: NgForm) {
+    this.showAlert = !this.validateInput(form.value.login, form.value.password);
+    if (this.showAlert) return false;
+    
+    this.auth.signInUser(form.value.login, form.value.password);
+    this.auth.currentLoginError.subscribe((data) => {
+      this.showAlert = data;
+      if (!data) this.alertMessage = "Error! Login or password incorrect!";
+    });
   }
 }

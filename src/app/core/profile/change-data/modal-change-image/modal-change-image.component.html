@@ -1,4 +1,7 @@
-<form class="modal-form" (ngSubmit)="onSaveImage(f)" #formOptions="ngForm">
+<form class="modal-form" (ngSubmit)="onSaveImage(f)" #f="ngForm">
+  <div *ngIf="showAlert" class="alert-wrap">
+    <div ngClass class="alert btn-red">{{ alertMessage }}</div>
+  </div>
   <label for="file">Select image from your drive (200x200 px)</label>
   <input type="file" id="file" name="file" required #fileInput />
   <div class="modal-footer">

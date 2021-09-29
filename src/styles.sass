@@ -1,5 +1,6 @@
 @import './_variables'
 @import './_mixins'
+@import './_animations'
 
 @font-face
     font-family: 'BarkingCat'
@@ -179,3 +180,13 @@ a
     vertical-align: middle
     color: white
     @include border-shadow-default()
+
+.spinner
+    display: block
+    width: 33px
+    height: 33px
+    font-size: 30px
+    margin: 10px auto
+    .spinner-icon
+        display: block
+        animation: spin 4s linear infinite

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { faStar, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
 import { ActivatedRoute } from "@angular/router";
@@ -15,6 +15,7 @@ export class ProfileGamesComponent implements OnInit {
   @Input("isMyProfileFlag") isMyProfileFlag: boolean;
   @Input("isLoading") isLoading: boolean;
 
+  faSpinner = faSpinner;
   faStar = faStar;
   faCheck = faCheck;
   faTimes = faTimes;

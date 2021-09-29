@@ -16,6 +16,7 @@ import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ApiService } from "src/app/core/services/api.service";
 import { NgForm } from "@angular/forms";
 import { GameAppModel } from "src/app/core/models/game.model";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-create-topic",
@@ -33,6 +34,8 @@ export class CreateTopicComponent implements OnInit {
   @Output() goBackOnSuccessEvent = new EventEmitter<boolean>();
 
   f: NgForm;
+  faSpinner = faSpinner;
+
   isLoading: boolean = false;
   showAlert: boolean = false;
   alertMessage: string;
@@ -77,8 +80,6 @@ export class CreateTopicComponent implements OnInit {
     const newtopic: NewTopicModel = new NewTopicModel(topic, s);
 
     this.isLoading = true;
-    this.alertMessage = "Loading...";
-    this.showAlert = true;
 
     this._api.createTopic(newtopic).subscribe(data => {
       if (data.id) {

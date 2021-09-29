@@ -6,7 +6,8 @@ import {
   PersonalDataCreateModel,
 } from "../../models/personaldata.model";
 import { AuthService } from "../auth.service";
-import { NotificationModel } from "../../models/notification.model";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-sign-up",
@@ -16,8 +17,11 @@ import { NotificationModel } from "../../models/notification.model";
 export class SignUpComponent implements OnInit {
   showAlert: boolean = false;
   alertMessage: string = "";
+  isLoading: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  faSpinner = faSpinner;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -53,7 +57,19 @@ export class SignUpComponent implements OnInit {
       form.value.email,
       pd
     );
-    this.authService.createAccountDB(account);
+
+    this.isLoading = true;
+    this.authService.createAccount(account).subscribe(
+      (data) => {
+        this.router.navigate(["/sign-in"]);
+        this.isLoading = false;
+      },
+      (error) => {
+        this.showAlert = true;
+        this.isLoading = false;
+        this.alertMessage = "Error! Login or password incorrect!";
+      });
+
     this.authService.currentAccMsg.subscribe((data) => {
       this.showAlert = data;
       if (!data) this.alertMessage = "Sorry! An error occured! Account was not created!";

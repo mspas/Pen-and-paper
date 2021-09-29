@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { GameToPersonAppModel } from "src/app/core/models/game-to-person.model";
@@ -17,6 +18,7 @@ import { DataService } from "src/app/core/services/data.service";
 export class ProfileComponent implements OnInit {
   @ViewChild("fileInput", { static: false }) fileInput: ElementRef;
 
+  faSpinner = faSpinner;
   imageToShow: any;
   isImageLoading: boolean;
   defaultImage: boolean = true;

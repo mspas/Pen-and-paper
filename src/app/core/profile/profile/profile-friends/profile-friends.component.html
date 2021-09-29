@@ -1,75 +1,82 @@
-<div *ngIf="isLoading === false" class="list-wrap">
-  <div class="friend-wrap" *ngFor="let player of friendsAccepted; index as i">
-    <a
-      class="profile-link"
-      role="button"
-      [routerLink]="['/profile', player.data.login]"
-    >
-      <img
-        *ngIf="player.photo"
-        [src]="player.photo"
-        alt="Profile image"
-      />
-      <img
-        *ngIf="player.photo == null"
-        src="assets/unknown.png"
-        alt="Profile image"
-      />
-      <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
-        player.data.login
-      }})</span>
-    </a>
+<div class="list-wrap">
+  <div class="spinner" *ngIf="isLoading">
+    <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
   </div>
-</div>
 
-<div *ngIf="isMyProfileFlag == true && invitations.length > 0" class="list-wrap">
-  <p>Invitations:</p>
-  <table>
-    <colgroup>
-       <col span="1" style="width: 80%;">
-       <col span="1" style="width: 20%;">
-    </colgroup>
-    <tbody>
-      <tr *ngFor="let invite of invitations">
-        <td>
-          <a
-            class="profile-link"
-            role="button"
-            [routerLink]="['/profile', invite.personalData.login]"
-          >
-            <img
-              *ngIf="invite.photo"
-              [src]="invite.photo"
-              alt="Profile image"
-            />
-            <img
-              *ngIf="invite.photo == null"
-              src="assets/unknown.png"
-              alt="Profile image"
-            />
-            <span class="name">{{ invite.personalData.firstname }} {{ invite.personalData.lastname }} ({{
-              invite.personalData.login
-            }})</span>
-          </a>
-        </td>
-        <td class="details">
-            <button
-              type="button"
-              class="btn-accept"
-              (click)="onAcceptFriend(invite.relationData.id)"
-            >
-              <fa-icon class="star-icon" title="Accept" [icon]="faCheck"></fa-icon>
-            </button>
-            <button
-              type="button"
-              class="btn-decline"
-              (click)="onRemoveFriend(invite.relationData.id)"
-            >
-              <fa-icon class="star-icon" title="Decline" [icon]="faTimes"></fa-icon>
-            </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="!isLoading">
+    <div class="friend-wrap" *ngFor="let player of friendsAccepted; index as i">
+      <a
+        class="profile-link"
+        role="button"
+        [routerLink]="['/profile', player.data.login]"
+      >
+        <img
+          *ngIf="player.photo"
+          [src]="player.photo"
+          alt="Profile image"
+        />
+        <img
+          *ngIf="player.photo == null"
+          src="assets/unknown.png"
+          alt="Profile image"
+        />
+        <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
+          player.data.login
+        }})</span>
+      </a>
+    </div>
+
+    <div *ngIf="isMyProfileFlag == true && invitations.length > 0">
+      <p>Invitations:</p>
+      <table>
+        <colgroup>
+          <col span="1" style="width: 80%;">
+          <col span="1" style="width: 20%;">
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let invite of invitations">
+            <td>
+              <a
+                class="profile-link"
+                role="button"
+                [routerLink]="['/profile', invite.personalData.login]"
+              >
+                <img
+                  *ngIf="invite.photo"
+                  [src]="invite.photo"
+                  alt="Profile image"
+                />
+                <img
+                  *ngIf="invite.photo == null"
+                  src="assets/unknown.png"
+                  alt="Profile image"
+                />
+                <span class="name">{{ invite.personalData.firstname }} {{ invite.personalData.lastname }} ({{
+                  invite.personalData.login
+                }})</span>
+              </a>
+            </td>
+            <td class="details">
+                <button
+                  type="button"
+                  class="btn-accept"
+                  (click)="onAcceptFriend(invite.relationData.id)"
+                >
+                  <fa-icon class="star-icon" title="Accept" [icon]="faCheck"></fa-icon>
+                </button>
+                <button
+                  type="button"
+                  class="btn-decline"
+                  (click)="onRemoveFriend(invite.relationData.id)"
+                >
+                  <fa-icon class="star-icon" title="Decline" [icon]="faTimes"></fa-icon>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  
 </div>
-<div *ngIf="isLoading" class="loading">Loading...</div>

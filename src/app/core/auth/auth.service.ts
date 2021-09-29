@@ -20,6 +20,7 @@ const helper = new JwtHelperService();
 @Injectable()
 export class AuthService {
   url = "http://localhost:50168/api/";
+  //url = "/api/";
   private token: string;
   private loginError = new BehaviorSubject<boolean>(false);
   private accMsg = new BehaviorSubject<boolean>(false);
@@ -50,30 +51,13 @@ export class AuthService {
     return isToken;
   }
 
-  getAccounts() {
-    let obs = this._http.get(this.url + "account");
-    obs.subscribe((res) => console.log(res));
+  createAccount(account: AccountCreateModel): Observable<any> {
+    return this._http.post(`${this.url}account`, account);
   }
 
-  createAccountDB(account: AccountCreateModel) {
-    this._http
-      .post(this.url + "account", account)
-      .subscribe(
-        (data) => {
-          this.router.navigate(["/sign-in"]);
-        },
-        (error) => this.accMsg.next(true));
-  }
-
-  signInUser(email: string, password: string) {
+  signInUser(email: string, password: string): Observable<any> {
     const user: AuthModel = new AuthModel(email, password);
-    this._http.post<AccessToken>(this.url + "login", user).subscribe(
-      (token: AccessToken) => {
-        let login = this.decodeToken(token);
-        this.router.navigate(["/profile", login]);
-      },
-      (error) => this.loginError.next(true)
-    );
+    return this._http.post<AccessToken>(`${this.url}login`, user);
   }
 
   refreshToken(token: string, login: string) {

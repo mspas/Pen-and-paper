@@ -42,6 +42,10 @@
     </div>
   </div>
 
+  <div class="spinner" *ngIf="isLoading && isLoadingTopics">
+    <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+  </div>
+
   <app-topic
     *ngIf="subpageManager.topic && !isLoading"
     [forumData]="forumData"

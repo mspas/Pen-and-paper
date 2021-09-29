@@ -10,6 +10,7 @@ import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/pe
 import { ButtonManager } from "../../button-manager";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const categoriesDefault = ["General", "Game", "Support", "Off-topic"];
 
@@ -28,6 +29,8 @@ export class ForumComponent implements OnInit {
   @Input() waitingSelfRequested: PersonalDataListModel[];
   @Input() waitingInvited: PersonalDataListModel[];
   @Input() iAmGameMaster: boolean;
+
+  faSpinner = faSpinner;
 
   topicIdParam: number = null;
   totalPages: number = -1;
@@ -122,11 +125,13 @@ export class ForumComponent implements OnInit {
       let author: PersonalDataModel = null;
       let lastPostAuthor: PersonalDataModel = null;
       let topicWasSeen = true;
-
+      
       this.gameData.participantsProfiles.forEach((user) => {
-        if (user.id == topic.authorId) author = user;
-        if (user.id == topic.lastActivityUserId) lastPostAuthor = user;
+        if (user.id === topic.authorId) author = user;
+        if (user.id === topic.lastActivityUserId) lastPostAuthor = user;
       });
+      if (this.gameData.gameMaster.id === topic.authorId) author = this.gameData.gameMaster;
+      if (this.gameData.gameMaster.id === topic.lastActivityUserId) lastPostAuthor = this.gameData.gameMaster;
 
       this.topicToPersonData.forEach((t2p) => {
         if (

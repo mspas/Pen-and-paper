@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
+import { AccessToken } from "../../models/token.model";
 import { AuthService } from "../auth.service";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-sign-in",
@@ -10,8 +13,11 @@ import { AuthService } from "../auth.service";
 export class SignInComponent implements OnInit {
   showAlert: boolean = false;
   alertMessage: string = "";
+  isLoading: boolean = false;
 
-  constructor(private auth: AuthService) {}
+  faSpinner = faSpinner;
+
+  constructor(private _auth: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -25,10 +31,19 @@ export class SignInComponent implements OnInit {
     this.showAlert = !this.validateInput(form.value.login, form.value.password);
     if (this.showAlert) return false;
     
-    this.auth.signInUser(form.value.login, form.value.password);
-    this.auth.currentLoginError.subscribe((data) => {
-      this.showAlert = data;
-      if (!data) this.alertMessage = "Error! Login or password incorrect!";
-    });
+    this.isLoading = true;
+
+    this._auth.signInUser(form.value.login, form.value.password).subscribe(
+      (token: AccessToken) => {
+        let login = this._auth.decodeToken(token);
+        this.router.navigate(["/profile", login]);
+        this.isLoading = false;
+      },
+      (error) => {
+        this.showAlert = true;
+        this.isLoading = false;
+        this.alertMessage = "Error! Login or password incorrect!";
+      }
+    );
   }
 }

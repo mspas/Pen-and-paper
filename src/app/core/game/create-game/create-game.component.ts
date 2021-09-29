@@ -1,9 +1,10 @@
 import { ApiService } from "../../services/api.service";
 import { Component, OnInit } from "@angular/core";
-import { NgForm, FormControl } from "@angular/forms";
+import { NgForm } from "@angular/forms";
 import { GameCreateModel } from "../../models/game.model";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { DataService } from "../../services/data.service";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-create-game",
@@ -16,6 +17,8 @@ export class CreateGameComponent implements OnInit {
   needInvite: boolean = false;
   hotJoin: boolean = false;
   
+  faSpinner = faSpinner;
+
   isLoading: boolean = false;
   showAlert: boolean = false;
   alertMessage: string;
@@ -67,13 +70,11 @@ export class CreateGameComponent implements OnInit {
       this.needInvite,
       this.hotJoin,
       "Active",
-      form.value.genre + ".png",
+      null,
       "bgdefault.png"
     );
 
     this.isLoading = true;
-    this.alertMessage = "Loading...";
-    this.showAlert = true;
 
     this._api.createGame(newGame).subscribe(data => {
       this.isLoading = false;

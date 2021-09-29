@@ -66,5 +66,9 @@
 <app-text-editor (getMsgHTML)="onCreate($event)"></app-text-editor>
 
 <div *ngIf="showAlert" class="alert-wrap">
-  <div ngClass [ngClass]="isLoading ? 'alert btn-yellow' : 'alert btn-red'">{{ alertMessage }}</div>
+  <div ngClass class="alert btn-red">{{ alertMessage }}</div>
+</div>
+
+<div class="spinner" *ngIf="isLoading">
+  <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
 </div>

@@ -4,7 +4,7 @@ import {
   PersonalDataModel,
   PersonalDataListModel,
 } from "src/app/core/models/personaldata.model";
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { ApiService } from "src/app/core/services/api.service";
 
 @Component({
@@ -20,6 +20,7 @@ export class ProfileFriendsComponent implements OnInit {
 
   faCheck = faCheck;
   faTimes = faTimes;
+  faSpinner = faSpinner;
   
   imageToShow: any;
   isImageLoading: boolean;

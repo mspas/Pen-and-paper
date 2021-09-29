@@ -1,5 +1,8 @@
 <div class="list-wrap">
-  <div *ngIf="isLoading === false">
+  <div class="spinner" *ngIf="isLoading">
+    <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+  </div>
+  <div *ngIf="!isLoading">
     <table>
       <colgroup>
          <col span="1" style="width: 60%;">
@@ -75,5 +78,4 @@
       </table>
     </div>
   </div>
-  <div *ngIf="isLoading" class="loading">Loading...</div>
 </div>

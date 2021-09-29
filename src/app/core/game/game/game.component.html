@@ -1,5 +1,7 @@
-<div class="container" style="padding-bottom: 100px;">
-  <div class="loading" *ngIf="isLoadingGame && isLoadingForum">Loading...</div>
+<div class="container">
+  <div class="spinner" *ngIf="isLoadingGame && isLoadingForum">
+    <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+  </div>
   <app-game-view
     *ngIf="!isLoadingGame"
     [showGameViewContent]="showGameViewContent"
@@ -12,7 +14,7 @@
     [waitingInvited]="waitingInvited"
   ></app-game-view>
   <app-forum
-    *ngIf="iAmGameParticipant && !isLoadingForum"
+    *ngIf="(iAmGameParticipant || iAmGameMaster) && !isLoadingForum"
     [iAmGameMaster]="iAmGameMaster"
     [profileData]="profileData"
     [gameData]="gameData"

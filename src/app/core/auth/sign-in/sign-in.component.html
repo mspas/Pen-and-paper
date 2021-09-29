@@ -1,8 +1,11 @@
 <div class="form-container">
   <form class="form" (ngSubmit)="onSignIn(f)" #f="ngForm">
     <div class="heading">Sign In</div>
-    <div class="alert btn-red" *ngIf="showAlert">
+    <div class="alert btn-red" *ngIf="!isLoading && showAlert">
       <p>{{ alertMessage }}</p>
+    </div>
+    <div class="spinner" *ngIf="isLoading">
+      <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
     </div>
     <div class="form-content">
       <div class="input-group">

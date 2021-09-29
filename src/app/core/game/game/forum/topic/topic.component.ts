@@ -25,7 +25,6 @@ export class TopicComponent implements OnInit {
   replyParam: string;
   replyPage: boolean = false;
 
-  participants: PersonalDataModel[];
   iAmGameMaster: boolean = false;
   linkPrevious: string;
   linkNext: string;
@@ -36,6 +35,7 @@ export class TopicComponent implements OnInit {
     this.pageNumber = parseInt(this.route.snapshot.queryParams.pageNumber);
     this.replyPage = this.route.snapshot.queryParams.reply === "true" ? true : false;
     this.pageSize = this._data.getPageSizeForum();
+    this.gameData.participantsProfiles.push(this.gameData.gameMaster);
   }
 
 }

@@ -41,6 +41,8 @@
             </tr>
         </tbody>
     </table>
-    <p *ngIf="isLoading" style="text-align: center;">Loading...</p>
+    <div class="spinner" *ngIf="isLoading">
+      <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+    </div>
     <p *ngIf="!isLoading && foundProfiles.length < 1" style="text-align: center;">No results!</p>
 </div>

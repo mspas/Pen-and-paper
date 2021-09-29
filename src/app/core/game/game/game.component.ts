@@ -1,15 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  ForumModel,
-  TopicModel,
-  TopicListModel,
-} from "src/app/core/models/forum.model";
+import { ForumModel } from "src/app/core/models/forum.model";
 import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
 import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "../../services/api.service";
 import { DataService } from "../../services/data.service";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-game",
@@ -17,6 +14,8 @@ import { DataService } from "../../services/data.service";
   styleUrls: ["./game.component.sass"],
 })
 export class GameComponent implements OnInit {
+  faSpinner = faSpinner;
+  
   forumData: ForumModel;
   gameData: GameAppModel;
   profileData: PersonalDataModel;
@@ -64,6 +63,7 @@ export class GameComponent implements OnInit {
         this.isLoadingGame = false;
 
         this.gameData = data;
+        this.gameMaster = this.gameData.gameMaster;
 
         this.gameData.participantsProfiles.forEach((user) => {
           this.setUserParticipationType(this.gameData, user);
@@ -72,7 +72,7 @@ export class GameComponent implements OnInit {
         });
   
         if (this.iAmGameParticipant || this.iAmGameMaster) 
-          this.getForumData(query.gameId, profileId);
+          this.getForumData(this.gameData.forumId, profileId);
       });
     });
   }
@@ -90,7 +90,6 @@ export class GameComponent implements OnInit {
         if (g2p.playerId === this.profileData.id) this.iAmGameParticipant = g2p.isAccepted;
       });
     }
-    if (user.id == game.gameMaster.id) this.gameMaster = user;
 
     if (game.masterId == this.profileData.id)
       this.iAmGameMaster = true;

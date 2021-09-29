@@ -1,5 +1,7 @@
 <div class="container">
-  <div class="profile-header" *ngIf="isLoading">Lodaing</div>
+  <div class="spinner" *ngIf="isLoading">
+    <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+  </div>
   <div class="profile-header" *ngIf="!isLoading">
     <div class="image-wrap center">
       <img

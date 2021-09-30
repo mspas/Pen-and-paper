@@ -34,8 +34,8 @@ export class SignInComponent implements OnInit {
     this.isLoading = true;
 
     this._auth.signInUser(form.value.login, form.value.password).subscribe(
-      (token: AccessToken) => {
-        let login = this._auth.decodeToken(token);
+      (tokenData) => {
+        let login = this._auth.decodeToken(tokenData.token, tokenData.expiration);
         this.router.navigate(["/profile", login]);
         this.isLoading = false;
       },

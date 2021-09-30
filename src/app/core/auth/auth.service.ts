@@ -65,7 +65,7 @@ export class AuthService {
     console.log(JSON.stringify(data));
     this._http.post<AccessToken>(this.url + "login/refresh", data).subscribe(
       (token: AccessToken) => {
-        let login = this.decodeToken(token);
+        let login = this.decodeToken1(token);
         console.log(token.token);
         //this.router.navigate(['/profile', login]);
       },
@@ -74,7 +74,18 @@ export class AuthService {
     );
   }
 
-  decodeToken(token: AccessToken) {
+  decodeToken(token: string, expiration: number) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("token-exp", expiration.toString());
+
+    let tokenInfo = this.getDecodedAccessToken(token);
+    localStorage.setItem("id", tokenInfo.unique_name);
+    localStorage.setItem("nick", tokenInfo.sub);
+
+    return tokenInfo.sub;
+  }
+
+  decodeToken1(token: AccessToken) {
     let accessToken = token.token;
     let accessTokenExp = token.expiration;
 
@@ -104,8 +115,8 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem("token");
     localStorage.removeItem("token-exp");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("refreshToken-exp");
+    //localStorage.removeItem("refreshToken");
+    //localStorage.removeItem("refreshToken-exp");
     localStorage.removeItem("id");
     localStorage.removeItem("nick");
     this.router.navigate(["/home"]);

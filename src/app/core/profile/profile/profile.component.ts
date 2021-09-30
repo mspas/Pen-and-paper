@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { PersonalDataModel } from "src/app/core/models/personaldata.model";
@@ -53,17 +53,21 @@ export class ProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _api: ApiService,
-    private _data: DataService
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe(async (params) => {
+      this.showChatFlag = false;
       this.isLoading = true;
       let myNickname = localStorage.getItem("nick");
       let userNick = params["login"];
-      this._api.getProfileData(userNick).subscribe((data) => {
-        this.setProfileData(data);
-      });
+      let profileData = await this._api.getProfileData(userNick).toPromise();
+
+      if (!profileData) 
+        return this.router.navigate(["profile", myNickname]);
+
+      this.setProfileData(profileData);
 
       this.isLoadingFriends = true;
       this.isLoadingGames = true;
@@ -93,7 +97,7 @@ export class ProfileComponent implements OnInit {
         }
       });
 
-      this._api.getPlayersGames(userNick).subscribe((data) => {
+      this._api.getPlayerGames(userNick).subscribe((data) => {
         this.userGamesList = data;
         this.isLoadingGames = false;
       });

@@ -3,7 +3,7 @@ import { ForumModel } from "src/app/core/models/forum.model";
 import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
 import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/personaldata.model";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../services/api.service";
 import { DataService } from "../../services/data.service";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
 
   pageSize: number = 50;
 
-  constructor(private route: ActivatedRoute, private _api: ApiService, private _data: DataService) {}
+  constructor(private route: ActivatedRoute, private _api: ApiService, private _data: DataService, private router: Router) {}
 
   ngOnInit() {
     this.pageSize = this._data.getPageSizeForum();
@@ -61,6 +61,9 @@ export class GameComponent implements OnInit {
   
       this._api.getGame(query.gameId).subscribe((data) => {
         this.isLoadingGame = false;
+
+        if (!data) 
+          return this.router.navigate(["profile", profileName]);
 
         this.gameData = data;
         this.gameMaster = this.gameData.gameMaster;

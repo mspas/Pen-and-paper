@@ -1,22 +1,22 @@
 <div class="forum-content">
-  <div *ngIf="gameData.status !== 'Ended'" class="btn-container">
+  <div *ngIf="gameData.status !== 'Ended' && subpageManager.topicList && !isLoadingTopics" class="btn-container">
     <div class="btn-wrap">
       <button class="btn-forum btn-green" (click)="onCreateTopic()">
         Create topic
       </button>
     </div>
     <div class="btn-wrap">
-      <button *ngIf="iAmGameMaster" class="btn-forum btn-yellow" (click)="onUserAccess()">
+      <button *ngIf="iAmGameMaster" class="btn-forum btn-yellow" (click)="showModal(0, true, 'Users access')">
         Users access
       </button>
     </div>
     <div class="btn-wrap">
-      <button *ngIf="iAmGameMaster" class="btn-forum btn-blue" (click)="onGameSettings()">
+      <button *ngIf="iAmGameMaster" class="btn-forum btn-blue" (click)="showModal(0, true, 'Game settings')">
         Game settings
       </button>
     </div>
     <div class="btn-wrap">
-      <button *ngIf="iAmGameMaster" class="btn-forum btn-blue" (click)="onManagePlayers()">
+      <button *ngIf="iAmGameMaster" class="btn-forum btn-blue" (click)="showModal(1, true, 'Players')">
         Manage players
       </button>
     </div>

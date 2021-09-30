@@ -44,14 +44,16 @@ export class ApiService {
     return this._http.get<PersonalDataModel>(`${this.url}/pdata/${user}`);
   }
 
+  getProfileDataById(id: number): Observable<PersonalDataModel> {
+    return this._http.get<PersonalDataModel>(`${this.url}/pdata/id/${id}`);
+  }
+
   getFriendsList(user: string): Observable<FriendModel[]> {
     return this._http.get<FriendModel[]>(`${this.url}/Friend/${user}`);
   }
 
-  getPlayersGames(user: string): Observable<GameToPersonAppModel[]> {
-    return this._http.get<GameToPersonAppModel[]>(
-      `${this.url}/GameToPerson/${user}`
-    );
+  getPlayerGames(user: string): Observable<GameToPersonAppModel[]> {
+    return this._http.get<GameToPersonAppModel[]>(`${this.url}/GameToPerson/${user}`);
   }
 
   getGame(gameId: number): Observable<GameAppModel> {

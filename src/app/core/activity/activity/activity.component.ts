@@ -92,7 +92,7 @@ export class ActivityComponent implements OnInit {
         case "my-games":
           this.resetFlags();
           this.myGamesFlag = true;
-          this._api.getPlayersGames(loggedNick).subscribe((data) => {
+          this._api.getPlayerGames(loggedNick).subscribe((data) => {
             this.myGamesList = data;
             this.isLoadingGames = false;
           });
@@ -149,7 +149,7 @@ export class ActivityComponent implements OnInit {
 
   refreshData(nick: string) {
     this.prepareMyMessagesData(nick);
-    this._api.getPlayersGames(nick).subscribe((data) => {
+    this._api.getPlayerGames(nick).subscribe((data) => {
       this.myGamesList = data;
     });
     this._api.getFriendsList(nick).subscribe((data) => {

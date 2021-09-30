@@ -5,7 +5,6 @@ import {
 } from "src/app/core/models/forum.model";
 
 import { ApiService } from "src/app/core/services/api.service";
-import { ForumService } from "src/app/core/services/forum.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -49,7 +48,7 @@ export class ReplyPostComponent implements OnInit {
     );
 
     this.isLoading = true;
-    this._api.sendForumMessage(msg).subscribe(data => {
+    this._api.sendForumMessage(msg).subscribe(async data => {
       this.isLoading = false;
       if (data.success) {
         let params = {
@@ -58,7 +57,7 @@ export class ReplyPostComponent implements OnInit {
           pageNumber: this.totalPages,
           pageSize: this.pageSize
         }
-        this.navigate(params);
+        this.router.navigate(["game"], { queryParams: params });
       }
       else {
         this.alertMessage = data.message

@@ -46,7 +46,7 @@ export class ForumComponent implements OnInit {
   
   myCardId: number = -1;
 
-  subpageManager: ButtonManager;
+  subpageManager: ButtonManager = new ButtonManager();
   showModalFlag: boolean = false;
   modalTitle: string;
   modalOption: number = -1;
@@ -55,7 +55,6 @@ export class ForumComponent implements OnInit {
 
   ngOnInit() {
     this.isLoadingTopics = true;
-    this.subpageManager = new ButtonManager();
 
     this.prepareTopicList();
 
@@ -114,14 +113,14 @@ export class ForumComponent implements OnInit {
     });
   }
 
-  ngOnChanges() {
+  /*ngOnChanges() {
     this.prepareTopicList();
-  }
+  }*/
 
   prepareTopicList() {
     this.topicsList = this.createEmptyTopicList();
 
-    this.forumData.topics.forEach((topic) => {
+    this.forumData.topics.forEach(async (topic) => {
       let author: PersonalDataModel = null;
       let lastPostAuthor: PersonalDataModel = null;
       let topicWasSeen = true;
@@ -132,6 +131,11 @@ export class ForumComponent implements OnInit {
       });
       if (this.gameData.gameMaster.id === topic.authorId) author = this.gameData.gameMaster;
       if (this.gameData.gameMaster.id === topic.lastActivityUserId) lastPostAuthor = this.gameData.gameMaster;
+
+      if (!author) 
+        author = await this._api.getProfileDataById(topic.authorId).toPromise();
+      if (!lastPostAuthor) 
+        lastPostAuthor = await this._api.getProfileDataById(topic.lastActivityUserId).toPromise();
 
       this.topicToPersonData.forEach((t2p) => {
         if (
@@ -189,6 +193,7 @@ export class ForumComponent implements OnInit {
   }
 
   navigate(params: any) {
+    console.log(this.subpageManager, params)
     if (params.hasOwnProperty("page")) 
       this.subpageManager.showChildComponent(params.page);
     else if (!params.hasOwnProperty("topicId"))

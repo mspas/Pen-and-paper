@@ -35,15 +35,17 @@ export class PostsComponent implements OnInit {
 
     for (let i = 0; i < this.topicData.messages.length; i++) {
       const message = this.topicData.messages[i];
-      let author;
+      let author = null;
       this.participants.forEach((user) => {
         if (message.senderId == user.id) author = user;
       });
 
+      if (!author) author = new PersonalDataModel(-1, "unknown", "", "player", "left the game", "", -1, null, false);   // workaround for bug - errer when it tries to prepare post for a user that left, but let's be honst this whole component is the one big WORKAROUND
+
       let post = new PostModel(message, author, null);
+        this.posts.push(post);
 
       if (post.user.photoName != null && post.user.photoName != "") {
-        this.posts.push(post);
         this.isImageLoading = true;
 
         this._api.getImage(post.user.photoName).subscribe(
@@ -57,8 +59,6 @@ export class PostsComponent implements OnInit {
             console.log(error);
           }
         );
-      } else {
-        this.posts.push(post);
       }
     }
   }

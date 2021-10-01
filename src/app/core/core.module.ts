@@ -6,7 +6,7 @@ import { SignInComponent } from "./auth/sign-in/sign-in.component";
 import { SignUpComponent } from "./auth/sign-up/sign-up.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "../app-routing.module";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProfileModule } from "./profile/profile.module";
 import { GameModule } from "./game/game.module";
@@ -19,6 +19,7 @@ import { DataService } from "./services/data.service";
 import { ForumService } from "./services/forum.service";
 import { CreateGameDataService } from "./services/create-game.service";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthInterceptor } from "./auth/auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ApiService,
     AuthService,
     AuthGuardService,
+    {  provide: HTTP_INTERCEPTORS,
+       useClass: AuthInterceptor,
+       multi: true
+    },
     DataService,
     ForumService,
     CreateGameDataService,

@@ -52,12 +52,12 @@ export class AuthService {
   }
 
   createAccount(account: AccountCreateModel): Observable<any> {
-    return this._http.post(`${this.url}account`, account);
+    return this._http.post(`${this.url}account`, account, { headers: { "No-Auth": "True" } });
   }
 
   signInUser(email: string, password: string): Observable<any> {
     const user: AuthModel = new AuthModel(email, password);
-    return this._http.post<AccessToken>(`${this.url}login`, user);
+    return this._http.post<AccessToken>(`${this.url}login`, user, { headers: { "No-Auth": "True" } });
   }
 
   refreshToken(token: string, login: string) {
@@ -112,7 +112,7 @@ export class AuthService {
     }
   }
 
-  public logout(): void {
+  public logout(path: string): void {
     localStorage.removeItem("token");
     localStorage.removeItem("token-exp");
     //localStorage.removeItem("refreshToken");

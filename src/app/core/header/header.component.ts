@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
   dropIsDown: boolean = false;
   private collapsedMyAccount: boolean = false;
-  private auth: AuthService;
   private timerSubscription: any;
   private newNotificationSet: CheckNotificationModel;
   private notificationSet: CheckNotificationModel = new CheckNotificationModel(
@@ -35,15 +34,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private router: Router,
-    private _data: DataService,
-    private renderer: Renderer2
+    private _data: DataService
   ) {
-    this.auth = _auth;
     this.isLoggedIn = _auth.isAuthenticated();
   }
 
   ngOnInit() {
-    this.isLoggedIn = this.auth.isAuthenticated();
+    this.isLoggedIn = this._auth.isAuthenticated();
     //this.refreshData();
     this._data.currentNotificationSet.subscribe((data) => {
       this.newNotificationSet = data;
@@ -61,7 +58,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.auth.logout();
+    this._auth.logout("/home");
   }
 
   goToMyProfile() {
@@ -91,7 +88,7 @@ export class HeaderComponent implements OnInit {
     this.notificationSet.friend = this.newNotificationSet.friend;
     this.notificationSet.game = this.newNotificationSet.game;
 
-    this.isLoggedIn = this.auth.isAuthenticated();
+    this.isLoggedIn = this._auth.isAuthenticated();
   }
 
   delay(ms: number) {

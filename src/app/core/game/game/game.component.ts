@@ -19,7 +19,7 @@ export class GameComponent implements OnInit {
   forumData: ForumModel;
   gameData: GameAppModel;
   profileData: PersonalDataModel;
-  gameMaster: PersonalDataModel;
+  gameMaster: PersonalDataListModel;
   
   topicToPersonData: TopicToPersonModel[];
 
@@ -59,14 +59,17 @@ export class GameComponent implements OnInit {
       this.waitingSelfRequested = [];
       this.waitingInvited = [];
   
-      this._api.getGame(query.gameId).subscribe((data) => {
-        this.isLoadingGame = false;
+      this._api.getGame(query.gameId).subscribe(async (data) => {
 
         if (!data) 
           return this.router.navigate(["profile", profileName]);
 
         this.gameData = data;
-        this.gameMaster = this.gameData.gameMaster;
+
+        let photo = await this.getImageData(this.gameData.gameMaster.photoName);
+        this.gameMaster = new PersonalDataListModel(this.gameData.gameMaster, photo);
+        
+        this.isLoadingGame = false;
 
         this.gameData.participantsProfiles.forEach((user) => {
           this.setUserParticipationType(this.gameData, user);
@@ -99,13 +102,14 @@ export class GameComponent implements OnInit {
   }
 
   sortPlayers(players, user) {
-    players.forEach((card) => {
+    players.forEach(async (card) => {
       if (
         card.playerId == user.id &&
         this.gameData.masterId !== user.id
       ) {
+        let photo = await this.getImageData(user.photoName);
         if (card.isAccepted) {
-          let playerListModel = new PersonalDataListModel(user, null);
+          let playerListModel = new PersonalDataListModel(user, photo);
           this.acceptedPlayers.push(playerListModel);
         } else {
           if (card.isMadeByPlayer) this.waitingSelfRequested.push(user);
@@ -127,5 +131,35 @@ export class GameComponent implements OnInit {
           this.isLoadingForum = false;
         });
     });
+  }
+
+
+  async getImageData(photoName: string): Promise<string> {
+    if (photoName === null || photoName === "unknown.png" || photoName === "" ) 
+      return null;
+
+    let blob = await this._api.getImage(photoName).toPromise();
+    let imageElem = await this.blobToImage(blob);
+    return imageElem.src;
+  }
+
+  blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      let dataURI;
+      reader.addEventListener(
+        "load",
+        () => {
+          dataURI = reader.result;
+          const img = document.createElement("img");
+          img.src = dataURI;
+          resolve(img);
+        },
+        false
+      );
+      if (blob) {
+        reader.readAsDataURL(blob);
+      }
+    })
   }
 }

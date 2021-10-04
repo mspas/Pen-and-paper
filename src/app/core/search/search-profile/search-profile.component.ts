@@ -35,54 +35,58 @@ export class SearchProfileComponent implements OnInit {
       let query = { ...params.keys, ...params };
 
       if (Object.keys(query).length > 0)
-        this._api.searchProfiles(query).subscribe((data) => {
+        this._api.searchProfiles(query).subscribe(async (data) => {
           this.isLoading = true;
           this.foundData = data.profilesResult;
           if (this.foundData.length < 1) this.isLoading = false;
           
-          this.prepareData(data.profilesResult);
+          await this.prepareData(data.profilesResult);
         });
     });
   }
 
-  prepareData(responseProfiles: any) {
+  async prepareData(responseProfiles: any) {
     this.foundProfiles = [];
     for (let i = 0; i < responseProfiles.length; i++) {
       const profile = responseProfiles[i];
-      this.foundProfiles.push(new PersonalDataListModel(profile, null));
+      let photo = null;
+      
       if (
         profile.photoName != null &&
         profile.photoName != "unknown.png"
       ) {
         this.isImageLoading = true;
-        this._api.getImage(profile.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(data, i);
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
+
+        let blob = await this._api.getImage(profile.photoName).toPromise();
+        let image = await this.blobToImage(blob);
+        photo = image.src;
+
+        this.isImageLoading = false;
       }
+
+      this.foundProfiles.push(new PersonalDataListModel(profile, photo));
       if (i === responseProfiles.length - 1) this.isLoading = false;
     }
   }
 
-  createImageFromBlob(image: Blob, index: number) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        this.foundProfiles[index].photo = reader.result;
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
+  blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      let dataURI;
+      reader.addEventListener(
+        "load",
+        () => {
+          dataURI = reader.result;
+          const img = document.createElement("img");
+          img.src = dataURI;
+          resolve(img);
+        },
+        false
+      );
+      if (blob) {
+        reader.readAsDataURL(blob);
+      }
+    })
   }
 
   async onSearch(form: NgForm) {

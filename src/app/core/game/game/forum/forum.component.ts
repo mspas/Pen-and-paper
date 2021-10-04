@@ -24,7 +24,7 @@ export class ForumComponent implements OnInit {
   @Input() gameData: GameAppModel;
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
-  @Input() gameMaster: PersonalDataModel;
+  @Input() gameMaster: PersonalDataListModel;
   @Input() acceptedPlayers: PersonalDataListModel[];
   @Input() waitingSelfRequested: PersonalDataListModel[];
   @Input() waitingInvited: PersonalDataListModel[];
@@ -86,28 +86,6 @@ export class ForumComponent implements OnInit {
       else {
         if (query.hasOwnProperty("page")) this.subpageManager.showChildComponent(query.page);
         else this.subpageManager.showTopicList();
-      }
-    });
-    
-    this.acceptedPlayers.forEach((element) => {
-      if (
-        element.data.photoName != null &&
-        element.data.photoName != "" &&
-        element.data.photoName != "unknown.png"
-      ) {
-        this._api.getImage(element.data.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(
-              data,
-              this.acceptedPlayers.indexOf(element)
-            );
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
       }
     });
   }
@@ -173,22 +151,6 @@ export class ForumComponent implements OnInit {
       list.push(item);
     }
     return list;
-  }
-
-  createImageFromBlob(image: Blob, i: number) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        if (i != -1) this.acceptedPlayers[i].photo = reader.result;
-        else this.imageToShow = reader.result;
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
   }
 
   navigate(params: any) {

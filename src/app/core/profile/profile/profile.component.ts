@@ -104,22 +104,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  createImageFromBlob(image: Blob) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        this.imageToShow = reader.result;
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
-
-  setProfileData(data) {
+  async setProfileData(data) {
     this.userProfileData = data;
     this.isLoading = false;
     let nick = localStorage.getItem("nick");
@@ -140,17 +125,31 @@ export class ProfileComponent implements OnInit {
       this.defaultImage = false;
 
       this.isImageLoading = true;
-      this._api.getImage(this.userProfileData.photoName).subscribe(
-        (data) => {
-          this.createImageFromBlob(data);
-          this.isImageLoading = false;
-        },
-        (error) => {
-          this.isImageLoading = false;
-          console.log(error);
-        }
-      );
+      let blob = await this._api.getImage(this.userProfileData.photoName).toPromise();
+      let image = await this.blobToImage(blob);
+      this.imageToShow = image.src;
+      this.isImageLoading = false;
     }
+  }
+
+  blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      let dataURI;
+      reader.addEventListener(
+        "load",
+        () => {
+          dataURI = reader.result;
+          const img = document.createElement("img");
+          img.src = dataURI;
+          resolve(img);
+        },
+        false
+      );
+      if (blob) {
+        reader.readAsDataURL(blob);
+      }
+    })
   }
 
   onSendInvite() {

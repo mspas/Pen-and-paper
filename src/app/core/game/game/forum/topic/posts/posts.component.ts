@@ -4,7 +4,7 @@ import {
   PostModel,
   PostImageModel,
 } from "src/app/core/models/forum.model";
-import { PersonalDataModel } from "src/app/core/models/personaldata.model";
+import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ApiService } from "src/app/core/services/api.service";
 import { ActivatedRoute } from "@angular/router";
 
@@ -15,7 +15,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class PostsComponent implements OnInit {
   @Input() topicData: TopicModel;
-  @Input() participants: PersonalDataModel[];
+  @Input() players: PersonalDataListModel[];
   @Input() iAmGameMaster: boolean;
   @ViewChild("divID", { static: true }) divID: ElementRef;
 
@@ -37,25 +37,18 @@ export class PostsComponent implements OnInit {
     for (let i = 0; i < this.topicData.messages.length; i++) {
       const message = this.topicData.messages[i];
       let author = null;
-      this.participants.forEach((user) => {
-        if (message.senderId == user.id) author = user;
+      this.players.forEach((user) => {
+        if (message.senderId == user.data.id) author = user;
       });
 
-      if (!author) author = new PersonalDataModel(-1, "unknown", "", "player", "left the game", "", -1, null, false);   // workaround for bug - errer when it tries to prepare post for a user that left, but let's be honst this whole component is the one big WORKAROUND
+      if (!author)                                        // workaround for bug - errer when it tries to prepare post for a user that left, but let's be honst this whole component is the one big WORKAROUND 
+        author = new PersonalDataListModel(
+          new PersonalDataModel(-1, "unknown", "", "player", "left the game", "", -1, null, false),
+          null);
 
       message.bodyMessage = await this.preparePostHtml(message.bodyMessage);
-
-      let image = null;
-
-      if (author.photoName != null && author.photoName != "") {
-        this.isImageLoading = true;
-
-        let blob = await this._api.getImage(author.photoName).toPromise();
-        let imageElem = await this.blobToImage(blob);
-        image = imageElem.src;
-      }
       
-      this.posts.push(new PostModel(message, author, image));
+      this.posts.push(new PostModel(message, author.data, author.photo));
     }
   }
 

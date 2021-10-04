@@ -20,7 +20,7 @@ import { DataService } from "src/app/core/services/data.service";
 export class GameViewComponent implements OnInit {
   @Input() profileData: PersonalDataModel;
   @Input() gameData: GameAppModel;
-  @Input() gameMaster: PersonalDataModel;
+  @Input() gameMaster: PersonalDataListModel;
   @Input() iAmGameMaster: boolean;
   @Input() showGameViewContent: boolean;
   @Input() acceptedPlayers: PersonalDataListModel[];
@@ -31,7 +31,7 @@ export class GameViewComponent implements OnInit {
   imageUrl: string = "";
   gameCategories: any[] = [];
 
-  imageToShow: any;
+  gameMasterImage: any;
   isImageLoading: boolean;
   data: any;
 
@@ -66,7 +66,6 @@ export class GameViewComponent implements OnInit {
     this.prepareGameConstantDetails(this.gameData);
 
     this.gameData.participantsProfiles.forEach((player) => {
-      if (this.gameData.masterId == player.id) this.gameMaster = player;
       if (this.profileData.id == player.id && !this.iAmGameMaster) {
         this.gameData.participants.forEach((card) => {
           if (this.profileData.id == card.playerId) {
@@ -87,64 +86,26 @@ export class GameViewComponent implements OnInit {
 
   ngOnChanges() {
     this.setNotificationFlags();
-    this.getProfileImages();
   }
 
-  getProfileImages() {
-    if (
-      this.gameMaster.photoName != null &&
-      this.gameMaster.photoName != "" &&
-      this.gameMaster.photoName != "unknown.png"
-    ) {
-      this._api.getImage(this.gameMaster.photoName).subscribe(
-        (data) => {
-          this.createImageFromBlob(data, -1);
-          this.isImageLoading = false;
+  blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      let dataURI;
+      reader.addEventListener(
+        "load",
+        () => {
+          dataURI = reader.result;
+          const img = document.createElement("img");
+          img.src = dataURI;
+          resolve(img);
         },
-        (error) => {
-          this.isImageLoading = false;
-          console.log(error);
-        }
+        false
       );
-    }
-    
-    this.acceptedPlayers.forEach((element) => {
-      if (
-        element.data.photoName != null &&
-        element.data.photoName != "" &&
-        element.data.photoName != "unknown.png"
-      ) {
-        this._api.getImage(element.data.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(
-              data,
-              this.acceptedPlayers.indexOf(element)
-            );
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
+      if (blob) {
+        reader.readAsDataURL(blob);
       }
-    });
-  }
-
-  createImageFromBlob(image: Blob, i: number) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        if (i != -1) this.acceptedPlayers[i].photo = reader.result;
-        else this.imageToShow = reader.result;
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
+    })
   }
 
   setGamePicture(category) {

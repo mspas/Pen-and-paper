@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { ForumModel, TopicModel } from "src/app/core/models/forum.model";
 import { GameAppModel } from "src/app/core/models/game.model";
 import { TopicToPersonModel } from "src/app/core/models/topic-to-person.model";
-import { PersonalDataModel } from "src/app/core/models/personaldata.model";
+import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ActivatedRoute } from "@angular/router";
 import { DataService } from "src/app/core/services/data.service";
 
@@ -14,6 +14,8 @@ import { DataService } from "src/app/core/services/data.service";
 export class TopicComponent implements OnInit {
   @Input() forumData: ForumModel;
   @Input() gameData: GameAppModel;
+  @Input() gameMaster: PersonalDataListModel;
+  @Input() players: PersonalDataListModel[];
   @Input() topicToPersonData: TopicToPersonModel[];
   @Input() profileData: PersonalDataModel;
   @Input() topicData: TopicModel;
@@ -35,7 +37,9 @@ export class TopicComponent implements OnInit {
     this.pageNumber = parseInt(this.route.snapshot.queryParams.pageNumber);
     this.replyPage = this.route.snapshot.queryParams.reply === "true" ? true : false;
     this.pageSize = this._data.getPageSizeForum();
+    
     this.gameData.participantsProfiles.push(this.gameData.gameMaster);
+    this.players.push(this.gameMaster);
   }
 
 }

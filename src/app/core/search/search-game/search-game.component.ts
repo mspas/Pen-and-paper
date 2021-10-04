@@ -46,80 +46,80 @@ export class SearchGameComponent implements OnInit {
       let query = { ...params.keys, ...params };
 
       if (Object.keys(query).length > 0)
-        this._api.searchGames(query).subscribe((data) => {
+        this._api.searchGames(query).subscribe(async (data) => {
           this.isLoading = true;
           this.foundData = data.gamesResult;
           if (this.foundData.length < 1) this.isLoading = false;
           
-          this.prepareData(data.gamesResult);
+          await this.prepareData(data.gamesResult);
         });
     });
   }
 
-  prepareData(responseGames) {
+  async prepareData(responseGames) {
     this.foundGames = [];
     for (let i = 0; i < responseGames.length; i++) {
       const game = responseGames[i];
-      this.foundGames.push(new GameListModel(game, false, null, null));
+      let photoGameMaster = null;
+      let photoGame = null;
+      let isDefaultImage = true;
       
       if (game.photoName != null && game.photoName != "unknown.png") {
         this.isImageLoading = true;
-        this._api.getImage(game.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(data, i, false);
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
-      } else this.setDefaultImage(i);
+
+        let blob = await this._api.getImage(game.photoName).toPromise();
+        let image = await this.blobToImage(blob);
+        photoGame = image.src;
+
+        this.isImageLoading = false;
+        isDefaultImage = false;
+      }
       
       if (
         game.gameMaster.photoName != null &&
-        game.photoName != "unknown.png"
+        game.gameMaster.photoName != "unknown.png"
       ) {
         this.isImageLoading = true;
-        this._api.getImage(game.gameMaster.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(data, i, true);
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
+
+        let blob = await this._api.getImage(game.gameMaster.photoName).toPromise();
+        let image = await this.blobToImage(blob);
+        photoGameMaster = image.src;
+
+        this.isImageLoading = false;
       }
+
+      if (isDefaultImage) photoGame = this.setDefaultImage(game.category);
+
+      this.foundGames.push(new GameListModel(game, isDefaultImage, photoGame, photoGameMaster));
 
       if (i === responseGames.length - 1) this.isLoading = false;
     }
   }
 
-  createImageFromBlob(image: Blob, index: number, photoGM: boolean) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        if (!photoGM) this.foundGames[index].photo = reader.result;
-        else this.foundGames[index].photoGM = reader.result;
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
+  blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      let dataURI;
+      reader.addEventListener(
+        "load",
+        () => {
+          dataURI = reader.result;
+          const img = document.createElement("img");
+          img.src = dataURI;
+          resolve(img);
+        },
+        false
+      );
+      if (blob) {
+        reader.readAsDataURL(blob);
+      }
+    })
   }
 
-  setDefaultImage(index: number) {
-    this.foundGames[index].defaultImage = true;
-    this.gameCategories.forEach((element) => {
-      if (this.foundGames[index].data.category == element.name) {
-        this.foundGames[index].photo = element.urlImage;
-      }
-    });
+  setDefaultImage(category: string) {
+    for (let i = 0; i < this.gameCategories.length; i++)
+      if (category === this.gameCategories[i].name)
+        return this.gameCategories[i].urlImage;
   }
 
   onBoxAvaliable(value: boolean) {

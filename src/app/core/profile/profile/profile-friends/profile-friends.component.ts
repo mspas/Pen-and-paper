@@ -58,68 +58,51 @@ export class ProfileFriendsComponent implements OnInit {
       });
     }
 
-    this.friendsAccepted.forEach((element) => {
+    this.friendsAccepted.forEach(async (element) => {
       if (
         element.data.photoName != null &&
         element.data.photoName != "unknown.png"
       ) {
         this.isImageLoading = true;
-        this._api.getImage(element.data.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(
-              data,
-              this.friendsAccepted.indexOf(element),
-              true
-            );
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
+
+        let blob = await this._api.getImage(element.data.photoName).toPromise();
+        let image = await this.blobToImage(blob);
+        element.photo = image.src;
+
+        this.isImageLoading = false;
       }
     });
 
-    this.invitations.forEach((element) => {
+    this.invitations.forEach(async (element) => {
       if (
         element.personalData.photoName != null &&
         element.personalData.photoName != "unknown.png"
       ) {
-        this.isImageLoading = true;
-        this._api.getImage(element.personalData.photoName).subscribe(
-          (data) => {
-            this.createImageFromBlob(
-              data,
-              this.invitations.indexOf(element),
-              false
-            );
-            this.isImageLoading = false;
-          },
-          (error) => {
-            this.isImageLoading = false;
-            console.log(error);
-          }
-        );
+        let blob = await this._api.getImage(element.personalData.photoName).toPromise();
+        let image = await this.blobToImage(blob);
+        element.photo = image.src;
       }
     });
   }
 
-  createImageFromBlob(image: Blob, id: number, check: boolean) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        if (id > -1)
-          if (check) this.friendsAccepted[id].photo = reader.result;
-          else this.invitations[id].photo = reader.result;
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
+  blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      let dataURI;
+      reader.addEventListener(
+        "load",
+        () => {
+          dataURI = reader.result;
+          const img = document.createElement("img");
+          img.src = dataURI;
+          resolve(img);
+        },
+        false
+      );
+      if (blob) {
+        reader.readAsDataURL(blob);
+      }
+    })
   }
 
   onAcceptFriend(id: number) {

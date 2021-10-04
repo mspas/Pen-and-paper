@@ -81,15 +81,15 @@
               <a
                 class="profile-link"
                 role="button"
-                [routerLink]="['/profile', gameMaster.login]"
+                [routerLink]="['/profile', gameMaster.data.login]"
               >
                 <img
-                  [src]="imageToShow"
+                  [src]="gameMaster.photo"
                   class="profile-photo"
                   alt="Profile image"
                 />
-                <span class="name">{{ gameMaster.firstname }} {{ gameMaster.lastname }} ({{
-                  gameMaster.login
+                <span class="name">{{ gameMaster.data.firstname }} {{ gameMaster.data.lastname }} ({{
+                  gameMaster.data.login
                 }})</span>
               </a>
             </td>

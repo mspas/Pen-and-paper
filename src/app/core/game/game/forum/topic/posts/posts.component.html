@@ -33,8 +33,8 @@
           ><i>Edited on {{ post.message.editDdate | date: "long" }}</i></small
         >
       </p>
-      <p class="message-body" id="message{{ i }}"></p>
-      <!--<h4>{{post.message.bodyMessage}}</h4>-->
+      <!--<p class="message-body" id="message{{ i }}"></p>-->
+      <p [innerHTML]="post.message.bodyMessage"></p>
     </div>
   </div>
   <div #divID id="divTemp"></div>

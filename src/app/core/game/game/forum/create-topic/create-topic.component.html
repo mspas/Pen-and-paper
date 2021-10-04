@@ -63,7 +63,7 @@
   </div>
 </div>
 
-<app-text-editor (getMsgHTML)="onCreate($event)"></app-text-editor>
+<app-text-editor (getMessageData)="onCreate($event)"></app-text-editor>
 
 <div *ngIf="showAlert" class="alert-wrap">
   <div ngClass class="alert btn-red">{{ alertMessage }}</div>

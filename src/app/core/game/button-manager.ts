@@ -9,7 +9,7 @@ export class ButtonManager {
 
   constructor() {
     this.topic = false;
-    this.topicList = false;
+    this.topicList = true;
     this.managePlayers = false;
     this.gameSettings = false;
     this.userAccess = false;

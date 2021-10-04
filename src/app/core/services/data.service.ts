@@ -34,7 +34,7 @@ export class DataService {
 
   private pageSizeForum = 10;
 
-  private acceptedImageExtensions = ['gif', 'jpg', 'png'];
+  private acceptedImageExtensions = ['gif', 'jpg', 'png', 'GIF', 'JPG', 'PNG'];
 
   private gameCategories: any[] = [
     {

@@ -34,20 +34,40 @@ export class ReplyPostComponent implements OnInit {
     this.editorContent = document.querySelector(".editor");
   }
 
-  async getMsgHTML(body) {
-    if (body.length < 1) return false;
+  async getMessageData(messageData: any) {
+    let bodyHtml = messageData.html;
+    let filesArray = messageData.files;
+    let userId = parseInt(localStorage.getItem("id"));
 
-    let date = new Date();
-    let msg = new MessageForumCreateModel(
-      date,
-      null,
-      body,
-      parseInt(localStorage.getItem("id")),
-      this.topicData.id,
-      false
-    );
+    if (bodyHtml.length < 1) return false;
 
     this.isLoading = true;
+
+    let arraySplitImg = bodyHtml.split(`<img src="`);
+    let arraySplit = [];
+
+    for (let i = 0; i < arraySplitImg.length; i++) {            // split message in a way that every second item in output array will be representing an image
+      const element = arraySplitImg[i].split(`" alt="findme">`);
+      for (let j = 0; j < element.length; j++) 
+        arraySplit.push(element[j]);
+    }
+
+    let bodyMessage = "";
+    for (let i = 0, fileIndex = 0; i < arraySplit.length; i++) {    // each second element stands for image which needs to be replaced with acctual img data
+      if (i%2 !== 0) {
+        let imageResponse = await this._api.uploadPhoto(3, userId, false, filesArray[fileIndex]).toPromise();
+        if (imageResponse.success)
+          arraySplit[i] = `<img src="${imageResponse.message}" alt="findme">`
+        else 
+          arraySplit[i] = `<img src="${filesArray[fileIndex].name}" alt="findme">`     //doodoo
+        fileIndex++;
+      }
+      bodyMessage += arraySplit[i];
+    }
+
+    let date = new Date();
+    let msg = new MessageForumCreateModel(date, null, bodyMessage, userId, this.topicData.id, false);
+
     this._api.sendForumMessage(msg).subscribe(async data => {
       this.isLoading = false;
       if (data.success) {
@@ -64,26 +84,5 @@ export class ReplyPostComponent implements OnInit {
         this.showAlert = true;
       }
     });
-
-    /*await this.delay(500);
-    this._api
-      .getTopicData(this.topicData.id)
-      .subscribe((data) => (this.topicData = data));
-    await this.delay(300);
-    this._forum.currentApiResponse.subscribe((data) => (this.msgId = data));
-    if (this.msgId != null && this.msgId != -1) {
-      let res = await this._router.navigate([
-        "/game",
-        this.gameId,
-        this.topicData.id,
-        this.topicData.messagesAmount,
-        "view",
-      ]);
-      window.location.reload();
-    } else this.error = true;*/
-  }
-
-  delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

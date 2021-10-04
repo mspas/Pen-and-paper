@@ -18,7 +18,6 @@ import { AuthService } from './auth.service';
       req: HttpRequest<any>,
       next: HttpHandler
     ): Observable<HttpEvent<any>> {
-      console.log(req)
       if (req.headers.get('No-Auth') === 'True') {
         return next.handle(req.clone());
       }

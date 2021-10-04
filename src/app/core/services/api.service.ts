@@ -153,9 +153,8 @@ export class ApiService {
       .subscribe((error) => console.log(error));
   }
 
-  createTopic(topic: NewTopicModel): Observable<TopicModel>  {
-    return this._http
-      .post<TopicModel>(this.url + "/Topic", topic);
+  createTopic(topic: NewTopicModel): Observable<any>  {
+    return this._http.post<any>(`${this.url}/Topic`, topic);
   }
 
   /*createTopic(topic: NewTopicModel) {
@@ -177,10 +176,6 @@ export class ApiService {
     return this._http.get<any>(`${this.url}/pdata/search`, { params: params });
   }
 
-  getPostImages(fileName: string): Observable<Blob> {
-    return this._http.get(this.url + "/Photo/" + fileName, { responseType: "blob" });
-  }
-
   uploadPhoto(type: number, id: number, isBgPhoto: boolean, file): Observable<any> {
     var formData = new FormData();
     formData.append("file", file);
@@ -188,7 +183,7 @@ export class ApiService {
   }
 
   getImage(fileName: string): Observable<Blob> {
-    return this._http.get(this.url + "/Photo/" + fileName, { responseType: "blob" });
+    return this._http.get(`${this.url}/Photo/${fileName}`, { responseType: "blob" });
   }
 
   createGame(game: GameCreateModel): Observable<any> {

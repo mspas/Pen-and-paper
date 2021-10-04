@@ -37,7 +37,7 @@ export class ForumComponent implements OnInit {
 
   topicsList: any = [];
 
-  isLoadingTopics: boolean = true;
+  isLoadingTopics: boolean = false;
   isLoading: boolean = false;
   topicData: TopicModel;
 
@@ -54,14 +54,13 @@ export class ForumComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private _api: ApiService) {}
 
   ngOnInit() {
-    this.isLoadingTopics = true;
-
     this.prepareTopicList();
 
     this.route.queryParams.subscribe((params) => {
       let query = { ...params.keys, ...params };
       if (query.hasOwnProperty("topicId")) {
         this.isLoading = true;
+        this.isLoadingTopics = true;
         this.subpageManager.showTopic();
 
         this._api
@@ -193,7 +192,6 @@ export class ForumComponent implements OnInit {
   }
 
   navigate(params: any) {
-    console.log(this.subpageManager, params)
     if (params.hasOwnProperty("page")) 
       this.subpageManager.showChildComponent(params.page);
     else if (!params.hasOwnProperty("topicId"))

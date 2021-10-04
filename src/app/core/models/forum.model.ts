@@ -38,7 +38,7 @@ export class TopicModel {
     public lastActivityDate: Date,
     public lastActivityUserId: number,
     public totalPages: number,
-    public messages: any,
+    public messages: MessageForumModel[],
     public userConnected: TopicToPersonModel[]
   ) {}
 }

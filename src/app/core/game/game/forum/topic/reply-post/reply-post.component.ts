@@ -6,6 +6,7 @@ import {
 
 import { ApiService } from "src/app/core/services/api.service";
 import { Router } from "@angular/router";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-reply-post",
@@ -27,6 +28,7 @@ export class ReplyPostComponent implements OnInit {
   showAlert: boolean = false;
   alertMessage: string = "";
 
+  faSpinner = faSpinner;
 
   constructor(private _api: ApiService, private router: Router) {}
 

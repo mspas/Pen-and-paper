@@ -7,6 +7,7 @@ import {
 import { PersonalDataListModel, PersonalDataModel } from "src/app/core/models/personaldata.model";
 import { ApiService } from "src/app/core/services/api.service";
 import { ActivatedRoute } from "@angular/router";
+import { faTrashAlt, faEdit, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-posts",
@@ -17,8 +18,12 @@ export class PostsComponent implements OnInit {
   @Input() topicData: TopicModel;
   @Input() players: PersonalDataListModel[];
   @Input() iAmGameMaster: boolean;
-  @ViewChild("divID", { static: true }) divID: ElementRef;
 
+  faTrashAlt = faTrashAlt;
+  faEdit = faEdit;
+  faSpinner = faSpinner;
+
+  loggedUserId: number = -1;
   html: string;
   test: string = "";
   page: number;
@@ -27,12 +32,19 @@ export class PostsComponent implements OnInit {
   postImages: PostImageModel[] = [];
   isImageLoading: boolean;
   isLoading: boolean;
+  isLoadingDelete: boolean = false;
+  showModal: boolean = false;
+  messageToDeleteId: number = -1;
+  showAlert: boolean = false;
+  alertMessage: string = "";
+
 
   constructor(private _api: ApiService, private route: ActivatedRoute) {}
 
   async ngOnInit() {
     this.gameId = this.route.snapshot.params.gameId;
     this.page = parseInt(this.route.snapshot.params.page);
+    this.loggedUserId = parseInt(localStorage.getItem("id"));
 
     for (let i = 0; i < this.topicData.messages.length; i++) {
       const message = this.topicData.messages[i];
@@ -97,5 +109,34 @@ export class PostsComponent implements OnInit {
         reader.readAsDataURL(blob);
       }
     })
+  }
+
+  onEditPostClick(messageForumId: number) {
+    alert("Not implemented!");
+  }
+
+  onDeletePostClick(messageForumId: number) {
+    this.showModal = true;
+    this.messageToDeleteId = messageForumId;
+  }
+
+  deleteMessage() {
+    this.isLoadingDelete = true;
+    this._api.deleteForumMessage(this.messageToDeleteId).subscribe(data => {
+      this.isLoadingDelete = false;
+      if (data.success) {
+        this.showAlert = false;
+        window.location.reload();
+      }
+      else {
+        this.alertMessage = "Error! Something went wrong!"
+        this.showAlert = true;
+      }
+    })
+  }
+
+  closeModal(value: boolean) {
+    this.showModal = value;
+    this.messageToDeleteId = -1;
   }
 }

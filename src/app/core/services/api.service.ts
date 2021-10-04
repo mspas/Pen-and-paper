@@ -164,8 +164,11 @@ export class ApiService {
   }*/
 
   sendForumMessage(msg: MessageForumCreateModel) {
-    return this._http
-      .post<any>(this.url + "/MessageForum", msg);
+    return this._http.post<any>(`${this.url}/MessageForum`, msg);
+  }
+
+  deleteForumMessage(messageId: number): Observable<any> {
+    return this._http.delete(`${this.url}/MessageForum/${messageId}`);
   }
 
   searchGames(params: any): Observable<any> {

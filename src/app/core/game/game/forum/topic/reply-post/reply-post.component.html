@@ -1,3 +1,5 @@
 <app-text-editor (getMessageData)="getMessageData($event)"></app-text-editor>
-<div *ngIf="isLoading">Loading...</div>
+<div class="spinner" *ngIf="isLoading">
+    <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+</div>
 <div *ngIf="showAlert" class="alert">{{ alertMessage }}</div>

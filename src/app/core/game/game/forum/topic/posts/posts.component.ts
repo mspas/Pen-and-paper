@@ -30,6 +30,8 @@ export class PostsComponent implements OnInit {
   gameId: number;
   posts: PostModel[] = [];
   postImages: PostImageModel[] = [];
+  fileNames: any[] = [];
+
   isImageLoading: boolean;
   isLoading: boolean;
   isLoadingDelete: boolean = false;
@@ -67,9 +69,12 @@ export class PostsComponent implements OnInit {
   async preparePostHtml(message: string) {
     let arraySplitImg = message.split(`<img src="`);
     let arraySplit = [];
+    let postFileNames = [];
 
-    if (arraySplitImg.length < 2)
+    if (arraySplitImg.length < 2) {
+      this.fileNames.push(postFileNames);
       return message;
+    }
 
     for (let i = 0; i < arraySplitImg.length; i++) {            // split message in a way that every second item in output array will be representing an image
       const element = arraySplitImg[i].split(`" alt="findme">`);
@@ -80,6 +85,7 @@ export class PostsComponent implements OnInit {
     let bodyMessage = "";
     for (let i = 0; i < arraySplit.length; i++) {    // each second element stands for image which needs to be replaced with acctual img data
       if (i%2 !== 0) {
+        postFileNames.push(arraySplit[i]);
         let blob = await this._api.getImage(arraySplit[i]).toPromise();
         let image = await this.blobToImage(blob);
         if (image)
@@ -87,6 +93,8 @@ export class PostsComponent implements OnInit {
       }
       bodyMessage += arraySplit[i];
     }
+
+    this.fileNames.push(postFileNames);
 
     return bodyMessage;
   }
@@ -120,8 +128,41 @@ export class PostsComponent implements OnInit {
     this.messageToDeleteId = messageForumId;
   }
 
-  deleteMessage() {
+  deleteImages(filesToDelete: string[]) {
+    let check = true;
+    return new Promise((resolve, reject) => {
+      if (filesToDelete.length < 1)
+        resolve(check);
+      for (let i = 0; i < filesToDelete.length; i++) {
+        const fileName = filesToDelete[i];
+        this._api.deletePhoto(3, this.loggedUserId, fileName).subscribe(data => {
+          if (!data.success)
+            check = false;
+          if (i === filesToDelete.length - 1)
+            resolve(check);
+        })
+      };
+    });
+  }
+
+  async deleteMessage() {
+    let filesToDelete = [];
     this.isLoadingDelete = true;
+    
+    for (let i = 0; i < this.posts.length; i++) {
+      const post = this.posts[i];
+      if (post.message.id === this.messageToDeleteId) filesToDelete = this.fileNames[i];
+    }
+
+    let checkDeleteImages = await this.deleteImages(filesToDelete);
+
+    if (!checkDeleteImages) {
+      this.alertMessage = "Error while deleting images!"
+      this.showAlert = true;
+      this.isLoadingDelete = false;
+      return false;
+    }
+
     this._api.deleteForumMessage(this.messageToDeleteId).subscribe(data => {
       this.isLoadingDelete = false;
       if (data.success) {

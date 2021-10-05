@@ -185,6 +185,10 @@ export class ApiService {
     return this._http.post(`${this.url}/Photo/${type}/${isBgPhoto}/${id}`, formData);
   }
 
+  deletePhoto(photoType: number, ownerId: number, fileName: string): Observable<any> {
+    return this._http.delete(`${this.url}/Photo/${photoType}/${ownerId}/${fileName}`);
+  }
+
   getImage(fileName: string): Observable<Blob> {
     return this._http.get(`${this.url}/Photo/${fileName}`, { responseType: "blob" });
   }

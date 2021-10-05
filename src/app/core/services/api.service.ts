@@ -157,6 +157,10 @@ export class ApiService {
     return this._http.post<any>(`${this.url}/Topic`, topic);
   }
 
+  deleteTopic(topicId: number): Observable<any>  {
+    return this._http.delete(`${this.url}/Topic/${topicId}`);
+  }
+
   /*createTopic(topic: NewTopicModel) {
     return this._http
       .post(this.url + "/Topic", topic)

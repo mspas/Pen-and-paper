@@ -54,7 +54,8 @@
                 </li>
               </ul>
             </div>
-            <p class="media-bottom">
+            <div class="media-bottom">
+              <div class="bottom-info">
                 <span
                   class="font-montserrat topic-info clickable"
                   [routerLink]="['/profile', topic.author.login]"
@@ -64,10 +65,41 @@
                   }})
                 </span>
                 <span class="font-montserrat msg-info">- {{ topic.lastPostDate | date: "h:mm:ss dd-MM-yyy" }} - LAST POST</span>
-            </p>
+              </div>
+              <div *ngIf="profileData.id === topic.author.id" class="icons-wrap">
+                <div class="option" (click)="onEditTopicClick(topic.topicData.id)">
+                  <fa-icon class="icon" [icon]="faEdit"></fa-icon>
+                  <span class="title">Edit</span>
+                </div>
+                <div class="option" (click)="onDeleteTopicClick(topic.topicData.id)">
+                  <fa-icon class="icon" [icon]="faTrashAlt"></fa-icon>
+                  <span class="title">Delete</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="showModal">
+  <app-modal [modalTitle]="'Confirmation'" [showModalFlag]="showModal" (closeModalEvent)="closeModal($event)">
+    <div class="confirmation-modal-body">
+      <div *ngIf="showAlert" class="alert">{{ alertMessage }}</div>
+      <div class="spinner" *ngIf="isLoadingDelete">
+        <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+      </div>
+      <p class="confirmation-text">Are you sure you want to delete this topic?</p>
+      <div class="btns-wrap center">
+        <button class="btn-forum btn-red" (click)="deleteTopic()">
+          Delete
+        </button>
+        <button class="btn-forum btn-yellow" (click)="closeModal(false)">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </app-modal>
 </div>

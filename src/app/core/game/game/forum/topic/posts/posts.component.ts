@@ -173,7 +173,7 @@ export class PostsComponent implements OnInit {
         this.alertMessage = "Error! Something went wrong!"
         this.showAlert = true;
       }
-    })
+    });
   }
 
   closeModal(value: boolean) {

@@ -11,6 +11,8 @@ import { ButtonManager } from "../../button-manager";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FriendModel } from "src/app/core/models/friend.model";
+import { GameToPersonListModel } from "src/app/core/models/game-to-person.model";
 
 const categoriesDefault = ["General", "Game", "Support", "Off-topic"];
 
@@ -26,8 +28,8 @@ export class ForumComponent implements OnInit {
   @Input() profileData: PersonalDataModel;
   @Input() gameMaster: PersonalDataListModel;
   @Input() acceptedPlayers: PersonalDataListModel[];
-  @Input() waitingSelfRequested: PersonalDataListModel[];
-  @Input() waitingInvited: PersonalDataListModel[];
+  @Input() waitingSelfRequested: GameToPersonListModel[];
+  @Input() waitingInvited: GameToPersonListModel[];
   @Input() iAmGameMaster: boolean;
 
   faSpinner = faSpinner;
@@ -36,7 +38,6 @@ export class ForumComponent implements OnInit {
   totalPages: number = -1;
 
   topicsList: any = [];
-
   isLoadingTopics: boolean = false;
   isLoading: boolean = false;
   topicData: TopicModel;
@@ -45,6 +46,10 @@ export class ForumComponent implements OnInit {
   isImageLoading: boolean;
   
   myCardId: number = -1;
+  myUserName: string;
+
+  isLoadingFriendsList: boolean = false;
+  friendsList: PersonalDataListModel[] = [];
 
   subpageManager: ButtonManager = new ButtonManager();
   showModalFlag: boolean = false;
@@ -55,6 +60,7 @@ export class ForumComponent implements OnInit {
 
   ngOnInit() {
     this.prepareTopicList();
+    this.myUserName = localStorage.getItem("nick");
 
     this.route.queryParams.subscribe((params) => {
       let query = { ...params.keys, ...params };
@@ -177,7 +183,71 @@ export class ForumComponent implements OnInit {
   }
 
   onManagePlayers() {
-    this.navigate({gameId: this.gameData.id, page: "players"});
+    this.isLoadingFriendsList = true;
+    this._api.getFriendsList(this.myUserName).subscribe(async data => {
+      this.isLoadingFriendsList = false;
+
+      console.log(this.waitingSelfRequested);
+      let filteredList = [];
+
+      for (let i = 0; i < data.length; i++) {
+        const friend = data[i];
+        let check = true;
+
+        if (!friend.isAccepted)
+          continue;
+
+        this.acceptedPlayers.forEach(player => {
+          if (friend.personalData.id === player.data.id)
+            check = false;
+        });
+        this.waitingInvited.forEach(request => {
+          if (friend.personalData.id === request.profileData.id)
+            check = false;
+        });
+        this.waitingSelfRequested.forEach(request => {
+          if (friend.personalData.id === request.profileData.id)
+            check = false;
+        });
+
+        if (check) {
+          let photo = await this.getImageData(friend.personalData.photoName);
+          filteredList.push(new PersonalDataListModel(friend.personalData, photo));
+        }
+      }
+      
+      this.friendsList = filteredList;
+      this.showModal(1, true, "Manage players");
+    })
+  }
+
+  async getImageData(photoName: string): Promise<string> {
+    if (photoName === null || photoName === "unknown.png" || photoName === "" ) 
+      return null;
+
+    let blob = await this._api.getImage(photoName).toPromise();
+    let imageElem = await this.blobToImage(blob);
+    return imageElem.src;
+  }
+
+  blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
+    return new Promise(resolve => {
+      let reader = new FileReader();
+      let dataURI;
+      reader.addEventListener(
+        "load",
+        () => {
+          dataURI = reader.result;
+          const img = document.createElement("img");
+          img.src = dataURI;
+          resolve(img);
+        },
+        false
+      );
+      if (blob) {
+        reader.readAsDataURL(blob);
+      }
+    })
   }
 
   onEndGame() {

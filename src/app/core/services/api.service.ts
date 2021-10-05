@@ -206,16 +206,8 @@ export class ApiService {
   }
 
   acceptJoinGame(invite: GameToPersonAppModel): Observable<any> {
-    let accept = new GameToPersonApiModel(
-      invite.id,
-      invite.gameId,
-      invite.playerId,
-      invite.isGameMaster,
-      true,
-      invite.isMadeByPlayer,
-      invite.characterHealth
-    );
-    return this._http.put<GameToPersonApiModel>(`${this.url}/GameToPerson/${accept.id}`, accept);
+    invite.isAccepted = true;
+    return this._http.put<GameToPersonApiModel>(`${this.url}/GameToPerson/`, invite);
   }
 
   declineJoinGame(inviteId: number): Observable<any> {

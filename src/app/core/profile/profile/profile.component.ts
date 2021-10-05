@@ -60,6 +60,7 @@ export class ProfileComponent implements OnInit {
     this.route.params.subscribe(async (params) => {
       this.showChatFlag = false;
       this.isLoading = true;
+      this.defaultImage = true;
       let myNickname = localStorage.getItem("nick");
       let userNick = params["login"];
       let profileData = await this._api.getProfileData(userNick).toPromise();
@@ -120,7 +121,8 @@ export class ProfileComponent implements OnInit {
 
     if (
       this.userProfileData.photoName != null &&
-      this.userProfileData.photoName != ""
+      this.userProfileData.photoName != "" &&
+      this.userProfileData.photoName != "unknown.png"
     ) {
       this.defaultImage = false;
 

@@ -1,0 +1,32 @@
+@import '../../../../../../../_variables'
+
+.manage-players-content
+    max-height: 70%
+    overflow-y: auto
+    @media screen and (max-width: 420px)
+        max-height: 90%
+    .players-list-container
+        .list-title
+            margin: 15px 0 5px 0
+            font-size: 0.8em
+            text-align: center
+        .players-list
+            border-bottom-style: solid
+            border-color: #e4e3e39a
+            .player-with-buttons
+                display: grid
+                grid-template-columns: 8fr 2fr
+                .buttons-wrap
+                    button
+                        background: transparent
+                        border: none
+                        cursor: pointer
+                        font-size: 1em !important
+                    .btn-accept
+                        color: $green
+                        &:hover
+                            color: #52dc9071
+                    .btn-decline
+                        color: #f15050
+                        &:hover
+                            color: $third

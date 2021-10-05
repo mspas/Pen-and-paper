@@ -1,0 +1,152 @@
+<div class="spinner" *ngIf="isLoading">
+    <fa-icon class="spinner-icon" [icon]="faSpinner"></fa-icon>
+</div>
+<div class="manage-players-content">
+    <div *ngIf="acceptedPlayers.length > 0" class="players-list-container">
+        <p class="list-title">Players:</p>
+        <div class="players-list">
+            <a
+                *ngFor="let player of acceptedPlayers; index as i"
+                class="profile-link"
+                role="button"
+                [routerLink]="['/profile', player.data.login]"
+            >
+                <img
+                    *ngIf="player.photo"
+                    [src]="player.photo"
+                    alt="Profile image"
+                />
+                <img
+                    *ngIf="player.photo == null"
+                    src="assets/unknown.png"
+                    alt="Profile image"
+                />
+                <span class="name">
+                    {{ player.data.firstname }} {{ player.data.lastname }} ({{ player.data.login }})
+                </span>
+            </a>
+        </div>
+    </div>
+    <p style="text-align: center; margin: 30px 0" *ngIf="acceptedPlayers.length < 1">There are no players yet!</p>
+
+    <div *ngIf="waitingInvited.length > 0" class="players-list-container">
+        <p class="list-title">Waiting invitations:</p>
+        <div class="players-list">
+            <div class="player-with-buttons" *ngFor="let request of waitingInvited; index as i">
+                <div class="details">
+                    <a
+                        class="profile-link"
+                        role="button"
+                        [routerLink]="['/profile', request.profileData.login]"
+                    >
+                        <img
+                            *ngIf="request.photo"
+                            [src]="request.photo"
+                            alt="Profile image"
+                        />
+                        <img
+                            *ngIf="request.photo == null"
+                            src="assets/unknown.png"
+                            alt="Profile image"
+                        />
+                        <span class="name">
+                            {{ request.profileData.firstname }} {{ request.profileData.lastname }} ({{ request.profileData.login }})
+                        </span>
+                    </a>
+                </div>
+                <div class="buttons-wrap center">
+                    <button
+                        type="button"
+                        class="btn-decline"
+                        (click)="onDeclineRequest(request.card.id)"
+                        >
+                            <fa-icon class="icon" title="Decline" [icon]="faTimes"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="waitingSelfRequested.length > 0" class="players-list-container">
+        <p class="list-title">New requests:</p>
+        <div class="players-list">
+            <div class="player-with-buttons" *ngFor="let request of waitingSelfRequested; index as i">
+                <div class="details">
+                    <a
+                        class="profile-link"
+                        role="button"
+                        [routerLink]="['/profile', request.profileData.login]"
+                    >
+                        <img
+                            *ngIf="request.photo"
+                            [src]="request.photo"
+                            alt="Profile image"
+                        />
+                        <img
+                            *ngIf="request.photo == null"
+                            src="assets/unknown.png"
+                            alt="Profile image"
+                        />
+                        <span class="name">
+                            {{ request.profileData.firstname }} {{ request.profileData.lastname }} ({{ request.profileData.login }})
+                        </span>
+                    </a>
+                </div>
+                <div class="buttons-wrap center">
+                    <button
+                        type="button"
+                        class="btn-accept"
+                        (click)="onAcceptRequest(request.card.id)"
+                        >
+                            <fa-icon class="icon" title="Accept" [icon]="faCheck"></fa-icon>
+                    </button>
+                    <button
+                        type="button"
+                        class="btn-decline"
+                        (click)="onDeclineRequest(request.card.id)"
+                        >
+                            <fa-icon class="icon" title="Decline" [icon]="faTimes"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="friendsList.length > 0" class="players-list-container">
+        <p class="list-title">Available to invite:</p>
+        <div class="players-list">
+            <div class="player-with-buttons" *ngFor="let player of friendsList; index as i">
+                <div class="details">
+                    <a
+                        class="profile-link"
+                        role="button"
+                        [routerLink]="['/profile', player.data.login]"
+                    >
+                        <img
+                            *ngIf="player.photo"
+                            [src]="player.photo"
+                            alt="Profile image"
+                        />
+                        <img
+                            *ngIf="player.photo == null"
+                            src="assets/unknown.png"
+                            alt="Profile image"
+                        />
+                        <span class="name">
+                            {{ player.data.firstname }} {{ player.data.lastname }} ({{ player.data.login }})
+                        </span>
+                    </a>
+                </div>
+                <div class="buttons-wrap center">
+                    <button
+                        type="button"
+                        class="btn-accept"
+                        (click)="onInviteFriend(player.data.id)"
+                        >
+                            <fa-icon class="icon" title="Invite" [icon]="faPlus"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../services/api.service";
 import { DataService } from "../../services/data.service";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { GameToPersonListModel } from "../../models/game-to-person.model";
 
 @Component({
   selector: "app-game",
@@ -24,8 +25,8 @@ export class GameComponent implements OnInit {
   topicToPersonData: TopicToPersonModel[];
 
   acceptedPlayers: PersonalDataListModel[] = [];
-  waitingSelfRequested: PersonalDataModel[] = [];
-  waitingInvited: PersonalDataModel[] = [];
+  waitingSelfRequested: GameToPersonListModel[] = [];
+  waitingInvited: GameToPersonListModel[] = [];
 
   isLoadingGame: boolean = true;
   isLoadingForum: boolean = true;
@@ -112,8 +113,9 @@ export class GameComponent implements OnInit {
           let playerListModel = new PersonalDataListModel(user, photo);
           this.acceptedPlayers.push(playerListModel);
         } else {
-          if (card.isMadeByPlayer) this.waitingSelfRequested.push(user);
-          else this.waitingInvited.push(user);
+          let g2pListModel = new GameToPersonListModel(card, user, photo);
+          if (card.isMadeByPlayer) this.waitingSelfRequested.push(g2pListModel);
+          else this.waitingInvited.push(g2pListModel);
         }
       }
     });

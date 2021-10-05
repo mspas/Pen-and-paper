@@ -13,6 +13,7 @@ import { PostsComponent } from "./game/forum/topic/posts/posts.component";
 import { ReplyPostComponent } from "./game/forum/topic/reply-post/reply-post.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CreateGameComponent } from './create-game/create-game.component';
+import { ManagePlayersComponent } from './game/forum/manage-game/manage-players/manage-players.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CreateGameComponent } from './create-game/create-game.component';
     PostsComponent,
     ReplyPostComponent,
     CreateGameComponent,
+    ManagePlayersComponent,
   ],
   imports: [
     CommonModule,

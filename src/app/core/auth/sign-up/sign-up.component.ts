@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit {
       form.value.lastname,
       form.value.city,
       form.value.age,
-      "unknown.png",
+      null,
       false
     );
     const account: AccountCreateModel = new AccountCreateModel(

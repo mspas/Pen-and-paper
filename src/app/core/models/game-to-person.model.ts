@@ -1,6 +1,7 @@
 import { MySkillModel } from './myskill.model';
 import { GameModel, GameAppModel } from "./game.model";
 import { MyItemModel } from './myitem.model';
+import { PersonalDataModel } from './personaldata.model';
 
 export class GameToPersonApiModel {
     constructor(
@@ -37,5 +38,13 @@ export class GameToPersonAppModel {
       public game: GameAppModel,
       public characterSkills: MySkillModel[],
       public characterItems: MyItemModel[]
+    ) {}
+}
+
+export class GameToPersonListModel {
+    constructor(
+      public card: GameToPersonAppModel,
+      public profileData: PersonalDataModel,
+      public photo: any
     ) {}
 }

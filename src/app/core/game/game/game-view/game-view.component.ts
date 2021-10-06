@@ -160,7 +160,7 @@ export class GameViewComponent implements OnInit {
   onDeclineRequest(playerId: number) {
     this.gameData.participants.forEach((card) => {
       if (card.playerId == playerId) 
-        this._api.declineJoinGame(card.id).subscribe(data => {
+        this._api.deleteGameToPerson(card.id).subscribe(data => {
           if (data.success) window.location.reload();
         });
     });

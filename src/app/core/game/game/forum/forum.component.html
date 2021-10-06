@@ -31,7 +31,7 @@
       </button>
     </div>
     <div class="btn-wrap">
-      <button *ngIf="!iAmGameMaster" class="btn-forum btn-blue" (click)="showModal(1, true, 'Players')">
+      <button *ngIf="!iAmGameMaster" class="btn-forum btn-blue" (click)="showModal(2, true, 'Players')">
         Players
       </button>
     </div>
@@ -83,7 +83,32 @@
       <p style="text-align: center; margin: 30px 0">Nothing here yet! Content in construction...</p>
     </div>
     <div *ngIf="modalOption === 1">
-      <app-manage-players [isLoading]="isLoadingFriendsList" [acceptedPlayers]="acceptedPlayers" [waitingSelfRequested]="waitingSelfRequested" [waitingInvited]="waitingInvited" [friendsList]="friendsList"></app-manage-players>
+      <app-manage-players [isLoading]="isLoadingFriendsList" [iAmGameMaster]="iAmGameMaster" [gameId]="gameData.id" [acceptedPlayersCards]="acceptedPlayersCards" [waitingSelfRequested]="waitingSelfRequested" [waitingInvited]="waitingInvited" [friendsList]="friendsList"></app-manage-players>
+    </div>
+    <div *ngIf="modalOption === 2">
+      <div *ngIf="acceptedPlayers.length > 0" class="list">
+        <a
+          *ngFor="let player of acceptedPlayers; index as i"
+          class="profile-link"
+          role="button"
+          [routerLink]="['/profile', player.data.login]"
+        >
+          <img
+            *ngIf="player.photo"
+            [src]="player.photo"
+            alt="Profile image"
+          />
+          <img
+            *ngIf="player.photo == null"
+            src="assets/unknown.png"
+            alt="Profile image"
+          />
+          <span class="name">{{ player.data.firstname }} {{ player.data.lastname }} ({{
+            player.data.login
+          }})</span>
+        </a>
+      </div>
+      <p style="text-align: center; margin: 30px 0" *ngIf="acceptedPlayers.length < 1">There are no players yet!</p>
     </div>
   </app-modal>
 </div>

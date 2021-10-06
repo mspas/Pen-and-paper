@@ -25,6 +25,7 @@ export class GameComponent implements OnInit {
   topicToPersonData: TopicToPersonModel[];
 
   acceptedPlayers: PersonalDataListModel[] = [];
+  acceptedPlayersCards: GameToPersonListModel[] = [];
   waitingSelfRequested: GameToPersonListModel[] = [];
   waitingInvited: GameToPersonListModel[] = [];
 
@@ -57,6 +58,7 @@ export class GameComponent implements OnInit {
       });
       
       this.acceptedPlayers = [];
+      this.acceptedPlayersCards = [];
       this.waitingSelfRequested = [];
       this.waitingInvited = [];
   
@@ -110,8 +112,8 @@ export class GameComponent implements OnInit {
       ) {
         let photo = await this.getImageData(user.photoName);
         if (card.isAccepted) {
-          let playerListModel = new PersonalDataListModel(user, photo);
-          this.acceptedPlayers.push(playerListModel);
+          this.acceptedPlayers.push(new PersonalDataListModel(user, photo));
+          this.acceptedPlayersCards.push(new GameToPersonListModel(card, user, photo));
         } else {
           let g2pListModel = new GameToPersonListModel(card, user, photo);
           if (card.isMadeByPlayer) this.waitingSelfRequested.push(g2pListModel);

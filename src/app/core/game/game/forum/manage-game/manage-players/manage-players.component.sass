@@ -1,7 +1,7 @@
 @import '../../../../../../../_variables'
 
 .manage-players-content
-    max-height: 70%
+    max-height: 70vh
     overflow-y: auto
     @media screen and (max-width: 420px)
         max-height: 90%
@@ -30,3 +30,12 @@
                         color: #f15050
                         &:hover
                             color: $third
+
+::-webkit-scrollbar
+    width: 5px
+::-webkit-scrollbar-track
+    background: #f1f1f1
+::-webkit-scrollbar-thumb
+    background: #b1b1b1
+::-webkit-scrollbar-thumb:hover
+    background: #888

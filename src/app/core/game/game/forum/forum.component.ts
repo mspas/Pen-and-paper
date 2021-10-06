@@ -28,6 +28,7 @@ export class ForumComponent implements OnInit {
   @Input() profileData: PersonalDataModel;
   @Input() gameMaster: PersonalDataListModel;
   @Input() acceptedPlayers: PersonalDataListModel[];
+  @Input() acceptedPlayersCards: GameToPersonListModel[];
   @Input() waitingSelfRequested: GameToPersonListModel[];
   @Input() waitingInvited: GameToPersonListModel[];
   @Input() iAmGameMaster: boolean;
@@ -68,7 +69,7 @@ export class ForumComponent implements OnInit {
         this.isLoading = true;
         this.isLoadingTopics = true;
         this.subpageManager.showTopic();
-
+        
         this._api
           .getTopic(this.profileData.id, query.topicId)
           .subscribe((data) => {
@@ -187,7 +188,6 @@ export class ForumComponent implements OnInit {
     this._api.getFriendsList(this.myUserName).subscribe(async data => {
       this.isLoadingFriendsList = false;
 
-      console.log(this.waitingSelfRequested);
       let filteredList = [];
 
       for (let i = 0; i < data.length; i++) {
@@ -258,7 +258,7 @@ export class ForumComponent implements OnInit {
   }
 
   onLeaveGame() {
-    this._api.declineJoinGame(this.myCardId).subscribe(data => {
+    this._api.deleteGameToPerson(this.myCardId).subscribe(data => {
       if (data.success) window.location.reload();
     });
   }

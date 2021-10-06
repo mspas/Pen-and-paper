@@ -210,7 +210,7 @@ export class ApiService {
     return this._http.put<GameToPersonApiModel>(`${this.url}/GameToPerson/`, invite);
   }
 
-  declineJoinGame(inviteId: number): Observable<any> {
+  deleteGameToPerson(inviteId: number): Observable<any> {
     return this._http.delete(`${this.url}/GameToPerson/${inviteId}`);
   }
 

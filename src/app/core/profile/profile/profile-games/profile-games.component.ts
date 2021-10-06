@@ -66,7 +66,7 @@ export class ProfileGamesComponent implements OnInit {
   onDeclineRequest(inviteId: number) {
     this.invitations.forEach((invite) => {
       if (invite.id == inviteId) 
-        this._api.declineJoinGame(invite.id).subscribe(data => {
+        this._api.deleteGameToPerson(invite.id).subscribe(data => {
           if (data.success) window.location.reload();
         });
     });

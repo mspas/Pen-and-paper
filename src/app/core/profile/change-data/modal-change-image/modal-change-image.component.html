@@ -2,8 +2,9 @@
   <div *ngIf="showAlert" class="alert-wrap">
     <div ngClass class="alert btn-red">{{ alertMessage }}</div>
   </div>
-  <label for="file">Select image from your drive (200x200 px)</label>
-  <input type="file" id="file" name="file" required #fileInput />
+  <label for="file">Select image from your drive (preferred and max: 200x200px)</label>
+  <input type="file" id="file" name="file" (change)="imageSelectHandler($event)" required #fileInput />
+  <img class="image-preview" *ngIf="imageDataPreview" [src]="imageDataPreview" alt="Select" />
   <div class="modal-footer">
     <button class="btn-forum btn-green" type="submit">
       SAVE

@@ -34,8 +34,6 @@ export class ModalChangeImageComponent implements OnInit {
     let file = event.target.files[0];
     let imageData = await this.getImageData(file);
 
-    console.log(imageData)
-
     if (imageData.height > MAX_HEIGHT && imageData.width > MAX_WIDTH) {
       this.showAlert = true;
       this.alertMessage = "Wrong size of the selected image! Maximum size - 200x200px."
@@ -51,7 +49,6 @@ export class ModalChangeImageComponent implements OnInit {
       reader.onload = (event) => {
         var img = new Image();
         img.src = URL.createObjectURL(file);
-        console.log(event)
         img.onload = () => {
           resolve({ data: reader.result, height: img.height, width: img.width });
         }

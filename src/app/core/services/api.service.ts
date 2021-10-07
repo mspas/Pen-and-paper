@@ -255,13 +255,12 @@ export class ApiService {
     return this._http.put<PersonalDataModel>(`${this.url}/pdata/${id}`, profile);
   }
 
-  editGameData(gameId: number, game: GameAppModel): Observable<any> {
-    return this._http.put<any>(`${this.url}/Game/${gameId}`, game);
+  editGameData(game: GameAppModel): Observable<any> {
+    return this._http.put<any>(`${this.url}/Game/${game.id}`, game);
   }
 
   editPassword(passwordData: ChangePasswordModel): Observable<any> {
     let id = localStorage.getItem("id");
-    console.log(passwordData)
     return this._http.put<ChangePasswordModel>(`${this.url}/account/${id}`, passwordData);
   }
 }

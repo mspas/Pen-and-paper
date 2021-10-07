@@ -1,4 +1,7 @@
 <div class="text-editor">
+  <div *ngIf="showAlert" class="alert-wrap">
+    <div ngClass class="alert btn-red">{{ alertMessage }}</div>
+  </div>
   <div class="toolbar">
     <button
       class="tool-items"
@@ -30,15 +33,15 @@
 
     <button
       class="tool-items"
-      onclick="document.execCommand('justifyCenter',false,'')"
-    >
-      <fa-icon [icon]="faAlignCenter"></fa-icon>
-    </button>
-    <button
-      class="tool-items"
       onclick="document.execCommand('justifyLeft',false,'')"
     >
       <fa-icon [icon]="faAlignLeft"></fa-icon>
+    </button>
+    <button
+      class="tool-items"
+      onclick="document.execCommand('justifyCenter',false,'')"
+    >
+      <fa-icon [icon]="faAlignCenter"></fa-icon>
     </button>
     <button
       class="tool-items"

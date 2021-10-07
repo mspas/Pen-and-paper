@@ -28,12 +28,24 @@ export class SignUpComponent implements OnInit {
   validateInput(login, email, firstname, lastname, city, age, password, password2) {
     let check = login.length < 1 || email.length < 1 || firstname.length < 1 || lastname.length < 1 || city.length < 1 || age.length < 1 || password.length < 1 ? false : true;
 
+    if (!check) { 
+      this.alertMessage = "Error! Fill all the inputs to sign up!";
+      return false;
+    }
+
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    check = regex.test(String(email).toLowerCase());
+    
+    if (!check) { 
+      this.alertMessage = "Error! Invalid email address!";
+      return false;
+    }
+
     if (password !== password2) { 
       this.alertMessage = "Error! Inputted passwords are different!";
       return false;
     }
 
-    if (!check) this.alertMessage = "Error! Fill all the inputs to sign up!";
     return check;
   }
 
@@ -67,7 +79,7 @@ export class SignUpComponent implements OnInit {
       (error) => {
         this.showAlert = true;
         this.isLoading = false;
-        this.alertMessage = "Error! Login or password incorrect!";
+        this.alertMessage = "Error! Login already in use!";
       });
 
     this.authService.currentAccMsg.subscribe((data) => {

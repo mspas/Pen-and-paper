@@ -8,6 +8,8 @@ import { faAlignCenter } from "@fortawesome/free-solid-svg-icons";
 import { faAlignRight } from "@fortawesome/free-solid-svg-icons";
 import { DataService } from "src/app/core/services/data.service";
 
+const MAX_SIZE = 2000000;
+
 @Component({
   selector: "app-text-editor",
   templateUrl: "./text-editor.component.html",
@@ -48,6 +50,12 @@ export class TextEditorComponent implements OnInit {
     if (!this.acceptedImageExtensions.includes(fileNameArray[fileNameArray.length - 1])) {
       this.showAlert = true;
       this.alertMessage = `Wrong file! Accepted image types: ${this.acceptedImageExtensions.join(", ")}.`;
+      return false;
+    }
+
+    if (file.size > MAX_SIZE) {
+      this.showAlert = true;
+      this.alertMessage = `Image too large! Max. size: ${MAX_SIZE/1000000} MB.`;
       return false;
     }
 

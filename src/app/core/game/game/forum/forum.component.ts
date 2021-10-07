@@ -251,8 +251,9 @@ export class ForumComponent implements OnInit {
   }
 
   onEndGame() {
-    this.gameData.status = "Ended";
-    this._api.editGameData(this.gameData.id, this.gameData).subscribe(data => {
+    let toUpdate = this.gameData;
+    toUpdate.status = "Ended";
+    this._api.editGameData(toUpdate).subscribe(data => {
       if (data.success) window.location.reload();
     });
   }

@@ -26,19 +26,13 @@ import {
   MessageForumModel,
 } from "../models/forum.model";
 import { TopicToPersonModel } from "../models/topic-to-person.model";
-import { ForumService } from "./forum.service";
-import { DataService } from "./data.service";
 
 @Injectable()
 export class ApiService {
   url = "http://localhost:50168/api";
   //url = "/api";
 
-  constructor(
-    private _http: HttpClient,
-    private _forum: ForumService,
-    private _data: DataService
-  ) {}
+  constructor(private _http: HttpClient) {}
 
   getProfileData(user: string): Observable<PersonalDataModel> {
     return this._http.get<PersonalDataModel>(`${this.url}/pdata/${user}`);

@@ -79,7 +79,6 @@ export class ChatComponent implements OnInit {
   onSendMessage(form: NgForm) {
     var body = form.value.message;
     var now = new Date();
-    console.log(this.conversationData)
     var msg = new MessageCreateModel(now, false, body, this.conversationData.relation.id, this.conversationData.myProfile.id, false);
 
     this._api.sendMessage(msg);

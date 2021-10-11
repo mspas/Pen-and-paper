@@ -36,15 +36,14 @@ export class GameViewComponent implements OnInit {
   data: any;
 
   buttonManager: ButtonManager;
-  hotJoinString: string = "No";
-  needInviteString: string = "No";
-  info: string = "Join game";
   iAmParticipant: boolean = false;
+  isRequestWaiting: boolean = false;
+  isInvited: boolean = false;
+
   isNewRequest: boolean = false;
   myCardId: number;
   newSkillsNames: string[] = [];
   newGameSessions: GameSessionCreateModel[] = [];
-  isNewInvited: boolean = false;
   subpage: string;
 
   showModalFlag: boolean = false;
@@ -74,18 +73,19 @@ export class GameViewComponent implements OnInit {
               this.myCardId = card.id;
             } else {
               this.iAmParticipant = false;
-              this.info = "Your request is waiting...";
+              if (card.isMadeByPlayer) {
+                this.isRequestWaiting = true;
+                this.isInvited = false;
+              }
+              else {
+                this.isRequestWaiting = false;
+                this.isInvited = true;
+              }
             }
           }
         });
       }
     });
-
-    this.setNotificationFlags();
-  }
-
-  ngOnChanges() {
-    this.setNotificationFlags();
   }
 
   blobToImage = (blob: Blob): Promise<HTMLImageElement> => {
@@ -112,16 +112,8 @@ export class GameViewComponent implements OnInit {
     this.imageUrl = this.gameImageAssets[category] ? this.gameImageAssets[category] : this.gameImageAssets.get("Fantasy");
   }
 
-  setNotificationFlags() {
-    if (this.waitingSelfRequested.length > 0) this.isNewRequest = true;
-    if (this.waitingInvited.length > 0) this.isNewInvited = true;
-  }
-
   prepareGameConstantDetails(gameData) {
     this.setGamePicture(gameData.category);
-
-    if (gameData.hotJoin) this.hotJoinString = "Yes";
-    if (gameData.needInvite) this.needInviteString = "Yes";
   }
 
   
@@ -150,10 +142,12 @@ export class GameViewComponent implements OnInit {
 
   onAcceptRequest(playerId: number) {
     this.gameData.participants.forEach((card) => {
-      if (card.playerId == playerId) 
+      if (card.playerId == playerId) {
+        card.isAccepted = true;
         this._api.acceptJoinGame(card).subscribe(data => {
           if (data.success) window.location.reload();
         });
+      }
     });
   }
 
@@ -165,6 +159,9 @@ export class GameViewComponent implements OnInit {
         });
     });
   }
+
+
+
 
   onAddSkill(form: NgForm) {
     if (this.newSkillsNames == null) this.newSkillsNames = [];

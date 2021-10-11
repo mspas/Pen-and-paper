@@ -21,6 +21,7 @@ const helper = new JwtHelperService();
 export class AuthService {
   url = "http://localhost:50168/api/";
   //url = "/api/";
+
   private token: string;
   private loginError = new BehaviorSubject<boolean>(false);
   private accMsg = new BehaviorSubject<boolean>(false);

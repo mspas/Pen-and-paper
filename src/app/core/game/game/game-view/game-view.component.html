@@ -15,24 +15,24 @@
       <div class="btns center" *ngIf="!iAmParticipant && !iAmGameMaster">
         <button
           class="btn-forum btn-green"
-          *ngIf="!isNewRequest && !isNewInvited"
+          *ngIf="!isRequestWaiting && !isInvited"
           (click)="onJoin()"
         >
           Join Game
         </button>
-        <button class="btn-forum btn-yellow" *ngIf="isNewRequest">
+        <button class="btn-forum btn-yellow" *ngIf="isRequestWaiting">
           Request waiting
         </button>
         <button
           class="btn-forum btn-green"
-          *ngIf="isNewInvited"
+          *ngIf="isInvited"
           (click)="onAcceptRequest(profileData.id)"
         >
           Accept Invitation
         </button>
         <button
           class="btn-forum btn-red"
-          *ngIf="isNewInvited"
+          *ngIf="isInvited"
           (click)="onDeclineRequest(profileData.id)"
         >
           Decline Invitation

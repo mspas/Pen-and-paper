@@ -56,10 +56,12 @@ export class ProfileGamesComponent implements OnInit {
 
   onAcceptRequest(inviteId: number) {
     this.invitations.forEach((invite) => {
-      if (invite.id == inviteId) 
+      if (invite.id == inviteId) { 
+        invite.isAccepted = true;
         this._api.acceptJoinGame(invite).subscribe(data => {
           if (data.success) window.location.reload();
         });
+      }
     });
   }
 

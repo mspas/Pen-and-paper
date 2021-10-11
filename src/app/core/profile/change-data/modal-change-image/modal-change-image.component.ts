@@ -61,6 +61,8 @@ export class ModalChangeImageComponent implements OnInit {
   };
 
   onSaveImage(form: NgForm) {
+    if (!this.imageDataPreview) return false;
+    
     this.showAlert = false;
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
     if (!nativeElement.files[0] && !this.imageDataPreview) {

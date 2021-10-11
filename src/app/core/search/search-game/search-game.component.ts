@@ -88,6 +88,14 @@ export class SearchGameComponent implements OnInit {
         this.isImageLoading = false;
       }
 
+      game.nofparticipants = game.participants.length;
+
+      for (let j = 0; j < game.participants.length; j++) {
+        const relation = game.participants[j];
+        if (relation.isGameMaster || !relation.isAccepted) 
+          game.nofparticipants--;
+      }
+      
       if (isDefaultImage) photoGame = this.setDefaultImage(game.category);
 
       this.foundGames.push(new GameListModel(game, isDefaultImage, photoGame, photoGameMaster));

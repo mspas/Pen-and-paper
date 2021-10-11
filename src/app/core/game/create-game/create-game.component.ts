@@ -67,7 +67,7 @@ export class CreateGameComponent implements OnInit {
       form.value.book,
       form.value.comment,
       form.value.date,
-      this.needInvite,
+      !this.needInvite,
       this.hotJoin,
       "Active",
       null,

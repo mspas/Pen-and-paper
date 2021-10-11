@@ -100,6 +100,18 @@ export class ProfileComponent implements OnInit {
 
       this._api.getPlayerGames(userNick).subscribe((data) => {
         this.userGamesList = data;
+
+        for (let j = 0; j < this.userGamesList.length; j++) {
+          const game = this.userGamesList[j].game;
+          game.nofparticipants = game.participants.length;
+
+          for (let j = 0; j < game.participants.length; j++) {
+            const relation = game.participants[j];
+            if (relation.isGameMaster || !relation.isAccepted) 
+              game.nofparticipants--;
+          }
+        }
+        
         this.isLoadingGames = false;
       });
     });

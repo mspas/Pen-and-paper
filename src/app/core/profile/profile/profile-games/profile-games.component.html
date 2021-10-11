@@ -22,7 +22,7 @@
             <a [routerLink]="['/game']" [queryParams]="{gameId: game.game.id}">{{ game.game.title }}</a>
             <fa-icon *ngIf="game.isGameMaster == true" class="star-icon" title="Game Master" [icon]="faStar"></fa-icon>
           </td>
-          <td class="details">{{ game.game.participants.length - 1 }} / {{ game.game.maxplayers }}</td>
+          <td class="details">{{ game.game.nofparticipants }} / {{ game.game.maxplayers }}</td>
           <td class="details">
             {{ game.game.status }}
           </td>
@@ -53,7 +53,7 @@
             <td type="button" class="button-name">
               <a [routerLink]="['/game']" [queryParams]="{gameId: game.game.id}">{{ game.game.title }}</a>
             </td>
-            <td class="details">{{ game.game.participants.length - 1 }} / {{ game.game.maxplayers }}</td>
+            <td class="details">{{ game.game.nofparticipants }} / {{ game.game.maxplayers }}</td>
             <td class="details">
               {{ game.game.status }}
             </td>

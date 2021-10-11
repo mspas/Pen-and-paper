@@ -81,11 +81,6 @@ export class ApiService {
     pageNumber: number,
     pageSize: number
   ): Observable<any> {
-    /*let params = new HttpParams();
-    params = params.append("gameId", gameId.toString());
-    params = params.append("topicId", topicId.toString());
-    params = params.append("pageNumber", pageNumber.toString());
-    params = params.append("pageSize", pageSize.toString());*/
 
     let params = {
       gameId: gameId.toString(),
@@ -98,21 +93,16 @@ export class ApiService {
   }
 
   getConversation(relationId: number) {
-    //this._http.post(this.url + 'Message/', new MessageModel(0, new Date(Date.UTC(2019, 6, 19, 1,1,1,1)), false, "hello dude", 2)).subscribe (
-    //  error => console.log(error));;
     return this._http.get<MessageModel[]>(this.url + "/Message/" + relationId);
-    // .do(data => console.log('All: ' + JSON.stringify(data)));
   }
 
   getRelationData(relationId: number) {
     return this._http.get<FriendModel[]>(
       this.url + "/Friend/" + relationId.toString()
     );
-    //.do(data => console.log('All: ' + JSON.stringify(data)));
   }
 
   sendMessage(msg: MessageCreateModel) {
-    console.log(JSON.stringify(msg));
     this._http
       .post(this.url + "/Message/", msg)
       .subscribe((error) => console.log(error));
@@ -154,12 +144,6 @@ export class ApiService {
   deleteTopic(topicId: number): Observable<any>  {
     return this._http.delete(`${this.url}/Topic/${topicId}`);
   }
-
-  /*createTopic(topic: NewTopicModel) {
-    return this._http
-      .post(this.url + "/Topic", topic)
-      .subscribe((data) => console.log(data));
-  }*/
 
   sendForumMessage(msg: MessageForumCreateModel) {
     return this._http.post<any>(`${this.url}/MessageForum`, msg);

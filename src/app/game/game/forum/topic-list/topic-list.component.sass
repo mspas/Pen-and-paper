@@ -1,0 +1,84 @@
+@import '../../../../../_mixins'
+@import '../../../../../_variables'
+
+.topic-list
+    padding: 0 20px
+    @media screen and (max-width: 430px)
+        padding: 0
+    .category-group
+        padding: 15px 0
+        .category-name
+            margin-bottom: 10px
+        .media
+            display: grid
+            grid-template-columns: 1fr 10fr
+            padding: 5px 10px
+            margin-top: 10px
+            border-radius: 10px 10px 10px 10px
+            background: #eeeeee
+            @include border-shadow-default()
+            .topic-info
+                letter-spacing: 1px
+                border-radius: 0
+            .media-left
+                display: flex
+                padding: 10px 0px
+                align-items: center
+                justify-content: center
+            .media-body
+                text-align: left
+                padding-left: 15px
+                .media-heading
+                    margin: 0
+                    .topic-title
+                        font-size: 1.1em
+            .media-bottom
+                border-top-style: solid
+                border-color: #e4e3e39a
+                margin: 0
+                margin-top: 5px
+                .bottom-info
+                    display: inline-block
+                .icons-wrap
+                    display: block
+                    width: 160px
+                    margin-left: auto
+                    .option
+                        display: inline-block
+                        font-size: 0.8em
+                        color: #4747478c
+                        margin-right: 20px
+                        cursor: pointer
+                        &:last-child
+                            margin-right: 0
+                        &:hover
+                            color: $third
+                        .icon
+                            margin: 0 3px
+                .msg-info
+                    @media screen and ( max-width: 800px )
+                        font-size: 0.7em
+            img
+                width: 40px
+            .pagination
+                list-style-type: none
+                margin: 10px 30px 0 0
+                padding: 0
+                .dots
+                    cursor: default !important
+                    margin: 0 5px
+                    box-shadow: none !important
+                .page-item
+                    display: inline-block
+                    cursor: pointer
+                    margin: 0 5px
+                    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.171)
+                    &:hover
+                        background: #ffffff57
+                    a, span
+                        float: none
+                        color: $third
+                        font-size: 12px !important
+                        padding: 4px 8px
+                        &:hover
+                            color: #ffb1b1

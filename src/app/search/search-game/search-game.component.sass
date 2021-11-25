@@ -1,0 +1,49 @@
+@import '../../../_variables'
+@import '../../../_mixins'
+
+.container
+    .filters
+        position: relative
+        padding: 25px 25px 15px 25px
+        background-color: rgba(255, 255, 255, 0.274)
+        border-radius: 25px
+        .input-group
+            margin-top: 20px
+            .categories
+                text-align: center
+                margin: 10px 0
+                .category-name
+                    display: inline-block !important
+                    margin-right: 20px
+                    cursor: pointer
+                .category-name:hover
+                    color: tomato
+                .focus
+                    color: tomato
+                label
+                    font-size: 15px
+                    input
+                        position: absolute
+                        left: 0
+                        bottom: 10px
+                        width: 18px
+                        height: 18px
+                    span
+                        position: absolute
+                        left: 25px
+                        bottom: 8px
+        .two-sided
+            display: grid
+            grid-template-columns: 1fr 1fr
+            @media screen and ( max-width: 430px )
+                display: block
+            .right-side
+                @media screen and ( max-width: 430px )
+                    display: block
+                button
+                    float: right
+                    @media screen and ( max-width: 430px )
+                        float: none
+            .left-side
+                @media screen and ( max-width: 430px )
+                    display: block

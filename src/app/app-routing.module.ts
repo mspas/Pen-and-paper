@@ -1,17 +1,8 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { HomeComponent } from "./core/home/home.component";
-import { ProfileComponent } from "./core/profile/profile/profile.component";
-import { AuthGuardService } from "./core/auth/auth-guard.service";
-import { GameComponent } from "./core/game/game/game.component";
-import { SearchGameComponent } from "./core/search/search-game/search-game.component";
-import { SearchProfileComponent } from "./core/search/search-profile/search-profile.component";
-import { ActivityComponent } from "./core/activity/activity/activity.component";
 import { SignInComponent } from "./core/auth/sign-in/sign-in.component";
 import { SignUpComponent } from "./core/auth/sign-up/sign-up.component";
-import { CreateGameComponent } from "./core/game/create-game/create-game.component";
-
-const routes: Routes = [];
 
 @NgModule({
   imports: [
@@ -21,34 +12,24 @@ const routes: Routes = [];
       { path: "sign-in", component: SignInComponent },
       { path: "sign-up", component: SignUpComponent },
       {
-        path: "profile/:login",
-        component: ProfileComponent,
-        canActivate: [AuthGuardService],
+        path: "profile",
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
       },
       {
         path: "game",
-        component: GameComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: "search-game",
-        component: SearchGameComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: "search-profile",
-        component: SearchProfileComponent,
-        canActivate: [AuthGuardService],
+        loadChildren: () => import('./game/game.module').then(m => m.GameModule)
       },
       {
         path: "create-game",
-        component: CreateGameComponent,
-        canActivate: [AuthGuardService],
+        loadChildren: () => import('./game/game.module').then(m => m.GameModule)
+      },
+      {
+        path: "search",
+        loadChildren: () => import('./search/search.module').then(m => m.SearchModule)
       },
       {
         path: "my-account",
-        component: ActivityComponent,
-        canActivate: [AuthGuardService]
+        loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule),
       },
       { path: '**', redirectTo: 'home' }
     ], {

@@ -4,13 +4,13 @@
   /></a>
     <ul class="navbar-collapse">
       <li class="link">
-        <a role="button" [routerLink]="['/search-game']">JOIN GAME</a>
+        <a role="button" [routerLink]="['/search/game']">JOIN GAME</a>
       </li>
       <li class="link">
-        <a role="button" [routerLink]="['/create-game']" >CREATE GAME</a>
+        <a role="button" [routerLink]="['/game/create-game']" >CREATE GAME</a>
       </li>
       <li class="link">
-        <a role="button" [routerLink]="['/search-profile']">FIND PLAYERS</a>
+        <a role="button" [routerLink]="['/search/profile']">FIND PLAYERS</a>
       </li>
       <li class="link" *ngIf="!isLoggedIn">
         <a role="button" [routerLink]="['/sign-in']">SIGN IN</a>
@@ -64,12 +64,12 @@
     </button>
     <ul *ngIf="dropIsDown" class="navbar-collapse">
       <li class="link">
-        <a role="button" [routerLink]="['/search-game']" (click)="showNavbarMobile()">JOIN GAME</a>
+        <a role="button" [routerLink]="['/search/game']" (click)="showNavbarMobile()">JOIN GAME</a>
       </li>
-      <li class="link" [routerLink]="['/create-game']" (click)="showNavbarMobile()">
+      <li class="link" [routerLink]="['/game/create-game']" (click)="showNavbarMobile()">
         <span>CREATE GAME</span>
       </li>
-      <li class="link" [routerLink]="['/search-profile']" (click)="showNavbarMobile()">
+      <li class="link" [routerLink]="['/search/profile']" (click)="showNavbarMobile()">
         <span>FIND PLAYERS</span>
       </li>
       <li class="link" [routerLink]="['/sign-in']" *ngIf="!isLoggedIn" (click)="showNavbarMobile()">

@@ -8,10 +8,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "../app-routing.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ProfileModule } from "./profile/profile.module";
-import { GameModule } from "./game/game.module";
-import { SearchModule } from "./search/search.module";
-import { ActivityModule } from "./activity/activity.module";
 import { ApiService } from "./services/api.service";
 import { AuthService } from "./auth/auth.service";
 import { AuthGuardService } from "./auth/auth-guard.service";
@@ -20,6 +16,13 @@ import { ForumService } from "./services/forum.service";
 import { CreateGameDataService } from "./services/create-game.service";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthInterceptor } from "./auth/auth-interceptor.service";
+import { Routes } from "@angular/router";
+import { StoreModule } from '@ngrx/store';
+import * as fromUserData from '../state/reducers/user-data.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UserDataEffects } from '../state/effects/user-data.effects';
+
+const routes: Routes = [];
 
 @NgModule({
   declarations: [
@@ -35,11 +38,9 @@ import { AuthInterceptor } from "./auth/auth-interceptor.service";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ProfileModule,
-    GameModule,
-    SearchModule,
-    ActivityModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    //StoreModule.forFeature(fromUserData.userDataFeatureKey, fromUserData.reducer),
+    //EffectsModule.forFeature([UserDataEffects])
   ],
   providers: [
     ApiService,

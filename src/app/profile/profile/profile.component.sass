@@ -1,0 +1,126 @@
+@import '../../../_variables'
+@import '../../../_mixins'
+
+$photoSize: 200px
+$marginInfo: 50px
+
+.container
+    min-height: 100%
+    .profile-header
+        display: flex
+        flex-flow: wrap
+        min-height: $photoSize + 100px
+        background-color: $lightWhite
+        @include border-shadow(1px, 1px, 5px, #00000010)
+        .image-wrap
+            flex: 1
+            max-width: 250px
+            padding: 10px
+            @media screen and ( max-width: 430px )
+                padding: 20px
+                max-width: 100%
+            img
+                max-width: $photoSize
+                border-radius: 20px
+        .profile-control
+            flex: 1
+            position: relative
+            display: inline-block
+            padding: $marginInfo 0
+            @media screen and ( max-width: 992px )
+                padding: 0 20px
+            .profile-name
+                font-size: 2em
+                @media screen and ( max-width: 992px )
+                    padding-top: 20px
+                    text-align: center
+                @media screen and ( max-width: 430px )
+                    padding-top: 0
+                    font-size: 1.2em
+            .btn-wrap
+                padding: $marginInfo/2 0
+                .btn-container
+                    @media screen and ( max-width: 992px )
+                        display: flex
+                        flex-flow: wrap
+                        align-items: center
+                        justify-content: center
+                    button
+                        display: inline-block
+                        margin: 5px
+                        height: $marginInfo
+                        width: 120px
+                        min-width: 120px
+                        max-width: 120px
+                        color: white
+                        border-radius: 2px
+                        border: none
+                        cursor: pointer
+                        background-color: $green
+                        transition: all 0.1s ease-in-out
+                        @media screen and ( max-width: 992px )
+                            flex: 1
+                        &:hover
+                            transform: scale(0.9)
+                            box-shadow: 0px 0px 1px 1px $green
+                        .btn-text
+                            text-align: center
+                            line-height: 1.15
+                            font-size: 0.8em
+                            margin: 0
+                    #btn-settings
+                        @media screen and ( min-width: 400px )
+                            display: none
+        .profile-info
+            flex: 1
+            padding: 0
+            margin: $marginInfo 0
+            border-left: 1px solid #55555536
+            @media screen and ( max-width: 992px )
+                margin-top: 0
+            table
+                min-width: 250px
+                @media screen and ( max-width: 992px )
+                    overflow-x: auto
+                @media screen and ( max-width: 430px )
+                    font-size: 0.9em
+                tr
+                    td
+                        padding: 5px 20px
+                        @media screen and ( max-width: 370px )
+                            padding: 5px
+    .profile-content
+        margin-top: 20px
+        ul
+            height: 40px
+            margin: 0
+            padding: 0
+            list-style-type: none
+            display: flex
+            justify-content: flex-end
+            align-items: center
+            li
+                display: inline
+                padding: 10px 20px
+                margin-top: 2px
+                background-color: $lightWhite
+                border-radius: 5px
+                border: 1px solid #00000011
+                user-select: none
+                cursor: pointer
+                &:nth-child(1)
+                    border-right: none
+                &:hover
+                    color: $third
+                    background-color: #fff
+            .active
+                cursor: default
+                border-bottom: none
+                &:hover
+                    background-color: $lightWhite
+        .profile-children
+            min-height: 300px
+            width: 100%
+            background-color: $lightWhite
+            border-radius: 5px
+            box-shadow: 0px 0px 1px 1px #00000010

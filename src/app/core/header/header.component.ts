@@ -1,9 +1,8 @@
-import { timer as observableTimer, Observable } from "rxjs";
+import { timer as observableTimer } from "rxjs";
 
 import { first } from "rxjs/operators";
-import { AuthGuardService } from "../auth/auth-guard.service";
 import { AuthService } from "../auth/auth.service";
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Router } from "@angular/router";
 import { DataService } from "../services/data.service";
